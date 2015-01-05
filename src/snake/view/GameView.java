@@ -18,7 +18,7 @@ public class GameView extends JFrame {
 		super();
 		setTitle("Snake");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setPreferedSize(800, 800);
+		setSize(800, 800);
 
 		this.game = game;
 		boardPanel = new BoardPanel(game);
@@ -26,7 +26,6 @@ public class GameView extends JFrame {
 
 		getContentPane().add(boardPanel, BorderLayout.CENTER);
 		getContentPane().add(scorePanel, BorderLayout.NORTH);
-		pack();
 	}
 
 }
