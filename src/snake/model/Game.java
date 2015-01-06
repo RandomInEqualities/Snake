@@ -10,6 +10,7 @@ public class Game extends Observable {
 	private Snake snake;
 	private Food food;
 	private Dimension size;
+	public boolean gameOver;
 		
 	private Random random = new Random();
 
@@ -44,6 +45,17 @@ public class Game extends Observable {
 		return snake;
 	}
 	
+	public void checkAction(){
+		if (snake.getAction() == Action.EAT){
+			snake.getSnake().add(0, food.getPosition());
+			Score.score++;
+			snake.setAction(Action.MOVE);
+		} else if (snake.getAction() == Action.KILL){
+			System.out.println("dead");
+			Score.score = 0;
+			gameOver = true;
+		}
+	}
 	private Food generateFood(Snake snake) {
 		// If the snake is small we select random locations until the
 		// location is not occupied.

@@ -1,4 +1,5 @@
 package snake.controller;
+
 import java.awt.event.*;
 import snake.model.*;
 import snake.view.*;
@@ -17,15 +18,14 @@ public class Control implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		Field head = game.getPlayer().getSnake().get(0);;
+		Field head = game.getPlayer().getSnake().get(0);
 		switch (e.getKeyCode()) {
 		case 37:
 			if (dir != Direction.RIGHT) {
 				if (head.getColumn() - 1 >= 0) {
 					game.getPlayer().move(-1, 0);
 				} else {
-					System.out.println("out");
-					game.getPlayer().move(game.getSize().width - 1, 0);
+					game.getPlayer().move(game.getSize().width+1, 0);
 				}
 				dir = Direction.LEFT;
 			}
@@ -35,33 +35,33 @@ public class Control implements KeyListener {
 				if (head.getRow() - 1 >= 0) {
 					game.getPlayer().move(0, -1);
 				} else {
-					game.getPlayer().move(0, game.getSize().height - 1);
+					game.getPlayer().move(0, game.getSize().height);
 				}
 				dir = Direction.UP;
 			}
 			break;
 		case 39:
 			if (dir != Direction.LEFT) {
-				if (head.getColumn() + 1 <= game.getSize().width) {
+				if (head.getColumn() + 1 <= game.getSize().width+1) {
 					game.getPlayer().move(1, 0);
 				} else {
-					game.getPlayer().move(-game.getSize().width + 1, 0);
+					game.getPlayer().move(-game.getSize().width-1, 0);
 				}
 				dir = Direction.RIGHT;
 			}
 			break;
 		case 40:
 			if (dir != Direction.UP) {
-				if (head.getRow() + 1 <= game.getSize().height) {
+				if (head.getRow() + 1 <= game.getSize().height+1) {
 					game.getPlayer().move(0, 1);
 				} else {
-					game.getPlayer().move(0, -game.getSize().height);
+					game.getPlayer().move(0, -game.getSize().height-1);
 				}
 				dir = Direction.DOWN;
 			}
 			break;
 		}
-		//game.view.repaint();
+		game.checkAction();
 	}
 
 	@Override
