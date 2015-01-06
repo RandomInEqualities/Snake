@@ -1,8 +1,8 @@
 package snake.model;
 public final class Field {
 	
-	private final int row;
-	private final int column;
+	private int row;
+	private int column;
 	
 	public Field(int row, int column) {
 		this.row = row;
@@ -19,6 +19,11 @@ public final class Field {
 	
 	public boolean equals(Field field){
 		return row == field.getRow() && column == field.getColumn();
+	}
+	
+	public void setField(int x, int y){
+		this.row = x;
+		this.column = y;
 	}
 	
 }

@@ -3,6 +3,7 @@ package snake.model;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Random;
 
 public class Snake extends Observable {
 	private Game game;
@@ -25,9 +26,16 @@ public class Snake extends Observable {
 
 	public void move(int dy, int dx) {
 		// check for food
+		System.out.print(game.getFood().equals(snake.get(0)));
 		if (game.getFood().equals(snake.get(0))) {
 			snake.add((game.getFood().getPosition()));
-			// game.getFood() = null;
+			
+			//Update food
+			System.out.println("eat");
+			Random random = new Random();
+			int x = random.nextInt(game.getWidth());
+			int y = random.nextInt(game.getHeight());
+			
 			Score.score++;
 		} else {
 			for (int i = 0; i < snake.size(); i++) {
