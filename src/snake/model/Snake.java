@@ -1,6 +1,5 @@
 package snake.model;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
@@ -15,8 +14,8 @@ public class Snake extends Observable {
 		this.gameOver = false;
 
 		// Place snake
-		Field head = new Field(game.getHeight() / 2, game.getWidth() / 2);
-		Field tail = new Field(game.getHeight() / 2, game.getWidth() / 2 + 1);
+		Field head = new Field(game.getSize().height / 2, game.getSize().width / 2);
+		Field tail = new Field(game.getSize().height / 2, game.getSize().width / 2 + 1);
 		this.snake = new ArrayList<>();
 		snake.add(head);
 		snake.add(tail);
@@ -33,8 +32,8 @@ public class Snake extends Observable {
 			//Update food
 			System.out.println("eat");
 			Random random = new Random();
-			int x = random.nextInt(game.getWidth());
-			int y = random.nextInt(game.getHeight());
+			int x = random.nextInt(game.getSize().width);
+			int y = random.nextInt(game.getSize().height);
 			
 			Score.score++;
 		} else {

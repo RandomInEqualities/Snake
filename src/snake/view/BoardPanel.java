@@ -40,15 +40,24 @@ public class BoardPanel extends JPanel implements Observer {
 	}
 	
 	public Rectangle getWindowRectangle(Field position) {
+		
 		Dimension windowSize = getSize();
-		int levelWidth = game.getWidth();
-		int levelHeight = game.getHeight();
-		if (windowSize.width < levelWidth || windowSize.height < levelHeight) {
+		Dimension gameSize = game.getSize();
+		
+		if (windowSize.width < gameSize.width || windowSize.height < gameSize.height) {
 			throw new IllegalArgumentException("window is too small");
 		}
-		int blockWidth = (int) ((double)windowSize.width/(double)levelWidth);
-		int blockHeight = (int) ((double)windowSize.height/(double)levelHeight);
-		return new Rectangle(position.getColumn() * blockWidth, position.getRow() * blockHeight, blockWidth, blockHeight);
+		
+		int patchWidth = windowSize.width/gameSize.width;
+		int patchHeight = windowSize.height/gameSize.height;
+		Rectangle windowRectangle = new Rectangle(
+			position.getColumn() * patchWidth, 
+			position.getRow() * patchHeight, 
+			patchWidth, 
+			patchHeight
+		);
+		
+		return windowRectangle;
 	}
 	
 	public void update(Observable o, Object arg) {
