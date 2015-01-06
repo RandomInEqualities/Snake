@@ -2,8 +2,9 @@ package snake.model;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class SnakePlayer {
+public class SnakePlayer extends Observable {
 	private Game game;
 	private ArrayList<Field> snake;
 	private boolean gameOver;
@@ -23,6 +24,8 @@ public class SnakePlayer {
 			this.snake = new ArrayList<>();
 			snake.add(head);
 			snake.add(tail);
+			setChanged();
+		 	notifyObservers();
 		}
 	}
 
@@ -47,6 +50,8 @@ public class SnakePlayer {
 						.getColumn() + dy));
 			}
 		}
+		setChanged();
+	 	notifyObservers();
 	}
 
 	public ArrayList<Field> getSnake() {
