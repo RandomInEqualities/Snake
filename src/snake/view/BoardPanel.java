@@ -18,7 +18,8 @@ public class BoardPanel extends JPanel implements Observer {
 	public BoardPanel(Game game) {
 		super();
 		this.game = game;
-		game.addObserver(this);
+		game.getPlayer().addObserver(this);
+		game.getFood().addObserver(this);
 	}
 	
 	private void drawSnake(Graphics2D context) {

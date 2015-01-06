@@ -1,7 +1,7 @@
 package snake.model;
 import java.util.*;
 
-public class SnakeFood {
+public class SnakeFood extends Observable {
 	private Field position;
 
 	public SnakeFood(Field position){
@@ -9,6 +9,8 @@ public class SnakeFood {
 	}
 	
 	public Field getPosition(){
+		setChanged();
+	 	notifyObservers();
 		return position;
 	}
 }

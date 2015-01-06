@@ -12,6 +12,7 @@ public class SnakeControl implements KeyListener {
 		this.game = game;
 		this.view = view;
 		this.dir = Direction.LEFT;
+		view.addKeyListener(this);
 	}
 
 	@Override
