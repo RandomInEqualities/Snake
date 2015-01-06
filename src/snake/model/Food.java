@@ -1,10 +1,10 @@
 package snake.model;
 import java.util.*;
 
-public class SnakeFood extends Observable {
+public class Food extends Observable {
 	private Field position;
 
-	public SnakeFood(Field position){
+	public Food(Field position){
 		this.position = position;
 	}
 	

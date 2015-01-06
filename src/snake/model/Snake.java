@@ -4,12 +4,12 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Observable;
 
-public class SnakePlayer extends Observable {
+public class Snake extends Observable {
 	private Game game;
 	private ArrayList<Field> snake;
 	private boolean gameOver;
 
-	public SnakePlayer(Game game) {
+	public Snake(Game game) {
 		this.game = game;
 		this.gameOver = false;
 

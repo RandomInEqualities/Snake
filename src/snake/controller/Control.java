@@ -1,21 +1,21 @@
 package snake.controller;
 import java.awt.event.*;
+
 import snake.model.*;
 import snake.view.*;
 
-public class SnakeControl implements KeyListener {
+public class Control implements KeyListener {
 	private Game game;
 	private GameView view;
 	private Direction dir;
 
-	public SnakeControl(Game game, GameView view) {
+	public Control(Game game, GameView view) {
 		this.game = game;
 		this.view = view;
 		this.dir = Direction.LEFT;
 		view.addKeyListener(this);
 	}
 
-	@Override
 	public void keyPressed(KeyEvent e) {
 		Field head = game.getPlayer().getSnake().get(0);;
 		switch (e.getKeyCode()) {
@@ -59,13 +59,11 @@ public class SnakeControl implements KeyListener {
 		//game.view.repaint();
 	}
 
-	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 

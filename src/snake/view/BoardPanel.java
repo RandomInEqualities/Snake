@@ -5,7 +5,6 @@ import javax.swing.*;
 
 import snake.model.Field;
 import snake.model.Game;
-import snake.model.Level;
 
 import java.util.*;
 

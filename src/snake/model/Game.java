@@ -5,8 +5,8 @@ import java.util.Observable;
 
 public class Game extends Observable {
 	
-	private SnakePlayer snake;
-	private SnakeFood food;
+	private Snake snake;
+	private Food food;
 	private int width;
 	private int height;
 		
@@ -27,7 +27,7 @@ public class Game extends Observable {
 		if (height < 5 || 100 < height) {
 			throw new IllegalArgumentException("invalid height " + height);
 		}
-		snake = new SnakePlayer(this);
+		snake = new Snake(this);
 		food = generateFood(snake);
 	}
 	
@@ -38,15 +38,15 @@ public class Game extends Observable {
 	public int getHeight() {
 		return height;
 	}
-	public SnakeFood getFood() {
+	public Food getFood() {
 		return food;
 	}
 	
-	public SnakePlayer getPlayer() {
+	public Snake getPlayer() {
 		return snake;
 	}
 	
-	private SnakeFood generateFood(SnakePlayer snake) {
+	private Food generateFood(Snake snake) {
 		int x = 0;
 		int y = 0;
 		do {
@@ -54,7 +54,7 @@ public class Game extends Observable {
 			y = random.nextInt(height);
 		//} while (!snake.contains(x, y));
 		} while (false);
-		return new SnakeFood(new Field(y, x));
+		return new Food(new Field(y, x));
 	}
 	
 }
