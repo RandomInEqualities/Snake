@@ -49,6 +49,7 @@ public class Game extends Observable {
 		if (snake.getAction() == Action.EAT){
 			snake.getSnake().add(0, food.getPosition());
 			Score.score++;
+			food = generateFood(snake);
 			snake.setAction(Action.MOVE);
 		} else if (snake.getAction() == Action.KILL){
 			System.out.println("dead");

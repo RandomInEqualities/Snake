@@ -21,7 +21,8 @@ public class GameView extends JFrame {
 		setTitle("Snake");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800, 800);
-
+		setLocationRelativeTo(null);
+		
 		this.game = game;
 		score = new Score();
 		boardPanel = new BoardPanel(game);

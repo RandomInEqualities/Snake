@@ -24,8 +24,8 @@ public class Snake extends Observable {
 		this.snake = new ArrayList<>();
 		snake.add(head);
 		snake.add(tail);
-		setChanged();
-		notifyObservers();
+		//setChanged();
+		//notifyObservers();
 	}
 
 	public void move(int dy, int dx) {
