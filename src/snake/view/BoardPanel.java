@@ -3,6 +3,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
+import snake.model.Field;
 import snake.model.Game;
 import snake.model.Level;
 
@@ -21,7 +22,13 @@ public class BoardPanel extends JPanel implements Observer {
 	}
 	
 	private void drawSnake(Graphics2D context) {
-		context.fill(new Rectangle(0,0,getWidth(), getHeight()));
+		if (game.getPlayer().getSnake() == null) {
+			System.out.println("WHAT");
+			return;
+		}
+		for (Field position : game.getPlayer().getSnake()) {
+			context.fill(getWindowRectangle(position));
+		}
 	}
 	
 	private void drawLevel(Graphics2D context) {
@@ -29,10 +36,19 @@ public class BoardPanel extends JPanel implements Observer {
 	}
 	
 	private void drawFood(Graphics2D context) {
-		
-		Level level = game.getLevel();
-		context.fill(new Rectangle(0,0,level.getWidth(), level.getHeight()));
-		
+		context.fill(getWindowRectangle(game.getFood().getPosition()));
+	}
+	
+	public Rectangle getWindowRectangle(Field position) {
+		Dimension windowSize = getSize();
+		int levelWidth = game.getLevel().getWidth();
+		int levelHeight = game.getLevel().getHeight();
+		if (windowSize.width < levelWidth || windowSize.height < levelHeight) {
+			throw new IllegalArgumentException("window is too small");
+		}
+		int blockWidth = (int) ((double)windowSize.width/(double)levelWidth);
+		int blockHeight = (int) ((double)windowSize.height/(double)levelHeight);
+		return new Rectangle(position.getRow() * blockWidth, position.getColumn() * blockHeight, blockWidth, blockHeight);
 	}
 	
 	public void update(Observable o, Object arg) {

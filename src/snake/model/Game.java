@@ -17,8 +17,8 @@ public class Game extends Observable {
 	
 	public Game(int width, int height) {
 		super();
-		snake = new SnakePlayer(this);
 		level = new Level(width, height);
+		snake = new SnakePlayer(this);
 		food = generateFood(snake, level);
 	}
 	
