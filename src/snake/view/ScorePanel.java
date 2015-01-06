@@ -1,16 +1,13 @@
 package snake.view;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JPanel;
 
-import snake.model.Game;
 import snake.model.Score;
 
 public class ScorePanel extends JPanel implements Observer {
