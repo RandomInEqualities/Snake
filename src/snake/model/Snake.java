@@ -25,8 +25,7 @@ public class Snake extends Observable {
 
 	public void move(int dy, int dx) {
 		// check for food
-		System.out.print(game.getFood().equals(snake.get(0)));
-		if (game.getFood().equals(snake.get(0))) {
+		if (game.getFood().getPosition().equals(snake.get(0))) {
 			snake.add((game.getFood().getPosition()));
 			
 			//Update food
@@ -44,7 +43,6 @@ public class Snake extends Observable {
 				}
 			}
 			if (!gameOver) {
-				System.out.print("left");
 				for (int i = snake.size() - 1; i > 0; i--) {
 					snake.set(i, snake.get(i - 1));
 				}

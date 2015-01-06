@@ -25,5 +25,6 @@ public final class Field {
 		this.row = x;
 		this.column = y;
 	}
+
 	
 }
