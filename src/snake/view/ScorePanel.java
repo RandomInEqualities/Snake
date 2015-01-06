@@ -30,6 +30,7 @@ public class ScorePanel extends JPanel implements Observer {
 		super.paintComponent(context);
 		context.setFont(FONT);
 		context.drawString("Score: " + score.getScore(), 10, 20);
+		repaint();
 	}
 	
 }
