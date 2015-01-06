@@ -49,7 +49,7 @@ public class BoardPanel extends JPanel implements Observer {
 		}
 		int blockWidth = (int) ((double)windowSize.width/(double)levelWidth);
 		int blockHeight = (int) ((double)windowSize.height/(double)levelHeight);
-		return new Rectangle(position.getRow() * blockWidth, position.getColumn() * blockHeight, blockWidth, blockHeight);
+		return new Rectangle(position.getColumn() * blockWidth, position.getRow() * blockHeight, blockWidth, blockHeight);
 	}
 	
 	public void update(Observable o, Object arg) {

@@ -31,18 +31,17 @@ public class SnakePlayer extends Observable {
 			Score.score++;
 		} else {
 			for (int i = 0; i < snake.size(); i++) {
-				if (new Field(snake.get(0).getRow() + dx, snake.get(0)
-						.getColumn() + dy).equals(snake.get(i))) {
+				if (new Field(snake.get(0).getRow() + dx, snake.get(0).getColumn() + dy).equals(snake.get(i))) {
 					gameOver = true;
 					Score.score = 0;
 				}
 			}
 			if (!gameOver) {
+				System.out.print("left");
 				for (int i = snake.size() - 1; i > 0; i--) {
 					snake.set(i, snake.get(i - 1));
 				}
-				snake.set(0, new Field(snake.get(0).getRow() + dx, snake.get(0)
-						.getColumn() + dy));
+				snake.set(0, new Field(snake.get(0).getRow() + dx, snake.get(0).getColumn() + dy));
 			}
 		}
 		setChanged();
