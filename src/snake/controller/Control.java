@@ -22,7 +22,7 @@ public class Control extends KeyAdapter {
 					game.getPlayer().move(-1, 0);
 				} else {
 					System.out.println("out");
-					game.getPlayer().move(game.getWidth() - 1, 0);
+					game.getPlayer().move(game.getSize().width - 1, 0);
 				}
 				dir = Direction.LEFT;
 				break;
@@ -32,27 +32,27 @@ public class Control extends KeyAdapter {
 				if (head.getRow() - 1 >= 0) {
 					game.getPlayer().move(0, -1);
 				} else {
-					game.getPlayer().move(0, game.getHeight() - 1);
+					game.getPlayer().move(0, game.getSize().height - 1);
 				}
 				dir = Direction.UP;
 				break;
 			}
 		case 39:
 			if (dir != Direction.LEFT) {
-				if (head.getColumn() + 1 <= game.getWidth()) {
+				if (head.getColumn() + 1 <= game.getSize().width) {
 					game.getPlayer().move(1, 0);
 				} else {
-					game.getPlayer().move(-game.getWidth() + 1, 0);
+					game.getPlayer().move(-game.getSize().width + 1, 0);
 				}
 				dir = Direction.RIGHT;
 				break;
 			}
 		case 40:
 			if (dir != Direction.UP) {
-				if (head.getRow() + 1 <= game.getHeight()) {
+				if (head.getRow() + 1 <= game.getSize().height) {
 					game.getPlayer().move(0, 1);
 				} else {
-					game.getPlayer().move(0, -game.getHeight());
+					game.getPlayer().move(0, -game.getSize().height);
 				}
 				dir = Direction.DOWN;
 				break;
