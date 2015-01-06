@@ -6,10 +6,11 @@ import java.util.Observable;
 public class Game extends Observable {
 	
 	private SnakePlayer snake;
-	private Level level;
 	private SnakeFood food;
+	private int width;
+	private int height;
 		
-	private static final Random random = new Random();
+	private Random random = new Random();
 
 	public Game() {
 		this(100,100); //tile size
@@ -17,7 +18,15 @@ public class Game extends Observable {
 	
 	public Game(int width, int height) {
 		super();
-		level = new Level(width, height);
+		this.width = width;
+		this.height = height;
+		
+		if (width < 5 || 100 < width) {
+			throw new IllegalArgumentException("invalid width " + width);
+		}
+		if (height < 5 || 100 < height) {
+			throw new IllegalArgumentException("invalid height " + height);
+		}
 		snake = new SnakePlayer(this);
 		food = generateFood(snake, level);
 	}
@@ -30,16 +39,12 @@ public class Game extends Observable {
 		return snake;
 	}
 	
-	public Level getLevel() {
-		return level;
-	}
-	
-	private static SnakeFood generateFood(SnakePlayer snake, Level level) {
+	private SnakeFood generateFood(SnakePlayer snake) {
 		int x = 0;
 		int y = 0;
 		do {
-			x = random.nextInt(level.getWidth());
-			y = random.nextInt(level.getHeight());
+			x = random.nextInt(width);
+			y = random.nextInt(height);
 		//} while (!snake.contains(x, y));
 		} while (false);
 		return new SnakeFood(new Field(y, x));
