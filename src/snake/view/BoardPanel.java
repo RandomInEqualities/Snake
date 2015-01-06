@@ -42,8 +42,8 @@ public class BoardPanel extends JPanel implements Observer {
 	
 	public Rectangle getWindowRectangle(Field position) {
 		Dimension windowSize = getSize();
-		int levelWidth = game.getLevel().getWidth();
-		int levelHeight = game.getLevel().getHeight();
+		int levelWidth = game.getWidth();
+		int levelHeight = game.getHeight();
 		if (windowSize.width < levelWidth || windowSize.height < levelHeight) {
 			throw new IllegalArgumentException("window is too small");
 		}

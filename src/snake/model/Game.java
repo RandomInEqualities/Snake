@@ -28,9 +28,16 @@ public class Game extends Observable {
 			throw new IllegalArgumentException("invalid height " + height);
 		}
 		snake = new SnakePlayer(this);
-		food = generateFood(snake, level);
+		food = generateFood(snake);
 	}
 	
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
 	public SnakeFood getFood() {
 		return food;
 	}

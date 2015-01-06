@@ -16,17 +16,13 @@ public class SnakePlayer extends Observable {
 		this.score = 0;
 
 		// Place snake
-		if (game.getLevel() != null) {
-			int midH = game.getLevel().getHeight();
-			int midW = game.getLevel().getWidth();
-			Field head = new Field(midH / 2, midW / 2);
-			Field tail = new Field(midH / 2, midW / 2 + 1);
-			this.snake = new ArrayList<>();
-			snake.add(head);
-			snake.add(tail);
-			setChanged();
-		 	notifyObservers();
-		}
+		Field head = new Field(game.getHeight() / 2, game.getWidth() / 2);
+		Field tail = new Field(game.getHeight() / 2, game.getWidth() / 2 + 1);
+		this.snake = new ArrayList<>();
+		snake.add(head);
+		snake.add(tail);
+		setChanged();
+		notifyObservers();
 	}
 
 	public void move(int dy, int dx) {
@@ -51,7 +47,7 @@ public class SnakePlayer extends Observable {
 			}
 		}
 		setChanged();
-	 	notifyObservers();
+		notifyObservers();
 	}
 
 	public ArrayList<Field> getSnake() {
