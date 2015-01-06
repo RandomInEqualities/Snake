@@ -1,33 +1,32 @@
 package snake.model;
-import java.awt.Point;
 import java.util.Random;
 import java.util.Observable;
 
 
 public class Game extends Observable {
 	
-	private Snake snake;
+	private SnakePlayer snake;
 	private Level level;
-	private Peanut peanut;
-	
+	private SnakeFood food;
+		
 	private static final Random random = new Random();
 
 	public Game() {
-		this(100,100);
+		this(100,100); //tile size
 	}
 	
 	public Game(int width, int height) {
 		super();
-		snake = new Snake();
+		snake = new SnakePlayer(this);
 		level = new Level(width, height);
-		peanut = generatePeanut(snake, level);
+		food = generateFood(snake, level);
 	}
 	
-	public Peanut getPeanut() {
-		return peanut;
+	public SnakeFood getFood() {
+		return food;
 	}
 	
-	public Snake getSnake() {
+	public SnakePlayer getPlayer() {
 		return snake;
 	}
 	
@@ -35,7 +34,7 @@ public class Game extends Observable {
 		return level;
 	}
 	
-	private static Peanut generatePeanut(Snake snake, Level level) {
+	private static SnakeFood generateFood(SnakePlayer snake, Level level) {
 		int x = 0;
 		int y = 0;
 		do {
@@ -43,7 +42,7 @@ public class Game extends Observable {
 			y = random.nextInt(level.getHeight());
 		//} while (!snake.contains(x, y));
 		} while (false);
-		return new Peanut(new Point(x, y));
+		return new SnakeFood(new Field(y, x));
 	}
 	
 }

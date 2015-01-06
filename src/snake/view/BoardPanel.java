@@ -28,7 +28,7 @@ public class BoardPanel extends JPanel implements Observer {
 		context.draw(new Rectangle(0, 0, getWidth() - 1, getHeight() - 1));
 	}
 	
-	private void drawPeanut(Graphics2D context) {
+	private void drawFood(Graphics2D context) {
 		
 		Level level = game.getLevel();
 		context.fill(new Rectangle(0,0,level.getWidth(), level.getHeight()));
@@ -45,6 +45,8 @@ public class BoardPanel extends JPanel implements Observer {
 		Graphics2D context2D = (Graphics2D)context;
 
 		drawLevel(context2D);
+		drawSnake(context2D);
+		drawFood(context2D);
 	}
 
 }

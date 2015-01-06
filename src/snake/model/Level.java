@@ -29,5 +29,4 @@ public class Level {
 	public int getHeight() {
 		return height;
 	}
-	
 }

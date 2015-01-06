@@ -1,12 +1,14 @@
 package snake.controller;
 import java.awt.event.*;
+import snake.model.*;
+import snake.view.*;
 
 public class SnakeControl implements KeyListener {
-	private SnakeGame game;
-	private View view;
+	private Game game;
+	private GameView view;
 	private Direction dir;
 
-	public SnakeControl(SnakeGame game, View view) {
+	public SnakeControl(Game game, GameView view) {
 		this.game = game;
 		this.view = view;
 		this.dir = Direction.LEFT;
@@ -14,45 +16,47 @@ public class SnakeControl implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		Field head = game.getPlayer().getSnake().get(0);
+		int tsize = 100;
 		switch (e.getKeyCode()) {
 		case 37:
 			if (dir != Direction.RIGHT) {
-				if (game.player.getSnake().get(0).getRow() - 1 >= 0) {
-					game.player.move(-1, 0);
+				if (head.getRow() - tsize >= 0) {
+					game.getPlayer().move(-tsize, 0);
 				} else {
-					game.player.move(game.level.length - 1, 0);
+					game.getPlayer().move(game.getLevel().getWidth() - tsize, 0);
 				}
 				dir = Direction.LEFT;
 			}
 		case 38:
 			if (dir != Direction.DOWN) {
-				if (game.player.getSnake().get(0).getColumn() - 1 >= 0) {
-					game.player.move(0, -1);
+				if (head.getColumn() - tsize >= 0) {
+					game.getPlayer().move(0, -tsize);
 				} else {
-					game.player.move(0, game.level.height - 1);
+					game.getPlayer().move(0, game.getLevel().getHeight() - tsize);
 				}
 				dir = Direction.UP;
 			}
 		case 39:
 			if (dir != Direction.LEFT) {
-				if (game.player.getSnake().get(0).getRow() + 1 <= game.level.length) {
-					game.player.move(1, 0);
+				if (head.getRow() + tsize <= game.getLevel().getWidth()) {
+					game.getPlayer().move(tsize, 0);
 				} else {
-					game.player.move(-game.level.length + 1, 0);
+					game.getPlayer().move(-game.getLevel().getWidth() + tsize, 0);
 				}
 				dir = Direction.RIGHT;
 			}
 		case 40:
 			if (dir != Direction.UP) {
-				if (game.player.getSnake().get(0).getColumn + 1 <= game.level.height) {
-					game.player.move(0, 1);
+				if (head.getColumn() + tsize <= game.getLevel().getHeight()) {
+					game.getPlayer().move(0, tsize);
 				} else {
-					game.player.move(0, -game.level.height + 1);
+					game.getPlayer().move(0, -game.getLevel().getHeight() + tsize);
 				}
 				dir = Direction.DOWN;
 			}
 		}
-		game.view.repaint();
+		//game.view.repaint();
 	}
 
 	@Override
