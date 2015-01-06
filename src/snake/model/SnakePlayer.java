@@ -8,12 +8,10 @@ public class SnakePlayer extends Observable {
 	private Game game;
 	private ArrayList<Field> snake;
 	private boolean gameOver;
-	private int score;
 
 	public SnakePlayer(Game game) {
 		this.game = game;
 		this.gameOver = false;
-		this.score = 0;
 
 		// Place snake
 		Field head = new Field(game.getHeight() / 2, game.getWidth() / 2);
@@ -30,12 +28,13 @@ public class SnakePlayer extends Observable {
 		if (game.getFood().equals(snake.get(0))) {
 			snake.add((game.getFood().getPosition()));
 			// game.getFood() = null;
-			score++;
+			Score.score++;
 		} else {
 			for (int i = 0; i < snake.size(); i++) {
 				if (new Field(snake.get(0).getRow() + dx, snake.get(0)
 						.getColumn() + dy).equals(snake.get(i))) {
 					gameOver = true;
+					Score.score = 0;
 				}
 			}
 			if (!gameOver) {

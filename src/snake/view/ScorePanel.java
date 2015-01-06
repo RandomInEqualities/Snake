@@ -11,17 +11,18 @@ import java.util.Observer;
 import javax.swing.JPanel;
 
 import snake.model.Game;
+import snake.model.Score;
 
 public class ScorePanel extends JPanel implements Observer {
 
-	private Game game;
+	private Score score;
 	private static final Font FONT = new Font("Serif", Font.PLAIN, 15);
 	private static final Dimension SIZE = new Dimension(400,30);
 	private static final long serialVersionUID = -8478516974010275721L;
 	
-	public ScorePanel(Game game) {
+	public ScorePanel(Score score) {
 		super();
-		this.game = game;
+		this.score = score;
 		setPreferredSize(SIZE);
 	}
 	
@@ -32,7 +33,7 @@ public class ScorePanel extends JPanel implements Observer {
 	protected void paintComponent(Graphics context) {
 		super.paintComponent(context);
 		context.setFont(FONT);
-		context.drawString("Score: 1 million.", 10, 20);
+		context.drawString("Score: " + score.getScore(), 10, 20);
 	}
 	
 }
