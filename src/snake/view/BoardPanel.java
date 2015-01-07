@@ -17,11 +17,10 @@ public class BoardPanel extends JPanel implements Observer {
 
 	private static final long serialVersionUID = 9109362543987437505L;
 	
-	private static final Color SNAKE_HEAD_COLOUR = new Color(0.1f, 0.9f, 0.1f);
 	private static final Color SNAKE_COLOUR = new Color(0.153f, 0.68f, 0.38f);
 	private static final Color FOOD_COLOUR = new Color(0.91f, 0.298f, 0.24f);
 	private static final Color BACKGROUND_COLOUR = new Color(0.7451f, 0.7647f, 0.78f);
-	private BufferedImage apple;
+	private BufferedImage apple, head;
 	
 	private Game game;
 	
@@ -36,6 +35,11 @@ public class BoardPanel extends JPanel implements Observer {
 		setBackground(BACKGROUND_COLOUR);
 		try {
 			apple = ImageIO.read(new File("apple.png"));
+		} catch (IOException ex) {
+			System.out.println("Image not found");
+		}
+		try {
+			head = ImageIO.read(new File("head.png"));
 		} catch (IOException ex) {
 			System.out.println("Image not found");
 		}
@@ -68,8 +72,11 @@ public class BoardPanel extends JPanel implements Observer {
 		}
 		
 		// Draw the with a different colour.
-		context.setColor(SNAKE_HEAD_COLOUR);
-		context.fill(getWindowRectangle(snake.getHead()));
+		Image scaledHead = head.getScaledInstance(10, 10, head.SCALE_SMOOTH);
+		Rectangle head = getWindowRectangle(snake.getHead());
+		int headXPosition = head.x;
+		int headYPosition = head.y;
+		context.drawImage(scaledHead, headXPosition, headYPosition, null);
 	}
 	
 	private void drawFood(Graphics2D context) {
