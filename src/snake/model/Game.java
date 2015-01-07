@@ -71,8 +71,8 @@ public class Game extends Observable {
 		return snake;
 	}
 	
-	public int getScore() {
-		return score.getScore();
+	public Score getScore() {
+		return score;
 	}
 	
 	public void makeSnakeMove(Direction direction) {
