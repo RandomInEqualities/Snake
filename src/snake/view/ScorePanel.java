@@ -20,7 +20,7 @@ import snake.model.*;
 public class ScorePanel extends JPanel implements Observer {
 
 	private Game game;
-	
+
 	private static final Font DEFAULT_FONT = new Font("Sans_Serif", Font.BOLD, 15);
 	private static final Color PANEL_COLOUR = new Color(0.2f, 0.286f, 0.3686f);
 	private static final Color SCORE_COLOUR = new Color(0.9255f, 0.941f, 0.9451f);
@@ -29,6 +29,7 @@ public class ScorePanel extends JPanel implements Observer {
 	
 	public ScorePanel(Game game) {
 		super();
+		this.game = game;
 		setBackground(PANEL_COLOUR);
 		if (game == null) {
 			throw new NullPointerException();
