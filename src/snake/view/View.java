@@ -29,7 +29,7 @@ public class View extends JFrame implements Observer {
 		game.addObserver(this);
 		this.game = game;
 		this.boardPanel = new BoardPanel(game);
-		this.scorePanel = new ScorePanel(game);
+		this.scorePanel = new ScorePanel(game, boardPanel);
 
 		getContentPane().add(scorePanel, BorderLayout.NORTH);
 		getContentPane().add(boardPanel, BorderLayout.CENTER);

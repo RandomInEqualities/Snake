@@ -20,16 +20,17 @@ import snake.model.*;
 public class ScorePanel extends JPanel implements Observer {
 
 	private Game game;
-
+	private BoardPanel boardPanel;
 	private static final Font DEFAULT_FONT = new Font("Sans_Serif", Font.BOLD, 15);
 	private static final Color PANEL_COLOUR = new Color(0.2f, 0.286f, 0.3686f);
 	private static final Color SCORE_COLOUR = new Color(0.9255f, 0.941f, 0.9451f);
 	private static final long serialVersionUID = -8478516974010275721L;
 	private BufferedImage image;
 	
-	public ScorePanel(Game game) {
+	public ScorePanel(Game game, BoardPanel boardPanel) {
 		super();
 		this.game = game;
+		this.boardPanel = boardPanel;
 		setBackground(PANEL_COLOUR);
 		if (game == null) {
 			throw new NullPointerException();
@@ -56,7 +57,8 @@ public class ScorePanel extends JPanel implements Observer {
 		context.setFont(DEFAULT_FONT);
 		context.setColor(SCORE_COLOUR);
 		context.drawString("Score: " + game.getScore(), 20, 40);
-		context.drawImage(image.getScaledInstance(200, 70, Image.SCALE_SMOOTH), 300, 0, null);
+		context.drawImage(image.getScaledInstance(200, 70, Image.SCALE_SMOOTH), boardPanel.getSize().width/2-100, 0, null);
+		System.out.println(boardPanel.getWindowBoard().width);
 	}
 	
 }
