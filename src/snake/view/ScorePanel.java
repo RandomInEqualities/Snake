@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -52,7 +53,7 @@ public class ScorePanel extends JPanel implements Observer {
 		context.setFont(DEFAULT_FONT);
 		context.setColor(SCORE_COLOUR);
 		context.drawString("Score: " + score.getValue(), 20, 40);
-		context.drawImage(image.getScaledInstance(200, 70, image.SCALE_SMOOTH), 300, 0, null);
+		context.drawImage(image.getScaledInstance(200, 70, Image.SCALE_SMOOTH), 300, 0, null);
 	}
 	
 }

@@ -10,7 +10,7 @@ public class Driver {
 	@SuppressWarnings("unused")
 	public static final void main(String[] args) {
 		
-		Game game = new Game(50, 50);
+		Game game = new Game(5, 5);
 		View view = new View(game);
 		Control controller = new Control(game, view);
 		
