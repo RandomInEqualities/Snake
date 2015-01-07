@@ -42,7 +42,7 @@ public class Game extends Observable {
 		
 		this.state = State.RUNNING;
 		this.board = new Dimension(width, height);
-		this.snake = new Snake(this.board);
+		this.snake = new Snake(this);
 		this.food = new Food(findFoodPosition(this.snake, this.board));
 		this.score = new Score();
 	}
@@ -75,30 +75,28 @@ public class Game extends Observable {
 		return score;
 	}
 	
-	public void makeSnakeMove(Direction direction) {
+	void snakeHasMoved(Snake.Move move) {
 		
-		if (state != State.RUNNING) {
+		if (state != State.RUNNING || move == Snake.Move.EAT_NECK) {
 			return;
 		}
-		
-		// Make a move with the snake.
-		Snake.Move result = snake.makeMove(direction, food);
-		
-		// Test if the snake eats anything.
-		if (result == Snake.Move.EAT_BODY) {
+
+		if (move == Snake.Move.EAT_BODY) {
+			// Snake ate itself.
 			state = State.LOST;
 		}
-		else if (result == Snake.Move.EAT_FOOD) {
+		else if (snake.getSize() == board.width*board.height) {
+			// Snake fills the board.
+			state = State.WON;
+		}
+		else if (move == Snake.Move.EAT_FOOD) {
+			// Snake east some food.
+			System.out.println("OBSERVE");
 			score.increment();
 			food = new Food(findFoodPosition(snake, board));
 		}
 		
-		// Test if the snake fill the board.
-		if (snake.getSize() == board.width*board.height) {
-			state = State.WON;
-		}
-		
-		// Notify all classes that view this object.
+		// Notify classes that the game changed.
 		setChanged();
 		notifyObservers();
 	}
