@@ -2,8 +2,15 @@
 package snake.view;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
+
 import java.util.*;
+
 import snake.model.*;
 
 public class BoardPanel extends JPanel implements Observer {
@@ -11,8 +18,10 @@ public class BoardPanel extends JPanel implements Observer {
 	private static final long serialVersionUID = 9109362543987437505L;
 	
 	private static final Color SNAKE_HEAD_COLOUR = new Color(0.1f, 0.9f, 0.1f);
-	private static final Color SNAKE_COLOUR = new Color(0.1f, 0.5f, 0.1f);
-	private static final Color FOOD_COLOUR = new Color(0.5f, 0.5f, 0.1f);
+	private static final Color SNAKE_COLOUR = new Color(0.153f, 0.68f, 0.38f);
+	private static final Color FOOD_COLOUR = new Color(0.91f, 0.298f, 0.24f);
+	private static final Color BACKGROUND_COLOUR = new Color(0.7451f, 0.7647f, 0.78f);
+	private BufferedImage apple;
 	
 	private Game game;
 	
@@ -24,6 +33,12 @@ public class BoardPanel extends JPanel implements Observer {
 		}
 		game.addObserver(this);
 		this.game = game;
+		setBackground(BACKGROUND_COLOUR);
+		try {
+			apple = ImageIO.read(new File("apple.png"));
+		} catch (IOException ex) {
+			System.out.println("Image not found");
+		}
 	}
 	
 	public void update(Observable o, Object arg) {
@@ -58,8 +73,12 @@ public class BoardPanel extends JPanel implements Observer {
 	}
 	
 	private void drawFood(Graphics2D context) {
-		context.setColor(FOOD_COLOUR);
-		context.fill(getWindowRectangle(game.getFood().getPosition()));
+		Image scaledApple = apple.getScaledInstance(20, 20, apple.SCALE_SMOOTH);
+		Rectangle foodPosition = getWindowRectangle(game.getFood().getPosition());
+		int xPosition = foodPosition.x - foodPosition.width/8;
+		int yPosition = foodPosition.y - foodPosition.height/2;
+		context.drawImage(scaledApple, xPosition, yPosition, null);
+		
 	}
 	
 	public Rectangle getWindowRectangle(Field position) {
