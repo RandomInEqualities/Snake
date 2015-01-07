@@ -1,5 +1,5 @@
 
-package snake.controller;
+package snake.control;
 
 import java.awt.event.*;
 import snake.model.*;
