@@ -67,6 +67,10 @@ public class Snake {
 		return positions.get(0);
 	}
 	
+	public Field getNeck() {
+		return positions.get(1);
+	}
+	
 	public Field getTail() {
 		return positions.get(positions.size() - 1);
 	}

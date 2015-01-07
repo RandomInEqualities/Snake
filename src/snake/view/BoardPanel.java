@@ -2,7 +2,9 @@
 package snake.view;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 
@@ -19,7 +21,7 @@ public class BoardPanel extends JPanel implements Observer {
 	
 	private static final Color SNAKE_COLOUR = new Color(0.153f, 0.68f, 0.38f);
 	private static final Color BACKGROUND_COLOUR = new Color(0.7451f, 0.7647f, 0.78f);
-	private BufferedImage apple, head;
+	private BufferedImage apple, head1, head2, head3, head4;
 	
 	private Game game;
 	
@@ -32,13 +34,18 @@ public class BoardPanel extends JPanel implements Observer {
 		game.addObserver(this);
 		this.game = game;
 		setBackground(BACKGROUND_COLOUR);
+		//apple picture
 		try {
 			apple = ImageIO.read(new File("apple.png"));
 		} catch (IOException ex) {
 			System.out.println("Image not found");
 		}
+		//head pictures
 		try {
-			head = ImageIO.read(new File("head.png"));
+			head1 = ImageIO.read(new File("head1.png"));
+			head2 = ImageIO.read(new File("head2.png"));
+			head3 = ImageIO.read(new File("head3.png"));
+			head4 = ImageIO.read(new File("head4.png"));
 		} catch (IOException ex) {
 			System.out.println("Image not found");
 		}
@@ -71,11 +78,22 @@ public class BoardPanel extends JPanel implements Observer {
 		}
 		
 		// Draw the with a different colour.
-		Image scaledHead = head.getScaledInstance(10, 10, head.SCALE_SMOOTH);
-		Rectangle head = getWindowRectangle(snake.getHead());
-		int headXPosition = head.x;
-		int headYPosition = head.y;
-		context.drawImage(scaledHead, headXPosition, headYPosition, null);
+		Rectangle headRectangle = getWindowRectangle(snake.getHead());
+		Image scaledHead1 = head1.getScaledInstance(headRectangle.width, headRectangle.height, Image.SCALE_SMOOTH);
+		Image scaledHead2 = head2.getScaledInstance(headRectangle.width, headRectangle.height, Image.SCALE_SMOOTH);
+		Image scaledHead3 = head3.getScaledInstance(headRectangle.width, headRectangle.height, Image.SCALE_SMOOTH);
+		Image scaledHead4 = head4.getScaledInstance(headRectangle.width, headRectangle.height, Image.SCALE_SMOOTH);
+		
+		if (snake.getNeck().getRow() - snake.getHead().getRow() == 1) { //Direction UP
+			context.drawImage(scaledHead1, headRectangle.x, headRectangle.y, BACKGROUND_COLOUR, null);
+	 	} else if (snake.getNeck().getColumn() - snake.getHead().getColumn() == 1) { //Direction LEFT
+			context.drawImage(scaledHead2, headRectangle.x, headRectangle.y, BACKGROUND_COLOUR, null);
+		} else if (snake.getHead().getRow() - snake.getNeck().getRow() == 1) { //Direction DOWN
+			context.drawImage(scaledHead3, headRectangle.x, headRectangle.y, BACKGROUND_COLOUR, null);
+	 	} else if (snake.getHead().getColumn() - snake.getNeck().getColumn() == 1) { //Direction RIGHT
+			context.drawImage(scaledHead4, headRectangle.x, headRectangle.y, BACKGROUND_COLOUR, null);
+		}
+	
 	}
 	
 	private void drawFood(Graphics2D context) {
