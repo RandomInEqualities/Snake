@@ -24,7 +24,6 @@ public class Score extends Observable {
 	}
 	
 	void setScore(int value) {
-		System.out.println(value);
 		score = value;
 		setChanged();
 		notifyObservers();

@@ -91,7 +91,6 @@ public class Game extends Observable {
 		}
 		else if (move == Snake.Move.EAT_FOOD) {
 			// Snake east some food.
-			System.out.println("OBSERVE");
 			score.increment();
 			food = new Food(findFoodPosition(snake, board));
 		}
