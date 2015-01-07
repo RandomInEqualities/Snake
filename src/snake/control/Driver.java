@@ -27,7 +27,7 @@ public class Driver {
 			game = new Game(width, height);
 		}
 		else if (args.length == 0) {
-			game = new Game(20, 10);
+			game = new Game(5, 5);
 		}
 		else {
 			printErrorMessage();
