@@ -45,13 +45,13 @@ public class View extends JFrame implements Observer {
 		Game.State state = game.getState();
 		if (state == Game.State.WON) {
 			displayEndGameDialog(
-				"You Won! You score is " + game.getScore().getValue() + ". What do you want to do?", 
+				"You Won! You score is " + game.getScore() + ". What do you want to do?", 
 				"You're awesome"
 			);
 		}
 		else if (state == Game.State.LOST) {
 			displayEndGameDialog(
-				"You lost. You score is " + game.getScore().getValue() + ". What do you want to do?", 
+				"You lost. You score is " + game.getScore() + ". What do you want to do?", 
 				"Snake"
 			);
 		}

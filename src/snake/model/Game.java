@@ -16,7 +16,7 @@ public class Game extends Observable {
 	}
 	
 	private State state;
-	private Score score;
+	private int score;
 	private Dimension board;
 	private Snake snake;
 	private Food food;
@@ -41,7 +41,7 @@ public class Game extends Observable {
 		}
 		
 		this.state = State.RUNNING;
-		this.score = new Score();
+		this.score = 0;
 		this.board = new Dimension(width, height);
 		this.snake = new Snake(this);
 		this.food = new Food(findFoodPosition(this.snake, this.board));
@@ -49,7 +49,7 @@ public class Game extends Observable {
 	
 	public void restart() {
 		state = State.RUNNING;
-		score.reset();
+		score = 0;
 		snake.createStartingSnake();
 		food = new Food(findFoodPosition(snake, board));
 		
@@ -82,7 +82,7 @@ public class Game extends Observable {
 		return snake;
 	}
 	
-	public Score getScore() {
+	public int getScore() {
 		return score;
 	}
 	
@@ -102,7 +102,7 @@ public class Game extends Observable {
 		}
 		else if (move == Snake.Move.EAT_FOOD) {
 			// Snake east some food.
-			score.increment();
+			score++;
 			food = new Food(findFoodPosition(snake, board));
 		}
 		

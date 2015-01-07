@@ -19,7 +19,7 @@ import snake.model.*;
 
 public class ScorePanel extends JPanel implements Observer {
 
-	private Score score;
+	private Game game;
 	
 	private static final Font DEFAULT_FONT = new Font("Sans_Serif", Font.BOLD, 15);
 	private static final Color PANEL_COLOUR = new Color(0.2f, 0.286f, 0.3686f);
@@ -38,8 +38,8 @@ public class ScorePanel extends JPanel implements Observer {
 		} catch (IOException ex) {
 			System.out.println("Image not found");
 		}
-		this.score = game.getScore();
-		this.score.addObserver(this);
+		this.game = game;
+		this.game.addObserver(this);
 	}
 	
 	public void update(Observable o, Object arg) {
@@ -54,7 +54,7 @@ public class ScorePanel extends JPanel implements Observer {
 		super.paintComponent(context);
 		context.setFont(DEFAULT_FONT);
 		context.setColor(SCORE_COLOUR);
-		context.drawString("Score: " + score.getValue(), 20, 40);
+		context.drawString("Score: " + game.getScore(), 20, 40);
 		context.drawImage(image.getScaledInstance(200, 70, Image.SCALE_SMOOTH), 300, 0, null);
 	}
 	
