@@ -85,8 +85,8 @@ public class Snake {
 	
 	void createStartingSnake() {
 		Dimension board = game.getBoardSize();
-		Field initialHead = new Field(board.width/2, board.height/2);
-		Field initialTail = new Field(board.width/2 + 1, board.height/2);
+		Field initialHead = new Field((board.height-1)/2, (board.width-1)/2);
+		Field initialTail = new Field((board.height-1)/2, (board.width-1)/2+1);
 		positions.clear();
 		positions.add(initialHead);
 		positions.add(initialTail);

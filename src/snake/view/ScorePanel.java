@@ -22,7 +22,6 @@ public class ScorePanel extends JPanel implements Observer {
 	private Score score;
 	
 	private static final Font DEFAULT_FONT = new Font("Sans_Serif", Font.BOLD, 15);
-	private static final Dimension DEFAULT_SIZE = new Dimension(400,70);
 	private static final Color PANEL_COLOUR = new Color(0.2f, 0.286f, 0.3686f);
 	private static final Color SCORE_COLOUR = new Color(0.9255f, 0.941f, 0.9451f);
 	private static final long serialVersionUID = -8478516974010275721L;
@@ -30,7 +29,6 @@ public class ScorePanel extends JPanel implements Observer {
 	
 	public ScorePanel(Game game) {
 		super();
-		setPreferredSize(DEFAULT_SIZE);
 		setBackground(PANEL_COLOUR);
 		if (game == null) {
 			throw new NullPointerException();
@@ -48,6 +46,10 @@ public class ScorePanel extends JPanel implements Observer {
 		repaint();
 	}
 	
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(400, 70);
+	}
 	protected void paintComponent(Graphics context) {
 		super.paintComponent(context);
 		context.setFont(DEFAULT_FONT);

@@ -1,4 +1,3 @@
-
 package snake.view;
 
 import java.awt.*;
@@ -16,17 +15,18 @@ import snake.model.*;
 public class BoardPanel extends JPanel implements Observer {
 
 	private static final long serialVersionUID = 9109362543987437505L;
-	
+
 	private static final Color SNAKE_HEAD_COLOUR = new Color(0.1f, 0.9f, 0.1f);
 	private static final Color SNAKE_COLOUR = new Color(0.153f, 0.68f, 0.38f);
-	private static final Color BACKGROUND_COLOUR = new Color(0.7451f, 0.7647f, 0.78f);
+	private static final Color BACKGROUND_COLOUR = new Color(0.7451f, 0.7647f,
+			0.78f);
 	private BufferedImage apple;
-	
+
 	private Game game;
-	
+
 	public BoardPanel(Game game) {
 		super();
-		
+
 		if (game == null) {
 			throw new NullPointerException();
 		}
@@ -39,63 +39,90 @@ public class BoardPanel extends JPanel implements Observer {
 			System.out.println("Image not found");
 		}
 	}
-	
+
 	public void update(Observable o, Object arg) {
 		repaint();
 	}
 
+	public Dimension getPreferredSize() {
+		return new Dimension(800, 800);
+	}
+
 	protected void paintComponent(Graphics context) {
 		super.paintComponent(context);
-		Graphics2D context2D = (Graphics2D)context;
+		Graphics2D context2D = (Graphics2D) context;
 		drawLevel(context2D);
 		drawSnake(context2D);
 		drawFood(context2D);
 	}
-	
+
 	private void drawLevel(Graphics2D context) {
 		// Draw a level outline.
-		context.draw(new Rectangle(0, 0, getWidth() - 1, getHeight() - 1));
+		context.draw(getWindowBoard());
 	}
-	
+
 	private void drawSnake(Graphics2D context) {
 		Snake snake = game.getSnake();
-		
+
 		// Draw the whole snake.
 		context.setColor(SNAKE_COLOUR);
 		for (Field position : snake.getPositions()) {
 			context.fill(getWindowRectangle(position));
 		}
-		
+
 		// Draw the with a different colour.
 		context.setColor(SNAKE_HEAD_COLOUR);
 		context.fill(getWindowRectangle(snake.getHead()));
 	}
-	
+
 	private void drawFood(Graphics2D context) {
-		Rectangle foodRectangle = getWindowRectangle(game.getFood().getPosition());
-		Image scaledApple = apple.getScaledInstance(foodRectangle.width, foodRectangle.height, Image.SCALE_SMOOTH);
+		Rectangle foodRectangle = getWindowRectangle(game.getFood()
+				.getPosition());
+		Image scaledApple = apple.getScaledInstance(foodRectangle.width,
+				foodRectangle.height, Image.SCALE_SMOOTH);
 		context.drawImage(scaledApple, foodRectangle.x, foodRectangle.y, null);
 	}
-	
+
 	public Rectangle getWindowRectangle(Field position) {
 
 		Dimension windowSize = getSize();
 		Dimension gameSize = game.getBoardSize();
-		
-		if (windowSize.width < gameSize.width || windowSize.height < gameSize.height) {
-			throw new IllegalArgumentException("window is too small to display board");
-		}
-		
-		int patchWidth = windowSize.width/gameSize.width;
-		int patchHeight = windowSize.height/gameSize.height;
-		Rectangle rectangle = new Rectangle(
-			position.getColumn() * patchWidth, 
-			position.getRow() * patchHeight, 
-			patchWidth, 
-			patchHeight
-		);
-		
+
+		// if (windowSize.width < gameSize.width || windowSize.height <
+		// gameSize.height) {
+		// throw new
+		// IllegalArgumentException("window is too small to display board");
+		// }
+
+		Rectangle rectangle = new Rectangle(position.getColumn() * getOptimalPatchSize()
+				+ getWindowBoard().x, position.getRow() * getOptimalPatchSize() + getWindowBoard().y,
+				getOptimalPatchSize(), getOptimalPatchSize());
+
 		return rectangle;
 	}
 
+	public Rectangle getWindowBoard() {
+		Dimension windowSize = getSize();
+		Dimension gameSize = game.getBoardSize();
+		
+		int offsetHeight = (windowSize.height - getOptimalPatchSize() * gameSize.height) / 2;
+		int offsetWidth = (windowSize.width - getOptimalPatchSize() * gameSize.width) / 2;
+
+		Rectangle rectangle = new Rectangle(offsetWidth, offsetHeight, getOptimalPatchSize()*gameSize.width, getOptimalPatchSize()*gameSize.height);
+		return rectangle;
+	}
+	
+	public int getOptimalPatchSize(){
+		Dimension windowSize = getSize();
+		Dimension gameSize = game.getBoardSize();
+		int patchWidth = windowSize.width / gameSize.width;
+		int patchHeight = windowSize.height / gameSize.height;
+		
+		if (patchWidth >= patchHeight) {
+			patchWidth = patchHeight;
+		} else {
+			patchHeight = patchWidth;
+		}
+		return patchWidth;
+	}
 }

@@ -131,9 +131,9 @@ public class Game extends Observable {
 		if (2*snake.getSize() < board.width*board.height) {
 			Field position;
 			do {
-				int x = random.nextInt(board.width);
-				int y = random.nextInt(board.height);
-				position = new Field(x, y);
+				int column = random.nextInt(board.width);
+				int row = random.nextInt(board.height);
+				position = new Field(row, column);
 			} while (snake.contains(position));
 			
 			return position;
@@ -141,9 +141,9 @@ public class Game extends Observable {
 
 		// Find all locations on the board that can contain food.
 		ArrayList<Field> foodPositions = new ArrayList<Field>();
-		for (int posX = 0; posX < board.width; posX++) {
-			for (int posY = 0; posY < board.width; posY++) {
-				Field position = new Field(posX, posY);
+		for (int column = 0; column < board.width; column++) {
+			for (int row = 0; row < board.width; row++) {
+				Field position = new Field(row, column);
 				if (snake.contains(position)) {
 					continue;
 				}
