@@ -17,8 +17,7 @@ public class BoardPanel extends JPanel implements Observer {
 	private static final Color BACKGROUND_COLOUR = new Color(0.7451f, 0.7647f,
 			0.78f);
 	private static final Color PANEL_COLOUR = new Color(0.2f, 0.286f, 0.3686f);
-	private BufferedImage apple, head1, head2, head3, head4;
-
+	private BufferedImage apple, head1, head2, head3, head4, bg;
 	private Game game;
 
 	public BoardPanel(Game game) {
@@ -29,7 +28,17 @@ public class BoardPanel extends JPanel implements Observer {
 		}
 		game.addObserver(this);
 		this.game = game;
+		
+		//Tile background
+		try {
+			bg = ImageIO.read(new File("TileBG.png"));
+		} catch (IOException ex) {
+			System.out.println("Image not found");
+		}
+		
 		setBackground(PANEL_COLOUR);
+
+		
 		// apple picture
 		try {
 			apple = ImageIO.read(new File("apple.png"));
@@ -69,6 +78,13 @@ public class BoardPanel extends JPanel implements Observer {
 	protected void paintComponent(Graphics context) {
 		super.paintComponent(context);
 		Graphics2D context2D = (Graphics2D) context;
+		
+		//Tile background
+		 for (int x = 0; x < getSize().width ;x += bg.getWidth()) {  
+	            for (int y = 0; y < getSize().height; y += bg.getHeight()) {  
+	            	context.drawImage(bg, x, y, this); 
+	            }  
+	        } 
 		drawLevel(context2D);
 		drawFood(context2D);
 		drawSnake(context2D);
@@ -145,7 +161,7 @@ public class BoardPanel extends JPanel implements Observer {
 		Dimension windowSize = getSize();
 		Dimension gameSize = game.getBoardSize();
 
-		int offsetHeight = 0;
+		int offsetHeight = 10;
 		int offsetWidth = (windowSize.width - getOptimalPatchSize()
 				* gameSize.width) / 2;
 
