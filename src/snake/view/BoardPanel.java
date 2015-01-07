@@ -84,13 +84,13 @@ public class BoardPanel extends JPanel implements Observer {
 		Image scaledHead3 = head3.getScaledInstance(headRectangle.width, headRectangle.height, Image.SCALE_SMOOTH);
 		Image scaledHead4 = head4.getScaledInstance(headRectangle.width, headRectangle.height, Image.SCALE_SMOOTH);
 		
-		if (snake.getNeck().getRow() - snake.getHead().getRow() == 1) { //Direction UP
+		if (snake.getNeck().getRow() - snake.getHead().getRow() == 1 || snake.getHead().getRow() - snake.getNeck().getRow() == game.getBoardHeight() - 1) { //Direction UP
 			context.drawImage(scaledHead1, headRectangle.x, headRectangle.y, BACKGROUND_COLOUR, null);
-	 	} else if (snake.getNeck().getColumn() - snake.getHead().getColumn() == 1) { //Direction LEFT
+	 	} else if (snake.getNeck().getColumn() - snake.getHead().getColumn() == 1 || snake.getHead().getColumn() - snake.getNeck().getColumn() == game.getBoardWidth() - 1) { //Direction LEFT
 			context.drawImage(scaledHead2, headRectangle.x, headRectangle.y, BACKGROUND_COLOUR, null);
-		} else if (snake.getHead().getRow() - snake.getNeck().getRow() == 1) { //Direction DOWN
+		} else if (snake.getHead().getRow() - snake.getNeck().getRow() == 1 || snake.getNeck().getRow() - snake.getHead().getRow() == game.getBoardHeight() - 1) { //Direction DOWN
 			context.drawImage(scaledHead3, headRectangle.x, headRectangle.y, BACKGROUND_COLOUR, null);
-	 	} else if (snake.getHead().getColumn() - snake.getNeck().getColumn() == 1) { //Direction RIGHT
+	 	} else if (snake.getHead().getColumn() - snake.getNeck().getColumn() == 1 || snake.getNeck().getColumn() - snake.getHead().getColumn() == game.getBoardWidth() - 1) { //Direction RIGHT
 			context.drawImage(scaledHead4, headRectangle.x, headRectangle.y, BACKGROUND_COLOUR, null);
 		}
 	
