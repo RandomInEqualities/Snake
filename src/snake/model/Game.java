@@ -16,10 +16,10 @@ public class Game extends Observable {
 	}
 	
 	private State state;
+	private Score score;
 	private Dimension board;
 	private Snake snake;
 	private Food food;
-	private Score score;
 	
 	private static final int DEFAULT_WIDTH = 100;
 	private static final int DEFAULT_HEIGHT = 100;
@@ -41,10 +41,21 @@ public class Game extends Observable {
 		}
 		
 		this.state = State.RUNNING;
+		this.score = new Score();
 		this.board = new Dimension(width, height);
 		this.snake = new Snake(this);
 		this.food = new Food(findFoodPosition(this.snake, this.board));
-		this.score = new Score();
+	}
+	
+	public void restart() {
+		state = State.RUNNING;
+		score.reset();
+		snake.createStartingSnake();
+		food = new Food(findFoodPosition(snake, board));
+		
+		// Notify classes that the game changed.
+		setChanged();
+		notifyObservers();
 	}
 	
 	public State getState() {

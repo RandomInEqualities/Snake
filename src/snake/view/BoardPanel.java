@@ -18,7 +18,6 @@ public class BoardPanel extends JPanel implements Observer {
 	private static final long serialVersionUID = 9109362543987437505L;
 	
 	private static final Color SNAKE_COLOUR = new Color(0.153f, 0.68f, 0.38f);
-	private static final Color FOOD_COLOUR = new Color(0.91f, 0.298f, 0.24f);
 	private static final Color BACKGROUND_COLOUR = new Color(0.7451f, 0.7647f, 0.78f);
 	private BufferedImage apple, head;
 	
@@ -80,12 +79,9 @@ public class BoardPanel extends JPanel implements Observer {
 	}
 	
 	private void drawFood(Graphics2D context) {
-		Image scaledApple = apple.getScaledInstance(20, 20, apple.SCALE_SMOOTH);
-		Rectangle foodPosition = getWindowRectangle(game.getFood().getPosition());
-		int xPosition = foodPosition.x - foodPosition.width/8;
-		int yPosition = foodPosition.y - foodPosition.height/2;
-		context.drawImage(scaledApple, xPosition, yPosition, null);
-		
+		Rectangle foodRectangle = getWindowRectangle(game.getFood().getPosition());
+		Image scaledApple = apple.getScaledInstance(foodRectangle.width, foodRectangle.height, Image.SCALE_SMOOTH);
+		context.drawImage(scaledApple, foodRectangle.x, foodRectangle.y, null);
 	}
 	
 	public Rectangle getWindowRectangle(Field position) {

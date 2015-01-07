@@ -26,11 +26,7 @@ public class Snake {
 		this.positions = new ArrayList<>();
 		
 		// Construct the initial snake.
-		Dimension board = game.getBoardSize();
-		Field initialHead = new Field(board.width/2, board.height/2);
-		Field initialTail = new Field(board.width/2 + 1, board.height/2);
-		positions.add(initialHead);
-		positions.add(initialTail);
+		createStartingSnake();
 	}
 
 	public void move(Direction direction) {
@@ -45,7 +41,7 @@ public class Snake {
 			return;
 		}
 		
-		// Test if the snake eats its tail.
+		// Test if the snake eats its body.
 		Field tailPosition = positions.get(positions.size() - 1);
 		if (positions.contains(movePosition) && !movePosition.equals(tailPosition)) {
 			game.snakeHasMoved(Move.EAT_BODY);
@@ -85,6 +81,15 @@ public class Snake {
 	
 	public boolean contains(Field position) {
 		return positions.contains(position);
+	}
+	
+	void createStartingSnake() {
+		Dimension board = game.getBoardSize();
+		Field initialHead = new Field(board.width/2, board.height/2);
+		Field initialTail = new Field(board.width/2 + 1, board.height/2);
+		positions.clear();
+		positions.add(initialHead);
+		positions.add(initialTail);
 	}
 	
 	private Field findMovePosition(Direction direction) {
