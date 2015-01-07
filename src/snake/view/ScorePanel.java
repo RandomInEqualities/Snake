@@ -1,17 +1,9 @@
 
 package snake.view;
-
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Observable;
-import java.util.Observer;
-
+import java.io.*;
+import java.util.*;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -56,9 +48,9 @@ public class ScorePanel extends JPanel implements Observer {
 		super.paintComponent(context);
 		context.setFont(DEFAULT_FONT);
 		context.setColor(SCORE_COLOUR);
-		context.drawString("Score: " + game.getScore(), 20, 40);
-		context.drawImage(image.getScaledInstance(200, 70, Image.SCALE_SMOOTH), boardPanel.getSize().width/2-100, 0, null);
-		System.out.println(boardPanel.getWindowBoard().width);
+		if(boardPanel.getWindowBoard().width>300){ //Only show logo if board is wide (to avoid overlap with score)
+			context.drawImage(image.getScaledInstance(200, 70, Image.SCALE_SMOOTH), boardPanel.getSize().width/2-100, 0, null);
+		}
+		context.drawString("Score: " + game.getScore(), boardPanel.getSize().width/2-boardPanel.getWindowBoard().width/2+10, 40);
 	}
-	
 }

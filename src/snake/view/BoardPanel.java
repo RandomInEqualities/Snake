@@ -1,4 +1,5 @@
 package snake.view;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -13,7 +14,8 @@ import snake.model.*;
 public class BoardPanel extends JPanel implements Observer {
 	private static final long serialVersionUID = 9109362543987437505L;
 	private static final Color SNAKE_COLOUR = new Color(0.153f, 0.68f, 0.38f);
-	private static final Color BACKGROUND_COLOUR = new Color(0.7451f, 0.7647f,0.78f);
+	private static final Color BACKGROUND_COLOUR = new Color(0.7451f, 0.7647f,
+			0.78f);
 	private static final Color PANEL_COLOUR = new Color(0.2f, 0.286f, 0.3686f);
 	private BufferedImage apple, head1, head2, head3, head4;
 
@@ -28,13 +30,13 @@ public class BoardPanel extends JPanel implements Observer {
 		game.addObserver(this);
 		this.game = game;
 		setBackground(PANEL_COLOUR);
-		//apple picture
+		// apple picture
 		try {
 			apple = ImageIO.read(new File("apple.png"));
 		} catch (IOException ex) {
 			System.out.println("Image not found");
 		}
-		//head pictures
+		// head pictures
 		try {
 			head1 = ImageIO.read(new File("head1.png"));
 			head2 = ImageIO.read(new File("head2.png"));
@@ -50,7 +52,18 @@ public class BoardPanel extends JPanel implements Observer {
 	}
 
 	public Dimension getPreferredSize() {
-		return new Dimension(800, 800);
+		int x;
+		int y;
+		
+		//Wrap window around board
+		if (game.getBoardHeight() <= 50 || game.getBoardWidth() <=50) { //increase size a lot if few tiles
+			x = game.getBoardWidth()*15;
+			y = game.getBoardHeight()*15;
+		} else { //increase size less if many tiles			
+			x = game.getBoardWidth() * 8;
+			y = game.getBoardHeight() * 8;
+		}
+		return new Dimension(x, y);
 	}
 
 	protected void paintComponent(Graphics context) {
@@ -78,21 +91,37 @@ public class BoardPanel extends JPanel implements Observer {
 
 		// Draw the with a different colour.
 		Rectangle headRectangle = getWindowRectangle(snake.getHead());
-		Image scaledHead1 = head1.getScaledInstance(headRectangle.width, headRectangle.height, Image.SCALE_SMOOTH);
-		Image scaledHead2 = head2.getScaledInstance(headRectangle.width, headRectangle.height, Image.SCALE_SMOOTH);
-		Image scaledHead3 = head3.getScaledInstance(headRectangle.width, headRectangle.height, Image.SCALE_SMOOTH);
-		Image scaledHead4 = head4.getScaledInstance(headRectangle.width, headRectangle.height, Image.SCALE_SMOOTH);
-		
-		if (snake.getNeck().getRow() - snake.getHead().getRow() == 1 || snake.getHead().getRow() - snake.getNeck().getRow() == game.getBoardHeight() - 1) { //Direction UP
-			context.drawImage(scaledHead1, headRectangle.x, headRectangle.y, BACKGROUND_COLOUR, null);
-	 	} else if (snake.getNeck().getColumn() - snake.getHead().getColumn() == 1 || snake.getHead().getColumn() - snake.getNeck().getColumn() == game.getBoardWidth() - 1) { //Direction LEFT
-			context.drawImage(scaledHead2, headRectangle.x, headRectangle.y, BACKGROUND_COLOUR, null);
-		} else if (snake.getHead().getRow() - snake.getNeck().getRow() == 1 || snake.getNeck().getRow() - snake.getHead().getRow() == game.getBoardHeight() - 1) { //Direction DOWN
-			context.drawImage(scaledHead3, headRectangle.x, headRectangle.y, BACKGROUND_COLOUR, null);
-	 	} else if (snake.getHead().getColumn() - snake.getNeck().getColumn() == 1 || snake.getNeck().getColumn() - snake.getHead().getColumn() == game.getBoardWidth() - 1) { //Direction RIGHT
-			context.drawImage(scaledHead4, headRectangle.x, headRectangle.y, BACKGROUND_COLOUR, null);
+		Image scaledHead1 = head1.getScaledInstance(headRectangle.width,
+				headRectangle.height, Image.SCALE_SMOOTH);
+		Image scaledHead2 = head2.getScaledInstance(headRectangle.width,
+				headRectangle.height, Image.SCALE_SMOOTH);
+		Image scaledHead3 = head3.getScaledInstance(headRectangle.width,
+				headRectangle.height, Image.SCALE_SMOOTH);
+		Image scaledHead4 = head4.getScaledInstance(headRectangle.width,
+				headRectangle.height, Image.SCALE_SMOOTH);
+
+		if (snake.getNeck().getRow() - snake.getHead().getRow() == 1
+				|| snake.getHead().getRow() - snake.getNeck().getRow() == game
+						.getBoardHeight() - 1) { // Direction UP
+			context.drawImage(scaledHead1, headRectangle.x, headRectangle.y,
+					BACKGROUND_COLOUR, null);
+		} else if (snake.getNeck().getColumn() - snake.getHead().getColumn() == 1
+				|| snake.getHead().getColumn() - snake.getNeck().getColumn() == game
+						.getBoardWidth() - 1) { // Direction LEFT
+			context.drawImage(scaledHead2, headRectangle.x, headRectangle.y,
+					BACKGROUND_COLOUR, null);
+		} else if (snake.getHead().getRow() - snake.getNeck().getRow() == 1
+				|| snake.getNeck().getRow() - snake.getHead().getRow() == game
+						.getBoardHeight() - 1) { // Direction DOWN
+			context.drawImage(scaledHead3, headRectangle.x, headRectangle.y,
+					BACKGROUND_COLOUR, null);
+		} else if (snake.getHead().getColumn() - snake.getNeck().getColumn() == 1
+				|| snake.getNeck().getColumn() - snake.getHead().getColumn() == game
+						.getBoardWidth() - 1) { // Direction RIGHT
+			context.drawImage(scaledHead4, headRectangle.x, headRectangle.y,
+					BACKGROUND_COLOUR, null);
 		}
-	
+
 	}
 
 	private void drawFood(Graphics2D context) {
@@ -104,8 +133,9 @@ public class BoardPanel extends JPanel implements Observer {
 	}
 
 	public Rectangle getWindowRectangle(Field position) {
-		Rectangle rectangle = new Rectangle(position.getColumn() * getOptimalPatchSize()
-				+ getWindowBoard().x, position.getRow() * getOptimalPatchSize() + getWindowBoard().y,
+		Rectangle rectangle = new Rectangle(position.getColumn()
+				* getOptimalPatchSize() + getWindowBoard().x, position.getRow()
+				* getOptimalPatchSize() + getWindowBoard().y,
 				getOptimalPatchSize(), getOptimalPatchSize());
 
 		return rectangle;
@@ -114,20 +144,23 @@ public class BoardPanel extends JPanel implements Observer {
 	public Rectangle getWindowBoard() {
 		Dimension windowSize = getSize();
 		Dimension gameSize = game.getBoardSize();
-		
-		int offsetHeight = (windowSize.height - getOptimalPatchSize() * gameSize.height) / 2;
-		int offsetWidth = (windowSize.width - getOptimalPatchSize() * gameSize.width) / 2;
 
-		Rectangle rectangle = new Rectangle(offsetWidth, offsetHeight, getOptimalPatchSize()*gameSize.width, getOptimalPatchSize()*gameSize.height);
+		int offsetHeight = 0;
+		int offsetWidth = (windowSize.width - getOptimalPatchSize()
+				* gameSize.width) / 2;
+
+		Rectangle rectangle = new Rectangle(offsetWidth, offsetHeight,
+				getOptimalPatchSize() * gameSize.width, getOptimalPatchSize()
+						* gameSize.height);
 		return rectangle;
 	}
-	
-	public int getOptimalPatchSize(){
+
+	public int getOptimalPatchSize() {
 		Dimension windowSize = getSize();
 		Dimension gameSize = game.getBoardSize();
 		int patchWidth = windowSize.width / gameSize.width;
 		int patchHeight = windowSize.height / gameSize.height;
-		
+
 		if (patchWidth >= patchHeight) {
 			patchWidth = patchHeight;
 		} else {

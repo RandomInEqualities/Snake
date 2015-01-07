@@ -2,6 +2,7 @@
 package snake.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -37,6 +38,7 @@ public class View extends JFrame implements Observer {
 		setTitle("Snake");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setMinimumSize(new Dimension(400, 400));
 		pack();
 		setLocationRelativeTo(null);
 	}
