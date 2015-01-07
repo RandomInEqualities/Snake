@@ -23,18 +23,19 @@ public class Control extends KeyAdapter {
 			throw new NullPointerException();
 		}
 		
+		Snake snake = game.getSnake();
 		switch (event.getKeyCode()) {
 			case KeyEvent.VK_UP:
-				game.makeSnakeMove(Direction.UP);
+				snake.move(Direction.UP);
 				break;
 			case KeyEvent.VK_DOWN:
-				game.makeSnakeMove(Direction.DOWN);
+				snake.move(Direction.DOWN);
 				break;
 			case KeyEvent.VK_LEFT:
-				game.makeSnakeMove(Direction.LEFT);
+				snake.move(Direction.LEFT);
 				break;
 			case KeyEvent.VK_RIGHT:
-				game.makeSnakeMove(Direction.RIGHT);
+				snake.move(Direction.RIGHT);
 				break;
 			default:
 				break;

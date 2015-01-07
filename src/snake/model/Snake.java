@@ -15,27 +15,25 @@ public class Snake {
 		NORMAL
 	}
 	
-	private Dimension board;
+	private Game game;
 	private ArrayList<Field> positions;
 
-	public Snake(Dimension board) {
-		if (board == null) {
+	public Snake(Game game) {
+		if (game == null) {
 			throw new NullPointerException();
 		}
-		if (board.width <= 0 || board.height <= 0) {
-			throw new IllegalArgumentException();
-		}
-		this.board = board;
+		this.game = game;
 		this.positions = new ArrayList<>();
 		
 		// Construct the initial snake.
+		Dimension board = game.getBoardSize();
 		Field initialHead = new Field(board.width/2, board.height/2);
 		Field initialTail = new Field(board.width/2 + 1, board.height/2);
 		positions.add(initialHead);
 		positions.add(initialTail);
 	}
 
-	public Move makeMove(Direction direction, Food food) {
+	public void move(Direction direction) {
 		
 		// Find the position to move into.
 		Field movePosition = findMovePosition(direction);
@@ -43,27 +41,30 @@ public class Snake {
 		// Test if the snakes neck blocks the move.
 		Field neckPosition = positions.get(1);
 		if (movePosition.equals(neckPosition)) {
-			return Move.EAT_NECK;
+			game.snakeHasMoved(Move.EAT_NECK);
+			return;
 		}
 		
 		// Test if the snake eats its tail.
 		Field tailPosition = positions.get(positions.size() - 1);
 		if (positions.contains(movePosition) && !movePosition.equals(tailPosition)) {
-			return Move.EAT_BODY;
+			game.snakeHasMoved(Move.EAT_BODY);
+			return;
 		}
 		
 		// Move to the new position.
 		positions.add(0, movePosition);
 		
 		// Test if the snake east any food.
-		if (movePosition.equals(food.getPosition())) {
-			return Move.EAT_FOOD;
+		if (movePosition.equals(game.getFood().getPosition())) {
+			game.snakeHasMoved(Move.EAT_FOOD);
+			return;
 		} 
 		
 		// Remove the snakes tail.
 		positions.remove(positions.size() - 1);
 		
-		return Move.NORMAL;
+		game.snakeHasMoved(Move.NORMAL);
 	}
 	
 	public Field getHead() {
@@ -95,6 +96,7 @@ public class Snake {
 		int moveColumn = head.getColumn() + difference.getColumn();
 		
 		// The board is a torus and we wrap the move positions around the it.
+		Dimension board = game.getBoardSize();
 		if (moveRow < 0) {
 			moveRow = board.height - 1;
 		}

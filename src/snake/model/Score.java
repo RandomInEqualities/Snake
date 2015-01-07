@@ -16,7 +16,7 @@ public class Score extends Observable {
 	}
 	
 	void increment() {
-		setScore(score++);
+		setScore(score + 1);
 	}
 	
 	void reset() {
