@@ -85,7 +85,7 @@ public class Game extends Observable {
 		Snake.Move result = snake.makeMove(direction, food);
 		
 		// Test if the snake eats anything.
-		if (result == Snake.Move.EAT_TAIL) {
+		if (result == Snake.Move.EAT_BODY) {
 			state = State.LOST;
 		}
 		else if (result == Snake.Move.EAT_FOOD) {

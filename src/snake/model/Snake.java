@@ -10,7 +10,7 @@ public class Snake {
 	
 	public enum Move {
 		EAT_NECK,
-		EAT_TAIL,
+		EAT_BODY,
 		EAT_FOOD,
 		NORMAL
 	}
@@ -47,8 +47,9 @@ public class Snake {
 		}
 		
 		// Test if the snake eats its tail.
-		if (positions.contains(movePosition)) {
-			return Move.EAT_TAIL;
+		Field tailPosition = positions.get(positions.size() - 1);
+		if (positions.contains(movePosition) && !movePosition.equals(tailPosition)) {
+			return Move.EAT_BODY;
 		}
 		
 		// Move to the new position.
