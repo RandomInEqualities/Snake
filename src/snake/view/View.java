@@ -2,8 +2,6 @@
 package snake.view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -16,7 +14,6 @@ import snake.model.Game;
 public class View extends JFrame implements Observer {
 
 	private static final long serialVersionUID = -6227614482647030704L;
-	private static final Color PANEL_COLOUR = new Color(0.2f, 0.286f, 0.3686f);
 	
 	private Game game;
 	private BoardPanel boardPanel;
@@ -34,8 +31,8 @@ public class View extends JFrame implements Observer {
 		this.boardPanel = new BoardPanel(game);
 		this.scorePanel = new ScorePanel(game);
 
-		getContentPane().add(boardPanel, BorderLayout.CENTER);
 		getContentPane().add(scorePanel, BorderLayout.NORTH);
+		getContentPane().add(boardPanel, BorderLayout.CENTER);
 		
 		setTitle("Snake");
 		

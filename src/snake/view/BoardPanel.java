@@ -9,7 +9,6 @@ import snake.model.*;
 
 public class BoardPanel extends JPanel implements Observer {
 	private static final long serialVersionUID = 9109362543987437505L;
-	private static final Color SNAKE_HEAD_COLOUR = new Color(0.1f, 0.9f, 0.1f);
 	private static final Color SNAKE_COLOUR = new Color(0.153f, 0.68f, 0.38f);
 	private static final Color BACKGROUND_COLOUR = new Color(0.7451f, 0.7647f,0.78f);
 	private BufferedImage apple, head1, head2, head3, head4;
@@ -53,13 +52,14 @@ public class BoardPanel extends JPanel implements Observer {
 	protected void paintComponent(Graphics context) {
 		super.paintComponent(context);
 		Graphics2D context2D = (Graphics2D) context;
-		drawLevel(context2D);
-		drawSnake(context2D);
 		drawFood(context2D);
+		drawSnake(context2D);
+		drawLevel(context2D);
 	}
 
 	private void drawLevel(Graphics2D context) {
 		// Draw a level outline.
+		context.setColor(Color.BLACK);
 		context.draw(getWindowBoard());
 	}
 
@@ -100,16 +100,6 @@ public class BoardPanel extends JPanel implements Observer {
 	}
 
 	public Rectangle getWindowRectangle(Field position) {
-
-		Dimension windowSize = getSize();
-		Dimension gameSize = game.getBoardSize();
-
-		// if (windowSize.width < gameSize.width || windowSize.height <
-		// gameSize.height) {
-		// throw new
-		// IllegalArgumentException("window is too small to display board");
-		// }
-
 		Rectangle rectangle = new Rectangle(position.getColumn() * getOptimalPatchSize()
 				+ getWindowBoard().x, position.getRow() * getOptimalPatchSize() + getWindowBoard().y,
 				getOptimalPatchSize(), getOptimalPatchSize());
