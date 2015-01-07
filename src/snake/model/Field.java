@@ -1,5 +1,7 @@
+
 package snake.model;
-public final class Field {
+
+public class Field {
 	
 	private int row;
 	private int column;
@@ -17,14 +19,16 @@ public final class Field {
 		return column;
 	}
 	
-	public boolean equals(Field field){
-		return row == field.getRow() && column == field.getColumn();
+	public @Override boolean equals(Object other){
+		if (other instanceof Field) {
+			Field field = (Field)other;
+			return row == field.row && column == field.column;
+		}
+		return false;
 	}
 	
-	public void setField(int x, int y){
-		this.row = x;
-		this.column = y;
+	public @Override String toString() {
+		return "Field(" + row + "," + column + ")";
 	}
-
 	
 }

@@ -1,9 +1,9 @@
+
 package snake.model;
 
-import java.util.Observable;
-
-public class Score extends Observable{
-	public static int score;
+public class Score {
+	
+	private int score;
 	
 	public Score(){
 		this.score = 0;
@@ -12,4 +12,13 @@ public class Score extends Observable{
 	public int getScore(){
 		return score;
 	}
+	
+	public void increment() {
+		score++;
+	}
+	
+	public void reset() {
+		score = 0;
+	}
+	
 }

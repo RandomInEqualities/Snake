@@ -1,4 +1,8 @@
 package snake.model;
+
 public enum Direction {
-	LEFT, UP, DOWN, RIGHT;
+	UP, 
+	DOWN,
+	LEFT, 
+	RIGHT
 }

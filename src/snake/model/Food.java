@@ -1,16 +1,23 @@
-package snake.model;
-import java.util.*;
 
-public class Food extends Observable {
+package snake.model;
+
+public class Food {
+	
 	private Field position;
 
 	public Food(Field position){
+		if (position == null) {
+			throw new NullPointerException();
+		}
 		this.position = position;
 	}
 	
 	public Field getPosition(){
-		setChanged();
-	 	notifyObservers();
 		return position;
 	}
+	
+	public @Override String toString() {
+		return "Food at " + position.toString();
+	}
+	
 }
