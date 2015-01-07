@@ -1,27 +1,43 @@
 
 package snake.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+
 import snake.model.*;
 
 public class ScorePanel extends JPanel implements Observer {
 
 	private Score score;
 	
-	private static final Font DEFAULT_FONT = new Font("Serif", Font.PLAIN, 15);
-	private static final Dimension DEFAULT_SIZE = new Dimension(400,30);
+	private static final Font DEFAULT_FONT = new Font("Sans_Serif", Font.BOLD, 15);
+	private static final Dimension DEFAULT_SIZE = new Dimension(400,70);
+	private static final Color PANEL_COLOUR = new Color(0.2f, 0.286f, 0.3686f);
+	private static final Color SCORE_COLOUR = new Color(0.9255f, 0.941f, 0.9451f);
 	private static final long serialVersionUID = -8478516974010275721L;
+	private BufferedImage image;
 	
 	public ScorePanel(Game game) {
 		super();
 		setPreferredSize(DEFAULT_SIZE);
+		setBackground(PANEL_COLOUR);
 		if (game == null) {
 			throw new NullPointerException();
+		}
+		try {
+			image = ImageIO.read(new File("snake-logo.png"));
+		} catch (IOException ex) {
+			System.out.println("Image not found");
 		}
 		this.score = game.getScore();
 		this.score.addObserver(this);
@@ -34,7 +50,9 @@ public class ScorePanel extends JPanel implements Observer {
 	protected void paintComponent(Graphics context) {
 		super.paintComponent(context);
 		context.setFont(DEFAULT_FONT);
-		context.drawString("Score: " + score.getValue(), 10, 20);
+		context.setColor(SCORE_COLOUR);
+		context.drawString("Score: " + score.getValue(), 20, 40);
+		context.drawImage(image.getScaledInstance(200, 70, image.SCALE_SMOOTH), 300, 0, null);
 	}
 	
 }
