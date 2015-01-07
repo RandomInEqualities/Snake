@@ -2,15 +2,19 @@ package snake.view;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
 import java.util.*;
+
 import snake.model.*;
 
 public class BoardPanel extends JPanel implements Observer {
 	private static final long serialVersionUID = 9109362543987437505L;
 	private static final Color SNAKE_COLOUR = new Color(0.153f, 0.68f, 0.38f);
 	private static final Color BACKGROUND_COLOUR = new Color(0.7451f, 0.7647f,0.78f);
+	private static final Color PANEL_COLOUR = new Color(0.2f, 0.286f, 0.3686f);
 	private BufferedImage apple, head1, head2, head3, head4;
 
 	private Game game;
@@ -23,7 +27,7 @@ public class BoardPanel extends JPanel implements Observer {
 		}
 		game.addObserver(this);
 		this.game = game;
-		setBackground(BACKGROUND_COLOUR);
+		setBackground(PANEL_COLOUR);
 		//apple picture
 		try {
 			apple = ImageIO.read(new File("apple.png"));
@@ -52,15 +56,15 @@ public class BoardPanel extends JPanel implements Observer {
 	protected void paintComponent(Graphics context) {
 		super.paintComponent(context);
 		Graphics2D context2D = (Graphics2D) context;
+		drawLevel(context2D);
 		drawFood(context2D);
 		drawSnake(context2D);
-		drawLevel(context2D);
 	}
 
 	private void drawLevel(Graphics2D context) {
 		// Draw a level outline.
-		context.setColor(Color.BLACK);
-		context.draw(getWindowBoard());
+		context.setColor(BACKGROUND_COLOUR);
+		context.fill(getWindowBoard());
 	}
 
 	private void drawSnake(Graphics2D context) {
