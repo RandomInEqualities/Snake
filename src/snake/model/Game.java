@@ -51,15 +51,15 @@ public class Game extends Observable {
 		return state;
 	}
 	
-	public Dimension getSize() {
+	public Dimension getBoardSize() {
 		return board;
 	}
 	
-	public int getWidth() {
+	public int getBoardWidth() {
 		return board.width;
 	}
 	
-	public int getHeight() {
+	public int getBoardHeight() {
 		return board.height;
 	}
 	
