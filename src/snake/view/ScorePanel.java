@@ -15,9 +15,7 @@ public class ScorePanel extends JPanel implements Observer {
 	private Game game;
 	private BoardPanel boardPanel;
 	private BufferedImage logo;
-	private static final Font DEFAULT_FONT = new Font("Sans_Serif", Font.BOLD, 15);
-	private static final Color PANEL_COLOUR = new Color(0.2f, 0.286f, 0.3686f);
-	private static final Color SCORE_COLOUR = new Color(0.9255f, 0.941f, 0.9451f);
+	public static final Font DEFAULT_FONT = new Font("Sans_Serif", Font.BOLD, 15);
 	private static final long serialVersionUID = -8478516974010275721L;
 	
 	public ScorePanel(Game game, BoardPanel boardPanel) {
@@ -29,7 +27,7 @@ public class ScorePanel extends JPanel implements Observer {
 		this.game = game;
 		this.boardPanel = boardPanel;
 		game.addObserver(this);
-		setBackground(PANEL_COLOUR);
+		setBackground(CustomColor.PANEL_COLOUR);
 		
 		try {
 			logo = ImageIO.read(new File("snake-logo.png"));
@@ -49,7 +47,7 @@ public class ScorePanel extends JPanel implements Observer {
 	protected @Override void paintComponent(Graphics context) {
 		super.paintComponent(context);
 		context.setFont(DEFAULT_FONT);
-		context.setColor(SCORE_COLOUR);
+		context.setColor(CustomColor.SCORE_COLOUR);
 		if(boardPanel.getRectangleForBoard().width>350){ 
 			//Only show logo if board is wide (to avoid overlap with score)
 			context.drawImage(logo.getScaledInstance(200, 70, Image.SCALE_SMOOTH), boardPanel.getSize().width/2-100, 0, null);

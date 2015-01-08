@@ -52,19 +52,7 @@ public class View extends JFrame implements Observer {
 	}
 	
 	public void update(Observable o, Object arg) {
-		//Game.State state = game.getState();
-		//if (state == Game.State.WON) {
-			//displayEndGameDialog(
-				//"You Won! You score is " + game.getScore() + ". What do you want to do?", 
-				//"You're awesome"
-			//);
-		//}
-		//else if (state == Game.State.LOST) {
-			//displayEndGameDialog(
-				//"You lost. You score is " + game.getScore() + ". What do you want to do?", 
-				//"Snake"
-			//);
-		//}
+		repaint();
 	}
 	
 	public void displayEndGameDialog(String message, String title) {

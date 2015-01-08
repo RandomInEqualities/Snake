@@ -2,7 +2,6 @@
 package snake.control;
 
 import java.awt.event.*;
-
 import snake.model.*;
 import snake.model.Game.State;
 import snake.view.*;
@@ -11,12 +10,14 @@ public class Control extends KeyAdapter {
 	
 	private Game game;
 	private ControlTimer controlTimer;
-
+	private View view;
+	
 	public Control(Game game, View view) {
 		if (view == null || game == null) {
 			throw new NullPointerException();
 		}
 		view.addKeyListener(this);
+		this.view = view;
 		this.game = game;
 	}
 
@@ -31,18 +32,18 @@ public class Control extends KeyAdapter {
 				if (game.getState() == State.LOST){
 					game.restart();
 				}
+				break;
 			case KeyEvent.VK_M:
 				game.isMuted = !game.isMuted;
-			case KeyEvent.VK_P:
-				game.isPaused = !game.isPaused;
-				if (game.isPaused) {
-					controlTimer.pauseTimer(controlTimer.getTimer());
-				} else {
-					game.isPaused = false;
-					controlTimer.getTimer().start();
-				}
+				break;
 				
-			default:
+			case KeyEvent.VK_P:
+				if (game.getState() == State.RUNNING){
+					game.setState(State.PAUSED);
+					view.getBoard().repaint();
+				} else if (game.getState() == State.PAUSED){
+					game.setState(State.RUNNING);
+				}
 				break;
 		}
 		

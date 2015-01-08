@@ -26,8 +26,6 @@ public class Game extends Observable {
 	private Snake snake;
 	private Food food;
 	public boolean isMuted;
-	public boolean isPaused;
-	
 	private static final int DEFAULT_WIDTH = 10;
 	private static final int DEFAULT_HEIGHT = 10;
 
@@ -38,7 +36,6 @@ public class Game extends Observable {
 	public Game(int width, int height) {
 		super();
 		this.isMuted = false;
-		this.isPaused = false;
 		this.state = State.RUNNING;
 		this.score = 0;
 		this.board = new Board(width, height);
@@ -66,6 +63,9 @@ public class Game extends Observable {
 		return score;
 	}
 	
+	public void setState(State state){
+		this.state = state;
+	}
 	public void moveSnake(Direction moveDirection) {
 		
 		if (state != State.RUNNING) {
@@ -113,14 +113,6 @@ public class Game extends Observable {
 		// Notify classes that the game changed.
 		setChanged();
 		notifyObservers(Event.RESTART);
-	}
-	public void paused(boolean paused) {
-		if (paused) {
-			state = State.PAUSED;
-		} else {
-			state = State.RUNNING;
-		}
-		
 	}
 	
 }
