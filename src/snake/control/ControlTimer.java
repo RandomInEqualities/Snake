@@ -13,7 +13,7 @@ public class ControlTimer extends KeyAdapter implements ActionListener {
 	private Game game;
 	private Timer timer;
 	private long lastUpdateTime = 0;
-	private long gameUpdateInterval = 50;
+	private long gameUpdateInterval = 200;
 	private static final int TIMER_INTERVAL = 16;
 	private static final int TIMER_INITIAL_DELAY = 500;
 
