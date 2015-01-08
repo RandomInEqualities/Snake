@@ -101,7 +101,7 @@ public class Game extends Observable {
 			state = State.WON;
 		}
 		else if (move == Snake.Move.EAT_FOOD) {
-			// Snake east some food.
+			// Snake eat some food.
 			score++;
 			food = new Food(findFoodPosition(snake, board));
 		}
@@ -142,7 +142,7 @@ public class Game extends Observable {
 		// Find all locations on the board that can contain food.
 		ArrayList<Field> foodPositions = new ArrayList<Field>();
 		for (int column = 0; column < board.width; column++) {
-			for (int row = 0; row < board.width; row++) {
+			for (int row = 0; row < board.height; row++) {
 				Field position = new Field(row, column);
 				if (snake.contains(position)) {
 					continue;
