@@ -6,6 +6,9 @@ import snake.view.View;
 
 public class Driver {
 	
+	private static int WIDTH = 10;
+	private static int HEIGHT = 10;
+	
 	@SuppressWarnings("unused")
 	public static final void main(String[] args) {
 		
@@ -15,6 +18,8 @@ public class Driver {
 		// Create the model which is our game logic.
 		Game game = null;
 		if (args.length == 2) {
+			// Determine the width and height of the game from the command line
+			// arguments.
 			int width, height;
 			try {
 				width = Integer.parseInt(args[0]);
@@ -27,7 +32,7 @@ public class Driver {
 			game = new Game(width, height);
 		}
 		else if (args.length == 0) {
-			game = new Game(100, 50);
+			game = new Game(WIDTH, HEIGHT);
 		}
 		else {
 			printErrorMessage();

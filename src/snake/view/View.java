@@ -38,7 +38,7 @@ public class View extends JFrame implements Observer {
 		setTitle("Snake");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setMinimumSize(new Dimension(400, 400));
+		setMinimumSize(new Dimension(525, 400));
 		pack();
 		setLocationRelativeTo(null);
 	}
