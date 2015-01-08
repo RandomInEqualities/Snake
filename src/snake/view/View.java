@@ -44,35 +44,26 @@ public class View extends JFrame implements Observer {
 	}
 	
 	public void update(Observable o, Object arg) {
-		Game.State state = game.getState();
-		if (state == Game.State.WON) {
-			displayEndGameDialog(
-				"You Won! You score is " + game.getScore() + ". What do you want to do?", 
-				"You're awesome"
-			);
-		}
-		else if (state == Game.State.LOST) {
-			displayEndGameDialog(
-				"You lost. You score is " + game.getScore() + ". What do you want to do?", 
-				"Snake"
-			);
-		}
+		//Game.State state = game.getState();
+		//if (state == Game.State.WON) {
+			//displayEndGameDialog(
+				//"You Won! You score is " + game.getScore() + ". What do you want to do?", 
+				//"You're awesome"
+			//);
+		//}
+		//else if (state == Game.State.LOST) {
+			//displayEndGameDialog(
+				//"You lost. You score is " + game.getScore() + ". What do you want to do?", 
+				//"Snake"
+			//);
+		//}
 	}
 	
 	public void displayEndGameDialog(String message, String title) {
 		
 		String[] options = {"Restart", "Quit"};
 		
-		int selection = JOptionPane.showOptionDialog(
-			this, 
-			message, 
-			title,
-			JOptionPane.YES_NO_OPTION,
-			JOptionPane.QUESTION_MESSAGE,
-			null,
-			options, 
-			options[0]
-		);
+		int selection = JOptionPane.showOptionDialog(this, message, title, JOptionPane.YES_NO_OPTION,	JOptionPane.QUESTION_MESSAGE,null, options,options[0]);
 		
 		if (selection == 0) {
 			game.restart();
