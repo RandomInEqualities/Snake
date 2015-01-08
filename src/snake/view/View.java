@@ -74,6 +74,10 @@ public class View extends JFrame implements Observer {
 			dispose();
 		}
 	}
+	
+	public BoardPanel getBoard() {
+		return boardPanel;
+	}
 
 }
 

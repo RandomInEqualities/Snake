@@ -42,6 +42,7 @@ public class Driver {
 		// Create the control which handles game interaction. It uses the view
 		// window for user input.
 		ControlTimer control = new ControlTimer(game, view);
+		ControlButton controlButton = new ControlButton(game, view);
 		
 		// Show the window.
 		view.setVisible(true);
