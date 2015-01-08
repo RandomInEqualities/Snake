@@ -6,11 +6,8 @@ import java.io.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
 import java.util.*;
-
 import snake.model.*;
-
 public class BoardPanel extends JPanel implements Observer {
 
 	private Game game;
@@ -26,7 +23,13 @@ public class BoardPanel extends JPanel implements Observer {
 	private static final Color SCORE_COLOUR = new Color(0.9255f, 0.941f,
 			0.9451f);
 	private static final long serialVersionUID = 9109362543987437505L;
-
+	
+	//Popup size
+	int widthPopup;
+	int heightPopup;
+	int xPopup;
+	int yPopup;
+	
 	public BoardPanel(Game game) {
 		super();
 
@@ -82,7 +85,7 @@ public class BoardPanel extends JPanel implements Observer {
 		drawFood(context2D);
 		drawSnake(context2D);
 		if (game.getState() == Game.State.LOST) {
-			drawPopup(context2D);
+			drawGameOver(context2D);
 		}
 	}
 
@@ -167,27 +170,27 @@ public class BoardPanel extends JPanel implements Observer {
 
 	private void drawPopup(Graphics2D context) {
 		// Window
-		int width = getSize().width;
-		int height = 200;
-		int x = 0;
-		int y = getRectangleForBoard().y + getRectangleForBoard().height / 2
-				- height / 2;
+		widthPopup = getSize().width;
+		heightPopup = 200;
+		xPopup = 0;
+		yPopup = getRectangleForBoard().y + getRectangleForBoard().height / 2 - heightPopup / 2;
 		context.setColor(POPUP_COLOUR);
-		context.fillRect(x, y, width, height);
+		context.fillRect(xPopup, yPopup, widthPopup, heightPopup);
+	}
 
+	private void drawGameOver(Graphics2D context){
+		drawPopup(context);
+		
 		// Text
 		context.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		String gameOverTxt = "Game Over";
-		int x2 = getRectangleForBoard().x + getRectangleForBoard().width / 2
-				- gameOverTxt.length() * 30 / 2;
-		int y2 = y + 50;
+		int x2 = getRectangleForBoard().x + getRectangleForBoard().width / 2 - gameOverTxt.length() * 30 / 2;
+		int y2 = yPopup + 50;
 		context.setColor(YELLOW_COLOUR);
 		context.setFont(new Font("Sans_Serif", Font.BOLD, 50));
 		context.drawString(gameOverTxt, x2, y2);
-
 		String scoreTxt = "Final Score: " + game.getScore();
-		int x3 = getRectangleForBoard().x + getRectangleForBoard().width / 2
-				- scoreTxt.length() * 10 / 2;
+		int x3 = getRectangleForBoard().x + getRectangleForBoard().width / 2 - scoreTxt.length() * 10 / 2;
 		int y3 = getRectangleForBoard().y + getRectangleForBoard().height / 2;
 		context.setColor(SCORE_COLOUR);
 		context.setFont(new Font("Sans_Serif", Font.BOLD, 20));
@@ -196,22 +199,37 @@ public class BoardPanel extends JPanel implements Observer {
 		// Buttons
 		int width4 = 150;
 		int height4 = 50;
-		int x4 = getRectangleForBoard().x + getRectangleForBoard().width / 2
-				- width4 / 2 - 100;
-		int x42 = getRectangleForBoard().x + getRectangleForBoard().width / 2
-				- width4 / 2 + 100;
-		int y4 = y + height - height4 - 20;
+		int x4 = getRectangleForBoard().x + getRectangleForBoard().width / 2- width4 / 2 - 100;
+		int x42 = getRectangleForBoard().x + getRectangleForBoard().width / 2- width4 / 2 + 100;
+		int y4 = yPopup + heightPopup - height4 - 20;
 		context.setColor(YELLOW_COLOUR);
 		playAgain = new Rectangle(x4, y4, width4, height4);
 		context.fillRect(x4, y4, width4, height4);
 		context.fillRect(x42, y4, width4, height4);
-		
+			
 		//text in buttons
 		context.setColor(PANEL_COLOUR);
 		context.drawString("Menu", x42 + 45, y4 + 30);
 		context.drawString("Play Again", x4 + 20, y4 + 30);
 	}
-
+	
+	private void drawPaused(Graphics2D context){
+		drawPopup(context);
+		
+		String pauseTxt = "Paused";
+		int x2 = getRectangleForBoard().x + getRectangleForBoard().width / 2 - pauseTxt.length() * 30 / 2;
+		int y2 = yPopup + 50;
+		context.setColor(YELLOW_COLOUR);
+		context.setFont(new Font("Sans_Serif", Font.BOLD, 50));
+		context.drawString(pauseTxt, x2, y2);
+		
+		String pauseMessage = "Press 'P' to start game again";
+		int x3 = getRectangleForBoard().x + getRectangleForBoard().width / 2 - pauseMessage.length() * 10 / 2;
+		int y3 = getRectangleForBoard().y + getRectangleForBoard().height / 2;
+		context.setColor(SCORE_COLOUR);
+		context.setFont(new Font("Sans_Serif", Font.BOLD, 20));
+		context.drawString(pauseMessage, x3, y3);
+	}
 	public Rectangle getPlayAgain() {
 		return playAgain;
 	}
