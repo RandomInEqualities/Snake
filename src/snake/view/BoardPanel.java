@@ -176,6 +176,7 @@ public class BoardPanel extends JPanel implements Observer {
 		context.fillRect(x, y, width, height);
 
 		// Text
+		context.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		String gameOverTxt = "Game Over";
 		int x2 = getRectangleForBoard().x + getRectangleForBoard().width / 2
 				- gameOverTxt.length() * 30 / 2;
