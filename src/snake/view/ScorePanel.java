@@ -48,7 +48,7 @@ public class ScorePanel extends JPanel implements Observer {
 		super.paintComponent(context);
 		context.setFont(DEFAULT_FONT);
 		context.setColor(SCORE_COLOUR);
-		if(boardPanel.getWindowBoard().width>300){ //Only show logo if board is wide (to avoid overlap with score)
+		if(boardPanel.getWindowBoard().width>350){ //Only show logo if board is wide (to avoid overlap with score)
 			context.drawImage(image.getScaledInstance(200, 70, Image.SCALE_SMOOTH), boardPanel.getSize().width/2-100, 0, null);
 		}
 		context.drawString("Score: " + game.getScore(), boardPanel.getSize().width/2-boardPanel.getWindowBoard().width/2+10, 40);
