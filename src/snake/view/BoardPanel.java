@@ -162,7 +162,11 @@ public class BoardPanel extends JPanel implements Observer {
 	}
 
 	private void drawPopup(Graphics2D context) {
-		// Window
+		// Behind
+		context.setColor(CustomColor.TRANS_BLACK);
+		context.fillRect(0, 0, getWidth(), getHeight());
+		
+		// Popup
 		widthPopup = getSize().width;
 		heightPopup = 200;
 		xPopup = 0;

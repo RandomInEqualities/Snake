@@ -34,7 +34,11 @@ public class Control extends KeyAdapter {
 				}
 				break;
 			case KeyEvent.VK_M:
-				game.isMuted = !game.isMuted;
+				if (!game.isMuted){
+					game.isMuted = true;
+				} else {
+					game.isMuted = false;
+				}
 				break;
 				
 			case KeyEvent.VK_P:

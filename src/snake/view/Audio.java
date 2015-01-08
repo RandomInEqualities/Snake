@@ -10,22 +10,23 @@ import javax.sound.sampled.Clip;
 
 import snake.model.Game;
 
-
 public class Audio implements Observer {
-	
+
 	private File eatSoundFile = new File("nom.wav");
 	private File endSoundFile = new File("ohno.wav");
 	private AudioInputStream eatSoundStream;
 	private AudioInputStream endSoundStream;
 	private Clip eatSound;
 	private Clip endSound;
-	
+	private Game game;
+
 	public Audio(Game game) {
 		if (game == null) {
 			throw new NullPointerException();
 		}
+		this.game = game;
 		game.addObserver(this);
-		
+
 		// Load the sounds.
 		try {
 			eatSoundStream = AudioSystem.getAudioInputStream(eatSoundFile);
@@ -43,7 +44,7 @@ public class Audio implements Observer {
 		eatSound.setFramePosition(0);
 		eatSound.start();
 	}
-	
+
 	public void playEndSound() {
 		endSound.setFramePosition(0);
 		endSound.start();
@@ -53,12 +54,14 @@ public class Audio implements Observer {
 		if (!(o instanceof Game)) {
 			throw new IllegalArgumentException();
 		}
-		Game.Event event = (Game.Event)arg;
-		if (event == Game.Event.EAT) {
-			playEatSound();
-		} 
-		if (event == Game.Event.DIE) {
-			playEndSound();
+		if (!game.isMuted) {
+			Game.Event event = (Game.Event) arg;
+			if (event == Game.Event.EAT) {
+				playEatSound();
+			}
+			if (event == Game.Event.DIE) {
+				playEndSound();
+			}
 		}
 	}
 }
