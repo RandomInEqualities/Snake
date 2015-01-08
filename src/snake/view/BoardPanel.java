@@ -65,10 +65,10 @@ public class BoardPanel extends JPanel implements Observer {
 		int y;
 		
 		//Wrap window around board
-		if (game.getBoardHeight() > game.getBoardWidth()+20) { //if board is narrow
+		if (game.getBoard().getHeight() > game.getBoard().getWidth()+20) { //if board is narrow
 			x = 700;
 			y = 800;
-		} else if (game.getBoardWidth() > game.getBoardHeight()+20){ //if board is wide
+		} else if (game.getBoard().getWidth() > game.getBoard().getHeight()+20){ //if board is wide
 			x = 800;
 			y = 500;
 		} else { //if board is (approximately) square
@@ -122,22 +122,22 @@ public class BoardPanel extends JPanel implements Observer {
 
 		if (snake.getNeck().getRow() - snake.getHead().getRow() == 1
 				|| snake.getHead().getRow() - snake.getNeck().getRow() == game
-						.getBoardHeight() - 1) { // Direction UP
+						.getBoard().getHeight() - 1) { // Direction UP
 			context.drawImage(scaledHead1, headRectangle.x, headRectangle.y,
 					BACKGROUND_COLOUR, null);
 		} else if (snake.getNeck().getColumn() - snake.getHead().getColumn() == 1
 				|| snake.getHead().getColumn() - snake.getNeck().getColumn() == game
-						.getBoardWidth() - 1) { // Direction LEFT
+						.getBoard().getWidth() - 1) { // Direction LEFT
 			context.drawImage(scaledHead2, headRectangle.x, headRectangle.y,
 					BACKGROUND_COLOUR, null);
 		} else if (snake.getHead().getRow() - snake.getNeck().getRow() == 1
 				|| snake.getNeck().getRow() - snake.getHead().getRow() == game
-						.getBoardHeight() - 1) { // Direction DOWN
+						.getBoard().getHeight() - 1) { // Direction DOWN
 			context.drawImage(scaledHead3, headRectangle.x, headRectangle.y,
 					BACKGROUND_COLOUR, null);
 		} else if (snake.getHead().getColumn() - snake.getNeck().getColumn() == 1
 				|| snake.getNeck().getColumn() - snake.getHead().getColumn() == game
-						.getBoardWidth() - 1) { // Direction RIGHT
+						.getBoard().getWidth() - 1) { // Direction RIGHT
 			context.drawImage(scaledHead4, headRectangle.x, headRectangle.y,
 					BACKGROUND_COLOUR, null);
 		}
@@ -163,7 +163,7 @@ public class BoardPanel extends JPanel implements Observer {
 
 	public Rectangle getWindowBoard() {
 		Dimension windowSize = getSize();
-		Dimension gameSize = game.getBoardSize();
+		Dimension gameSize = game.getBoard().getDimension();
 
 		int offsetHeight = 10;
 		int offsetWidth = (windowSize.width - getOptimalPatchSize()
@@ -177,7 +177,7 @@ public class BoardPanel extends JPanel implements Observer {
 
 	public int getOptimalPatchSize() {
 		Dimension windowSize = getSize();
-		Dimension gameSize = game.getBoardSize();
+		Dimension gameSize = game.getBoard().getDimension();
 		int patchWidth = windowSize.width / gameSize.width;
 		int patchHeight = windowSize.height / gameSize.height;
 

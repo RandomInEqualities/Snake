@@ -6,9 +6,6 @@ import snake.view.View;
 
 public class Driver {
 	
-	private static int WIDTH = 5;
-	private static int HEIGHT = 5;
-	
 	@SuppressWarnings("unused")
 	public static final void main(String[] args) {
 		
@@ -32,7 +29,7 @@ public class Driver {
 			game = new Game(width, height);
 		}
 		else if (args.length == 0) {
-			game = new Game(WIDTH, HEIGHT);
+			game = new Game();
 		}
 		else {
 			printErrorMessage();
