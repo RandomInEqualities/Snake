@@ -27,18 +27,6 @@ public class Control extends KeyAdapter {
 		}
 		
 		switch (event.getKeyCode()) {
-			case KeyEvent.VK_UP:
-				game.moveSnake(Direction.UP);
-				break;
-			case KeyEvent.VK_DOWN:
-				game.moveSnake(Direction.DOWN);
-				break;
-			case KeyEvent.VK_LEFT:
-				game.moveSnake(Direction.LEFT);
-				break;
-			case KeyEvent.VK_RIGHT:
-				game.moveSnake(Direction.RIGHT);
-				break;
 			case KeyEvent.VK_ENTER: case KeyEvent.VK_SPACE:
 				if (game.getState() == State.LOST){
 					game.restart();
