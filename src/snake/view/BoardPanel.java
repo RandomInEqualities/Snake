@@ -13,6 +13,7 @@ public class BoardPanel extends JPanel implements Observer {
 	private Game game;
 	private BufferedImage apple, headUp, headDown, headLeft, headRight, background, gameOverTitle, pausedTitle;
 	private Rectangle playAgain;
+	private Rectangle menu;
 	private static final long serialVersionUID = 9109362543987437505L;
 	
 	//Popup size
@@ -199,13 +200,14 @@ public class BoardPanel extends JPanel implements Observer {
 		int x4 = getRectangleForBoard().x + getRectangleForBoard().width / 2- width4 / 2 - 100;
 		int x42 = getRectangleForBoard().x + getRectangleForBoard().width / 2- width4 / 2 + 100;
 		int y4 = yPopup + heightPopup - height4 - 20;
-		context.setColor(CustomColor.YELLOW_COLOUR);
+		context.setColor(CustomColor.PANEL_COLOUR);
 		playAgain = new Rectangle(x4, y4, width4, height4);
 		context.fillRect(x4, y4, width4, height4);
+		menu = new Rectangle(x42, y4, width4, height4);
 		context.fillRect(x42, y4, width4, height4);
 			
 		//text in buttons
-		context.setColor(CustomColor.PANEL_COLOUR);
+		context.setColor(CustomColor.YELLOW_COLOUR);
 		context.drawString("Menu", x42 + 45, y4 + 30);
 		context.drawString("Play Again", x4 + 20, y4 + 30);
 	}
@@ -219,7 +221,7 @@ public class BoardPanel extends JPanel implements Observer {
 		context.drawImage(pausedTitle, x2, y2, null);
 		
 		//Text
-		String pauseMessage = "Press 'P' to start game again";
+		String pauseMessage = "Press 'P' to resume game";
 		int x3 = getRectangleForBoard().x + getRectangleForBoard().width / 2 - pauseMessage.length() * 10 / 2;
 		int y3 = getRectangleForBoard().y + getRectangleForBoard().height / 2 + 25;
 		context.setColor(CustomColor.PANEL_COLOUR);
@@ -228,6 +230,10 @@ public class BoardPanel extends JPanel implements Observer {
 	}
 	public Rectangle getPlayAgain() {
 		return playAgain;
+	}
+	
+	public Rectangle getMenu() {
+		return menu;
 	}
 	
 	public int getFieldSideLength() {

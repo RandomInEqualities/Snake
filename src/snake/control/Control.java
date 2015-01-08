@@ -1,7 +1,9 @@
 
 package snake.control;
 
+import java.awt.Cursor;
 import java.awt.event.*;
+
 import snake.model.*;
 import snake.model.Game.State;
 import snake.view.*;
@@ -31,6 +33,7 @@ public class Control extends KeyAdapter {
 			case KeyEvent.VK_ENTER: case KeyEvent.VK_SPACE:
 				if (game.getState() == State.LOST){
 					game.restart();
+					view.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				}
 				break;
 			case KeyEvent.VK_M:
@@ -48,6 +51,9 @@ public class Control extends KeyAdapter {
 				} else if (game.getState() == State.PAUSED){
 					game.setState(State.RUNNING);
 				}
+				break;
+			case KeyEvent.VK_ESCAPE:
+				//return to menu
 				break;
 		}
 		

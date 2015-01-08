@@ -1,18 +1,11 @@
 
 package snake.view;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
-import snake.control.Control;
-import snake.control.ControlButton;
-import snake.control.ControlTimer;
-import snake.model.Game;
+import java.awt.*;
+import java.util.*;
+import javax.swing.*;
+import snake.control.*;
+import snake.model.*;
 
 
 public class View extends JFrame implements Observer {

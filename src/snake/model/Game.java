@@ -3,6 +3,10 @@ package snake.model;
 
 import java.util.Observable;
 
+import snake.control.Control;
+import snake.control.ControlButton;
+import snake.control.ControlTimer;
+
 
 public class Game extends Observable {
 	
