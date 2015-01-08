@@ -65,14 +65,18 @@ public class BoardPanel extends JPanel implements Observer {
 		int y;
 		
 		//Wrap window around board
-		if (game.getBoardHeight() <= 50 || game.getBoardWidth() <=50) { //increase size a lot if few tiles
-			x = game.getBoardWidth()*15;
-			y = game.getBoardHeight()*15;
-		} else { //increase size less if many tiles			
-			x = game.getBoardWidth() * 8;
-			y = game.getBoardHeight() * 8;
+		if (game.getBoardHeight() > game.getBoardWidth()+20) { //if board is narrow
+			x = 700;
+			y = 800;
+		} else if (game.getBoardWidth() > game.getBoardHeight()+20){ //if board is wide
+			x = 800;
+			y = 500;
+		} else { //if board is (approximately) square
+			x = 800;
+			y = 800;
 		}
 		return new Dimension(x, y);
+
 	}
 
 	protected void paintComponent(Graphics context) {
