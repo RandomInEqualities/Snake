@@ -204,6 +204,11 @@ public class BoardPanel extends JPanel implements Observer {
 		playAgain = new Rectangle(x4, y4, width4, height4);
 		context.fillRect(x4, y4, width4, height4);
 		context.fillRect(x42, y4, width4, height4);
+		
+		//text in buttons
+		context.setColor(PANEL_COLOUR);
+		context.drawString("Menu", x42 + 45, y4 + 30);
+		context.drawString("Play Again", x4 + 20, y4 + 30);
 	}
 
 	public Rectangle getPlayAgain() {
