@@ -38,6 +38,8 @@ public class Control extends KeyAdapter {
 				break;
 			case KeyEvent.VK_M:
 				game.isMuted = !game.isMuted;
+			case KeyEvent.VK_P:
+				game.isPaused = !game.isPaused;
 			default:
 				break;
 		}

@@ -64,7 +64,10 @@ public class ControlTimer extends KeyAdapter implements ActionListener {
 		}
 		
 		lastUpdateTime = System.currentTimeMillis();
-		
+	}
+	
+	public Timer getTimer() {
+		return timer;
 	}
 
 }

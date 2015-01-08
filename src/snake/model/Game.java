@@ -9,7 +9,8 @@ public class Game extends Observable {
 	public enum State {
 		RUNNING,
 		WON,
-		LOST
+		LOST,
+		PAUSED
 	}
 	
 	public enum Event {
@@ -25,6 +26,7 @@ public class Game extends Observable {
 	private Snake snake;
 	private Food food;
 	public boolean isMuted;
+	public boolean isPaused;
 	
 	private static final int DEFAULT_WIDTH = 20;
 	private static final int DEFAULT_HEIGHT = 20;
@@ -36,6 +38,7 @@ public class Game extends Observable {
 	public Game(int width, int height) {
 		super();
 		this.isMuted = false;
+		this.isPaused = false;
 		this.state = State.RUNNING;
 		this.score = 0;
 		this.board = new Board(width, height);
@@ -110,6 +113,10 @@ public class Game extends Observable {
 		// Notify classes that the game changed.
 		setChanged();
 		notifyObservers(Event.RESTART);
+	}
+	public void paused() {
+		state = State.PAUSED;
+		
 	}
 	
 }
