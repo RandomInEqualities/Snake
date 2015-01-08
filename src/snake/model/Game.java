@@ -19,6 +19,7 @@ public class Game extends Observable {
 	private Board board;
 	private Snake snake;
 	private Food food;
+	public boolean isMuted;
 	
 	private static final int DEFAULT_WIDTH = 30;
 	private static final int DEFAULT_HEIGHT = 30;
@@ -29,6 +30,7 @@ public class Game extends Observable {
 	
 	public Game(int width, int height) {
 		super();
+		this.isMuted = false;
 		this.state = State.RUNNING;
 		this.score = 0;
 		this.board = new Board(width, height);
@@ -68,13 +70,13 @@ public class Game extends Observable {
 		
 		if (snakeEatsFood) {
 			score++;
-			Audio.eatApple();
+			if(isMuted==false)Audio.eatApple();
 			food = Food.generateRandomFood(snake, board);
 		}
 		
 		if (snakeEatsItSelf) {
 			state = State.LOST;
-			Audio.endGame();
+			if(isMuted==false) Audio.endGame();
 		}
 		else if (snake.fillsBoard()) {
 			state = State.WON;

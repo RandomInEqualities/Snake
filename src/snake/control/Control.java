@@ -36,6 +36,8 @@ public class Control extends KeyAdapter {
 			case KeyEvent.VK_RIGHT:
 				game.moveSnake(Direction.RIGHT);
 				break;
+			case KeyEvent.VK_M:
+				game.isMuted = !game.isMuted;
 			default:
 				break;
 		}
