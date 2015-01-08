@@ -21,8 +21,8 @@ public class Game extends Observable {
 	private Food food;
 	public boolean isMuted;
 	
-	private static final int DEFAULT_WIDTH = 30;
-	private static final int DEFAULT_HEIGHT = 30;
+	private static final int DEFAULT_WIDTH = 20;
+	private static final int DEFAULT_HEIGHT = 20;
 
 	public Game() {
 		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
