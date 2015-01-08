@@ -9,6 +9,9 @@ import java.util.Observer;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import snake.control.Control;
+import snake.control.ControlButton;
+import snake.control.ControlTimer;
 import snake.model.Game;
 
 
@@ -23,6 +26,9 @@ public class View extends JFrame implements Observer {
 
 	public View(Game game) {
 		super();
+		ControlTimer control = new ControlTimer(game, this);
+		ControlButton controlButton = new ControlButton(game, this);
+		Control controlKeys = new Control(game, this);
 		
 		if (game == null) {
 			throw new NullPointerException();
