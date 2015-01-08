@@ -39,20 +39,15 @@ public class BoardPanel extends JPanel implements Observer {
 		setBackground(PANEL_COLOUR);
 
 		
-		// apple picture
+		// head & apple picture
 		try {
 			apple = ImageIO.read(new File("apple.png"));
-		} catch (IOException ex) {
-			System.out.println("Image not found");
-		}
-		// head pictures
-		try {
 			head1 = ImageIO.read(new File("head1.png"));
 			head2 = ImageIO.read(new File("head2.png"));
 			head3 = ImageIO.read(new File("head3.png"));
 			head4 = ImageIO.read(new File("head4.png"));
 		} catch (IOException ex) {
-			System.out.println("Image not found");
+			throw new RuntimeException("Image not found" + ex.getMessage());
 		}
 	}
 
@@ -66,7 +61,7 @@ public class BoardPanel extends JPanel implements Observer {
 		
 		//Wrap window around board
 		if (game.getBoard().getHeight() > game.getBoard().getWidth()+20) { //if board is narrow
-			x = 700;
+			x = 500;
 			y = 800;
 		} else if (game.getBoard().getWidth() > game.getBoard().getHeight()+20){ //if board is wide
 			x = 800;
@@ -100,6 +95,33 @@ public class BoardPanel extends JPanel implements Observer {
 		context.fill(getWindowBoard());
 	}
 
+	private boolean headDirection(Direction direction) {
+		
+		int neckRow = game.getSnake().getNeck().getRow();
+		int headRow = game.getSnake().getHead().getRow();
+		int neckColumn = game.getSnake().getNeck().getColumn();
+		int headColumn = game.getSnake().getHead().getColumn();
+		
+		boolean forwardDirection, torrusDirection;
+		if(direction == Direction.UP) {
+			forwardDirection = neckRow - headRow == 1;
+			torrusDirection = headRow - neckRow == game.getBoard().getHeight() - 1;
+			return forwardDirection || torrusDirection;
+		} else if(direction == Direction.LEFT) {
+			forwardDirection = neckColumn - headColumn == 1;
+			torrusDirection = headColumn - neckColumn == game.getBoard().getWidth() - 1;
+			return forwardDirection || torrusDirection;
+		} else if(direction == Direction.DOWN) {
+			forwardDirection = headRow - neckRow == 1;
+			torrusDirection = neckRow - headRow == game.getBoard().getHeight() - 1;
+			return forwardDirection || torrusDirection;
+		} else { //Direction.RIGHT
+			forwardDirection = headColumn - neckColumn == 1;
+			torrusDirection = neckColumn - headColumn == game.getBoard().getWidth() - 1;
+			return forwardDirection || torrusDirection;
+		}
+	}
+	
 	private void drawSnake(Graphics2D context) {
 		Snake snake = game.getSnake();
 
@@ -120,24 +142,16 @@ public class BoardPanel extends JPanel implements Observer {
 		Image scaledHead4 = head4.getScaledInstance(headRectangle.width,
 				headRectangle.height, Image.SCALE_SMOOTH);
 
-		if (snake.getNeck().getRow() - snake.getHead().getRow() == 1
-				|| snake.getHead().getRow() - snake.getNeck().getRow() == game
-						.getBoard().getHeight() - 1) { // Direction UP
+		if (headDirection(Direction.UP)){
 			context.drawImage(scaledHead1, headRectangle.x, headRectangle.y,
 					BACKGROUND_COLOUR, null);
-		} else if (snake.getNeck().getColumn() - snake.getHead().getColumn() == 1
-				|| snake.getHead().getColumn() - snake.getNeck().getColumn() == game
-						.getBoard().getWidth() - 1) { // Direction LEFT
+		} else if (headDirection(Direction.LEFT)) {
 			context.drawImage(scaledHead2, headRectangle.x, headRectangle.y,
 					BACKGROUND_COLOUR, null);
-		} else if (snake.getHead().getRow() - snake.getNeck().getRow() == 1
-				|| snake.getNeck().getRow() - snake.getHead().getRow() == game
-						.getBoard().getHeight() - 1) { // Direction DOWN
+		} else if (headDirection(Direction.DOWN)) {
 			context.drawImage(scaledHead3, headRectangle.x, headRectangle.y,
 					BACKGROUND_COLOUR, null);
-		} else if (snake.getHead().getColumn() - snake.getNeck().getColumn() == 1
-				|| snake.getNeck().getColumn() - snake.getHead().getColumn() == game
-						.getBoard().getWidth() - 1) { // Direction RIGHT
+		} else if (headDirection(Direction.RIGHT)) {
 			context.drawImage(scaledHead4, headRectangle.x, headRectangle.y,
 					BACKGROUND_COLOUR, null);
 		}
@@ -186,6 +200,6 @@ public class BoardPanel extends JPanel implements Observer {
 		} else {
 			patchHeight = patchWidth;
 		}
-		return patchWidth;
+		return patchWidth-4; //bottom gap
 	}
 }
