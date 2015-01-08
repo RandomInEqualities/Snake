@@ -3,8 +3,6 @@ package snake.model;
 
 import java.util.Observable;
 
-import snake.view.Audio;
-
 
 public class Game extends Observable {
 	
@@ -12,6 +10,13 @@ public class Game extends Observable {
 		RUNNING,
 		WON,
 		LOST
+	}
+	
+	public enum Event {
+		MOVE,
+		EAT,
+		DIE,
+		RESTART
 	}
 	
 	private State state;
@@ -70,20 +75,30 @@ public class Game extends Observable {
 		
 		if (snakeEatsFood) {
 			score++;
-			if(isMuted==false)Audio.eatApple();
 			food = Food.generateRandomFood(snake, board);
 		}
 		
 		if (snakeEatsItSelf) {
 			state = State.LOST;
-			if(isMuted==false) Audio.endGame();
 		}
 		else if (snake.fillsBoard()) {
 			state = State.WON;
 		}
 		
+		// Notify the observing classes that the game changed. We send an argument
+		// with the type of event that happened.
+		Event event;
+		if (snakeEatsItSelf) {
+			event = Event.DIE;
+		}
+		else if (snakeEatsFood) {
+			event = Event.EAT;
+		}
+		else {
+			event = Event.MOVE;
+		}
 		setChanged();
-		notifyObservers();
+		notifyObservers(event);
 	}
 	
 	public void restart() {
@@ -94,7 +109,7 @@ public class Game extends Observable {
 		
 		// Notify classes that the game changed.
 		setChanged();
-		notifyObservers();
+		notifyObservers(Event.RESTART);
 	}
 	
 }

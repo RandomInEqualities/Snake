@@ -19,6 +19,7 @@ public class View extends JFrame implements Observer {
 	private Game game;
 	private BoardPanel boardPanel;
 	private ScorePanel scorePanel;
+	private Audio audio;
 
 	public View(Game game) {
 		super();
@@ -31,6 +32,7 @@ public class View extends JFrame implements Observer {
 		this.game = game;
 		this.boardPanel = new BoardPanel(game);
 		this.scorePanel = new ScorePanel(game, boardPanel);
+		this.audio = new Audio(game);
 
 		getContentPane().add(scorePanel, BorderLayout.NORTH);
 		getContentPane().add(boardPanel, BorderLayout.CENTER);
