@@ -24,7 +24,7 @@ public class Audio {
 			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("ohno.wav").getAbsoluteFile());
 	        Clip clip = AudioSystem.getClip();
 	        clip.open(audioInputStream);
-	        clip.start();
+	        clip.start();	
 			}
 			catch(Exception ex) {
 	        System.out.println("Error with playing sound.");
