@@ -69,5 +69,9 @@ public class ControlTimer extends KeyAdapter implements ActionListener {
 	public Timer getTimer() {
 		return timer;
 	}
+	
+	public void pauseTimer(Timer timer) {
+		timer.stop();
+	}
 
 }

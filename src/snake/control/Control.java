@@ -10,6 +10,7 @@ import snake.view.*;
 public class Control extends KeyAdapter {
 	
 	private Game game;
+	private ControlTimer controlTimer;
 
 	public Control(Game game, View view) {
 		if (view == null || game == null) {
@@ -46,6 +47,12 @@ public class Control extends KeyAdapter {
 				game.isMuted = !game.isMuted;
 			case KeyEvent.VK_P:
 				game.isPaused = !game.isPaused;
+				if (game.isPaused) {
+					controlTimer.pauseTimer(controlTimer.getTimer());
+				} else {
+					game.isPaused = false;
+					controlTimer.getTimer().start();
+				}
 			default:
 				break;
 		}

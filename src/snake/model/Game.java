@@ -114,8 +114,12 @@ public class Game extends Observable {
 		setChanged();
 		notifyObservers(Event.RESTART);
 	}
-	public void paused() {
-		state = State.PAUSED;
+	public void paused(boolean paused) {
+		if (paused) {
+			state = State.PAUSED;
+		} else {
+			state = State.RUNNING;
+		}
 		
 	}
 	
