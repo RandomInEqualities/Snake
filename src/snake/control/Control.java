@@ -41,6 +41,7 @@ public class Control extends KeyAdapter {
 					game.isPaused = false;
 					controlTimer.getTimer().start();
 				}
+				
 			default:
 				break;
 		}

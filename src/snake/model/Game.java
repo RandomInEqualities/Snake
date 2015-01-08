@@ -28,8 +28,8 @@ public class Game extends Observable {
 	public boolean isMuted;
 	public boolean isPaused;
 	
-	private static final int DEFAULT_WIDTH = 20;
-	private static final int DEFAULT_HEIGHT = 20;
+	private static final int DEFAULT_WIDTH = 10;
+	private static final int DEFAULT_HEIGHT = 10;
 
 	public Game() {
 		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
