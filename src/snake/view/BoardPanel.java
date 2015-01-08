@@ -66,7 +66,7 @@ public class BoardPanel extends JPanel implements Observer {
 		
 		//Wrap window around board
 		if (game.getBoardHeight() > game.getBoardWidth()+20) { //if board is narrow
-			x = 700;
+			x = 500;
 			y = 800;
 		} else if (game.getBoardWidth() > game.getBoardHeight()+20){ //if board is wide
 			x = 800;
@@ -186,6 +186,6 @@ public class BoardPanel extends JPanel implements Observer {
 		} else {
 			patchHeight = patchWidth;
 		}
-		return patchWidth;
+		return patchWidth-4; //bottom gap
 	}
 }
