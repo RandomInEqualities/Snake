@@ -1,0 +1,26 @@
+\contentsline {section}{\numberline {1.1}Struktur af Simpel-Snake}{2}
+\contentsline {subsection}{\numberline {1.1.1}Styring}{2}
+\contentsline {subsection}{\numberline {1.1.2}Model}{2}
+\contentsline {subsubsection}{Slange}{2}
+\contentsline {subsubsection}{View (Brugerflade)}{3}
+\contentsline {section}{\numberline {1.2}Udviklingsproces - Simpel Udgave}{3}
+\contentsline {subsection}{\numberline {1.2.1}Controller}{3}
+\contentsline {subsection}{\numberline {1.2.2}Model}{3}
+\contentsline {subsubsection}{Field vs. point til at bestemme koordinater}{3}
+\contentsline {subsubsection}{Opbygning af banen}{3}
+\contentsline {subsubsection}{Banens størrelse}{3}
+\contentsline {subsubsection}{Snake}{3}
+\contentsline {subsection}{\numberline {1.2.3}Brugerflade og visualisering af programmet}{4}
+\contentsline {subsubsection}{Tegning af banen}{4}
+\contentsline {subsubsection}{Vinduestørrelse}{4}
+\contentsline {section}{\numberline {1.3}Struktur af endelig version}{5}
+\contentsline {subsection}{\numberline {1.3.1}Styring}{5}
+\contentsline {subsection}{\numberline {1.3.2}Model}{5}
+\contentsline {subsection}{\numberline {1.3.3}Brugerflade}{5}
+\contentsline {section}{\numberline {1.4}Udviklingsproces af avanceret version}{5}
+\contentsline {subsection}{\numberline {1.4.1}Optegnelse af slange}{5}
+\contentsline {subsection}{\numberline {1.4.2}Lyd}{5}
+\contentsline {subsection}{\numberline {1.4.3}Hovedmenu}{5}
+\contentsline {subsection}{\numberline {1.4.4}Automatisk bevægelse}{5}
+\contentsline {subsection}{\numberline {1.4.5}Variatoner af baner}{5}
+\contentsline {subsection}{\numberline {1.4.6}Multiplayer}{5}

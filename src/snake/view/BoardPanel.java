@@ -16,6 +16,7 @@ public class BoardPanel extends JPanel implements Observer {
 	private Game game;
 	private BufferedImage apple, headUp, headDown, headLeft, headRight,
 			background;
+	private Rectangle playAgain;
 	private static final Color SNAKE_COLOUR = new Color(0.153f, 0.68f, 0.38f);
 	private static final Color BACKGROUND_COLOUR = new Color(0.7451f, 0.7647f,
 			0.78f);
@@ -175,6 +176,7 @@ public class BoardPanel extends JPanel implements Observer {
 		context.fillRect(x, y, width, height);
 
 		// Text
+		context.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		String gameOverTxt = "Game Over";
 		int x2 = getRectangleForBoard().x + getRectangleForBoard().width / 2
 				- gameOverTxt.length() * 30 / 2;
@@ -200,11 +202,20 @@ public class BoardPanel extends JPanel implements Observer {
 				- width4 / 2 + 100;
 		int y4 = y + height - height4 - 20;
 		context.setColor(YELLOW_COLOUR);
-		Rectangle playAgain = new Rectangle(x4, y4, width4, height4);
+		playAgain = new Rectangle(x4, y4, width4, height4);
 		context.fillRect(x4, y4, width4, height4);
 		context.fillRect(x42, y4, width4, height4);
+		
+		//text in buttons
+		context.setColor(PANEL_COLOUR);
+		context.drawString("Menu", x42 + 45, y4 + 30);
+		context.drawString("Play Again", x4 + 20, y4 + 30);
 	}
 
+	public Rectangle getPlayAgain() {
+		return playAgain;
+	}
+	
 	public int getFieldSideLength() {
 		Dimension windowSize = getSize();
 		Dimension gameSize = game.getBoard().getDimension();
