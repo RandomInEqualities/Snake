@@ -6,8 +6,8 @@ import snake.view.View;
 
 public class Driver {
 	
-	private static int WIDTH = 10;
-	private static int HEIGHT = 10;
+	private static int WIDTH = 5;
+	private static int HEIGHT = 5;
 	
 	@SuppressWarnings("unused")
 	public static final void main(String[] args) {
