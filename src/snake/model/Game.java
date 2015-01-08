@@ -3,6 +3,8 @@ package snake.model;
 
 import java.util.Observable;
 
+import snake.view.Audio;
+
 
 public class Game extends Observable {
 	
@@ -66,11 +68,13 @@ public class Game extends Observable {
 		
 		if (snakeEatsFood) {
 			score++;
+			Audio.eatApple();
 			food = Food.generateRandomFood(snake, board);
 		}
 		
 		if (snakeEatsItSelf) {
 			state = State.LOST;
+			Audio.endGame();
 		}
 		else if (snake.fillsBoard()) {
 			state = State.WON;
