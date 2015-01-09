@@ -4,7 +4,7 @@ package snake.model;
 import java.util.Observable;
 
 import snake.control.ControlKeys;
-import snake.control.ControlButton;
+import snake.control.ControlGame;
 import snake.control.ControlTimer;
 
 
@@ -31,7 +31,7 @@ public class Game extends Observable {
 	private Snake snake;
 	private Food food;
 	public boolean isMuted;
-	//public boolean menuStart;
+	public boolean menuStart;
 	private static final int DEFAULT_WIDTH = 10;
 	private static final int DEFAULT_HEIGHT = 5;
 
@@ -42,13 +42,12 @@ public class Game extends Observable {
 	public Game(int width, int height) {
 		super();
 		this.isMuted = false;
-		this.state = State.RUNNING;
-		/*this.menuStart = true;
+		this.menuStart = true;
 		if (menuStart) {
 			this.state = State.MENU;
 		} else {
 			this.state = State.RUNNING;
-		}*/
+		}
 		this.score = 0;
 		this.board = new Board(width, height);
 		this.snake = new Snake(this.board);

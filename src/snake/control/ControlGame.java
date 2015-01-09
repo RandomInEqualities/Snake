@@ -12,13 +12,13 @@ import javax.swing.JList;
 import snake.model.Game;
 import snake.view.*;
 
-public class ControlButton extends MouseAdapter {
+public class ControlGame extends MouseAdapter {
 
 	private Game game;
 	private View view;
 	private int xfix = 10;
 	private int yfix = 100;
-	public ControlButton(Game game, View view) {
+	public ControlGame(Game game, View view) {
 		view.addMouseMotionListener(this);
 		view.addMouseListener(this);
 		this.game = game;

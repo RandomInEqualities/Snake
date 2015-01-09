@@ -15,13 +15,13 @@ public class View extends JFrame implements Observer {
 	private Game game;
 	private BoardPanel boardPanel;
 	private ScorePanel scorePanel;
-	//private Menu menu;
+	private Menu menu;
 	private Audio audio;
 
 	public View(Game game) {
 		super();
 		ControlTimer control = new ControlTimer(game, this);
-		ControlButton controlButton = new ControlButton(game, this);
+		ControlGame controlButton = new ControlGame(game, this);
 		ControlKeys controlKeys = new ControlKeys(game, this);
 		
 		if (game == null) {
@@ -31,12 +31,19 @@ public class View extends JFrame implements Observer {
 		game.addObserver(this);
 		this.game = game;
 		this.boardPanel = new BoardPanel(game);
-		this.scorePanel = new ScorePanel(game, boardPanel);
-		//this.menu = new Menu(game);
+		this.menu = new Menu(game, boardPanel);
+		this.scorePanel = new ScorePanel(game, boardPanel, menu);
 		this.audio = new Audio(game);
 	
 		getContentPane().add(scorePanel, BorderLayout.NORTH);
-		getContentPane().add(boardPanel, BorderLayout.CENTER);
+		
+		if (game.getState() == Game.State.RUNNING) {
+			getContentPane().add(boardPanel, BorderLayout.CENTER);
+			setTitle("Snake");
+		} 
+		if (game.getState() == Game.State.MENU){
+			getContentPane().add(menu, BorderLayout.CENTER);
+		}
 
 		setTitle("Snake");
 		
@@ -45,6 +52,7 @@ public class View extends JFrame implements Observer {
 		pack();
 		setLocationRelativeTo(null);
 	}
+
 	
 	public void update(Observable o, Object arg) {
 		repaint();
@@ -52,6 +60,10 @@ public class View extends JFrame implements Observer {
 	
 	public BoardPanel getBoard() {
 		return boardPanel;
+	}
+	
+	public Menu getMenu() {
+		return menu;
 	}
 }
 

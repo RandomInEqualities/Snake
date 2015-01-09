@@ -11,7 +11,7 @@ import snake.model.*;
 public class BoardPanel extends JPanel implements Observer {
 
 	private Game game;
-	private BufferedImage apple, headUp, headDown, headLeft, headRight, snakeCornerRU, snakeCornerLU, snakeCornerRD, snakeCornerLD, snakeHorizontal, snakeVertical, background, gameOverTitle, pausedTitle;
+	private CustomImages images;
 	private Rectangle playAgain;
 	private Rectangle menu;
 	private static final long serialVersionUID = 9109362543987437505L;
@@ -31,25 +31,7 @@ public class BoardPanel extends JPanel implements Observer {
 		this.game = game;
 		game.addObserver(this);
 		setBackground(CustomColor.PANEL_COLOUR);
-		// Load the board images.
-		try {
-			apple = ImageIO.read(new File("apple.png"));
-			headUp = ImageIO.read(new File("SnakeHeadU.png"));
-			headDown = ImageIO.read(new File("SnakeHeadD.png"));
-			headLeft = ImageIO.read(new File("SnakeHeadL.png"));
-			headRight = ImageIO.read(new File("SnakeHeadR.png"));
-			snakeCornerRU = ImageIO.read(new File("SnakeCornerRU.png"));
-			snakeCornerLU = ImageIO.read(new File("SnakeCornerLU.png"));
-			snakeCornerRD = ImageIO.read(new File("SnakeCornerRD.png"));
-			snakeCornerLD = ImageIO.read(new File("SnakeCornerLD.png"));
-			snakeHorizontal = ImageIO.read(new File("SnakeHorizontal.png"));
-			snakeVertical = ImageIO.read(new File("SnakeVertical.png"));
-			background = ImageIO.read(new File("TileBackground.png"));
-			gameOverTitle = ImageIO.read(new File("TitleGameOver.png"));
-			pausedTitle = ImageIO.read(new File("TitlePaused.png"));
-		} catch (IOException error) {
-			throw new RuntimeException("Image not found: " + error.getMessage());
-		}
+		images = new CustomImages();
 	}
 
 	public @Override void update(Observable o, Object arg) {
@@ -62,10 +44,10 @@ public class BoardPanel extends JPanel implements Observer {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		
 		// Wrap window around board
-		if (game.getBoard().getHeight() > game.getBoard().getWidth() + 20) { // if board is narrow
+		if (game.getBoard().getHeight() > game.getBoard().getWidth()) { // if board is narrow
 			x = ((int)screenSize.getWidth()-1200);
 			y = ((int)screenSize.getHeight()-200);
-		} else if (game.getBoard().getWidth() > game.getBoard().getHeight() + 20) { // if board is wide
+		} else if (game.getBoard().getWidth() > game.getBoard().getHeight()) { // if board is wide
 			x = ((int)screenSize.getWidth()-300);
 			y = ((int)screenSize.getHeight()-300);
 		} else { // if board is (approximately) square
@@ -80,7 +62,7 @@ public class BoardPanel extends JPanel implements Observer {
 		super.paintComponent(context);
 
 		Graphics2D context2D = (Graphics2D) context;
-		drawBackground(context2D);
+		drawBackground(context2D, getWidth(), getHeight());
 		drawBoard(context2D);
 		drawFood(context2D);
 		drawSnake(context2D);
@@ -92,10 +74,10 @@ public class BoardPanel extends JPanel implements Observer {
 	}
 
 	//Tile background
-	private void drawBackground(Graphics2D context) {
-		for (int x = 0; x < getWidth(); x += background.getWidth()) {
-			for (int y = 0; y < getHeight(); y += background.getHeight()) {
-				context.drawImage(background, x, y, this);
+	public void drawBackground(Graphics2D context, int width, int height) {
+		for (int x = 0; x < width; x += images.background.getWidth()) {
+			for (int y = 0; y < height; y += images.background.getHeight()) {
+				context.drawImage(images.background, x, y, this);
 			}
 		}
 	}
@@ -112,12 +94,12 @@ public class BoardPanel extends JPanel implements Observer {
 		Rectangle fieldSize = getRectangleForField(snake.getPositions().get(j));
 			//Loop tegner slangen
 			for (int i = 0; i<snake.getBody().size(); i++){
-				//Undersøger første led
+				//Undersï¿½ger fï¿½rste led
 				if(snake.getBody().get(i).getPrevLink() == Direction.LEFT){
-					//Undersøger andet led
+					//Undersï¿½ger andet led
 					if(snake.getBody().get(i).getNextLink() == Direction.RIGHT){
 						//Tegner leddet
-						Image verticalScaled = snakeVertical.getScaledInstance(fieldSize.width,
+						Image verticalScaled = images.snakeVertical.getScaledInstance(fieldSize.width,
 							fieldSize.height, Image.SCALE_SMOOTH);
 						context.drawImage(verticalScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
@@ -128,7 +110,7 @@ public class BoardPanel extends JPanel implements Observer {
 						//Draw LD at position
 					}
 				}
-				//Undersøger første led 
+				//Undersï¿½ger fï¿½rste led 
 				else if(snake.getBody().get(i).getPrevLink() == Direction.RIGHT){
 					if(snake.getBody().get(i).getNextLink() == Direction.LEFT){
 						//Draw vertical at position
@@ -140,7 +122,7 @@ public class BoardPanel extends JPanel implements Observer {
 						//Draw RD at position
 					}
 				}
-				//første led blah blah
+				//fï¿½rste led blah blah
 				else if(snake.getBody().get(i).getPrevLink() == Direction.UP){
 					if(snake.getBody().get(i).getNextLink() == Direction.DOWN){
 						//Draw horizontal at position
@@ -152,7 +134,7 @@ public class BoardPanel extends JPanel implements Observer {
 						//Draw LU at position
 					}
 				}
-				//første led
+				//fï¿½rste led
 				else if(snake.getBody().get(i).getPrevLink() == Direction.DOWN){
 					if(snake.getBody().get(i).getNextLink() == Direction.UP){
 							//Draw horizontal at position
@@ -171,16 +153,16 @@ public class BoardPanel extends JPanel implements Observer {
 		Image head = null;
 		switch (snake.getHeadDirection()) {
 		case UP:
-			head = headUp;
+			head = images.headUp;
 			break;
 		case DOWN:
-			head = headDown;
+			head = images.headDown;
 			break;
 		case LEFT:
-			head = headLeft;
+			head = images.headLeft;
 			break;
 		case RIGHT:
-			head = headRight;
+			head = images.headRight;
 			break;
 		}
 		
@@ -192,7 +174,7 @@ public class BoardPanel extends JPanel implements Observer {
 	private void drawFood(Graphics2D context) {
 		Rectangle foodRectangle = getRectangleForField(game.getFood()
 				.getPosition());
-		Image scaledApple = apple.getScaledInstance(foodRectangle.width, foodRectangle.height, Image.SCALE_SMOOTH);
+		Image scaledApple = images.apple.getScaledInstance(foodRectangle.width, foodRectangle.height, Image.SCALE_SMOOTH);
 		context.drawImage(scaledApple, foodRectangle.x, foodRectangle.y, null);
 	}
 
@@ -240,9 +222,9 @@ public class BoardPanel extends JPanel implements Observer {
 		drawPopup(context);
 		
 		//Title
-		int x2 = getRectangleForBoard().x + getRectangleForBoard().width / 2 - gameOverTitle.getWidth()/2;
+		int x2 = getRectangleForBoard().x + getRectangleForBoard().width / 2 - images.gameOverTitle.getWidth()/2;
 		int y2 = yPopup;;
-		context.drawImage(gameOverTitle, x2, y2, null);
+		context.drawImage(images.gameOverTitle, x2, y2, null);
 		
 		// Text
 		String scoreTxt = "Final Score: " + game.getScore();
@@ -274,9 +256,9 @@ public class BoardPanel extends JPanel implements Observer {
 		drawPopup(context);
 		
 		//Title
-		int x2 = getRectangleForBoard().x + getRectangleForBoard().width / 2 - pausedTitle.getWidth()/2;
+		int x2 = getRectangleForBoard().x + getRectangleForBoard().width / 2 - images.pausedTitle.getWidth()/2;
 		int y2 = yPopup;
-		context.drawImage(pausedTitle, x2, y2, null);
+		context.drawImage(images.pausedTitle, x2, y2, null);
 		
 		//Text
 		String pauseMessage = "Press 'P' to resume game";
