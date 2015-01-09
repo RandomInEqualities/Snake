@@ -22,7 +22,8 @@ public class Game extends Observable {
 		MOVE,
 		EAT,
 		DIE,
-		RESTART
+		RESTART,
+		MENU
 	}
 	
 	private State state;
@@ -42,7 +43,7 @@ public class Game extends Observable {
 	public Game(int width, int height) {
 		super();
 		this.isMuted = false;
-		this.menuStart = true;
+		this.menuStart = false;
 		if (menuStart) {
 			this.state = State.MENU;
 		} else {
@@ -101,15 +102,22 @@ public class Game extends Observable {
 		
 		// Notify the observing classes that the game changed. We send an argument
 		// with the type of event that happened.
-		Event event;
-		if (snakeEatsItSelf) {
-			event = Event.DIE;
-		}
-		else if (snakeEatsFood) {
-			event = Event.EAT;
-		}
-		else {
-			event = Event.MOVE;
+		Event event = null;
+		if (getState() == State.RUNNING) {
+			if (snakeEatsItSelf) {
+				event = Event.DIE;
+			}
+			else if (snakeEatsFood) {
+				event = Event.EAT;
+			}
+			else {
+				event = Event.MOVE;
+			}
+		} 
+		if (getState() == State.MENU) {
+			if(menuStart) {
+				event = Event.MENU;
+			}
 		}
 		setChanged();
 		notifyObservers(event);
@@ -124,6 +132,14 @@ public class Game extends Observable {
 		// Notify classes that the game changed.
 		setChanged();
 		notifyObservers(Event.RESTART);
+	}
+	
+	public void openMenu() {
+		menuStart = true;
+		state = State.MENU;
+		// Notify classes that the game changed.
+		setChanged();
+		notifyObservers();
 	}
 	
 }

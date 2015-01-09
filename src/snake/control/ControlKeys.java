@@ -53,7 +53,7 @@ public class ControlKeys extends KeyAdapter {
 				}
 				break;
 			case KeyEvent.VK_ESCAPE:
-				//return to menu
+				game.openMenu();
 				break;
 		}
 		
