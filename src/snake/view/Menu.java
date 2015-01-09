@@ -26,25 +26,25 @@ public class Menu extends JPanel{
 
 		Graphics2D context2D = (Graphics2D) context;
 		board.drawBackground(context2D, getWidth(), getHeight());
-		drawBoard(context2D);
+		drawBoard(context2D, getWidth());
 		drawMenu(context2D);
 	}
 
-	private void drawBoard(Graphics2D context) {
+	public void drawBoard(Graphics2D context, int width) {
 		context.setColor(CustomColor.BOARD_COLOUR);
-		context.fill(getRectangleForMenu());
+		context.fill(getRectangleForMenu(width));
 	}
 
 	private void drawMenu(Graphics2D context) {
 		context.setColor(CustomColor.PANEL_COLOUR);
 		context.setFont(new Font("Sans_Serif", Font.BOLD, 25));
 		int menuHeight = 53;
-		context.drawString("Menu", getWidth()/2-35, getRectangleForMenu().y+menuHeight);
+		context.drawString("Menu", getWidth()/2-35, getRectangleForMenu(getWidth()).y+menuHeight);
 
 		// Buttons
 		int width = 150;
 		int height = 40;
-		int x = getRectangleForMenu().x + getRectangleForMenu().width / 2 - width/2;
+		int x = getRectangleForMenu(getWidth()).x + getRectangleForMenu(getWidth()).width / 2 - width/2;
 		int y = 60;
 		context.setColor(CustomColor.PANEL_COLOUR);
 		singleplayer = new Rectangle(x, y + menuHeight, width, height);
@@ -95,16 +95,11 @@ public class Menu extends JPanel{
 		return new Dimension(screenSize.height-250, screenSize.height-250);
 	}
 
-	public Rectangle getRectangleForMenu() {
-		Dimension windowSize = getSize();
-		Dimension gameSize = game.getBoard().getDimension();
-		int fieldSideLength = windowSize.width / gameSize.width;
-
+	public Rectangle getRectangleForMenu(int width) {
 		int offsetHeight = 10;
-		int offsetWidth = (getWidth() - 500) /2;
+		int offsetWidth = (width - 500) /2;
 
-		Rectangle rectangle = new Rectangle(offsetWidth, offsetHeight,
-				500, 400);
+		Rectangle rectangle = new Rectangle(offsetWidth, offsetHeight, 500, 400);
 		return rectangle;
 	}
 

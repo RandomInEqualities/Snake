@@ -16,6 +16,7 @@ public class View extends JFrame implements Observer {
 	private BoardPanel boardPanel;
 	private ScorePanel scorePanel;
 	private Menu menu;
+	private Singleplayer splayer;
 	private Audio audio;
 
 	public View(Game game) {
@@ -32,10 +33,13 @@ public class View extends JFrame implements Observer {
 		this.game = game;
 		this.boardPanel = new BoardPanel(game);
 		this.menu = new Menu(game, boardPanel);
-		this.scorePanel = new ScorePanel(game, boardPanel, menu);
+		this.scorePanel = new ScorePanel(game, boardPanel);
+		this.splayer = new Singleplayer(game, boardPanel, menu);
 		this.audio = new Audio(game);
-	
+		
 		getContentPane().add(scorePanel, BorderLayout.NORTH);
+		getContentPane().add(splayer, BorderLayout.CENTER);
+		/*
 		
 		if (game.getState() == Game.State.RUNNING) {
 			getContentPane().add(boardPanel, BorderLayout.CENTER);
@@ -43,12 +47,12 @@ public class View extends JFrame implements Observer {
 		} 
 		if (game.getState() == Game.State.MENU){
 			getContentPane().add(menu, BorderLayout.CENTER);
-		}
+		}*/
 
 		setTitle("Snake");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setMinimumSize(new Dimension(525, 400));
+		setMinimumSize(new Dimension(550, 550));
 		pack();
 		setLocationRelativeTo(null);
 	}
