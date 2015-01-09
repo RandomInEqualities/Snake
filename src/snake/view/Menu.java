@@ -23,7 +23,6 @@ public class Menu extends JPanel{
 
 	protected @Override void paintComponent(Graphics context) {
 		super.paintComponent(context);
-
 		Graphics2D context2D = (Graphics2D) context;
 		board.drawBackground(context2D, getWidth(), getHeight());
 		drawBoard(context2D, getWidth());
@@ -81,7 +80,7 @@ public class Menu extends JPanel{
 		return controls;
 	}
 	
-	public Rectangle getHighScore() {
+	public Rectangle getHighscore() {
 		return highscore;
 	}
 	

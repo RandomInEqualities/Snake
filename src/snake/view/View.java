@@ -3,7 +3,9 @@ package snake.view;
 
 import java.awt.*;
 import java.util.*;
+
 import javax.swing.*;
+
 import snake.control.*;
 import snake.model.*;
 
@@ -24,6 +26,8 @@ public class View extends JFrame implements Observer {
 		ControlTimer control = new ControlTimer(game, this);
 		ControlGame controlButton = new ControlGame(game, this);
 		ControlKeys controlKeys = new ControlKeys(game, this);
+		ControlMenu controlMenu = new ControlMenu(game, this);
+				
 		
 		if (game == null) {
 			throw new NullPointerException();
@@ -55,6 +59,7 @@ public class View extends JFrame implements Observer {
 		setMinimumSize(new Dimension(550, 550));
 		pack();
 		setLocationRelativeTo(null);
+		
 	}
 
 	

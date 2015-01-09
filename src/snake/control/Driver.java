@@ -35,10 +35,9 @@ public class Driver {
 			printErrorMessage();
 			return;
 		}
-		
 		// Create the view which displays the game in a window.
 		View view = new View(game);
-				
+		
 		// Show the window.
 		view.setVisible(true);
 	}

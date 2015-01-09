@@ -31,7 +31,7 @@ public class ControlGame extends MouseAdapter {
 				game.restart();
 				view.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			} else if(view.getBoard().getMenu().contains(e.getX()- xfix, e.getY()-yfix)){
-				//return to menu
+				game.openMenu();
 				view.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 		}
