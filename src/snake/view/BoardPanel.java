@@ -110,6 +110,12 @@ public class BoardPanel extends JPanel implements Observer {
 		Snake snake = game.getSnake();
 		for(int j = 1; j<snake.getPositions().size(); j++){
 		Rectangle fieldSize = getRectangleForField(snake.getPositions().get(j));
+		Image horizontalScaled = snakeHorizontal.getScaledInstance(fieldSize.width, fieldSize.height, Image.SCALE_SMOOTH);
+		Image verticalScaled = snakeVertical.getScaledInstance(fieldSize.width, fieldSize.height, Image.SCALE_SMOOTH);
+		Image RUScaled = snakeVertical.getScaledInstance(fieldSize.width, fieldSize.height, Image.SCALE_SMOOTH);
+		Image LUScaled = snakeVertical.getScaledInstance(fieldSize.width, fieldSize.height, Image.SCALE_SMOOTH);
+		Image RDScaled = snakeVertical.getScaledInstance(fieldSize.width, fieldSize.height, Image.SCALE_SMOOTH);
+		Image LDScaled = snakeVertical.getScaledInstance(fieldSize.width, fieldSize.height, Image.SCALE_SMOOTH);
 			//Loop tegner slangen
 			for (int i = 0; i<snake.getBody().size(); i++){
 				//Undersøger første led
@@ -117,51 +123,49 @@ public class BoardPanel extends JPanel implements Observer {
 					//Undersøger andet led
 					if(snake.getBody().get(i).getNextLink() == Direction.RIGHT){
 						//Tegner leddet
-						Image verticalScaled = snakeVertical.getScaledInstance(fieldSize.width,
-							fieldSize.height, Image.SCALE_SMOOTH);
-						context.drawImage(verticalScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
+						context.drawImage(horizontalScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 					else if(snake.getBody().get(i).getNextLink() == Direction.UP){
-						//Draw LU at position
+						context.drawImage(LUScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 					else if(snake.getBody().get(i).getNextLink() == Direction.DOWN){
-						//Draw LD at position
+						context.drawImage(LDScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 				}
 				//Undersøger første led 
 				else if(snake.getBody().get(i).getPrevLink() == Direction.RIGHT){
 					if(snake.getBody().get(i).getNextLink() == Direction.LEFT){
-						//Draw vertical at position
+						context.drawImage(horizontalScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 					else if(snake.getBody().get(i).getNextLink() == Direction.UP){
-						//Draw RU at position
+						context.drawImage(RUScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 					else if(snake.getBody().get(i).getNextLink() == Direction.DOWN){
-						//Draw RD at position
+						context.drawImage(RDScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 				}
 				//første led blah blah
 				else if(snake.getBody().get(i).getPrevLink() == Direction.UP){
 					if(snake.getBody().get(i).getNextLink() == Direction.DOWN){
-						//Draw horizontal at position
+						context.drawImage(verticalScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 					else if(snake.getBody().get(i).getNextLink() == Direction.RIGHT){
-						//Draw RU at position
+						context.drawImage(RUScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 					else if(snake.getBody().get(i).getNextLink() == Direction.LEFT){
-						//Draw LU at position
+						context.drawImage(LUScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 				}
 				//første led
 				else if(snake.getBody().get(i).getPrevLink() == Direction.DOWN){
 					if(snake.getBody().get(i).getNextLink() == Direction.UP){
-							//Draw horizontal at position
+						context.drawImage(verticalScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 					else if(snake.getBody().get(i).getNextLink() == Direction.LEFT){
-						//Draw LD at position
+						context.drawImage(LDScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 					else if(snake.getBody().get(i).getNextLink() == Direction.RIGHT){
-						//Draw RD at position
+						context.drawImage(RDScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 				}
 			}
