@@ -62,10 +62,10 @@ public class BoardPanel extends JPanel implements Observer {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		
 		// Wrap window around board
-		if (game.getBoard().getHeight() > game.getBoard().getWidth() + 20) { // if board is narrow
+		if (game.getBoard().getHeight() > game.getBoard().getWidth()) { // if board is narrow
 			x = ((int)screenSize.getWidth()-1200);
 			y = ((int)screenSize.getHeight()-200);
-		} else if (game.getBoard().getWidth() > game.getBoard().getHeight() + 20) { // if board is wide
+		} else if (game.getBoard().getWidth() > game.getBoard().getHeight()) { // if board is wide
 			x = ((int)screenSize.getWidth()-300);
 			y = ((int)screenSize.getHeight()-300);
 		} else { // if board is (approximately) square
