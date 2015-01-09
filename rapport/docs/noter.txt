@@ -1,0 +1,27 @@
+global static score class
+	SINGLETON vs ordinary classes
+class responsibility
+	snake with gameover
+git til prototype 
+	hindre 4 personer i at lave noget hele tiden
+	dropbox bedre?
+immutable types in java 
+	getters can not change immutable objects
+	Enforces constness.
+	Requires more allocations. Each time you want to change it you need to construct a new object.
+const reference return in java
+	Ways to do it:
+		return immutable object.
+		return primitive object.
+		return copy.
+		For a List (and Map,Set,etc) we can use Collections.unmodifiableList(arraylist)
+	http://stackoverflow.com/questions/4262434/returning-const-reference-of-an-arraylist
+use package private (no public or private) to hide internal communication!
+	Particularly in Snake to Game communication.
+	Gives consistent and clear interface!
+	http://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html
+Board class vs Dimension object as board.
+	Good with a board class:
+		Typesafe versus Dimension.
+		can have specific board methods.
+		Board is selfdocumenting versus a Dimension object.
