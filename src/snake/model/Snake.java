@@ -1,4 +1,3 @@
-
 package snake.model;
 
 import java.util.Collections;
@@ -11,7 +10,7 @@ public class Snake {
 	private Board board;
 	private Direction headDirection;
 	private ArrayList<Field> positions;
-
+	private ArrayList<Body> body;
 	public Snake(Board board) {
 		if (board == null) {
 			throw new NullPointerException();
@@ -19,6 +18,7 @@ public class Snake {
 		
 		this.board = board;
 		this.positions = new ArrayList<>();
+		this.body = new ArrayList<>();
 		setupStartingSnake();
 	}
 	
@@ -109,6 +109,8 @@ public class Snake {
 		Field head = new Field(center.getRow(), center.getColumn());
 		Field tail = new Field(center.getRow(), center.getColumn() + 1);
 		headDirection = Direction.LEFT;
+		body.add(new Body());
+		body.get(0).prevLink = Direction.LEFT;
 		positions.clear();
 		positions.add(head);
 		positions.add(tail);
