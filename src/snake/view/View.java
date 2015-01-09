@@ -35,7 +35,7 @@ public class View extends JFrame implements Observer {
 
 		getContentPane().add(scorePanel, BorderLayout.NORTH);
 		getContentPane().add(boardPanel, BorderLayout.CENTER);
-		
+
 		setTitle("Snake");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,22 +46,6 @@ public class View extends JFrame implements Observer {
 	
 	public void update(Observable o, Object arg) {
 		repaint();
-	}
-	
-	public void displayEndGameDialog(String message, String title) {
-		
-		String[] options = {"Restart", "Quit"};
-		
-		int selection = JOptionPane.showOptionDialog(this, message, title, JOptionPane.YES_NO_OPTION,	JOptionPane.QUESTION_MESSAGE,null, options,options[0]);
-		
-		if (selection == 0) {
-			game.restart();
-		}
-		else {
-			// Close the window.
-			setVisible(false);
-			dispose();
-		}
 	}
 	
 	public BoardPanel getBoard() {
