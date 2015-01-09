@@ -62,5 +62,4 @@ public class Board {
 	public Field wrap(Field field) {
 		return wrap(field.getRow(), field.getColumn());
 	}
-	
 }

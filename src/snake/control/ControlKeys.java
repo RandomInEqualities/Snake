@@ -8,13 +8,13 @@ import snake.model.*;
 import snake.model.Game.State;
 import snake.view.*;
 
-public class Control extends KeyAdapter {
+public class ControlKeys extends KeyAdapter {
 	
 	private Game game;
 	private ControlTimer controlTimer;
 	private View view;
 	
-	public Control(Game game, View view) {
+	public ControlKeys(Game game, View view) {
 		if (view == null || game == null) {
 			throw new NullPointerException();
 		}

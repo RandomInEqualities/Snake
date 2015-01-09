@@ -54,17 +54,18 @@ public class BoardPanel extends JPanel implements Observer {
 	public @Override Dimension getPreferredSize() {
 		int x;
 		int y;
-
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		
 		// Wrap window around board
 		if (game.getBoard().getHeight() > game.getBoard().getWidth() + 20) { // if board is narrow
-			x = 500;
-			y = 800;
+			x = ((int)screenSize.getWidth()-1200);
+			y = ((int)screenSize.getHeight()-200);
 		} else if (game.getBoard().getWidth() > game.getBoard().getHeight() + 20) { // if board is wide
-			x = 800;
-			y = 500;
+			x = ((int)screenSize.getWidth()-300);
+			y = ((int)screenSize.getHeight()-300);
 		} else { // if board is (approximately) square
-			x = 800;
-			y = 800;
+			x = ((int)screenSize.getHeight()-200);
+			y = ((int)screenSize.getHeight()-200);
 		}
 		return new Dimension(x, y);
 
@@ -240,14 +241,12 @@ public class BoardPanel extends JPanel implements Observer {
 		Dimension windowSize = getSize();
 		Dimension gameSize = game.getBoard().getDimension();
 		int fieldWidth = windowSize.width / gameSize.width;
-		int fieldHeight = windowSize.height / gameSize.height;
-
+		int fieldHeight = (windowSize.height-20) / gameSize.height;
 		if (fieldWidth >= fieldHeight) {
 			fieldWidth = fieldHeight;
 		} else {
 			fieldHeight = fieldWidth;
 		}
-		// Bottom gap.
-		return fieldWidth-4;
+		return fieldWidth;
 	}
 }

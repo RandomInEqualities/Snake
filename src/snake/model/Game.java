@@ -3,7 +3,7 @@ package snake.model;
 
 import java.util.Observable;
 
-import snake.control.Control;
+import snake.control.ControlKeys;
 import snake.control.ControlButton;
 import snake.control.ControlTimer;
 
@@ -14,7 +14,8 @@ public class Game extends Observable {
 		RUNNING,
 		WON,
 		LOST,
-		PAUSED
+		PAUSED,
+		MENU
 	}
 	
 	public enum Event {
@@ -30,8 +31,9 @@ public class Game extends Observable {
 	private Snake snake;
 	private Food food;
 	public boolean isMuted;
+	public boolean menuStart;
 	private static final int DEFAULT_WIDTH = 10;
-	private static final int DEFAULT_HEIGHT = 10;
+	private static final int DEFAULT_HEIGHT = 5;
 
 	public Game() {
 		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -40,7 +42,12 @@ public class Game extends Observable {
 	public Game(int width, int height) {
 		super();
 		this.isMuted = false;
-		this.state = State.RUNNING;
+		this.menuStart = true;
+		if (menuStart) {
+			this.state = State.MENU;
+		} else {
+			this.state = State.RUNNING;
+		}
 		this.score = 0;
 		this.board = new Board(width, height);
 		this.snake = new Snake(this.board);
