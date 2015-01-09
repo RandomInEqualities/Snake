@@ -1,0 +1,61 @@
+
+\documentclass[10pt,a4paper,oneside]{article}
+\usepackage[utf8]{inputenc} 	%UTF-8 encoding
+\usepackage{graphicx} 			%Include images with \includegraphics
+\usepackage{pdfpages} 			%Including pdf pages
+\usepackage{amsmath} 			%Math formulas
+\usepackage{amsfonts} 			%Math formulas
+\usepackage{amssymb} 			%Math formulas
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+% Bibtex
+	\usepackage[square]{natbib} %Natbib with square brackets
+	\setcitestyle{numbers} %Natbib with short links e.g. [1].
+	\renewcommand\bibname{References} %Name of the reference chapter.
+	% Example citations: \cite{<name>} or \cite[p.~30]{<name>}
+% Bibtex
+
+% toc, lof, lot
+	\usepackage[ 	 	%Hyperlinks in table of contents, lof, equations, citations.
+		hidelinks, 		%Hide blue boxes around links.
+		pdfpagelabels 	%Have PDF page navigation use both roman and arabic notation.
+	]{hyperref}
+	\usepackage{tocloft} 
+	\renewcommand\cftloftitlefont{\Large\bfseries} %Correct lof title font and size
+% toc, lof, lot
+
+% code
+	\usepackage{listings} %Syntax highlighting
+	\usepackage{color} %for defining colors
+	% Include code with \lstinputlisting{Main.cpp}.
+	% Include code snippet with \begin{lstlisting} code \end{lstlisting}.
+% code
+
+% Page Setup
+	\usepackage{geometry}
+	\setlength{\parindent}{0cm} %Indentation after a paragraph.
+	\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+% Page Setup
+
+% Page Headers
+	% www.texblog.org/2007/11/07/headerfooter-in-latex-with-fancyhdr/
+	\usepackage{fancyhdr} %Use \pagestyle{fancy} to show headers.
+	\fancyhead[L]{\slshape Harmonic oscillator in heat bath}  
+	\fancyhead[C]{3rd October 2013}
+	\fancyhead[R]{Name \\ email@gmail.com}
+	\fancyfoot[C]{\thepage}
+	\setlength{\headheight}{23pt} %To supress stupid warning
+% Page Headers
+
+%User defined commands in texdef.tex
+\input{texdefs.tex}
+
+\begin{document}
+
+\include{content/Frontpage}\newpage
+\include{content/Preface}\newpage
+\include{content/InitialDraft}\newpage
+
+\end{document}
