@@ -1,5 +1,5 @@
 
-\documentclass[10pt,a4paper,oneside]{article}
+\documentclass[10pt,a4paper,oneside]{report}
 \usepackage[utf8]{inputenc} 	%UTF-8 encoding
 \usepackage{graphicx} 			%Include images with \includegraphics
 \usepackage{pdfpages} 			%Including pdf pages
@@ -55,6 +55,9 @@
 \begin{document}
 
 \include{content/frontpage}\newpage
-\include{content/introduction}\newpage
+\include{content/introduktion}\newpage
+\title{References}
+\bibliographystyle{plainnat}
+\bibliography{referencer}
 
 \end{document}
