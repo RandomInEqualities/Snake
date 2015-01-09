@@ -44,6 +44,10 @@ public class Snake {
 		return Collections.unmodifiableList(positions);
 	}
 	
+	public List<Body> getBody() {
+		return Collections.unmodifiableList(body);
+	}
+	
 	public int getSize() {
 		return positions.size();
 	}

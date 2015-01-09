@@ -102,12 +102,56 @@ public class BoardPanel extends JPanel implements Observer {
 	}
 
 	private void drawSnake(Graphics2D context) {
+		/* SKITSE TIL NYT DESIGN
+		 * Snake snake = game.getSnake();
+		 * context.setColor(CustomColor.SNAKE_COLOUR);
+		 * 
+		 * private void drawMiddleSpot(){
+		 * 	for(int i = 0; i<snake.getPositions().size(); i++ {
+		 * 		Draw middle spot at field
+		 * 	}
+		 * }
+		 * private void drawPrevLink(){
+		 * 	for(int i = 0; i<snake.getPositions().size(); i++) {
+		 * 		//Draw snake at position
+		 * 		if(snake.getBody.get(i).prevLink == Direction.LEFT){
+		 * 			//Draw left spot at field
+		 * 		}
+		 * 		if(snake.getBody.get(i).prevLink == Direction.RIGHT){
+		 * 			//Draw right spot at field
+		 * 		}
+		 * 		if(snake.getBody.get(i).prevLink == Direction.UP){
+		 * 			//Draw upper spot at field
+		 * 		}
+		 * 		if(snake.getBody.get(i).prevLink == Direction.DOWN){
+		 * 			//Draw lower spot at field
+		 * 		}
+		 *	}
+		 *}
+		 *
+		 *private void drawNextLink(){
+		 * 	for(int i = 0; i<snake.getPositions().size(); i++) {
+		 * 		//Draw snake at positions
+		 * 		if(snake.getBody.get(i).nextLink == Direction.LEFT){
+		 * 			//Draw left spot at field
+		 * 		}
+		 * 		if(snake.getBody.get(i).nextLink == Direction.RIGHT){
+		 * 			//Draw right spot at field
+		 * 		}
+		 * 		if(snake.getBody.get(i).nextLink == Direction.UP){
+		 * 			//Draw upper spot at field
+		 * 		}
+		 * 		if(snake.getBody.get(i).nextLink == Direction.DOWN){
+		 * 			//Draw lower spot at field
+		 * 		}
+		 *	}
+		 *}
+		 */
 		Snake snake = game.getSnake();
-
 		// Draw the whole snake.
 		context.setColor(CustomColor.SNAKE_COLOUR);
 		for (Field position : snake.getPositions()) {
-			context.fill(getRectangleForField(position));
+			context.fillRect(getRectangleForField(position).x,getRectangleForField(position).y,getRectangleForField(position).width/3,getRectangleForField(position).height/3);
 		}
 
 		// Draw the with a different colour.
