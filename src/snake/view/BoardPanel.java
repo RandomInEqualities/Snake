@@ -92,6 +92,12 @@ public class BoardPanel extends JPanel implements Observer {
 		Snake snake = game.getSnake();
 		for(int j = 1; j<snake.getPositions().size(); j++){
 		Rectangle fieldSize = getRectangleForField(snake.getPositions().get(j));
+		Image horizontalScaled = images.snakeHorizontal.getScaledInstance(fieldSize.width, fieldSize.height, Image.SCALE_SMOOTH);
+		Image verticalScaled = images.snakeVertical.getScaledInstance(fieldSize.width, fieldSize.height, Image.SCALE_SMOOTH);
+		Image RUScaled = images.snakeVertical.getScaledInstance(fieldSize.width, fieldSize.height, Image.SCALE_SMOOTH);
+		Image LUScaled = images.snakeVertical.getScaledInstance(fieldSize.width, fieldSize.height, Image.SCALE_SMOOTH);
+		Image RDScaled = images.snakeVertical.getScaledInstance(fieldSize.width, fieldSize.height, Image.SCALE_SMOOTH);
+		Image LDScaled = images.snakeVertical.getScaledInstance(fieldSize.width, fieldSize.height, Image.SCALE_SMOOTH);
 			//Loop tegner slangen
 			for (int i = 0; i<snake.getBody().size(); i++){
 				//Unders�ger f�rste led
@@ -99,51 +105,41 @@ public class BoardPanel extends JPanel implements Observer {
 					//Unders�ger andet led
 					if(snake.getBody().get(i).getNextLink() == Direction.RIGHT){
 						//Tegner leddet
-						Image verticalScaled = images.snakeVertical.getScaledInstance(fieldSize.width,
-							fieldSize.height, Image.SCALE_SMOOTH);
-						context.drawImage(verticalScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
-					}
-					else if(snake.getBody().get(i).getNextLink() == Direction.UP){
-						//Draw LU at position
-					}
-					else if(snake.getBody().get(i).getNextLink() == Direction.DOWN){
-						//Draw LD at position
-					}
 				}
 				//Unders�ger f�rste led 
 				else if(snake.getBody().get(i).getPrevLink() == Direction.RIGHT){
 					if(snake.getBody().get(i).getNextLink() == Direction.LEFT){
-						//Draw vertical at position
+						context.drawImage(horizontalScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 					else if(snake.getBody().get(i).getNextLink() == Direction.UP){
-						//Draw RU at position
+						context.drawImage(RUScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 					else if(snake.getBody().get(i).getNextLink() == Direction.DOWN){
-						//Draw RD at position
+						context.drawImage(RDScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 				}
 				//f�rste led blah blah
 				else if(snake.getBody().get(i).getPrevLink() == Direction.UP){
 					if(snake.getBody().get(i).getNextLink() == Direction.DOWN){
-						//Draw horizontal at position
+						context.drawImage(verticalScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 					else if(snake.getBody().get(i).getNextLink() == Direction.RIGHT){
-						//Draw RU at position
+						context.drawImage(RUScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 					else if(snake.getBody().get(i).getNextLink() == Direction.LEFT){
-						//Draw LU at position
+						context.drawImage(LUScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 				}
 				//f�rste led
 				else if(snake.getBody().get(i).getPrevLink() == Direction.DOWN){
 					if(snake.getBody().get(i).getNextLink() == Direction.UP){
-							//Draw horizontal at position
+						context.drawImage(verticalScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 					else if(snake.getBody().get(i).getNextLink() == Direction.LEFT){
-						//Draw LD at position
+						context.drawImage(LDScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 					else if(snake.getBody().get(i).getNextLink() == Direction.RIGHT){
-						//Draw RD at position
+						context.drawImage(RDScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
 					}
 				}
 			}
@@ -169,6 +165,7 @@ public class BoardPanel extends JPanel implements Observer {
 		Image headScaled = head.getScaledInstance(headRectangle.width,
 				headRectangle.height, Image.SCALE_SMOOTH);
 		context.drawImage(headScaled, headRectangle.x, headRectangle.y, CustomColor.BOARD_COLOUR, null);
+		}
 	}
 
 	private void drawFood(Graphics2D context) {

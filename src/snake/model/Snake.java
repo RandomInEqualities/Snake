@@ -75,7 +75,6 @@ public class Snake {
 		if (moveDirection == getOppositeOf(headDirection)) {
 			return false;
 		}
-		
 		// Find the position to move into.
 		Field newHeadPosition = getNewHeadPosition(moveDirection);
 		
@@ -92,7 +91,7 @@ public class Snake {
 		// Move to the new position.
 		positions.add(0, newHeadPosition);
 		headDirection = moveDirection;
-		
+		updateBody(body);
 		return false;
 	}
 	
@@ -114,7 +113,6 @@ public class Snake {
 		Field tail = new Field(center.getRow(), center.getColumn() + 1);
 		headDirection = Direction.LEFT;
 		body.add(new Body());
-		body.get(0).prevLink = Direction.LEFT;
 		positions.clear();
 		positions.add(head);
 		positions.add(tail);
@@ -134,7 +132,16 @@ public class Snake {
 				throw new IllegalArgumentException();
 		}
 	}
-	
+	public void updateBody(ArrayList<Body> body){
+		for(int i = 0; i<body.size(); i++){
+			if(body.size()==1){
+				//½TODO: Fuldend funktion
+			}
+			if(body.size()>2){
+				
+			}
+		}
+	}
 	private static Direction getOppositeOf(Direction direction) {
 		switch (direction) {
 			case UP:
@@ -148,6 +155,5 @@ public class Snake {
 			default:
 				throw new IllegalArgumentException();
 		}
-	}
-	
+	}	
 }

@@ -13,8 +13,25 @@ public class Body {
 	public Direction getNextLink(){
 		return nextLink;
 	}
-
-	public void setLink(Field thisField, Field prevField, Field nextField){
+	public void setTail(Field thisField, Field prevField){
+		if(isLeft(thisField, prevField)==true){
+			prevLink = Direction.LEFT;
+			nextLink = Direction.RIGHT;
+		}
+		else if(isRight(thisField, prevField)==true){
+			prevLink = Direction.RIGHT;
+			nextLink = Direction.LEFT;
+		}
+		else if(isAbove(thisField, prevField)==true){
+			prevLink = Direction.UP;
+			nextLink = Direction.DOWN;
+		}
+		else if(isBelow(thisField, prevField)==true){
+			prevLink = Direction.DOWN;
+			nextLink = Direction.UP;
+		}
+	}
+	public void setMiddleLink(Field thisField, Field prevField, Field nextField){
 		//Set forward direction
 		if(isLeft(thisField, prevField)==true){
 			prevLink = Direction.LEFT;
