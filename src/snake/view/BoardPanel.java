@@ -11,7 +11,7 @@ import snake.model.*;
 public class BoardPanel extends JPanel implements Observer {
 
 	private Game game;
-	private BufferedImage apple, headUp, headDown, headLeft, headRight, background, gameOverTitle, pausedTitle;
+	private BufferedImage apple, headUp, headDown, headLeft, headRight, snakeCornerRU, snakeCornerLU, snakeCornerRD, snakeCornerLD, snakeHorizontal, snakeVertical, background, gameOverTitle, pausedTitle;
 	private Rectangle playAgain;
 	private Rectangle menu;
 	private static final long serialVersionUID = 9109362543987437505L;
@@ -31,14 +31,19 @@ public class BoardPanel extends JPanel implements Observer {
 		this.game = game;
 		game.addObserver(this);
 		setBackground(CustomColor.PANEL_COLOUR);
-
 		// Load the board images.
 		try {
 			apple = ImageIO.read(new File("apple.png"));
-			headUp = ImageIO.read(new File("head_up.png"));
-			headDown = ImageIO.read(new File("head_down.png"));
-			headLeft = ImageIO.read(new File("head_left.png"));
-			headRight = ImageIO.read(new File("head_right.png"));
+			headUp = ImageIO.read(new File("SnakeHeadU.png"));
+			headDown = ImageIO.read(new File("SnakeHeadD.png"));
+			headLeft = ImageIO.read(new File("SnakeHeadL.png"));
+			headRight = ImageIO.read(new File("SnakeHeadR.png"));
+			snakeCornerRU = ImageIO.read(new File("SnakeCornerRU.png"));
+			snakeCornerLU = ImageIO.read(new File("SnakeCornerLU.png"));
+			snakeCornerRD = ImageIO.read(new File("SnakeCornerRD.png"));
+			snakeCornerLD = ImageIO.read(new File("SnakeCornerLD.png"));
+			snakeHorizontal = ImageIO.read(new File("SnakeHorizontal.png"));
+			snakeVertical = ImageIO.read(new File("SnakeVertical.png"));
 			background = ImageIO.read(new File("TileBackground.png"));
 			gameOverTitle = ImageIO.read(new File("TitleGameOver.png"));
 			pausedTitle = ImageIO.read(new File("TitlePaused.png"));
@@ -102,59 +107,66 @@ public class BoardPanel extends JPanel implements Observer {
 	}
 
 	private void drawSnake(Graphics2D context) {
-		/* SKITSE TIL NYT DESIGN
-		 * Snake snake = game.getSnake();
-		 * context.setColor(CustomColor.SNAKE_COLOUR);
-		 * 
-		 * private void drawMiddleSpot(){
-		 * 	for(int i = 0; i<snake.getPositions().size(); i++ {
-		 * 		Draw middle spot at field
-		 * 	}
-		 * }
-		 * private void drawPrevLink(){
-		 * 	for(int i = 0; i<snake.getPositions().size(); i++) {
-		 * 		//Draw snake at position
-		 * 		if(snake.getBody.get(i).prevLink == Direction.LEFT){
-		 * 			//Draw left spot at field
-		 * 		}
-		 * 		if(snake.getBody.get(i).prevLink == Direction.RIGHT){
-		 * 			//Draw right spot at field
-		 * 		}
-		 * 		if(snake.getBody.get(i).prevLink == Direction.UP){
-		 * 			//Draw upper spot at field
-		 * 		}
-		 * 		if(snake.getBody.get(i).prevLink == Direction.DOWN){
-		 * 			//Draw lower spot at field
-		 * 		}
-		 *	}
-		 *}
-		 *
-		 *private void drawNextLink(){
-		 * 	for(int i = 0; i<snake.getPositions().size(); i++) {
-		 * 		//Draw snake at positions
-		 * 		if(snake.getBody.get(i).nextLink == Direction.LEFT){
-		 * 			//Draw left spot at field
-		 * 		}
-		 * 		if(snake.getBody.get(i).nextLink == Direction.RIGHT){
-		 * 			//Draw right spot at field
-		 * 		}
-		 * 		if(snake.getBody.get(i).nextLink == Direction.UP){
-		 * 			//Draw upper spot at field
-		 * 		}
-		 * 		if(snake.getBody.get(i).nextLink == Direction.DOWN){
-		 * 			//Draw lower spot at field
-		 * 		}
-		 *	}
-		 *}
-		 */
 		Snake snake = game.getSnake();
-		// Draw the whole snake.
-		context.setColor(CustomColor.SNAKE_COLOUR);
-		for (Field position : snake.getPositions()) {
-			context.fillRect(getRectangleForField(position).x,getRectangleForField(position).y,getRectangleForField(position).width/3,getRectangleForField(position).height/3);
+		for(int j = 1; j<snake.getPositions().size(); j++){
+		Rectangle fieldSize = getRectangleForField(snake.getPositions().get(j));
+			//Loop tegner slangen
+			for (int i = 0; i<snake.getBody().size(); i++){
+				//Undersøger første led
+				if(snake.getBody().get(i).getPrevLink() == Direction.LEFT){
+					//Undersøger andet led
+					if(snake.getBody().get(i).getNextLink() == Direction.RIGHT){
+						//Tegner leddet
+						Image verticalScaled = snakeVertical.getScaledInstance(fieldSize.width,
+							fieldSize.height, Image.SCALE_SMOOTH);
+						context.drawImage(verticalScaled,fieldSize.x, fieldSize.y, CustomColor.BOARD_COLOUR, null);
+					}
+					else if(snake.getBody().get(i).getNextLink() == Direction.UP){
+						//Draw LU at position
+					}
+					else if(snake.getBody().get(i).getNextLink() == Direction.DOWN){
+						//Draw LD at position
+					}
+				}
+				//Undersøger første led 
+				else if(snake.getBody().get(i).getPrevLink() == Direction.RIGHT){
+					if(snake.getBody().get(i).getNextLink() == Direction.LEFT){
+						//Draw vertical at position
+					}
+					else if(snake.getBody().get(i).getNextLink() == Direction.UP){
+						//Draw RU at position
+					}
+					else if(snake.getBody().get(i).getNextLink() == Direction.DOWN){
+						//Draw RD at position
+					}
+				}
+				//første led blah blah
+				else if(snake.getBody().get(i).getPrevLink() == Direction.UP){
+					if(snake.getBody().get(i).getNextLink() == Direction.DOWN){
+						//Draw horizontal at position
+					}
+					else if(snake.getBody().get(i).getNextLink() == Direction.RIGHT){
+						//Draw RU at position
+					}
+					else if(snake.getBody().get(i).getNextLink() == Direction.LEFT){
+						//Draw LU at position
+					}
+				}
+				//første led
+				else if(snake.getBody().get(i).getPrevLink() == Direction.DOWN){
+					if(snake.getBody().get(i).getNextLink() == Direction.UP){
+							//Draw horizontal at position
+					}
+					else if(snake.getBody().get(i).getNextLink() == Direction.LEFT){
+						//Draw LD at position
+					}
+					else if(snake.getBody().get(i).getNextLink() == Direction.RIGHT){
+						//Draw RD at position
+					}
+				}
+			}
 		}
-
-		// Draw the with a different colour.
+		// Draw the head field with a different colour.
 		Rectangle headRectangle = getRectangleForField(snake.getHead());
 		Image head = null;
 		switch (snake.getHeadDirection()) {
@@ -171,6 +183,7 @@ public class BoardPanel extends JPanel implements Observer {
 			head = headRight;
 			break;
 		}
+		
 		Image headScaled = head.getScaledInstance(headRectangle.width,
 				headRectangle.height, Image.SCALE_SMOOTH);
 		context.drawImage(headScaled, headRectangle.x, headRectangle.y, CustomColor.BOARD_COLOUR, null);
