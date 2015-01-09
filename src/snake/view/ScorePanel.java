@@ -52,6 +52,7 @@ public class ScorePanel extends JPanel implements Observer {
 			//Only show logo if board is wide (to avoid overlap with score)
 			context.drawImage(logo.getScaledInstance(200, 70, Image.SCALE_SMOOTH), boardPanel.getSize().width/2-100, 0, null);
 		}
+			
 		if (game.getState() == Game.State.RUNNING){
 			context.drawString("Score: " + game.getScore(), boardPanel.getSize().width/2-boardPanel.getRectangleForBoard().width/2+10, 40);
 		}

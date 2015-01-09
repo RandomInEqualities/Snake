@@ -15,13 +15,14 @@ public class View extends JFrame implements Observer {
 	private Game game;
 	private BoardPanel boardPanel;
 	private ScorePanel scorePanel;
+	private Menu menu;
 	private Audio audio;
 
 	public View(Game game) {
 		super();
 		ControlTimer control = new ControlTimer(game, this);
 		ControlButton controlButton = new ControlButton(game, this);
-		Control controlKeys = new Control(game, this);
+		ControlKeys controlKeys = new ControlKeys(game, this);
 		
 		if (game == null) {
 			throw new NullPointerException();
@@ -31,12 +32,18 @@ public class View extends JFrame implements Observer {
 		this.game = game;
 		this.boardPanel = new BoardPanel(game);
 		this.scorePanel = new ScorePanel(game, boardPanel);
+		this.menu = new Menu(game);
 		this.audio = new Audio(game);
-
-		getContentPane().add(scorePanel, BorderLayout.NORTH);
-		getContentPane().add(boardPanel, BorderLayout.CENTER);
 		
-		setTitle("Snake");
+		getContentPane().add(scorePanel, BorderLayout.NORTH);
+		
+		if (game.getState() == Game.State.RUNNING) {
+			getContentPane().add(boardPanel, BorderLayout.CENTER);
+			setTitle("Snake");
+		} 
+		if (game.getState() == Game.State.MENU){
+			getContentPane().add(menu, BorderLayout.CENTER);
+		}
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(525, 400));
@@ -67,7 +74,6 @@ public class View extends JFrame implements Observer {
 	public BoardPanel getBoard() {
 		return boardPanel;
 	}
-
 }
 
 
