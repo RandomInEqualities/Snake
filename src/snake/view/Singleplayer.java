@@ -14,10 +14,12 @@ public class Singleplayer extends JPanel{
 	private Rectangle play;
 	private JFormattedTextField inputWidth, inputHeight;
 	private boolean valid;
+	private boolean filled;
 	
 	public Singleplayer(View view){
 		this.view = view;
 		this.valid = true;
+		this.filled = true;
 		//this.setLayout(new GridLayout(8,1));
 		
 		chooseSize();
@@ -47,6 +49,12 @@ public class Singleplayer extends JPanel{
 			context.setFont(new Font("Sans_Serif", Font.BOLD, 12));
 			context.setColor(Color.RED);
 			context.drawString("Invalid input", x, y);
+		} else if (!filled){
+			int x = getSize().width/2-20;
+			int y = 150;
+			context.setFont(new Font("Sans_Serif", Font.BOLD, 12));
+			context.setColor(Color.RED);
+			context.drawString("Type in game size", x, y);
 		}
 	}
 	
@@ -139,7 +147,11 @@ public class Singleplayer extends JPanel{
     	return inputHeight;
     }
     
-    public void setValid(boolean tf){
-    	valid = tf;
+    public void setValid(boolean b){
+    	valid = b;
     }
+
+	public void setFilled(boolean b) {
+		filled = b;		
+	}
 }

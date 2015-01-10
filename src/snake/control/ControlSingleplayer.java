@@ -20,16 +20,22 @@ public class ControlSingleplayer implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		int inputWidth = getInput(view.getSingleplayer().getWidthInput());
-		int inputHeight = getInput(view.getSingleplayer().getHeightInput());
-		if (inputWidth >= 5 && inputWidth <= 100 && inputHeight >= 5
-				&& inputHeight <= 100) {
-			view.remove(view.getSingleplayer());
-			view.remove(view.getHeader());
-			view.startGame(inputWidth, inputHeight);
-		} else { // if input is invalid
-			view.getSingleplayer().setValid(false);
+		if (getInput(view.getSingleplayer().getWidthInput()) =="" || getInput(view.getSingleplayer().getHeightInput())==""){ //if no input
+			view.getSingleplayer().setFilled(false);
 			view.getSingleplayer().repaint();
+		} else if (getInput(view.getSingleplayer().getWidthInput()) !="" && getInput(view.getSingleplayer().getHeightInput())!=""){ //if input
+			int inputWidth = Integer.parseInt(getInput(view.getSingleplayer().getWidthInput()));
+			int inputHeight = Integer.parseInt(getInput(view.getSingleplayer().getHeightInput()));
+			if (inputWidth >= 5 && inputWidth <= 100 && inputHeight >= 5 && inputHeight <= 100) {
+				view.remove(view.getSingleplayer());
+				view.remove(view.getHeader());
+				view.startGame(inputWidth, inputHeight);
+				view.getSingleplayer().setValid(true);
+				view.getSingleplayer().setFilled(true);
+			} else { // if input is invalid
+				view.getSingleplayer().setValid(false);
+				view.getSingleplayer().repaint();
+			}
 		}
 	}
 	
@@ -59,7 +65,7 @@ public class ControlSingleplayer implements ActionListener {
 	}*/
 
 	// Get input
-	public int getInput(JFormattedTextField input) {
+	public String getInput(JFormattedTextField input) {
 		String in = input.getText();
 		String out = "";
 
@@ -69,8 +75,6 @@ public class ControlSingleplayer implements ActionListener {
 				out += in.charAt(i);
 			}
 		}
-		int value = Integer.parseInt(out);
-
-		return value;
+		return out;
 	}
 }
