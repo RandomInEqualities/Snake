@@ -18,6 +18,7 @@ public class ControlGame extends MouseAdapter {
 	private View view;
 	private int xfix = 10;
 	private int yfix = 100;
+	
 	public ControlGame(Game game, View view) {
 		view.addMouseMotionListener(this);
 		view.addMouseListener(this);
@@ -27,11 +28,10 @@ public class ControlGame extends MouseAdapter {
 
 	public void mouseClicked(MouseEvent e) {
 		if (game.getState() == Game.State.LOST) {
-			if (view.getBoard().getPlayAgain().contains(e.getX() - xfix, e.getY() - yfix)) {
+			if (view.getBoard().getplayAgain_btn().contains(e.getX() - xfix, e.getY() - yfix)) {
 				game.restart();
 				view.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			} else if(view.getBoard().getMenu().contains(e.getX()- xfix, e.getY()-yfix)){
-				game.openMenu();
 				view.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 		}
@@ -40,7 +40,7 @@ public class ControlGame extends MouseAdapter {
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		if (game.getState() == Game.State.LOST) {
-			if (view.getBoard().getPlayAgain().contains(e.getX() - xfix, e.getY() - yfix) || view.getBoard().getMenu().contains(e.getX()- xfix, e.getY()-yfix)) {
+			if (view.getBoard().getplayAgain_btn().contains(e.getX() - xfix, e.getY() - yfix) || view.getBoard().getMenu().contains(e.getX()- xfix, e.getY()-yfix)) {
 				view.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			} else  {
 				view.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));

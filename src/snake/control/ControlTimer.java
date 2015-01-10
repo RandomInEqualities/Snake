@@ -23,7 +23,6 @@ public class ControlTimer extends KeyAdapter implements ActionListener {
 		}
 		this.game = game;
 		view.addKeyListener(this);
-		
 		// Create a timer object that java swing will call in a periodic
 		// interval. The timer will then send an ActionEvent to this class.
 		this.timer = new Timer(TIMER_INTERVAL, this);
@@ -39,9 +38,8 @@ public class ControlTimer extends KeyAdapter implements ActionListener {
 			lastUpdateTime = currentTime;
 		}
     }
-
-	public @Override void keyPressed(KeyEvent event) {
-		
+	@Override
+	public void keyPressed(KeyEvent event) {
 		if (event == null) {
 			throw new NullPointerException();
 		}

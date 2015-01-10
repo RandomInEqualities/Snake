@@ -6,14 +6,18 @@ import java.io.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
 import java.util.*;
+
+import snake.control.ControlTimer;
 import snake.model.*;
 public class BoardPanel extends JPanel implements Observer {
 
 	private Game game;
 	private CustomImages images;
-	private Rectangle playAgain;
-	private Rectangle menu;
+	private Rectangle playAgain_btn;
+	private Rectangle menu_btn;
+	private Menu menu;
 	private static final long serialVersionUID = 9109362543987437505L;
 	
 	//Popup size
@@ -22,13 +26,14 @@ public class BoardPanel extends JPanel implements Observer {
 	int xPopup;
 	int yPopup;
 	
-	public BoardPanel(Game game) {
+	public BoardPanel(Game game, Menu menu) {
 		super();
 
 		if (game == null) {
 			throw new NullPointerException();
 		}
 		this.game = game;
+		this.menu = menu;
 		game.addObserver(this);
 		setBackground(CustomColor.PANEL_COLOUR);
 		images = new CustomImages();
@@ -39,7 +44,9 @@ public class BoardPanel extends JPanel implements Observer {
 	}
 
 	public @Override Dimension getPreferredSize() {
-		int x;
+		
+		//Doesn't work
+		/*int x;
 		int y;
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		
@@ -53,16 +60,15 @@ public class BoardPanel extends JPanel implements Observer {
 		} else { // if board is (approximately) square
 			x = ((int)screenSize.getHeight()-200);
 			y = ((int)screenSize.getHeight()-200);
-		}
-		return new Dimension(x, y);
+		}*/
+		return new Dimension(800, 100);
 
 	}
 
 	protected @Override void paintComponent(Graphics context) {
 		super.paintComponent(context);
-
 		Graphics2D context2D = (Graphics2D) context;
-		drawBackground(context2D, getWidth(), getHeight());
+		menu.drawBackground(context2D, getWidth(), getHeight());
 		drawBoard(context2D);
 		drawFood(context2D);
 		drawSnake(context2D);
@@ -70,15 +76,6 @@ public class BoardPanel extends JPanel implements Observer {
 			drawGameOver(context2D);
 		} else if (game.getState() == Game.State.PAUSED){
 			drawPaused(context2D);
-		}
-	}
-
-	//Tile background
-	public void drawBackground(Graphics2D context, int width, int height) {
-		for (int x = 0; x < width; x += images.background.getWidth()) {
-			for (int y = 0; y < height; y += images.background.getHeight()) {
-				context.drawImage(images.background, x, y, this);
-			}
 		}
 	}
 
@@ -90,7 +87,15 @@ public class BoardPanel extends JPanel implements Observer {
 
 	private void drawSnake(Graphics2D context) {
 		Snake snake = game.getSnake();
-		for(int j = 1; j<snake.getPositions().size(); j++){
+		
+		//Temporary snake body
+		context.setColor(CustomColor.SNAKE_COLOUR);
+		for (Field position : snake.getPositions()) {
+		context.fill(getRectangleForField(position));
+		}
+		
+		//Incomplete snake body
+		/*for(int j = 1; j<snake.getPositions().size(); j++){
 		Rectangle fieldSize = getRectangleForField(snake.getPositions().get(j));
 		Image horizontalScaled = images.snakeHorizontal.getScaledInstance(fieldSize.width, fieldSize.height, Image.SCALE_SMOOTH);
 		Image verticalScaled = images.snakeVertical.getScaledInstance(fieldSize.width, fieldSize.height, Image.SCALE_SMOOTH);
@@ -143,7 +148,7 @@ public class BoardPanel extends JPanel implements Observer {
 					}
 				}
 			}
-		}
+		}*/
 		// Draw the head field with a different colour.
 		Rectangle headRectangle = getRectangleForField(snake.getHead());
 		Image head = null;
@@ -166,7 +171,7 @@ public class BoardPanel extends JPanel implements Observer {
 				headRectangle.height, Image.SCALE_SMOOTH);
 		context.drawImage(headScaled, headRectangle.x, headRectangle.y, CustomColor.BOARD_COLOUR, null);
 		}
-	}
+
 
 	private void drawFood(Graphics2D context) {
 		Rectangle foodRectangle = getRectangleForField(game.getFood()
@@ -238,9 +243,9 @@ public class BoardPanel extends JPanel implements Observer {
 		int x42 = getRectangleForBoard().x + getRectangleForBoard().width / 2- width4 / 2 + 100;
 		int y4 = yPopup + heightPopup - height4 - 20;
 		context.setColor(CustomColor.PANEL_COLOUR);
-		playAgain = new Rectangle(x4, y4, width4, height4);
+		playAgain_btn = new Rectangle(x4, y4, width4, height4);
 		context.fillRect(x4, y4, width4, height4);
-		menu = new Rectangle(x42, y4, width4, height4);
+		menu_btn = new Rectangle(x42, y4, width4, height4);
 		context.fillRect(x42, y4, width4, height4);
 			
 		//text in buttons
@@ -264,13 +269,14 @@ public class BoardPanel extends JPanel implements Observer {
 		context.setColor(CustomColor.PANEL_COLOUR);
 		context.setFont(new Font("Sans_Serif", Font.BOLD, 20));
 		context.drawString(pauseMessage, x3, y3);
-	}
-	public Rectangle getPlayAgain() {
-		return playAgain;
+		}
+	
+	public Rectangle getplayAgain_btn() {
+		return playAgain_btn;
 	}
 	
 	public Rectangle getMenu() {
-		return menu;
+		return menu_btn;
 	}
 	
 	public int getFieldSideLength() {

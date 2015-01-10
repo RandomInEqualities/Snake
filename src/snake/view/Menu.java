@@ -1,71 +1,56 @@
 package snake.view;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-
 import javax.swing.*;
-import snake.model.Game;
 
 public class Menu extends JPanel{
 	
 	private static final long serialVersionUID = -5571239145421408870L;
 
-	private Game game;
-	private BoardPanel board;
 	private CustomImages images;
-	private Rectangle singleplayer, multiplayer, controls, highscore, quit;
+	private Rectangle singleplayer, multiplayer, controls, highScores, quit;
 
-	public Menu(Game game, BoardPanel board){
-		this.game = game;
-		this.board = board;
+	public Menu(){
 		images = new CustomImages();
 	}
 
 	protected @Override void paintComponent(Graphics context) {
 		super.paintComponent(context);
 		Graphics2D context2D = (Graphics2D) context;
-		board.drawBackground(context2D, getWidth(), getHeight());
+		drawBackground(context2D, getWidth(), getHeight());
 		drawBoard(context2D, getWidth());
 		drawMenu(context2D);
 	}
 
 	public void drawBoard(Graphics2D context, int width) {
-		context.setColor(CustomColor.BOARD_COLOUR);
+		context.setColor(CustomColor.POPUP_COLOUR);
 		context.fill(getRectangleForMenu(width));
 	}
 
 	private void drawMenu(Graphics2D context) {
-		context.setColor(CustomColor.PANEL_COLOUR);
-		context.setFont(new Font("Sans_Serif", Font.BOLD, 25));
-		int menuHeight = 53;
-		context.drawString("Menu", getWidth()/2-35, getRectangleForMenu(getWidth()).y+menuHeight);
+		//Title
+		int x = getSize().width/2-images.menuTitle.getWidth()/2;
+		int y = 20;
+		context.drawImage(images.menuTitle, x, y, null);
 
 		// Buttons
-		int width = 150;
-		int height = 40;
-		int x = getRectangleForMenu(getWidth()).x + getRectangleForMenu(getWidth()).width / 2 - width/2;
-		int y = 60;
-		context.setColor(CustomColor.PANEL_COLOUR);
-		singleplayer = new Rectangle(x, y + menuHeight, width, height);
-		context.fillRect(x, y + menuHeight, width, height);
-		multiplayer = new Rectangle(x, y + 2*menuHeight, width, height);
-		context.fillRect(x, y + 2*menuHeight, width, height);
-		controls = new Rectangle(x, y + 3*menuHeight, width, height);
-		context.fillRect(x, y + 3*menuHeight, width, height);
-		highscore = new Rectangle(x, y + 4*menuHeight, width, height);
-		context.fillRect(x, y + 4*menuHeight, width, height);
-		quit = new Rectangle(x, y + 5*menuHeight, width, height);
-		context.fillRect(x, y + 5*menuHeight, width, height);
-			
-		//text in buttons
-		int textWidth = x + width/2;
-		context.setColor(CustomColor.YELLOW_COLOUR);
-		context.setFont(new Font("Sans_Serif", Font.BOLD, 20));
-		context.drawString("Singleplayer", textWidth - 65, y + menuHeight + 25);
-		context.drawString("Multiplayer", textWidth - 60, y + 2*menuHeight + 25);
-		context.drawString("Controls", textWidth - 45, y + 3*menuHeight + 25);
-		context.drawString("HighScore", textWidth - 53, y + 4*menuHeight + 25);
-		context.drawString("Quit", textWidth - 20, y + 5*menuHeight + 25);
+		int buttonWidth = images.singleplayer_btn.getWidth();
+		int buttonHeight = images.singleplayer_btn.getHeight();
+		int x2 = getSize().width/2-buttonWidth/2;
+		int y2 = y+images.menuTitle.getHeight()+50;
+		int gap = 10;
+
+		context.drawImage(images.singleplayer_btn, x2, y2, null);
+		context.drawImage(images.multiplayer_btn, x2, y2+buttonHeight+gap, null);
+		context.drawImage(images.controls_btn, x2, y2+2*(buttonHeight+gap), null);
+		context.drawImage(images.highScores_btn, x2, y2+3*(buttonHeight+gap), null);
+		context.drawImage(images.quit_btn, x2, y2+4*(buttonHeight+gap), null);
+		singleplayer = new Rectangle(x2, y2, buttonWidth, buttonHeight);
+		multiplayer = new Rectangle(x2, y2+buttonHeight+gap, buttonWidth, buttonHeight);
+		controls = new Rectangle(x2, y2+2*(buttonHeight+gap), buttonWidth, buttonHeight);
+		highScores = new Rectangle(x2, y2+3*(buttonHeight+gap), buttonWidth, buttonHeight);
+		quit = new Rectangle(x2, y2+4*(buttonHeight+gap), buttonWidth, buttonHeight);
+
 	}
 	
 	public Rectangle getSingleplayer() {
@@ -81,25 +66,28 @@ public class Menu extends JPanel{
 	}
 	
 	public Rectangle getHighscore() {
-		return highscore;
+		return highScores;
 	}
 	
 	public Rectangle getQuit() {
 		return quit;
-	}
-	
-
-	public @Override Dimension getPreferredSize() {
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		return new Dimension(screenSize.height-250, screenSize.height-250);
 	}
 
 	public Rectangle getRectangleForMenu(int width) {
 		int offsetHeight = 10;
 		int offsetWidth = (width - 500) /2;
 
-		Rectangle rectangle = new Rectangle(offsetWidth, offsetHeight, 500, 400);
+		Rectangle rectangle = new Rectangle(offsetWidth, offsetHeight, 500, 500);
 		return rectangle;
 	}
+	
 
+	//Tile background
+	public void drawBackground(Graphics2D context, int width, int height) {
+		for (int x = 0; x < width; x += images.background.getWidth()) {
+			for (int y = 0; y < height; y += images.background.getHeight()) {
+				context.drawImage(images.background, x, y, this);
+			}
+		}
+	}
 }

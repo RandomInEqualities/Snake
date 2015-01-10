@@ -30,6 +30,11 @@ public class Board {
 		return new Dimension(width, height);
 	}
 	
+	public void setDimension(int width, int height){
+		this.width = width;
+		this.height = height;
+	}
+
 	public int getSize() {
 		return width*height;
 	}

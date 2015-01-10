@@ -6,6 +6,7 @@ import java.util.Observable;
 import snake.control.ControlKeys;
 import snake.control.ControlGame;
 import snake.control.ControlTimer;
+import snake.view.Audio;
 
 
 public class Game extends Observable {
@@ -14,16 +15,14 @@ public class Game extends Observable {
 		RUNNING,
 		WON,
 		LOST,
-		PAUSED,
-		MENU
+		PAUSED
 	}
 	
 	public enum Event {
 		MOVE,
 		EAT,
 		DIE,
-		RESTART,
-		MENU
+		RESTART
 	}
 	
 	private State state;
@@ -31,10 +30,12 @@ public class Game extends Observable {
 	private Board board;
 	private Snake snake;
 	private Food food;
+	private int width;
+	private int height;
+	private Audio audio;
 	public boolean isMuted;
-	public boolean menuStart;
 	private static final int DEFAULT_WIDTH = 10;
-	private static final int DEFAULT_HEIGHT = 5;
+	private static final int DEFAULT_HEIGHT = 10;
 
 	public Game() {
 		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -42,19 +43,21 @@ public class Game extends Observable {
 	
 	public Game(int width, int height) {
 		super();
+		this.width = width;
+		this.height = height;
+		this.audio = new Audio(this);
 		this.isMuted = false;
-		this.menuStart = false;
-		if (menuStart) {
-			this.state = State.MENU;
-		} else {
-			this.state = State.RUNNING;
-		}
+		this.state = State.RUNNING;
 		this.score = 0;
 		this.board = new Board(width, height);
 		this.snake = new Snake(this.board);
 		this.food = Food.generateRandomFood(this.snake, this.board);
+
 	}
 	
+	public void setSize(int width, int height){
+		this.board.setDimension(width, height);
+	}
 	public State getState() {
 		return state;
 	}
@@ -114,11 +117,6 @@ public class Game extends Observable {
 				event = Event.MOVE;
 			}
 		} 
-		if (getState() == State.MENU) {
-			if(menuStart) {
-				event = Event.MENU;
-			}
-		}
 		setChanged();
 		notifyObservers(event);
 	}
@@ -133,13 +131,4 @@ public class Game extends Observable {
 		setChanged();
 		notifyObservers(Event.RESTART);
 	}
-	
-	public void openMenu() {
-		menuStart = true;
-		state = State.MENU;
-		// Notify classes that the game changed.
-		setChanged();
-		notifyObservers();
-	}
-	
 }

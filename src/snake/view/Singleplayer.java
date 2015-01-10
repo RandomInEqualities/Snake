@@ -3,64 +3,143 @@ package snake.view;
 import java.awt.*;
 
 import javax.swing.*;
-import javax.swing.text.AttributeSet;
+import javax.swing.text.*;
 
-import snake.model.*;
+import snake.control.ControlSingleplayer;
+
 
 public class Singleplayer extends JPanel{
-	
-	private static final long serialVersionUID = -5571239145421408870L;
-
-	private Game game;
-	private BoardPanel board;
-	private CustomImages images;
+	private View view;
+	private CustomImages images = new CustomImages();;
 	private Rectangle play;
-	private Menu menu;
+	private JFormattedTextField inputWidth, inputHeight;
+	private boolean valid;
+	
+	public Singleplayer(View view){
+		this.view = view;
+		this.valid = true;
+		//this.setLayout(new GridLayout(8,1));
+		
+		chooseSize();
+		
+		//Button
+		JButton play = playButton();
+		this.add(play);
+		ControlSingleplayer controlSingleplayer = new ControlSingleplayer(view);
+		play.addActionListener(controlSingleplayer);
+		
 
-	public Singleplayer(Game game, BoardPanel board, Menu menu){
-		this.game = game;
-		this.board = board;
-		this.menu = menu;
-		images = new CustomImages();
-		int size = 20;
-		JFormattedTextField inputWidth = new JFormattedTextField("50");
-		JFormattedTextField inputHeight = new JFormattedTextField("50");
-		setTextFieldFormat(inputWidth);
-		setTextFieldFormat(inputHeight);
-		this.add(inputWidth);
-		this.add(inputHeight);
-		inputWidth.getCaret().setVisible(false);
 	}
 
 	protected @Override void paintComponent(Graphics context) {
 		super.paintComponent(context);
 		Graphics2D context2D = (Graphics2D) context;
-		board.drawBackground(context2D, getWidth(), getHeight());
-		menu.drawBoard(context2D, getWidth());
-		drawPlay(context2D);
 		
-
+		//Background
+		view.getMenu().drawBackground(context2D, getWidth(), getHeight());
+		view.getMenu().drawBoard(context2D, getWidth());
+		
+		//Button
+		//drawPlay(context2D);
+		if (!valid){
+			int x = getSize().width/2-20;
+			int y = 150;
+			context.setFont(new Font("Sans_Serif", Font.BOLD, 12));
+			context.setColor(Color.RED);
+			context.drawString("Invalid input", x, y);
+		}
 	}
 	
-	private void drawPlay(Graphics2D context){
-		int width = 150;
-		int height = 40;
-		int x = getSize().width/2-width/2;
-		int y = getSize().height-height-100;
-		context.setColor(CustomColor.PANEL_COLOUR);
-		play = new Rectangle(x, y, width, height);
-		context.fillRect(x, y, width, height);
+	private JButton playButton(){
+		JButton play = new JButton(new ImageIcon(images.play_btn));
+		play.setContentAreaFilled(false);
+		play.setPreferredSize(new Dimension(140, 50));
+		play.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		return play;
 	}
+	
+	/*private void drawPlay(Graphics2D context){
+		int buttonWidth = images.play_btn.getWidth();
+		int buttonHeight = images.play_btn.getHeight();
+		int x = getSize().width/2-buttonWidth/2;
+		int y = view.getMenu().getRectangleForMenu(getSize().width).height - buttonHeight - 20;
+
+		context.drawImage(images.play_btn, x, y, null);
+		play = new Rectangle(x, y, buttonWidth, buttonHeight);
+		
+
+	}*/
 	public Rectangle getPlay_btn() {
 		return play;
+	}
+	
+	private void chooseSize(){
+		//Labels
+		JLabel sizeLabel = new JLabel("GAME DIMENSIONS", SwingConstants.CENTER);
+		JLabel sizeInfo = new JLabel("(Type in dimensions between 5 and 100)", SwingConstants.CENTER);
+		JLabel xLabel = new JLabel("x");
+		JLabel yLabel = new JLabel("y");
+		JLabel gap = new JLabel("          ");
+		customizeText(sizeLabel);
+		customizeText(xLabel);
+		customizeText(yLabel);
+		customizeText(gap);
+		
+		//Formatter (limit input to three digits)
+		MaskFormatter formatter = null;
+	    try {
+	        formatter = new MaskFormatter("###");
+	    } catch (java.text.ParseException exc) {
+	    	throw new RuntimeException("Formatter error");
+	    }
+	    
+	    //Input fields
+		inputWidth = new JFormattedTextField(formatter);
+		inputHeight = new JFormattedTextField(formatter);
+		setTextFieldFormat(inputWidth);
+		setTextFieldFormat(inputHeight);
+		
+		JPanel sizeText = new JPanel();
+		((FlowLayout)sizeText.getLayout()).setVgap(20);
+		sizeText.add(sizeLabel);
+		sizeText.add(sizeInfo);
+		sizeText.setOpaque(false);
+		
+		JPanel sizePanel = new JPanel();
+		sizePanel.add(xLabel);
+		sizePanel.add(inputWidth);
+		sizePanel.add(gap);
+		sizePanel.add(yLabel);
+		sizePanel.add(inputHeight);
+		sizePanel.setOpaque(false);
+
+		this.add(sizeText);
+		this.add(sizePanel);
+
 	}
 	
 	private void setTextFieldFormat(JFormattedTextField txt){
 		txt.setFont(new Font("Sans_Serif", Font.PLAIN, 20)); 
 		txt.setHorizontalAlignment(JTextField.CENTER);
 		txt.setColumns(3);
+		txt.setFocusLostBehavior(JFormattedTextField.COMMIT);
 	}
-	public void insertString(int offs, String str, AttributeSet a){
-		
+
+	private void customizeText(JLabel label){
+		label.setForeground(CustomColor.PANEL_COLOUR);
+		label.setFont(new Font("Sans_Serif", Font.BOLD, 20));
 	}
+	
+	 
+    public JFormattedTextField getWidthInput(){
+    	return inputWidth;
+    }
+	
+    public JFormattedTextField getHeightInput(){
+    	return inputHeight;
+    }
+    
+    public void setValid(boolean tf){
+    	valid = tf;
+    }
 }

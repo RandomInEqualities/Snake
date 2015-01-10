@@ -23,7 +23,8 @@ public class ControlKeys extends KeyAdapter {
 		this.game = game;
 	}
 
-	public @Override void keyPressed(KeyEvent event) {
+	@Override
+	public void keyPressed(KeyEvent event) {
 		
 		if (event == null) {
 			throw new NullPointerException();
@@ -53,7 +54,7 @@ public class ControlKeys extends KeyAdapter {
 				}
 				break;
 			case KeyEvent.VK_ESCAPE:
-				game.openMenu();
+				System.exit(0);
 				break;
 		}
 		
