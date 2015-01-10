@@ -26,7 +26,6 @@ public class Menu extends JPanel{
 		context.setColor(CustomColor.POPUP_COLOUR);
 		context.fill(getRectangleForMenu(width));
 	}
-
 	private void drawMenu(Graphics2D context) {
 		//Title
 		int x = getSize().width/2-images.menuTitle.getWidth()/2;

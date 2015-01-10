@@ -3,6 +3,7 @@ package snake.control;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -20,7 +21,7 @@ public class ControlSingleplayer implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (getInput(view.getSingleplayer().getWidthInput()) =="" || getInput(view.getSingleplayer().getHeightInput())==""){ //if no input
+		if (getInput(view.getSingleplayer().getWidthInput()).isEmpty() || getInput(view.getSingleplayer().getHeightInput()).isEmpty()){ //if no input
 			view.getSingleplayer().setFilled(false);
 			view.getSingleplayer().repaint();
 		} else if (getInput(view.getSingleplayer().getWidthInput()) !="" && getInput(view.getSingleplayer().getHeightInput())!=""){ //if input
@@ -64,17 +65,10 @@ public class ControlSingleplayer implements ActionListener {
 		}
 	}*/
 
-	// Get input
+	// Get input without whitespace
 	public String getInput(JFormattedTextField input) {
 		String in = input.getText();
-		String out = "";
-
-		// Remove whitespace
-		for (int i = 0; i < in.length(); i++) {
-			if (!Character.isWhitespace(in.charAt(i))) {
-				out += in.charAt(i);
-			}
-		}
+		String out = in.replace(" ", "");;
 		return out;
 	}
 }
