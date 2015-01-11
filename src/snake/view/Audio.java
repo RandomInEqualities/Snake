@@ -1,67 +1,75 @@
-package snake.view;
 
+package snake.view;
 import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-
 import snake.model.Game;
+
 
 public class Audio implements Observer {
 
-	private File eatSoundFile = new File("nom.wav");
-	private File endSoundFile = new File("ohno.wav");
-	private AudioInputStream eatSoundStream;
-	private AudioInputStream endSoundStream;
+	private boolean muted;
 	private Clip eatSound;
 	private Clip endSound;
-	private Game game;
+	
+	private AudioInputStream eatSoundStream;
+	private AudioInputStream endSoundStream;
+	private static final String EAT_SOUND_FILENAME = "resources/sounds/nom.wav";
+	private static final String END_SOUND_FILENAME = "resources/sounds/ohno.wav";
 
 	public Audio(Game game) {
 		if (game == null) {
 			throw new NullPointerException();
 		}
-		this.game = game;
+		this.muted = false;
+		loadSounds();
 		game.addObserver(this);
+	}
+	
+	public boolean isMuted() {
+		return muted;
+	}
+	
+	public void setMuted(boolean muted) {
+		this.muted = muted;
+	}
 
-		// Load the sounds.
+	@Override
+	public void update(Observable o, Object arg) {
+		if (o instanceof Game && !muted) {
+			Game.Event event = (Game.Event)arg;
+			if (event == Game.Event.EAT) {
+				playEatSound();
+			}
+			else if (event == Game.Event.DIE) {
+				playEndSound();
+			}
+		}
+	}
+	
+	private void playEatSound() {
+		eatSound.setFramePosition(0);
+		eatSound.start();
+	}
+
+	private void playEndSound() {
+		endSound.setFramePosition(0);
+		endSound.start();
+	}
+	
+	private void loadSounds() {
 		try {
-			eatSoundStream = AudioSystem.getAudioInputStream(eatSoundFile);
-			endSoundStream = AudioSystem.getAudioInputStream(endSoundFile);
+			eatSoundStream = AudioSystem.getAudioInputStream(new File(EAT_SOUND_FILENAME));
+			endSoundStream = AudioSystem.getAudioInputStream(new File(END_SOUND_FILENAME));
 			eatSound = AudioSystem.getClip();
 			endSound = AudioSystem.getClip();
 			eatSound.open(eatSoundStream);
 			endSound.open(endSoundStream);
 		} catch (Exception error) {
-			throw new RuntimeException(error.getMessage());
-		}
-	}
-
-	public void playEatSound() {
-		eatSound.setFramePosition(0);
-		eatSound.start();
-	}
-
-	public void playEndSound() {
-		endSound.setFramePosition(0);
-		endSound.start();
-	}
-
-	public @Override void update(Observable o, Object arg) {
-		if (!(o instanceof Game)) {
-			throw new IllegalArgumentException();
-		}
-		if (!game.isMuted) {
-			Game.Event event = (Game.Event) arg;
-			if (event == Game.Event.EAT) {
-				playEatSound();
-			}
-			if (event == Game.Event.DIE) {
-				playEndSound();
-			}
+			throw new RuntimeException("unable to load sound: " + error.getMessage());
 		}
 	}
 }

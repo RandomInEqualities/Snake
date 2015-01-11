@@ -3,15 +3,14 @@ package snake.view;
 import java.awt.*;
 import javax.swing.*;
 
-public class Menu extends JPanel{
+public class ViewMenu extends JPanel {
 	
 	private static final long serialVersionUID = -5571239145421408870L;
 
-	private CustomImages images;
 	private Rectangle singleplayer, multiplayer, controls, highScores, quit;
 
-	public Menu(){
-		images = new CustomImages();
+	public ViewMenu() {
+
 	}
 
 	protected @Override void paintComponent(Graphics context) {
@@ -23,28 +22,28 @@ public class Menu extends JPanel{
 	}
 
 	public void drawBoard(Graphics2D context, int width) {
-		context.setColor(CustomColor.POPUP_COLOUR);
+		context.setColor(Colors.POPUP_COLOUR);
 		context.fill(getRectangleForMenu(width));
 	}
 
 	private void drawMenu(Graphics2D context) {
 		//Title
-		int x = getSize().width/2-images.menuTitle.getWidth()/2;
+		int x = getSize().width/2-Images.TITLE_MENU.getWidth()/2;
 		int y = 20;
-		context.drawImage(images.menuTitle, x, y, null);
+		context.drawImage(Images.TITLE_MENU, x, y, null);
 
 		// Buttons
-		int buttonWidth = images.singleplayer_btn.getWidth();
-		int buttonHeight = images.singleplayer_btn.getHeight();
+		int buttonWidth = Images.BUTTON_SINGLEPLAYER.getWidth();
+		int buttonHeight = Images.BUTTON_SINGLEPLAYER.getHeight();
 		int x2 = getSize().width/2-buttonWidth/2;
-		int y2 = y+images.menuTitle.getHeight()+50;
+		int y2 = y+Images.TITLE_MENU.getHeight()+50;
 		int gap = 10;
 
-		context.drawImage(images.singleplayer_btn, x2, y2, null);
-		context.drawImage(images.multiplayer_btn, x2, y2+buttonHeight+gap, null);
-		context.drawImage(images.controls_btn, x2, y2+2*(buttonHeight+gap), null);
-		context.drawImage(images.highScores_btn, x2, y2+3*(buttonHeight+gap), null);
-		context.drawImage(images.quit_btn, x2, y2+4*(buttonHeight+gap), null);
+		context.drawImage(Images.BUTTON_SINGLEPLAYER, x2, y2, null);
+		context.drawImage(Images.BUTTON_MULTIPLAYER, x2, y2+buttonHeight+gap, null);
+		context.drawImage(Images.BUTTON_CONTROLS, x2, y2+2*(buttonHeight+gap), null);
+		context.drawImage(Images.BUTTON_HIGHSCORE, x2, y2+3*(buttonHeight+gap), null);
+		context.drawImage(Images.BUTTON_QUIT, x2, y2+4*(buttonHeight+gap), null);
 		singleplayer = new Rectangle(x2, y2, buttonWidth, buttonHeight);
 		multiplayer = new Rectangle(x2, y2+buttonHeight+gap, buttonWidth, buttonHeight);
 		controls = new Rectangle(x2, y2+2*(buttonHeight+gap), buttonWidth, buttonHeight);
@@ -81,13 +80,12 @@ public class Menu extends JPanel{
 		return rectangle;
 	}
 	
-
-	//Tile background
 	public void drawBackground(Graphics2D context, int width, int height) {
-		for (int x = 0; x < width; x += images.background.getWidth()) {
-			for (int y = 0; y < height; y += images.background.getHeight()) {
-				context.drawImage(images.background, x, y, this);
+		for (int x = 0; x < width; x += Images.BACKGROUND.getWidth()) {
+			for (int y = 0; y < height; y += Images.BACKGROUND.getHeight()) {
+				context.drawImage(Images.BACKGROUND, x, y, this);
 			}
 		}
 	}
+	
 }

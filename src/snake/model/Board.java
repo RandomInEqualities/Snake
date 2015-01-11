@@ -7,11 +7,16 @@ public class Board {
 	private int width;
 	private int height;
 	
+	public static final int MIN_WIDTH = 5;
+	public static final int MAX_WIDTH = 100;
+	public static final int MIN_HEIGHT = 5;
+	public static final int MAX_HEIGHT = 100;
+	
 	public Board(int width, int height) {
-		if (width < 5 || width > 100) {
+		if (width < MIN_WIDTH || width > MAX_WIDTH) {
 			throw new IllegalArgumentException("invalid width " + width);
 		}
-		if (height < 5 || height > 100) {
+		if (height < MIN_HEIGHT || height > MAX_HEIGHT) {
 			throw new IllegalArgumentException("invalid height " + height);
 		}
 		this.width = width;
@@ -28,11 +33,6 @@ public class Board {
 	
 	public Dimension getDimension() {
 		return new Dimension(width, height);
-	}
-	
-	public void setDimension(int width, int height){
-		this.width = width;
-		this.height = height;
 	}
 
 	public int getSize() {
@@ -67,4 +67,5 @@ public class Board {
 	public Field wrap(Field field) {
 		return wrap(field.getRow(), field.getColumn());
 	}
+	
 }

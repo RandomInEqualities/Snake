@@ -1,73 +1,134 @@
 
 package snake.view;
 
-import java.awt.*;
-import java.util.*;
-
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 import javax.swing.*;
-
-import snake.control.ControlGame;
-import snake.control.ControlKeys;
-import snake.control.ControlTimer;
 import snake.model.*;
-import snake.model.Game.State;
 
-public class View extends JFrame{
 
-	private Menu menu;
-	private BoardPanel boardPanel;
-	private Singleplayer splayer;
-	private Header header;
-	private Game game;
-	private BoardPanel board;
+public class View extends JFrame {
+	
+	public enum State {
+		IN_GAME,
+		IN_MENU,
+		IN_MENU_SINGLE_PLAYER,
+		IN_PAUSE_SCREEN,
+	}
+	
+	private static final long serialVersionUID = 6240347347855679335L;
+	
+	private State state;
+	private ViewHeader headerPanel;
+	private ViewMenu menuPanel;
+	private ViewMenuSinglePlayer menuSinglePlayerPanel;
+	private ViewBoard boardPanel;
+	private Audio audio;
 	
 	public View(Game game) {
-		super();			
-		//Menu
-		this.header = new Header();
-		this.menu = new Menu();
-		this.splayer = new Singleplayer(this);
-		this.boardPanel = null;
-		getContentPane().add(header, BorderLayout.NORTH);
-		getContentPane().add(menu, BorderLayout.CENTER);
+		super();
+		
+		if (game == null) {
+			throw new NullPointerException();
+		}
+		
+		this.headerPanel = new ViewHeader(game, false);
+		this.menuPanel = new ViewMenu();
+		this.menuSinglePlayerPanel = new ViewMenuSinglePlayer(game, this);
+		this.boardPanel = new ViewBoard(game, menuPanel);
+		this.audio = new Audio(game);
+		
+		showMenu();
 		
 		setTitle("Snake");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setMinimumSize(new Dimension(550, 650));
 		pack();
 		setLocationRelativeTo(null);
 	}
-
-	public Header getHeader(){
-		return header;
+	
+	public void showGame() {
+		setFrameComponents(headerPanel, boardPanel);
+		headerPanel.showScore();
+		state = State.IN_GAME;
 	}
 	
-	public Menu getMenu() {
-		return menu;
-	}
-
-	public Singleplayer getSingleplayer(){
-		return splayer;
+	public void showMenu() {
+		setFrameComponents(headerPanel, menuPanel);
+		headerPanel.hideScore();
+		state = State.IN_MENU;
 	}
 	
-	public BoardPanel getBoard() {
+	public void showSinglePlayerMenu() {
+		setFrameComponents(headerPanel, menuSinglePlayerPanel);
+		headerPanel.hideScore();
+		state = State.IN_MENU_SINGLE_PLAYER;
+	}
+	
+	public boolean inMenu() {
+		return state == State.IN_MENU;
+	}
+	
+	public boolean inMenuSinglePlayer() {
+		return state == State.IN_MENU_SINGLE_PLAYER;
+	}
+	
+	public boolean inGame() {
+		return state == State.IN_GAME;
+	}
+	
+	public boolean inPauseScreen() {
+		return state == State.IN_PAUSE_SCREEN;
+	}
+	
+	public State getViewState() {
+		return state;
+	}
+	
+	public Audio getAudio() {
+		return audio;
+	}
+	
+	public ViewHeader getViewHeader() {
+		return headerPanel;
+	}
+	
+	public ViewMenu getViewMenu() {
+		return menuPanel;
+	}
+	
+	public ViewMenuSinglePlayer getViewMenuSinglePlayer() {
+		return menuSinglePlayerPanel;
+	}
+	
+	public ViewBoard getViewBoard() {
 		return boardPanel;
 	}
 	
-	public void startGame(int width, int height) {
-		game = new Game(width, height);
-		boardPanel = new BoardPanel(game, menu);
-		boardPanel.setSize(boardPanel.getPreferredSize());
-		ScorePanel scorePanel = new ScorePanel(game, boardPanel);
-		getContentPane().add(scorePanel, BorderLayout.NORTH);
-		getContentPane().add(boardPanel, BorderLayout.CENTER);
-		this.revalidate();
-		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-		this.requestFocus();
-		ControlTimer control = new ControlTimer(game, this);
-		ControlKeys controlKeys = new ControlKeys(game, this);
-		ControlGame controlButton = new ControlGame(game, this);
+	public void closeWindow() {
+		dispose();
 	}
+	
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(800, 800);
+	}
+	
+	private void setFrameComponents(Component northPanel, Component centerPanel) {
+		
+		// Remove the current contents pane components and add the new ones.
+		getContentPane().removeAll();
+		getContentPane().add(northPanel, BorderLayout.NORTH);
+		getContentPane().add(centerPanel, BorderLayout.CENTER);
+		getContentPane().revalidate();
+		getContentPane().repaint();
+		
+		// It is very important that this JFrame gets the focus. Otherwise the control
+		// objects won't receive keyboard events!
+		requestFocus();
+		
+	}
+	
 }
 
 

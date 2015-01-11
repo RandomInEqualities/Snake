@@ -10,7 +10,7 @@ public class Snake {
 	private Board board;
 	private Direction headDirection;
 	private ArrayList<Field> positions;
-	private ArrayList<Body> body;
+
 	public Snake(Board board) {
 		if (board == null) {
 			throw new NullPointerException();
@@ -18,7 +18,6 @@ public class Snake {
 		
 		this.board = board;
 		this.positions = new ArrayList<>();
-		this.body = new ArrayList<>();
 		setupStartingSnake();
 	}
 	
@@ -43,10 +42,6 @@ public class Snake {
 		// from changing the snake array.
 		return Collections.unmodifiableList(positions);
 	}
-
-	public List<Body> getBody() {
-		return body;
-	}
 	
 	public int getSize() {
 		return positions.size();
@@ -61,6 +56,19 @@ public class Snake {
 	}
 	
 	/**
+	 * Test if the snake is allow to move in a given direction. The snake can for example
+	 * not move in its necks direction.
+	 * @param direction the direction to test for
+	 * @return true if it can move in direction, otherwise false.
+	 */
+	public boolean canMove(Direction direction) {
+		if (direction == Direction.getOppositeOf(headDirection)) {
+			return false;
+		}
+		return true;
+	}
+	
+	/**
 	 * Move the snake. If the snake eat any food its tail will not move. The 
 	 * snake's head moves in the given direction. If the direction is towards
 	 * the snake's neck the head will not move.
@@ -72,9 +80,10 @@ public class Snake {
 	boolean move(Direction moveDirection, boolean eatFood) {
 		
 		// Test if the snakes neck blocks the move.
-		if (moveDirection == getOppositeOf(headDirection)) {
+		if (moveDirection == Direction.getOppositeOf(headDirection)) {
 			return false;
 		}
+		
 		// Find the position to move into.
 		Field newHeadPosition = getNewHeadPosition(moveDirection);
 		
@@ -91,7 +100,6 @@ public class Snake {
 		// Move to the new position.
 		positions.add(0, newHeadPosition);
 		headDirection = moveDirection;
-		//updateBody(body);
 		return false;
 	}
 	
@@ -112,7 +120,6 @@ public class Snake {
 		Field head = new Field(center.getRow(), center.getColumn());
 		Field tail = new Field(center.getRow(), center.getColumn() + 1);
 		headDirection = Direction.LEFT;
-		//body.add(new Body());
 		positions.clear();
 		positions.add(head);
 		positions.add(tail);
@@ -132,29 +139,5 @@ public class Snake {
 				throw new IllegalArgumentException();
 		}
 	}
-	//Incomplete
-	/*public void updateBody(ArrayList<Body> body){
-		for(int i = 0; i<body.size(); i++){
-			if(body.size()==1){
-				//½TODO: Fuldend funktion
-			}
-			if(body.size()>2){
-				
-			}
-		}
-	}*/
-	private static Direction getOppositeOf(Direction direction) {
-		switch (direction) {
-			case UP:
-				return Direction.DOWN;
-			case DOWN:
-				return Direction.UP;
-			case LEFT:
-				return Direction.RIGHT;
-			case RIGHT:
-				return Direction.LEFT;
-			default:
-				throw new IllegalArgumentException();
-		}
-	}	
+
 }

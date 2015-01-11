@@ -5,41 +5,38 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.text.*;
 
-import snake.control.ControlSingleplayer;
+import snake.model.Game;
 
 
-public class Singleplayer extends JPanel{
-	private View view;
-	private CustomImages images = new CustomImages();;
+public class ViewMenuSinglePlayer extends JPanel{
+
+	private Game game;
 	private Rectangle play;
 	private JFormattedTextField inputWidth, inputHeight;
 	private boolean valid;
 	private boolean filled;
+	private static final long serialVersionUID = 2158879219007803798L;
+	private JButton playButton;
 	
-	public Singleplayer(View view){
-		this.view = view;
+	public ViewMenuSinglePlayer(Game game, View view){
+		this.game = game;
 		this.valid = true;
 		this.filled = true;
+		this.playButton = playButton();
 		//this.setLayout(new GridLayout(8,1));
 		
 		chooseSize();
 		
-		//Button
-		JButton play = playButton();
-		this.add(play);
-		ControlSingleplayer controlSingleplayer = new ControlSingleplayer(view);
-		play.addActionListener(controlSingleplayer);
-		
+		this.add(this.playButton);
 
+	}
+	
+	public JButton getPlayButton() {
+		return playButton;
 	}
 
 	protected @Override void paintComponent(Graphics context) {
 		super.paintComponent(context);
-		Graphics2D context2D = (Graphics2D) context;
-		
-		//Background
-		view.getMenu().drawBackground(context2D, getWidth(), getHeight());
-		view.getMenu().drawBoard(context2D, getWidth());
 		
 		//Button
 		//drawPlay(context2D);
@@ -59,24 +56,13 @@ public class Singleplayer extends JPanel{
 	}
 	
 	private JButton playButton(){
-		JButton play = new JButton(new ImageIcon(images.play_btn));
+		JButton play = new JButton(new ImageIcon(Images.BUTTON_PLAY));
 		play.setContentAreaFilled(false);
 		play.setPreferredSize(new Dimension(140, 50));
 		play.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		return play;
 	}
 	
-	/*private void drawPlay(Graphics2D context){
-		int buttonWidth = images.play_btn.getWidth();
-		int buttonHeight = images.play_btn.getHeight();
-		int x = getSize().width/2-buttonWidth/2;
-		int y = view.getMenu().getRectangleForMenu(getSize().width).height - buttonHeight - 20;
-
-		context.drawImage(images.play_btn, x, y, null);
-		play = new Rectangle(x, y, buttonWidth, buttonHeight);
-		
-
-	}*/
 	public Rectangle getPlay_btn() {
 		return play;
 	}
@@ -104,6 +90,8 @@ public class Singleplayer extends JPanel{
 	    //Input fields
 		inputWidth = new JFormattedTextField(formatter);
 		inputHeight = new JFormattedTextField(formatter);
+		inputWidth.setValue(game.getBoard().getWidth());
+		inputHeight.setValue(game.getBoard().getHeight());
 		setTextFieldFormat(inputWidth);
 		setTextFieldFormat(inputHeight);
 		
@@ -134,7 +122,7 @@ public class Singleplayer extends JPanel{
 	}
 
 	private void customizeText(JLabel label){
-		label.setForeground(CustomColor.PANEL_COLOUR);
+		label.setForeground(Colors.PANEL_COLOUR);
 		label.setFont(new Font("Sans_Serif", Font.BOLD, 20));
 	}
 	
