@@ -1,6 +1,7 @@
 
 package snake.control;
 
+import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.event.*;
 
@@ -35,6 +36,8 @@ public class ControlKeys extends KeyAdapter {
 				if (game.getState() == State.LOST){
 					game.restart();
 					view.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+					view.getBoard().remove(view.getBoard().getPlayAgain());
+					view.getBoard().remove(view.getBoard().getMenu());
 				}
 				break;
 			case KeyEvent.VK_M:
@@ -54,7 +57,11 @@ public class ControlKeys extends KeyAdapter {
 				}
 				break;
 			case KeyEvent.VK_ESCAPE:
-				System.exit(0);
+				view.getContentPane().removeAll();
+				view.add(view.getHeader(), BorderLayout.NORTH);
+				view.add(view.getMenu());
+				view.revalidate();
+				view.repaint();
 				break;
 		}
 		

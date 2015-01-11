@@ -54,9 +54,9 @@ public class View extends JFrame{
 		return boardPanel;
 	}
 	
-	public void startGame(int width, int height) {
+	public void startGame(int width, int height, int speed) {
 		game = new Game(width, height);
-		boardPanel = new BoardPanel(game, menu);
+		boardPanel = new BoardPanel(game, this);
 		boardPanel.setSize(boardPanel.getPreferredSize());
 		ScorePanel scorePanel = new ScorePanel(game, boardPanel);
 		getContentPane().add(scorePanel, BorderLayout.NORTH);
@@ -64,9 +64,8 @@ public class View extends JFrame{
 		this.revalidate();
 		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		this.requestFocus();
-		ControlTimer control = new ControlTimer(game, this);
+		ControlTimer timer = new ControlTimer(game, this, speed);
 		ControlKeys controlKeys = new ControlKeys(game, this);
-		ControlGame controlButton = new ControlGame(game, this);
 	}
 }
 

@@ -17,11 +17,12 @@ public class ControlTimer extends KeyAdapter implements ActionListener {
 	private static final int TIMER_INTERVAL = 16;
 	private static final int TIMER_INITIAL_DELAY = 500;
 
-	public ControlTimer(Game game, View view) {
+	public ControlTimer(Game game, View view, int speed) {
 		if (view == null || game == null) {
 			throw new NullPointerException();
 		}
 		this.game = game;
+		this.gameUpdateInterval = speed;
 		view.addKeyListener(this);
 		// Create a timer object that java swing will call in a periodic
 		// interval. The timer will then send an ActionEvent to this class.
@@ -71,5 +72,4 @@ public class ControlTimer extends KeyAdapter implements ActionListener {
 	public void pauseTimer(Timer timer) {
 		timer.stop();
 	}
-
 }

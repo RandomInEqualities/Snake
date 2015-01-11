@@ -1,7 +1,10 @@
 package snake.view;
 
 import java.awt.*;
+
 import javax.swing.*;
+
+import snake.control.ControlSingleplayer;
 
 public class Menu extends JPanel{
 	
@@ -88,5 +91,10 @@ public class Menu extends JPanel{
 				context.drawImage(images.background, x, y, this);
 			}
 		}
+	}
+	
+	public void setButton(JButton button){
+		button.setPreferredSize(new Dimension(140, 50));
+		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	}
 }

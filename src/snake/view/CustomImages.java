@@ -10,7 +10,9 @@ public class CustomImages {
 	public BufferedImage apple, logo, headUp, headDown, headLeft, headRight,
 			snakeCornerRU, snakeCornerLU, snakeCornerRD, snakeCornerLD,
 			snakeHorizontal, snakeVertical, background, gameOverTitle,
-			pausedTitle, menuTitle, singleplayer_btn, multiplayer_btn, controls_btn, highScores_btn, quit_btn, play_btn, playAgain_btn, menu_btn;
+			pausedTitle, menuTitle, singleplayer_btn, multiplayer_btn,
+			controls_btn, highScores_btn, quit_btn, play_btn, playAgain_btn,
+			menu_btn, easy_btn, intermediate_btn, hard_btn;
 
 	public CustomImages() {
 		try {
@@ -45,7 +47,10 @@ public class CustomImages {
 			play_btn = ImageIO.read(new File("ButtonPlay.png"));
 			playAgain_btn = ImageIO.read(new File("ButtonPlayAgain.png"));
 			menu_btn = ImageIO.read(new File("ButtonMenu.png"));
-			
+			easy_btn = ImageIO.read(new File("DifficultyEasy.png"));
+			intermediate_btn = ImageIO.read(new File("DifficultyIntermediate.png"));
+			hard_btn = ImageIO.read(new File("DifficultyHard.png"));
+
 		} catch (IOException error) {
 			throw new RuntimeException("Image not found: " + error.getMessage());
 		}

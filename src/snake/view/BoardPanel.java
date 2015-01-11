@@ -1,15 +1,14 @@
 package snake.view;
 
 import java.awt.*;
+
 import java.awt.image.BufferedImage;
 import java.io.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
 import java.util.*;
-
-import snake.control.ControlTimer;
+import snake.control.*;
 import snake.model.*;
 public class BoardPanel extends JPanel implements Observer {
 
@@ -17,7 +16,8 @@ public class BoardPanel extends JPanel implements Observer {
 	private CustomImages images;
 	private Rectangle playAgain_btn;
 	private Rectangle menu_btn;
-	private Menu menu;
+	private JButton playAgain, menu;
+	private View view;
 	private static final long serialVersionUID = 9109362543987437505L;
 	
 	//Popup size
@@ -26,17 +26,30 @@ public class BoardPanel extends JPanel implements Observer {
 	int xPopup;
 	int yPopup;
 	
-	public BoardPanel(Game game, Menu menu) {
+	public BoardPanel(Game game, View view) {
 		super();
 
 		if (game == null) {
 			throw new NullPointerException();
 		}
 		this.game = game;
-		this.menu = menu;
+		this.view = view;
+		
 		game.addObserver(this);
-		setBackground(CustomColor.PANEL_COLOUR);
 		images = new CustomImages();
+		
+		//Buttons
+		playAgain = new JButton(new ImageIcon(images.playAgain_btn));
+		view.getMenu().setButton(playAgain);
+		menu = new JButton(new ImageIcon(images.menu_btn));
+		view.getMenu().setButton(menu);
+		
+		//Control buttons
+		ControlGame controlGame = new ControlGame(game, view);
+		playAgain.addActionListener(controlGame);
+		playAgain.setActionCommand("playAgain");
+		menu.addActionListener(controlGame);
+		menu.setActionCommand("menu");
 	}
 
 	public @Override void update(Observable o, Object arg) {
@@ -44,31 +57,13 @@ public class BoardPanel extends JPanel implements Observer {
 	}
 
 	public @Override Dimension getPreferredSize() {
-		
-		//Doesn't work
-		/*int x;
-		int y;
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		
-		// Wrap window around board
-		if (game.getBoard().getHeight() > game.getBoard().getWidth()) { // if board is narrow
-			x = ((int)screenSize.getWidth()-1200);
-			y = ((int)screenSize.getHeight()-200);
-		} else if (game.getBoard().getWidth() > game.getBoard().getHeight()) { // if board is wide
-			x = ((int)screenSize.getWidth()-300);
-			y = ((int)screenSize.getHeight()-300);
-		} else { // if board is (approximately) square
-			x = ((int)screenSize.getHeight()-200);
-			y = ((int)screenSize.getHeight()-200);
-		}*/
 		return new Dimension(800, 100);
-
 	}
 
 	protected @Override void paintComponent(Graphics context) {
 		super.paintComponent(context);
 		Graphics2D context2D = (Graphics2D) context;
-		menu.drawBackground(context2D, getWidth(), getHeight());
+		view.getMenu().drawBackground(context2D, getWidth(), getHeight());
 		drawBoard(context2D);
 		drawFood(context2D);
 		drawSnake(context2D);
@@ -237,21 +232,16 @@ public class BoardPanel extends JPanel implements Observer {
 		context.drawString(scoreTxt, x3, y3);
 
 		// Buttons
-		int width4 = 150;
-		int height4 = 50;
-		int x4 = getRectangleForBoard().x + getRectangleForBoard().width / 2- width4 / 2 - 100;
-		int x42 = getRectangleForBoard().x + getRectangleForBoard().width / 2- width4 / 2 + 100;
-		int y4 = yPopup + heightPopup - height4 - 20;
-		context.setColor(CustomColor.PANEL_COLOUR);
-		playAgain_btn = new Rectangle(x4, y4, width4, height4);
-		context.fillRect(x4, y4, width4, height4);
-		menu_btn = new Rectangle(x42, y4, width4, height4);
-		context.fillRect(x42, y4, width4, height4);
-			
-		//text in buttons
-		context.setColor(CustomColor.YELLOW_COLOUR);
-		context.drawString("Menu", x42 + 45, y4 + 30);
-		context.drawString("Play Again", x4 + 20, y4 + 30);
+		int buttonWidth = 140;
+		int buttonHeight = 50;
+		int xPlayAgain = getRectangleForBoard().x + getRectangleForBoard().width / 2- buttonWidth / 2 - 100;
+		int xMenu = getRectangleForBoard().x + getRectangleForBoard().width / 2- buttonWidth / 2 + 100;
+		int yPlayAgain = yPopup + heightPopup - buttonHeight - 20;
+		
+		playAgain.setBounds(xPlayAgain, yPlayAgain, buttonWidth, buttonHeight);
+		menu.setBounds(xMenu, yPlayAgain, buttonWidth, buttonHeight);
+		this.add(playAgain);
+		this.add(menu);
 	}
 	
 	private void drawPaused(Graphics2D context){
@@ -271,14 +261,6 @@ public class BoardPanel extends JPanel implements Observer {
 		context.drawString(pauseMessage, x3, y3);
 		}
 	
-	public Rectangle getplayAgain_btn() {
-		return playAgain_btn;
-	}
-	
-	public Rectangle getMenu() {
-		return menu_btn;
-	}
-	
 	public int getFieldSideLength() {
 		Dimension windowSize = getSize();
 		Dimension gameSize = game.getBoard().getDimension();
@@ -290,5 +272,13 @@ public class BoardPanel extends JPanel implements Observer {
 			fieldHeight = fieldWidth;
 		}
 		return fieldWidth;
+	}
+	
+	public JButton getPlayAgain(){
+		return playAgain;
+	}
+	
+	public JButton getMenu(){
+		return menu;
 	}
 }

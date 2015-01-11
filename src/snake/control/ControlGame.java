@@ -1,50 +1,39 @@
 package snake.control;
 
-import java.awt.Cursor;
-import java.awt.List;
-import java.awt.Rectangle;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JList;
 
-import snake.model.Game;
+import snake.model.*;
 import snake.view.*;
 
-public class ControlGame extends MouseAdapter {
+public class ControlGame implements ActionListener {
 
 	private Game game;
 	private View view;
-	private int xfix = 10;
-	private int yfix = 100;
 	
 	public ControlGame(Game game, View view) {
-		view.addMouseMotionListener(this);
-		view.addMouseListener(this);
 		this.game = game;
 		this.view = view;
 	}
 
-	public void mouseClicked(MouseEvent e) {
-		if (game.getState() == Game.State.LOST) {
-			if (view.getBoard().getplayAgain_btn().contains(e.getX() - xfix, e.getY() - yfix)) {
-				game.restart();
-				view.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			} else if(view.getBoard().getMenu().contains(e.getX()- xfix, e.getY()-yfix)){
-				view.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-		}
-	}
-
 	@Override
-	public void mouseMoved(MouseEvent e) {
-		if (game.getState() == Game.State.LOST) {
-			if (view.getBoard().getplayAgain_btn().contains(e.getX() - xfix, e.getY() - yfix) || view.getBoard().getMenu().contains(e.getX()- xfix, e.getY()-yfix)) {
-				view.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			} else  {
-				view.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
+	public void actionPerformed(ActionEvent e) {
+		if(e.getActionCommand()=="playAgain"){
+			game.restart();
+			view.getBoard().remove(view.getBoard().getPlayAgain());
+			view.getBoard().remove(view.getBoard().getMenu());
+			view.requestFocus();
+		} else if (e.getActionCommand()=="menu"){
+			view.getContentPane().removeAll();
+			view.add(view.getHeader(), BorderLayout.NORTH);
+			view.add(view.getMenu());
+			view.revalidate();
+			view.repaint();
 		}
+		
 	}
 }
