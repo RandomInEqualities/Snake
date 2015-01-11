@@ -1,8 +1,11 @@
 package snake.control;
 
+import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.event.*;
+
 import javax.swing.*;
+
 import snake.view.*;
 
 public class ControlSingleplayer implements ActionListener {
@@ -56,6 +59,12 @@ public class ControlSingleplayer implements ActionListener {
 			intermediate.setBorderPainted(false);
 			hard.setBorderPainted(true);
 			speed = 70;
+		} else if (e.getActionCommand() == "back"){
+			view.getContentPane().removeAll();
+			view.add(view.getHeader(), BorderLayout.NORTH);
+			view.add(view.getMenu());
+			view.revalidate();
+			view.repaint();
 		}
 	}
 
@@ -63,7 +72,6 @@ public class ControlSingleplayer implements ActionListener {
 	public String getInput(JFormattedTextField input) {
 		String in = input.getText();
 		String out = in.replace(" ", "");
-		;
 		return out;
 	}
 }

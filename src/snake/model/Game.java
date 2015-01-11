@@ -46,7 +46,7 @@ public class Game extends Observable {
 		this.width = width;
 		this.height = height;
 		this.audio = new Audio(this);
-		this.isMuted = false;
+		this.isMuted = true;
 		this.state = State.RUNNING;
 		this.score = 0;
 		this.board = new Board(width, height);

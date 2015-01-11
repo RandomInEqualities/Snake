@@ -8,11 +8,12 @@ import javax.imageio.ImageIO;
 
 public class CustomImages {
 	public BufferedImage apple, logo, headUp, headDown, headLeft, headRight,
-			snakeCornerRU, snakeCornerLU, snakeCornerRD, snakeCornerLD,
-			snakeHorizontal, snakeVertical, background, gameOverTitle,
-			pausedTitle, menuTitle, singleplayer_btn, multiplayer_btn,
-			controls_btn, highScores_btn, quit_btn, play_btn, playAgain_btn,
-			menu_btn, easy_btn, intermediate_btn, hard_btn;
+			snakeCornerTL, snakeCornerTR, snakeCornerBL, snakeCornerBR,
+			snakeHorizontal, snakeVertical, snakeTailU, snakeTailD, snakeTailL,
+			snakeTailR, background, gameOverTitle, pausedTitle, gameWonTitle, menuTitle, controlsTitle,
+			singleplayer_btn, multiplayer_btn, controls_btn, highScores_btn,
+			quit_btn, play_btn, playAgain_btn, menu_btn, easy_btn,
+			intermediate_btn, hard_btn, back_btn, controlsImage;
 
 	public CustomImages() {
 		try {
@@ -22,21 +23,27 @@ public class CustomImages {
 
 			// Game
 			apple = ImageIO.read(new File("apple.png"));
-			headUp = ImageIO.read(new File("head_up.png"));
-			headDown = ImageIO.read(new File("head_down.png"));
-			headLeft = ImageIO.read(new File("head_left.png"));
-			headRight = ImageIO.read(new File("head_right.png"));
-			snakeCornerRU = ImageIO.read(new File("SnakeCornerRU.png"));
-			snakeCornerLU = ImageIO.read(new File("SnakeCornerLU.png"));
-			snakeCornerRD = ImageIO.read(new File("SnakeCornerRD.png"));
-			snakeCornerLD = ImageIO.read(new File("SnakeCornerLD.png"));
+			headUp = ImageIO.read(new File("SnakeHeadU.png"));
+			headDown = ImageIO.read(new File("SnakeHeadD.png"));
+			headLeft = ImageIO.read(new File("SnakeHeadL.png"));
+			headRight = ImageIO.read(new File("SnakeHeadR.png"));
+			snakeCornerTL = ImageIO.read(new File("SnakeCornerTL.png"));
+			snakeCornerTR = ImageIO.read(new File("SnakeCornerTR.png"));
+			snakeCornerBL = ImageIO.read(new File("SnakeCornerBL.png"));
+			snakeCornerBR = ImageIO.read(new File("SnakeCornerBR.png"));
 			snakeHorizontal = ImageIO.read(new File("SnakeHorizontal.png"));
 			snakeVertical = ImageIO.read(new File("SnakeVertical.png"));
+			snakeTailU = ImageIO.read(new File("SnakeTailU.png"));
+			snakeTailD = ImageIO.read(new File("SnakeTailD.png"));
+			snakeTailL = ImageIO.read(new File("SnakeTailL.png"));
+			snakeTailR = ImageIO.read(new File("SnakeTailR.png"));
 
 			// Titles
 			gameOverTitle = ImageIO.read(new File("TitleGameOver.png"));
 			pausedTitle = ImageIO.read(new File("TitlePaused.png"));
+			gameWonTitle = ImageIO.read(new File("TitleGameWon.png"));
 			menuTitle = ImageIO.read(new File("TitleMenu.png"));
+			controlsTitle = ImageIO.read(new File("TitleControls.png"));
 
 			// Buttons
 			singleplayer_btn = ImageIO.read(new File("ButtonSingleplayer.png"));
@@ -47,10 +54,13 @@ public class CustomImages {
 			play_btn = ImageIO.read(new File("ButtonPlay.png"));
 			playAgain_btn = ImageIO.read(new File("ButtonPlayAgain.png"));
 			menu_btn = ImageIO.read(new File("ButtonMenu.png"));
+			back_btn = ImageIO.read(new File("ButtonBack.png"));
 			easy_btn = ImageIO.read(new File("DifficultyEasy.png"));
 			intermediate_btn = ImageIO.read(new File("DifficultyIntermediate.png"));
 			hard_btn = ImageIO.read(new File("DifficultyHard.png"));
 
+			//Other
+			controlsImage = ImageIO.read(new File("ControlsImage.png"));
 		} catch (IOException error) {
 			throw new RuntimeException("Image not found: " + error.getMessage());
 		}

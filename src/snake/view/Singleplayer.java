@@ -15,7 +15,7 @@ public class Singleplayer extends JPanel implements FocusListener{
 	private JFormattedTextField inputWidth, inputHeight;
 	private boolean valid, filled;
 	private JPanel panel;
-	private JButton play, easy, intermediate, hard;
+	private JButton play, easy, intermediate, hard, back;
 	
 	public Singleplayer(View view){
 		this.view = view;
@@ -40,6 +40,8 @@ public class Singleplayer extends JPanel implements FocusListener{
 		setTextFieldFormat(inputHeight);
 		
 		//Buttons
+		back = new JButton(new ImageIcon(images.back_btn));
+		view.getMenu().setButton(back);
 		play = new JButton(new ImageIcon(images.play_btn));
 		view.getMenu().setButton(play);
 		
@@ -56,6 +58,8 @@ public class Singleplayer extends JPanel implements FocusListener{
 		ControlSingleplayer controlSingleplayer = new ControlSingleplayer(view);
 		play.addActionListener(controlSingleplayer);
 		play.setActionCommand("play");
+		back.addActionListener(controlSingleplayer);
+		back.setActionCommand("back");
 		easy.addActionListener(controlSingleplayer);
 		easy.setActionCommand("easy");
 		intermediate.addActionListener(controlSingleplayer);
@@ -112,11 +116,15 @@ public class Singleplayer extends JPanel implements FocusListener{
 		panel.add(intermediate);
 		panel.add(hard);
 		
-		//Add play button
-		int xPlay = getSize().width/2-buttonWidth/2;
+		//Add play button and back button
+		int xBack = getSize().width/2-buttonWidth-10;
+		int xPlay = getSize().width/2+10;
 		int yPlay = view.getMenu().getRectangleForMenu(getSize().width).height - buttonHeight - 20;
+		back.setBounds(xBack, yPlay, buttonWidth, buttonHeight);
 		play.setBounds(xPlay, yPlay, buttonWidth, buttonHeight);
+		this.add(back);
 		this.add(play);
+		
 		
 		//Error message
 		int y = 110;
@@ -135,7 +143,7 @@ public class Singleplayer extends JPanel implements FocusListener{
 		txt.setFont(new Font("Sans_Serif", Font.PLAIN, 20)); 
 		txt.setHorizontalAlignment(JTextField.CENTER);
 		txt.setFocusLostBehavior(JFormattedTextField.COMMIT); //Commit the new input
-		txt.setValue("100");
+		txt.setValue("20");
 	}
 	 
     public JFormattedTextField getWidthInput(){

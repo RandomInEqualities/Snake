@@ -17,6 +17,7 @@ public class View extends JFrame{
 	private Menu menu;
 	private BoardPanel boardPanel;
 	private Singleplayer splayer;
+	private Controls controls;
 	private Header header;
 	private Game game;
 	private BoardPanel board;
@@ -25,8 +26,9 @@ public class View extends JFrame{
 		super();			
 		//Menu
 		this.header = new Header();
-		this.menu = new Menu();
+		this.menu = new Menu(this);
 		this.splayer = new Singleplayer(this);
+		this.controls = new Controls(this);
 		this.boardPanel = null;
 		getContentPane().add(header, BorderLayout.NORTH);
 		getContentPane().add(menu, BorderLayout.CENTER);
@@ -48,6 +50,10 @@ public class View extends JFrame{
 
 	public Singleplayer getSingleplayer(){
 		return splayer;
+	}
+	
+	public Controls getControls(){
+		return controls;
 	}
 	
 	public BoardPanel getBoard() {
