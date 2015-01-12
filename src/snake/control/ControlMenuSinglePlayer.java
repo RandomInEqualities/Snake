@@ -62,6 +62,7 @@ public class ControlMenuSinglePlayer implements ActionListener {
 				int inputHeight = Integer.parseInt(inputH);
 				if (inputWidth >= 5 && inputWidth <= 100 && inputHeight >= 5 && inputHeight <= 100) {
 					game.restart(inputWidth, inputHeight);
+					game.setTimedMovementSpeed(speed);
 					view.showGame();
 					viewMenuSinglePlayer.setValid(true);
 					viewMenuSinglePlayer.setFilled(true);
@@ -72,20 +73,29 @@ public class ControlMenuSinglePlayer implements ActionListener {
 					viewMenuSinglePlayer.repaint();
 				}
 			}
-		} 
+		} else if (e.getActionCommand() == "kindergarten"){
+			//kindergarten.setBorderPainted(true);
+			easy.setBorderPainted(false);
+			intermediate.setBorderPainted(false);
+			hard.setBorderPainted(false);		
+			speed = 0;
+		}
 		else if (e.getActionCommand() == "easy"){
+			//kindergarten.setBorderPainted(false);
 			easy.setBorderPainted(true);
 			intermediate.setBorderPainted(false);
 			hard.setBorderPainted(false);		
 			speed = 300;
 		} 
 		else if (e.getActionCommand() == "intermediate"){
+			//kindergarten.setBorderPainted(false);
 			easy.setBorderPainted(false);
 			intermediate.setBorderPainted(true);
 			hard.setBorderPainted(false);
 			speed = 150;
 		} 
 		else if (e.getActionCommand() == "hard"){
+			//kindergarten.setBorderPainted(false);
 			easy.setBorderPainted(false);
 			intermediate.setBorderPainted(false);
 			hard.setBorderPainted(true);
