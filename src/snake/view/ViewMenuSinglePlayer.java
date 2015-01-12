@@ -18,7 +18,7 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 	private JPanel panel;
 	private JButton play, easy, intermediate, hard, back;
 	
-	public ViewMenuSinglePlayer(Game game, View view){
+	public ViewMenuSinglePlayer(View view){
 		this.view = view;
 		this.valid = true;
 		this.filled = true;
@@ -37,8 +37,8 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		inputHeight = new JFormattedTextField(formatter);
 		inputWidth.addFocusListener(this);
 		inputHeight.addFocusListener(this);
-		setTextFieldFormat(inputWidth, game.getBoard().getWidth());
-		setTextFieldFormat(inputHeight, game.getBoard().getHeight());
+		setTextFieldFormat(inputWidth);
+		setTextFieldFormat(inputHeight);
 		
 		//Buttons
 		back = new JButton(new ImageIcon(Images.BUTTON_BACK));
@@ -149,11 +149,11 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		}
 	}
 	
-	private void setTextFieldFormat(JFormattedTextField txt, int value){
+	private void setTextFieldFormat(JFormattedTextField txt){
 		txt.setFont(new Font("Sans_Serif", Font.PLAIN, 20)); 
 		txt.setHorizontalAlignment(JTextField.CENTER);
 		txt.setFocusLostBehavior(JFormattedTextField.COMMIT); //Commit the new input
-		txt.setValue(value);
+		txt.setValue("20");
 	}
 	 
     public JFormattedTextField getWidthInput(){
