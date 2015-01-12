@@ -11,7 +11,10 @@ public class Colors {
 	public static final Color BOARD_COLOUR = new Color(0.35f, 0.35f,0.35f, 0.9f);
 	public static final Color POPUP_COLOUR = new Color(1f, 1f, 1f, 0.8f);
 	
-	public static final Color YELLOW = new Color(0.949f, 0.757f, 0.267f);
+	public static final Color GREEN = new Color(0.33f, 0.85f, 0.32f);
+	public static final Color BLUE = new Color(0.31f, 0.60f, 0.85f);
+	public static final Color RED = new Color(0.93f, 0.30f, 0.26f);
+	public static final Color YELLOW = new Color(0.95f, 0.76f, 0.26f);
 	public static final Color TRANSPARENT_BLACK = new Color(0f, 0f, 0f, 0.7f);
 	
 }
