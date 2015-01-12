@@ -1,14 +1,11 @@
 package snake.view;
 
 import java.awt.*;
-import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.*;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-import javax.swing.event.CaretListener;
 import javax.swing.text.*;
 
 import snake.model.Game;
@@ -25,21 +22,24 @@ public class ViewMenuSingleplayer extends JPanel implements FocusListener {
 	private JButton play, kindergarten, easy, intermediate, hard, back, green, blue, red, yellow;
 	
 	public ViewMenuSingleplayer(View view, Game game){
+		if (view == null || game == null) {
+			throw new NullPointerException();
+		}
+		
 		this.view = view;
 		this.valid = true;
 		this.filled = true;
 		panel = new JPanel(); //Game options panel
 		
-		//Formatter (limit input to three digits)
+		// Formatter (limit input to three digits)
 		MaskFormatter formatter = null;
 		try {
 			formatter = new MaskFormatter("###");
 		} catch (java.text.ParseException exc) {
 			throw new RuntimeException("Formatter error");
 		}
-		
 
-		//Text input fields
+		// Text input fields
 		inputWidth = new JFormattedTextField(formatter);
 		inputHeight = new JFormattedTextField(formatter);
 		
@@ -50,14 +50,14 @@ public class ViewMenuSingleplayer extends JPanel implements FocusListener {
 		setTextFieldFormat(inputWidth, gameWidth);
 		setTextFieldFormat(inputHeight, gameHeight);
 		
-		//Buttons
+		// Buttons
 		back = new JButton(new ImageIcon(Images.BUTTON_BACK));
-		view.getViewMenu().setButton(back);
+		view.getViewMenu().setCommonButtonParameters(back);
 		play = new JButton(new ImageIcon(Images.BUTTON_PLAY));
-		view.getViewMenu().setButton(play);
+		view.getViewMenu().setCommonButtonParameters(play);
 		
 		kindergarten = new JButton(new ImageIcon(Images.DIFFICULTY_KINDERGARTEN));
-		view.getViewMenu().setButton(kindergarten);
+		view.getViewMenu().setCommonButtonParameters(kindergarten);
 		easy = new JButton(new ImageIcon(Images.DIFFICULTY_EASY));
 		view.getViewMenu().setOptionButton(easy);
 		intermediate = new JButton(new ImageIcon(Images.DIFFICULTY_INTERMEDIATE));
@@ -66,7 +66,7 @@ public class ViewMenuSingleplayer extends JPanel implements FocusListener {
 		view.getViewMenu().setOptionButton(hard);
 		
 		green = new JButton();
-		view.getViewMenu().setButton(green);
+		view.getViewMenu().setCommonButtonParameters(green);
 		green.setBackground(Colors.GREEN);
 		green.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
 		blue = new JButton();
@@ -79,7 +79,6 @@ public class ViewMenuSingleplayer extends JPanel implements FocusListener {
 		view.getViewMenu().setOptionButton(yellow);
 		yellow.setBackground(Colors.YELLOW);
 		
-		//adds
 		this.add(panel);
 		panel.add(inputWidth);
 		panel.add(inputHeight);
@@ -123,31 +122,35 @@ public class ViewMenuSingleplayer extends JPanel implements FocusListener {
 	public JButton getGreenButton() {
 		return green;
 	}
+	
 	public JButton getBlueButton() {
 		return blue;
 	}
+	
 	public JButton getRedButton() {
 		return red;
 	}
+	
 	public JButton getYellowButton() {
 		return yellow;
 	}
+	
 	@Override
 	protected void paintComponent(Graphics context) {
 		super.paintComponent(context);
 		Graphics2D context2D = (Graphics2D) context;
 		
-		//Background
+		// Background
 		view.getViewMenu().drawBackground(context2D, getWidth(), getHeight());
 		view.getViewMenu().drawBoard(context2D, getWidth());
 		
-		//Set transparent panel in the board area
+		// Set transparent panel in the board area
 		Rectangle board = view.getViewMenu().getRectangleForMenu(getWidth());
 		board.height = 400;
 		panel.setBounds(board);
 		panel.setOpaque(false);
 		
-		//Text
+		// Text
 		context2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		context2D.setFont(new Font("Sans_Serif", Font.BOLD, 20));
 		context2D.setColor(Colors.PANEL_COLOUR);
@@ -164,7 +167,7 @@ public class ViewMenuSingleplayer extends JPanel implements FocusListener {
 		inputWidth.setBounds(150, panel.getY()+40, 50, 30);
 		inputHeight.setBounds(panel.getWidth()-200, panel.getY()+40, 50, 30);
 
-		//Buttons
+		// Buttons
 		int buttonWidth = Images.BUTTON_PLAY.getWidth();
 		int buttonHeight = Images.BUTTON_PLAY.getHeight();
 		int difficultyWidth = Images.DIFFICULTY_EASY.getWidth();
@@ -172,21 +175,21 @@ public class ViewMenuSingleplayer extends JPanel implements FocusListener {
 
 		drawColourButtons(context2D);
 		
-		//Difficulty buttons
+		// Difficulty buttons
 		int space = (panel.getWidth()-4*difficultyWidth)/5; //space between buttons
 		kindergarten.setBounds(space, panel.getY()+280, difficultyWidth, difficultyHeight);
 		easy.setBounds(2*space+difficultyWidth, panel.getY()+280, difficultyWidth, difficultyHeight);
 		intermediate.setBounds(3*space+2*difficultyWidth, panel.getY()+280, difficultyWidth, difficultyHeight);
 		hard.setBounds(4*space+3*difficultyWidth, panel.getY()+280, difficultyWidth, difficultyHeight);
 	
-		//Play button and back button
+		// Play button and back button
 		int xBack = getSize().width/2-buttonWidth-10;
 		int xPlay = getSize().width/2+10;
 		int yPlay = view.getViewMenu().getRectangleForMenu(getSize().width).height - buttonHeight - 20;
 		back.setBounds(xBack, yPlay, buttonWidth, buttonHeight);
 		play.setBounds(xPlay, yPlay, buttonWidth, buttonHeight);
 		
-		//Error message
+		// Error message
 		int y = 110;
 		context.setColor(Color.RED);
 		context.setFont(new Font("Sans_Serif", Font.BOLD, 12));
@@ -199,22 +202,33 @@ public class ViewMenuSingleplayer extends JPanel implements FocusListener {
 		}
 	}
 	
-	private void setTextFieldFormat(JFormattedTextField txt, String value){
-		txt.setFont(new Font("Sans_Serif", Font.PLAIN, 20)); 
-		txt.setHorizontalAlignment(JTextField.CENTER);
-		txt.setFocusLostBehavior(JFormattedTextField.COMMIT); //Commit the new input
-		txt.setValue(value);
+	public void drawColourButtons(Graphics2D context){
+		int gap = 10;
+		int sizeColour = 30;
+		int xBlue = panel.getWidth()/2-sizeColour-gap/2;
+		int yColour = panel.getY()+180;
+		green.setBounds(xBlue-gap-sizeColour, yColour, sizeColour, sizeColour);
+		blue.setBounds(xBlue, yColour, sizeColour, sizeColour);
+		red.setBounds(xBlue+gap+sizeColour, yColour, sizeColour, sizeColour);
+		yellow.setBounds(xBlue+2*gap+2*sizeColour, yColour, sizeColour, sizeColour);
+	}
+	
+	private void setTextFieldFormat(JFormattedTextField text, String value) {
+		text.setFont(new Font("Sans_Serif", Font.PLAIN, 20)); 
+		text.setHorizontalAlignment(JTextField.CENTER);
+		text.setFocusLostBehavior(JFormattedTextField.COMMIT); // Commit the new input
+		text.setValue(value);
 	}
 	 
-    public JFormattedTextField getWidthInput(){
+    public JFormattedTextField getWidthInput() {
     	return inputWidth;
     }
 	
-    public JFormattedTextField getHeightInput(){
+    public JFormattedTextField getHeightInput() {
     	return inputHeight;
     }
     
-    public void setValid(boolean b){
+    public void setValid(boolean b) {
     	valid = b;
     }
 
@@ -222,7 +236,7 @@ public class ViewMenuSingleplayer extends JPanel implements FocusListener {
 		filled = b;		
 	}
 
-	//Place caret after the number when focus in the text field is gained
+	// Place caret after the number when focus in the text field is gained
 	@Override
 	public void focusGained(FocusEvent e) {
 		SwingUtilities.invokeLater(new Runnable(){
@@ -252,18 +266,8 @@ public class ViewMenuSingleplayer extends JPanel implements FocusListener {
 		return hard;
 	}
 	
-	public void drawColourButtons(Graphics2D context){
-		int gap = 10;
-		int sizeColour = 30;
-		int xBlue = panel.getWidth()/2-sizeColour-gap/2;
-		int yColour = panel.getY()+180;
-		green.setBounds(xBlue-gap-sizeColour, yColour, sizeColour, sizeColour);
-		blue.setBounds(xBlue, yColour, sizeColour, sizeColour);
-		red.setBounds(xBlue+gap+sizeColour, yColour, sizeColour, sizeColour);
-		yellow.setBounds(xBlue+2*gap+2*sizeColour, yColour, sizeColour, sizeColour);
-	}
-	
 	public JPanel getPanel(){
 		return panel;
 	}
+	
 }

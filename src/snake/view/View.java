@@ -4,6 +4,7 @@ package snake.view;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
@@ -22,7 +23,7 @@ public class View extends JFrame {
 	
 	private static final long serialVersionUID = 6240347347855679335L;
 	
-	public State state;
+	private State state;
 	private ViewHeader headerPanel;
 	private ViewMenu menuPanel;
 	private ViewMenuSingleplayer menuSingleplayerPanel;
@@ -39,7 +40,7 @@ public class View extends JFrame {
 		}
 		
 		this.headerPanel = new ViewHeader(this, game, false);
-		this.menuPanel = new ViewMenu(this);
+		this.menuPanel = new ViewMenu();
 		this.menuSingleplayerPanel = new ViewMenuSingleplayer(this, game);
 		//this.menuMultiplayerPanel = new ViewMenuMultiplayer(this, game);
 		this.menuControlsPanel = new ViewMenuControls(this);
@@ -55,32 +56,43 @@ public class View extends JFrame {
 	}
 	
 	public void showGame() {
-		setFrameComponents(headerPanel, boardPanel);
-		headerPanel.showScore();
-		state = State.IN_GAME;
+		if (state != State.IN_GAME) {
+			setFrameComponents(headerPanel, boardPanel);
+			headerPanel.showScore();
+			state = State.IN_GAME;
+		}
 	}
 	
 	public void showMenu() {
-		setFrameComponents(headerPanel, menuPanel);
-		headerPanel.hideScore();
-		state = State.IN_MENU;
+		if (state != State.IN_MENU) {
+			setFrameComponents(headerPanel, menuPanel);
+			headerPanel.hideScore();
+			state = State.IN_MENU;
+		}
 	}
 	
 	public void showSingleplayerMenu() {
-		setFrameComponents(headerPanel, menuSingleplayerPanel);
-		headerPanel.hideScore();
-		state = State.IN_MENU_SINGLEPLAYER;
+		if (state != State.IN_MENU_SINGLEPLAYER) {
+			setFrameComponents(headerPanel, menuSingleplayerPanel);
+			headerPanel.hideScore();
+			state = State.IN_MENU_SINGLEPLAYER;
+		}
 	}
 	
 	public void showMultiplayerMenu(){
-		//setFrameComponents(headerPanel, menuMultiplayerPanel);
-		headerPanel.hideScore();
-		state = State.IN_MENU_MULTIPLAYER;
+		if (state != State.IN_MENU_MULTIPLAYER) {
+			//setFrameComponents(headerPanel, menuMultiplayerPanel);
+			headerPanel.hideScore();
+			state = State.IN_MENU_MULTIPLAYER;
+		}
 	}
+	
 	public void showControlsMenu() {
-		setFrameComponents(headerPanel, menuControlsPanel);
-		headerPanel.hideScore();
-		state = State.IN_MENU_CONTROLS;
+		if (state != State.IN_MENU_CONTROLS) {
+			setFrameComponents(headerPanel, menuControlsPanel);
+			headerPanel.hideScore();
+			state = State.IN_MENU_CONTROLS;
+		}
 	}
 	
 	public boolean inGame() {
@@ -123,12 +135,14 @@ public class View extends JFrame {
 	}
 	
 	public void closeWindow() {
-		System.exit(0);
+		// Send an event to the window system that we want to close the frame.
+		dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 	}
 	
 	public ViewHeader getHeader(){
 		return headerPanel;
 	}
+	
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(800, 800);
@@ -145,7 +159,6 @@ public class View extends JFrame {
 		// It is very important that this JFrame gets the focus. Otherwise the control
 		// objects won't receive keyboard events!
 		requestFocus();
-		
 	}
 	
 }

@@ -1,11 +1,11 @@
 
 package snake.view;
+
 import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
+
 import snake.model.Game;
 
 
@@ -69,7 +69,13 @@ public class Audio implements Observer {
 			eatSound.open(eatSoundStream);
 			endSound.open(endSoundStream);
 		} catch (Exception error) {
-			throw new RuntimeException("unable to load sound: " + error.getMessage());
+			throw new RuntimeException("unable to load sounds: " + error.getMessage());
 		}
+		
+		// Lower the sound volumes, it is really loud with headphones on.
+		FloatControl eatSoundGain = (FloatControl) eatSound.getControl(FloatControl.Type.MASTER_GAIN);
+		eatSoundGain.setValue(-30.0f);
+		FloatControl endSoundGain = (FloatControl) endSound.getControl(FloatControl.Type.MASTER_GAIN);
+		endSoundGain.setValue(-20.0f);
 	}
 }

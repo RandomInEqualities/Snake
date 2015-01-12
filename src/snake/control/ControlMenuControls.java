@@ -35,13 +35,8 @@ public class ControlMenuControls extends KeyAdapter implements ActionListener {
 		if (view.inGame()) {
 			return;
 		}
-		
-		switch (event.getKeyCode()) {
-			case KeyEvent.VK_BACK_SPACE:
-				view.showMenu();
-				break;
-			default:
-				break;
+		if (event.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+			view.showMenu();
 		}
 	}
 	

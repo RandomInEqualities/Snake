@@ -1,16 +1,13 @@
 package snake.control;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
+import javax.swing.border.*;
 
 import snake.model.*;
 import snake.view.*;
+
 public class ControlMenuMultiplayer extends KeyAdapter implements ActionListener {
 
 	private Game game;
@@ -85,16 +82,16 @@ public class ControlMenuMultiplayer extends KeyAdapter implements ActionListener
 			view.showMenu();
 		} else if (e.getActionCommand() == "green") {
 			active(green, blue, red, yellow);
-			view.getViewBoard().setColour(84, 216, 81);
+			view.getViewBoard().setSnakeColour(84, 216, 81);
 		} else if (e.getActionCommand() == "blue") {
 			active(blue, green, red, yellow);
-			view.getViewBoard().setColour(80, 152, 218);
+			view.getViewBoard().setSnakeColour(80, 152, 218);
 		} else if (e.getActionCommand() == "red"){
 			active(red, green, blue, yellow);
-			view.getViewBoard().setColour(237, 75, 66);
+			view.getViewBoard().setSnakeColour(237, 75, 66);
 		} else if (e.getActionCommand() == "yellow"){
 			active(yellow, green, blue, red);
-			view.getViewBoard().setColour(243, 196, 67);
+			view.getViewBoard().setSnakeColour(243, 196, 67);
 		}
 	}
 
@@ -130,7 +127,8 @@ public class ControlMenuMultiplayer extends KeyAdapter implements ActionListener
 			// if input is correct
 			int inputWidth = Integer.parseInt(inputW);
 			int inputHeight = Integer.parseInt(inputH);
-			if (inputWidth >= 5 && inputWidth <= 100 && inputHeight >= 5 && inputHeight <= 100) {
+			if (inputWidth >= Board.MIN_WIDTH && inputWidth <= Board.MAX_WIDTH && 
+					inputHeight >= Board.MIN_HEIGHT && inputHeight <= Board.MAX_HEIGHT) {
 				game.restart(inputWidth, inputHeight);
 				view.showGame();
 				viewMenuMultiplayer.setValid(true);
@@ -158,4 +156,5 @@ public class ControlMenuMultiplayer extends KeyAdapter implements ActionListener
 		b3.setBorderPainted(false);
 		view.requestFocus();
 	}
+	
 }

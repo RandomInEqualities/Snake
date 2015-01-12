@@ -58,34 +58,35 @@ public class ViewHeader extends JPanel implements Observer {
 	@Override
 	protected void paintComponent(Graphics context) {
 		super.paintComponent(context);
+		Graphics2D context2D = (Graphics2D)context;
 		
 		// Only show logo if board is wide enough to contain it.
 		Dimension size = getSize();
 		int logoWidth = logo.getWidth(null);
 		if (size.width > logoWidth + 230 || (!showScore && size.width > logoWidth)) {
-			context.drawImage(logo, size.width/2 - logo.getWidth(null)/2, 0, null);
+			context2D.drawImage(logo, size.width/2 - logo.getWidth(null)/2, 0, null);
 		}
 		
 		// Update the score (if we need to show scores).
 		if (showScore) {
-			((Graphics2D) context).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-			context.setFont(this.font);
+			context2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+			context2D.setFont(this.font);
 			int fontSize = font.getSize();
-			context.setColor(Color.WHITE);
-			context.drawString("Score: " + game.getScore(), fontSize, size.height/2 - fontSize/2);
-			
-			//Sound icon
-			Image soundIcon;		
-			if (view.getAudio().isMuted()){
-				soundIcon = Images.SOUND_OFF;
-			} else {
-				soundIcon = Images.SOUND_ON;
-			}
-			context.drawImage(soundIcon, size.width-Images.SOUND_OFF.getWidth()-10, 0, null);
-			
-			//Key info
-			context.drawImage(Images.INFO_KEYS, size.width-Images.INFO_KEYS.getWidth()-10, 35, null);
+			context2D.setColor(Color.WHITE);
+			context2D.drawString("Score: " + game.getScore(), fontSize, size.height/2 - fontSize/2);
 		}
+		
+		// Sound icon
+		Image soundIcon;		
+		if (view.getAudio().isMuted()){
+			soundIcon = Images.SOUND_OFF;
+		} else {
+			soundIcon = Images.SOUND_ON;
+		}
+		context2D.drawImage(soundIcon, size.width-Images.SOUND_OFF.getWidth()-10, 0, null);
+		
+		// Key info
+		context2D.drawImage(Images.INFO_KEYS, size.width-Images.INFO_KEYS.getWidth()-10, 35, null);
 	}
 	
 }

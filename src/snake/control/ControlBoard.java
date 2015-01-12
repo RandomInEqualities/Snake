@@ -2,8 +2,6 @@
 package snake.control;
 
 import java.awt.event.*;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JButton;
 
@@ -11,7 +9,7 @@ import snake.model.*;
 import snake.view.*;
 
 
-public class ControlBoard extends KeyAdapter implements ActionListener, Observer {
+public class ControlBoard extends KeyAdapter implements ActionListener {
 	
 	private Game game;
 	private View view;
@@ -39,6 +37,7 @@ public class ControlBoard extends KeyAdapter implements ActionListener, Observer
 		if (event == null) {
 			throw new NullPointerException();
 		}
+		
 		if (!view.inGame()) {
 			return;
 		}
@@ -87,11 +86,6 @@ public class ControlBoard extends KeyAdapter implements ActionListener, Observer
 			view.showMenu();
 			boardView.removeButtons();
 		}
-	}
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

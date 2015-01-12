@@ -3,7 +3,7 @@ package snake.control;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
+
 import snake.view.*;
 
 public class ControlMenu implements ActionListener {
@@ -44,11 +44,5 @@ public class ControlMenu implements ActionListener {
 		}
 	}
 
-	// Get input without whitespace
-	public String getInput(JFormattedTextField input) {
-		String in = input.getText();
-		String out = in.replace(" ", "");
-		return out;
-	}
 }
 

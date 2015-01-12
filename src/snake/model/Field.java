@@ -3,8 +3,8 @@ package snake.model;
 
 public class Field {
 	
-	private int row;
-	private int column;
+	private final int row;
+	private final int column;
 	
 	public Field(int row, int column) {
 		this.row = row;
@@ -19,7 +19,8 @@ public class Field {
 		return column;
 	}
 	
-	public @Override boolean equals(Object other){
+	@Override
+	public boolean equals(Object other){
 		if (other instanceof Field) {
 			Field field = (Field)other;
 			return row == field.row && column == field.column;
@@ -27,7 +28,8 @@ public class Field {
 		return false;
 	}
 	
-	public @Override String toString() {
+	@Override
+	public String toString() {
 		return "Field(" + row + "," + column + ")";
 	}
 	

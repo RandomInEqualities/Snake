@@ -5,29 +5,29 @@ import java.awt.*;
 
 import javax.swing.*;
 
+
 public class ViewMenu extends JPanel {
+	
 	private static final long serialVersionUID = 4427452065585644066L;
 	private JButton singleplayer, multiplayer, controls, quit;
-	private View view;
 	
-	public ViewMenu(View view){
+	public ViewMenu() {
+		super();
 		
-		//Buttons
+		// Buttons
 		singleplayer = new JButton(new ImageIcon(Images.BUTTON_SINGLEPLAYER));
-		setButton(singleplayer);
 		multiplayer = new JButton(new ImageIcon(Images.BUTTON_MULTIPLAYER));
-		setButton(multiplayer);
 		controls = new JButton(new ImageIcon(Images.BUTTON_CONTROLS));
-		setButton(controls);
 		quit = new JButton(new ImageIcon(Images.BUTTON_QUIT));
-		setButton(quit);
-		this.view = view;
+		setCommonButtonParameters(singleplayer);
+		setCommonButtonParameters(multiplayer);
+		setCommonButtonParameters(controls);
+		setCommonButtonParameters(quit);
 
 		this.add(singleplayer);
 		this.add(multiplayer);
 		this.add(controls);
 		this.add(quit);
-		
 	}
 	
 	public JButton getSinglePlayerButton() {
@@ -61,7 +61,7 @@ public class ViewMenu extends JPanel {
 	}
 	
 	private void drawMenu(Graphics2D context) {
-		//Title
+		// Title
 		int x = getSize().width/2-Images.TITLE_MENU.getWidth()/2;
 		int y = 20;
 		context.drawImage(Images.TITLE_MENU, x, y, null);
@@ -89,20 +89,23 @@ public class ViewMenu extends JPanel {
 	
 	// Tile background
 	public void drawBackground(Graphics2D context, int width, int height) {
-		for (int x = 0; x < width; x += Images.BACKGROUND.getWidth()) {
-			for (int y = 0; y < height; y += Images.BACKGROUND.getHeight()) {
+		int imageWidth = Images.BACKGROUND.getWidth();
+		int imageHeight = Images.BACKGROUND.getHeight();
+		for (int x = 0; x < width; x += imageWidth) {
+			for (int y = 0; y < height; y += imageHeight) {
 				context.drawImage(Images.BACKGROUND, x, y, this);
 			}
 		}
 	}
 	
-	public void setButton(JButton button){
+	public void setCommonButtonParameters(JButton button){
 		button.setPreferredSize(new Dimension(140, 50));
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	}
 	
 	public void setOptionButton(JButton button){
-		setButton(button);
+		setCommonButtonParameters(button);
 		button.setBorderPainted(false);
 	}
+	
 }

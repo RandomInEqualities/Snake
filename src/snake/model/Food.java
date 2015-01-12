@@ -20,7 +20,8 @@ public class Food {
 		return position;
 	}
 	
-	public @Override String toString() {
+	@Override
+	public String toString() {
 		return "Food at " + position.toString();
 	}
 	

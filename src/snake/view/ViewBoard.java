@@ -6,16 +6,18 @@ import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import javax.swing.*;
 import java.util.*;
+
 import snake.model.*;
 
 public class ViewBoard extends JPanel implements Observer {
+	
 	private Game game;
 	private View view;
 	private JButton playAgainButton, menuButton;
 	private static final long serialVersionUID = 9109362543987437505L;
 
 	int widthPopup, heightPopup, xPopup, yPopup;
-	int r, g, b;
+	int snakeRed, snakeGreen, snakeBlue;
 	
 	public ViewBoard(Game game, View view) {
 		super();
@@ -29,14 +31,14 @@ public class ViewBoard extends JPanel implements Observer {
 		setBackground(Colors.PANEL_COLOUR);
 		
 		playAgainButton = new JButton(new ImageIcon(Images.BUTTON_PLAY_AGAIN));
-		view.getViewMenu().setButton(playAgainButton);
+		view.getViewMenu().setCommonButtonParameters(playAgainButton);
 		menuButton = new JButton(new ImageIcon(Images.BUTTON_MENU));
-		view.getViewMenu().setButton(menuButton);
+		view.getViewMenu().setCommonButtonParameters(menuButton);
 		
 		//Default colour
-		this.r = 84;
-		this.g = 216;
-		this.b = 81;
+		this.snakeRed = 84;
+		this.snakeGreen = 216;
+		this.snakeBlue = 81;
 	}
 
 	@Override
@@ -121,7 +123,7 @@ public class ViewBoard extends JPanel implements Observer {
 			} else {
 				body = Images.SNAKE_CORNER_BL;
 			}
-			BufferedImage bodyColoured = colourSnake(body, r, g, b);
+			BufferedImage bodyColoured = colourSnake(body, snakeRed, snakeGreen, snakeBlue);
 			Image bodyscaled = bodyColoured.getScaledInstance(getFieldSideLength(), getFieldSideLength(), Image.SCALE_SMOOTH);
 			context.drawImage(bodyscaled, bodyRectangle.x, bodyRectangle.y, null);
 		}
@@ -140,7 +142,7 @@ public class ViewBoard extends JPanel implements Observer {
 		} else {
 			tail = Images.SNAKE_TAIL_DOWN;
 		}
-		BufferedImage tailColoured = colourSnake(tail, r, g, b);
+		BufferedImage tailColoured = colourSnake(tail, snakeRed, snakeGreen, snakeBlue);
 		Image tailscaled = tailColoured.getScaledInstance(getFieldSideLength(), getFieldSideLength(), Image.SCALE_SMOOTH);
 		context.drawImage(tailscaled, tailRectangle.x, tailRectangle.y, null);
 		
@@ -163,7 +165,7 @@ public class ViewBoard extends JPanel implements Observer {
 			break;
 		}
 		
-		BufferedImage headColoured = colourSnake(head, r, g, b);
+		BufferedImage headColoured = colourSnake(head, snakeRed, snakeGreen, snakeBlue);
 		Image headScaled = headColoured.getScaledInstance(headRectangle.width, headRectangle.height, Image.SCALE_SMOOTH);
 		context.drawImage(headScaled, headRectangle.x, headRectangle.y, null);
 	}
@@ -183,8 +185,7 @@ public class ViewBoard extends JPanel implements Observer {
 		widthPopup = getSize().width;
 		heightPopup = 200;
 		xPopup = 0;
-		yPopup = getRectangleForBoard().y + getRectangleForBoard().height / 2
-				- heightPopup / 2;
+		yPopup = getRectangleForBoard().y + getRectangleForBoard().height/2 - heightPopup/2;
 		context.setColor(Colors.POPUP_COLOUR);
 		context.fillRect(xPopup, yPopup, widthPopup, heightPopup);
 		context.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -193,7 +194,7 @@ public class ViewBoard extends JPanel implements Observer {
 	private void drawGameLost(Graphics2D context) {
 		drawGameOver(context);
 		// Title
-		int x2 = getRectangleForBoard().x + getRectangleForBoard().width / 2 - Images.TITLE_GAME_OVER.getWidth() / 2;
+		int x2 = getRectangleForBoard().x + getRectangleForBoard().width/2 - Images.TITLE_GAME_OVER.getWidth()/2;
 		int y2 = yPopup;
 		context.drawImage(Images.TITLE_GAME_OVER, x2, y2, null);
 		
@@ -201,7 +202,7 @@ public class ViewBoard extends JPanel implements Observer {
 	private void drawGameWon(Graphics2D context){
 		drawGameOver(context);
 		// Title
-		int x2 = getRectangleForBoard().x + getRectangleForBoard().width / 2 - Images.TITLE_GAME_WON.getWidth() / 2;
+		int x2 = getRectangleForBoard().x + getRectangleForBoard().width/2 - Images.TITLE_GAME_WON.getWidth()/2;
 		int y2 = yPopup;
 		context.drawImage(Images.TITLE_GAME_WON, x2, y2, null);
 	}
@@ -212,8 +213,8 @@ public class ViewBoard extends JPanel implements Observer {
 
 		// Text
 		String scoreTxt = "Final Score: " + game.getScore();
-		int x3 = getRectangleForBoard().x + getRectangleForBoard().width / 2 - scoreTxt.length() * 10 / 2;
-		int y3 = getRectangleForBoard().y + getRectangleForBoard().height / 2 + 5;
+		int x3 = getRectangleForBoard().x + getRectangleForBoard().width/2 - scoreTxt.length()*10/2;
+		int y3 = getRectangleForBoard().y + getRectangleForBoard().height/2 + 5;
 		context.setColor(Colors.PANEL_COLOUR);
 		context.setFont(new Font("Sans_Serif", Font.BOLD, 20));
 		context.drawString(scoreTxt, x3, y3);
@@ -221,8 +222,8 @@ public class ViewBoard extends JPanel implements Observer {
 		// Buttons
 		int buttonWidth = 140;
 		int buttonHeight = 50;
-		int xPlayAgain = getRectangleForBoard().x + getRectangleForBoard().width / 2 - buttonWidth / 2 - 100;
-		int xMenu = getRectangleForBoard().x + getRectangleForBoard().width / 2 - buttonWidth / 2 + 100;
+		int xPlayAgain = getRectangleForBoard().x + getRectangleForBoard().width/2 - buttonWidth/2 - 100;
+		int xMenu = getRectangleForBoard().x + getRectangleForBoard().width/2 - buttonWidth/2 + 100;
 		int yPlayAgain = yPopup + heightPopup - buttonHeight - 20;
 
 		playAgainButton.setBounds(xPlayAgain, yPlayAgain, buttonWidth, buttonHeight);
@@ -233,17 +234,14 @@ public class ViewBoard extends JPanel implements Observer {
 		drawPopup(context);
 
 		// Title
-		int x2 = getRectangleForBoard().x + getRectangleForBoard().width / 2
-				- Images.TITLE_PAUSED.getWidth() / 2;
+		int x2 = getRectangleForBoard().x + getRectangleForBoard().width/2 - Images.TITLE_PAUSED.getWidth()/2;
 		int y2 = yPopup;
 		context.drawImage(Images.TITLE_PAUSED, x2, y2, null);
 
 		// Text
 		String pauseMessage = "Press 'P' to resume game";
-		int x3 = getRectangleForBoard().x + getRectangleForBoard().width / 2
-				- pauseMessage.length() * 10 / 2;
-		int y3 = getRectangleForBoard().y + getRectangleForBoard().height / 2
-				+ 25;
+		int x3 = getRectangleForBoard().x + getRectangleForBoard().width/2 - pauseMessage.length()*10/2;
+		int y3 = getRectangleForBoard().y + getRectangleForBoard().height/2 + 25;
 		context.setColor(Colors.PANEL_COLOUR);
 		context.setFont(new Font("Sans_Serif", Font.BOLD, 20));
 		context.drawString(pauseMessage, x3, y3);
@@ -312,25 +310,25 @@ public class ViewBoard extends JPanel implements Observer {
 		return fieldWidth;
 	}
 	
-	public void setColour(int r, int g, int b){
-		this.r = r;
-		this.g = g;
-		this.b = b;
+	public void setSnakeColour(int red, int green, int blue){
+		this.snakeRed = red;
+		this.snakeGreen = green;
+		this.snakeBlue = blue;
 	}
 	
-	 private BufferedImage colourSnake(BufferedImage img, int r, int g, int b) {
-	    WritableRaster raster = img.getRaster();
-	    for (int x = 0; x < img.getWidth(); x++) {
-	    	for (int y = 0; y < img.getHeight(); y++) {
-	    		if (img.getRGB(x, y) != -13547430){ //don't colour the eye pixels
+	 private BufferedImage colourSnake(BufferedImage image, int red, int green, int blue) {
+	    WritableRaster raster = image.getRaster();
+	    for (int x = 0; x < image.getWidth(); x++) {
+	    	for (int y = 0; y < image.getHeight(); y++) {
+	    		if (image.getRGB(x, y) != -13547430){ //don't colour the eye pixels
 	    			int[] colour = raster.getPixel(x, y, (int[]) null);
-	            	colour[0] = r;
-	            	colour[1] = g;
-	            	colour[2] = b;
+	            	colour[0] = red;
+	            	colour[1] = green;
+	            	colour[2] = blue;
 	            	raster.setPixel(x, y, colour);
-	            	}
-	            }
-	        }
-	        return img;
+            	}
+            }
+        }
+	    return image;
 	 }
 }
