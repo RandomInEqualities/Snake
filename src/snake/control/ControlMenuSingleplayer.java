@@ -103,7 +103,7 @@ public class ControlMenuSingleplayer extends KeyAdapter implements ActionListene
 		if (event == null) {
 			throw new NullPointerException();
 		}
-		if (view.inGame()) {
+		if (view.inGame() || view.inControls()) {
 			return;
 		}
 

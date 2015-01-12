@@ -87,6 +87,10 @@ public class View extends JFrame {
 		return state == State.IN_GAME;
 	}
 	
+	public boolean inControls() {
+		return state == State.IN_MENU_CONTROLS;
+	}
+	
 	public State getViewState() {
 		return state;
 	}

@@ -18,7 +18,6 @@ public class ControlMenuControls extends KeyAdapter implements ActionListener {
 	public ControlMenuControls(View view) {
 		this.view = view;
 		JButton back = view.getViewMenuControls().getBackButton();
-		back.setActionCommand("back");
 		back.addActionListener(this);
 		this.view.addKeyListener(this);
 	}
