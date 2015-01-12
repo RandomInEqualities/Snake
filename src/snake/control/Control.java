@@ -48,8 +48,8 @@ public class Control extends KeyAdapter {
 				audio.setMuted(!audio.isMuted());
 				break;
 			case KeyEvent.VK_ESCAPE:
-				game.state = State.PAUSED;
 				view.showMenu();
+				view.getViewBoard().removeButtons();
 				break;
 			default:
 				break;
