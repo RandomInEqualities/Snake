@@ -1,4 +1,3 @@
-
 package snake.control;
 
 import java.awt.Color;
@@ -12,21 +11,19 @@ import javax.swing.*;
 import snake.model.*;
 import snake.view.*;
 
+public class ControlMenuSinglePlayer extends KeyAdapter implements
+		ActionListener {
 
-public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListener {
-	
 	private Game game;
 	private View view;
-	private int speed;
 	private ViewMenuSinglePlayer viewMenuSinglePlayer;
 
 	public ControlMenuSinglePlayer(Game game, View view) {
 		this.game = game;
 		this.view = view;
-		this.speed = 300;
 		this.viewMenuSinglePlayer = view.getViewMenuSinglePlayer();
 		this.view.addKeyListener(this);
-		
+		game.setTimedMovementSpeed(300); //default difficulty = easy
 		JButton play = this.viewMenuSinglePlayer.getPlayButton();
 		JButton back = this.viewMenuSinglePlayer.getBackButton();
 		JButton easy = this.viewMenuSinglePlayer.getEasyButton();
@@ -44,7 +41,6 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 		hard.setActionCommand("hard");
 	}
 
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton easy, intermediate, hard;
@@ -53,8 +49,14 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 		hard = viewMenuSinglePlayer.getHard();
 		if (e.getActionCommand() == "play") {
 			playGame();
-		} 
-		else if (e.getActionCommand() == "easy"){
+		} else if (e.getActionCommand() == "kindergarten") {
+			// kindergarten.setBorderPainted(true);
+			easy.setBorderPainted(false);
+			intermediate.setBorderPainted(false);
+			hard.setBorderPainted(false);
+			game.disableTimedMovement();
+		} else if (e.getActionCommand() == "easy") {
+			// kindergarten.setBorderPainted(false);
 			if (intermediate.isEnabled() == false || hard.isEnabled() == false) {
 				intermediate.setEnabled(true);
 				hard.setEnabled(true);
@@ -63,9 +65,10 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 			easy.setBorderPainted(true);
 			intermediate.setBorderPainted(false);
 			hard.setBorderPainted(false);		
-			speed = 300;
-		} 
-		else if (e.getActionCommand() == "intermediate"){
+			game.enableTimedMovement();
+			game.setTimedMovementSpeed(300);
+		} else if (e.getActionCommand() == "intermediate"){
+			// kindergarten.setBorderPainted(false);
 			if (easy.isEnabled() == false || hard.isEnabled() == false) {
 				easy.setEnabled(true);
 				hard.setEnabled(true);
@@ -74,9 +77,10 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 			easy.setBorderPainted(false);
 			intermediate.setBorderPainted(true);
 			hard.setBorderPainted(false);
-			speed = 150;
-		} 
-		else if (e.getActionCommand() == "hard"){
+			game.enableTimedMovement();
+			game.setTimedMovementSpeed(150);
+		} else if (e.getActionCommand() == "hard") {
+			// kindergarten.setBorderPainted(false);
 			if (intermediate.isEnabled() == false || easy.isEnabled() == false) {
 				intermediate.setEnabled(true);
 				easy.setEnabled(true);
@@ -85,9 +89,8 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 			easy.setBorderPainted(false);
 			intermediate.setBorderPainted(false);
 			hard.setBorderPainted(true);
-			speed = 70;
-		} 
-		else if (e.getActionCommand() == "back"){
+			game.setTimedMovementSpeed(70);
+		} else if (e.getActionCommand() == "back") {
 			view.showMenu();
 		}
 	}
@@ -100,28 +103,27 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 		if (view.inGame()) {
 			return;
 		}
-		
+
 		switch (event.getKeyCode()) {
-			case KeyEvent.VK_BACK_SPACE:
-				view.showMenu();
-				break;
-			case KeyEvent.VK_ENTER:
-				playGame();
-				break;
-			default:
-				break;
+		case KeyEvent.VK_BACK_SPACE:
+			view.showMenu();
+			break;
+		case KeyEvent.VK_ENTER:
+			playGame();
+			break;
+		default:
+			break;
 		}
 	}
-	
+
 	public void playGame() {
 		String inputW = getInput(viewMenuSinglePlayer.getWidthInput());
 		String inputH = getInput(viewMenuSinglePlayer.getHeightInput());
-		
+
 		if (inputW.isEmpty() || inputH.isEmpty()) { // if no input
 			viewMenuSinglePlayer.setFilled(false);
 			viewMenuSinglePlayer.repaint();
-		} 
-		else { 
+		} else {
 			// if input is correct
 			int inputWidth = Integer.parseInt(inputW);
 			int inputHeight = Integer.parseInt(inputH);
@@ -130,15 +132,14 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 				view.showGame();
 				viewMenuSinglePlayer.setValid(true);
 				viewMenuSinglePlayer.setFilled(true);
-			} 
-			else { 
+			} else {
 				// if input is invalid
 				viewMenuSinglePlayer.setValid(false);
 				viewMenuSinglePlayer.repaint();
 			}
 		}
 	}
-	
+
 	// Get input without whitespace
 	public String getInput(JFormattedTextField input) {
 		String in = input.getText();
