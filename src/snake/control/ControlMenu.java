@@ -14,11 +14,14 @@ public class ControlMenu implements ActionListener {
 		this.view = view;
 		
 		JButton singleplayer = view.getViewMenu().getSinglePlayerButton();
+		JButton multiplayer = view.getViewMenu().getMultiPlayerButton();
 		JButton controls = view.getViewMenu().getControlsButton();
 		JButton quit = view.getViewMenu().getQuitButton();
 		
 		singleplayer.addActionListener(this);
 		singleplayer.setActionCommand("singleplayer");
+		multiplayer.addActionListener(this);
+		multiplayer.setActionCommand("multiplayer");
 		controls.addActionListener(this);
 		controls.setActionCommand("controls");
 		quit.addActionListener(this);
@@ -30,6 +33,9 @@ public class ControlMenu implements ActionListener {
 		if (e.getActionCommand() == "singleplayer") {
 			view.showSinglePlayerMenu();
 		} 
+		else if (e.getActionCommand() == "multiplayer"){
+			view.showMultiPlayerMenu();
+		}
 		else if (e.getActionCommand() == "controls"){
 			view.showControlsMenu();
 		} 

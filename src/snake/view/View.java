@@ -25,6 +25,7 @@ public class View extends JFrame {
 	private ViewHeader headerPanel;
 	private ViewMenu menuPanel;
 	private ViewMenuSinglePlayer menuSinglePlayerPanel;
+	private ViewMenuMultiplayer menuMultiPlayerPanel;
 	private ViewMenuControls menuControlsPanel;
 	private ViewBoard boardPanel;
 	private Audio audio;
@@ -39,6 +40,7 @@ public class View extends JFrame {
 		this.headerPanel = new ViewHeader(game, false);
 		this.menuPanel = new ViewMenu(this);
 		this.menuSinglePlayerPanel = new ViewMenuSinglePlayer(this, game);
+		this.menuMultiPlayerPanel = new ViewMenuMultiplayer(this, game);
 		this.menuControlsPanel = new ViewMenuControls(this);
 		this.boardPanel = new ViewBoard(game, this);
 		this.audio = new Audio(game);
@@ -69,6 +71,10 @@ public class View extends JFrame {
 		state = State.IN_MENU_SINGLE_PLAYER;
 	}
 	
+	public void showMultiPlayerMenu(){
+		setFrameComponents(headerPanel, menuMultiPlayerPanel);
+		headerPanel.hideScore();
+	}
 	public void showControlsMenu() {
 		setFrameComponents(headerPanel, menuControlsPanel);
 		headerPanel.hideScore();
@@ -98,6 +104,9 @@ public class View extends JFrame {
 	public ViewMenuSinglePlayer getViewMenuSinglePlayer() {
 		return menuSinglePlayerPanel;
 	}
+	public ViewMenuMultiplayer getViewMenuMultiPlayer() {
+		return menuMultiPlayerPanel;
+	}
 	
 	public ViewMenuControls getViewMenuControls() {
 		return menuControlsPanel;
@@ -117,7 +126,6 @@ public class View extends JFrame {
 	}
 	
 	private void setFrameComponents(Component northPanel, Component centerPanel) {
-		
 		// Remove the current contents pane components and add the new ones.
 		getContentPane().removeAll();
 		getContentPane().add(northPanel, BorderLayout.NORTH);

@@ -53,16 +53,17 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		
 		easy = new JButton(new ImageIcon(Images.DIFFICULTY_EASY));
 		view.getViewMenu().setButton(easy);
-		easy.setEnabled(false);
+		easy.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
 		intermediate = new JButton(new ImageIcon(Images.DIFFICULTY_INTERMEDIATE));
 		view.getViewMenu().setButton(intermediate);
+		intermediate.setBorderPainted(false);
 		hard = new JButton(new ImageIcon(Images.DIFFICULTY_HARD));
 		view.getViewMenu().setButton(hard);
+		hard.setBorderPainted(false);
 		
 		green = new JButton();
 		view.getViewMenu().setButton(green);
 		green.setBackground(Colors.GREEN);
-		green.setBorderPainted(true);
 		green.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
 		blue = new JButton();
 		view.getViewMenu().setButton(blue);
@@ -161,15 +162,7 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		int buttonWidth = Images.BUTTON_PLAY.getWidth();
 		int buttonHeight = Images.BUTTON_PLAY.getHeight();
 
-		//Colour buttons
-		int gap = 10;
-		int sizeColour = 30;
-		int xBlue = panel.getWidth()/2-sizeColour-gap/2;
-		int yColour = panel.getY()+180;
-		green.setBounds(xBlue-gap-sizeColour, yColour, sizeColour, sizeColour);
-		blue.setBounds(xBlue, yColour, sizeColour, sizeColour);
-		red.setBounds(xBlue+gap+sizeColour, yColour, sizeColour, sizeColour);
-		yellow.setBounds(xBlue+2*gap+2*sizeColour, yColour, sizeColour, sizeColour);
+		drawColourButtons(context2D);
 		
 		//Difficulty buttons
 		int space = (panel.getWidth()-3*buttonWidth)/4; //space between buttons
@@ -241,5 +234,20 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 	
 	public JButton getHard(){
 		return hard;
+	}
+	
+	public void drawColourButtons(Graphics2D context){
+		int gap = 10;
+		int sizeColour = 30;
+		int xBlue = panel.getWidth()/2-sizeColour-gap/2;
+		int yColour = panel.getY()+180;
+		green.setBounds(xBlue-gap-sizeColour, yColour, sizeColour, sizeColour);
+		blue.setBounds(xBlue, yColour, sizeColour, sizeColour);
+		red.setBounds(xBlue+gap+sizeColour, yColour, sizeColour, sizeColour);
+		yellow.setBounds(xBlue+2*gap+2*sizeColour, yColour, sizeColour, sizeColour);
+	}
+	
+	public JPanel getPanel(){
+		return panel;
 	}
 }

@@ -2,6 +2,7 @@
 package snake.view;
 
 import java.awt.*;
+
 import javax.swing.*;
 
 public class ViewMenu extends JPanel {
@@ -33,6 +34,10 @@ public class ViewMenu extends JPanel {
 	
 	public JButton getSinglePlayerButton() {
 		return singleplayer;
+	}
+	
+	public JButton getMultiPlayerButton() {
+		return multiplayer;
 	}
 	
 	public JButton getControlsButton() {

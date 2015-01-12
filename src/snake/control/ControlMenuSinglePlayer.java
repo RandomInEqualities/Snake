@@ -63,31 +63,34 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements
 		if (e.getActionCommand() == "play") {
 			playGame();
 		} else if (e.getActionCommand() == "kindergarten") {
-			// kindergarten.setEnabled(false);
-			easy.setEnabled(true);
-			intermediate.setEnabled(true);
-			hard.setEnabled(true);
+			// kindergarten.setBorderPainted(false);
+			//kindergarten.setBorderPainted(true);
+			easy.setBorderPainted(false);
+			intermediate.setBorderPainted(false);
+			hard.setBorderPainted(false);
 			game.disableTimedMovement();
 		} else if (e.getActionCommand() == "easy") {
-			// kindergarten.setEnabled(true);
-			easy.setEnabled(false);
-			intermediate.setEnabled(true);
-			hard.setEnabled(true);	
+			// kindergarten.setBorderPainted(false);
+			easy.setBorder(thickBorder);
+			easy.setBorderPainted(true);
+			intermediate.setBorderPainted(false);
+			hard.setBorderPainted(false);
 			game.enableTimedMovement();
 			game.setTimedMovementSpeed(300);
 		} else if (e.getActionCommand() == "intermediate"){
-			// kindergarten.setBorderPainted(true);
-			easy.setEnabled(true);
-			intermediate.setEnabled(false);
-			hard.setEnabled(true);
+			// kindergarten.setBorder(BorderFactory.createEmptyBorder());
+			easy.setBorderPainted(false);
+			intermediate.setBorder(thickBorder);
+			intermediate.setBorderPainted(true);
+			hard.setBorderPainted(false);
 			game.enableTimedMovement();
 			game.setTimedMovementSpeed(150);
 		} else if (e.getActionCommand() == "hard") {
-			// kindergarten.setBorderPainted(true);
-			hard.setEnabled(true);
-			easy.setEnabled(true);
-			intermediate.setEnabled(true);
-			hard.setEnabled(false);
+			// kindergarten.setBorderPainted(false);
+			easy.setBorderPainted(false);
+			intermediate.setBorderPainted(false);
+			hard.setBorder(thickBorder);
+			hard.setBorderPainted(true);
 			game.setTimedMovementSpeed(70);
 		} else if (e.getActionCommand() == "back") {
 			view.showMenu();

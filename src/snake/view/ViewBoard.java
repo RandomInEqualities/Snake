@@ -325,7 +325,7 @@ public class ViewBoard extends JPanel implements Observer {
 	    WritableRaster raster = img.getRaster();
 	    for (int x = 0; x < img.getWidth(); x++) {
 	    	for (int y = 0; y < img.getHeight(); y++) {
-	    		if (img.getRGB(x, y) != -13547430){ //colour the green parts only
+	    		if (img.getRGB(x, y) != -13547430){ //don't colour the eye pixels
 	    			int[] colour = raster.getPixel(x, y, (int[]) null);
 	            	colour[0] = r;
 	            	colour[1] = g;
