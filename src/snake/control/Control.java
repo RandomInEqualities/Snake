@@ -16,6 +16,8 @@ public class Control extends KeyAdapter {
 	private ControlMenu menuControl;
 	@SuppressWarnings("unused")
 	private ControlMenuSinglePlayer menuSinglePlayerConstrol;
+	@SuppressWarnings("unused")
+	private ControlMenuControls menuControlsControl;
 	
 	public Control(Game game, View view) {
 		if (view == null || game == null) {
@@ -27,6 +29,7 @@ public class Control extends KeyAdapter {
 		boardControl = new ControlBoard(game, view);
 		menuControl = new ControlMenu(view);
 		menuSinglePlayerConstrol = new ControlMenuSinglePlayer(game, view);
+		menuControlsControl = new ControlMenuControls(view);
 	}
 
 	@Override

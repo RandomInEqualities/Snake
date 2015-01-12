@@ -14,15 +14,22 @@ public class Images {
 	public static final BufferedImage SNAKE_HEAD_DOWN;
 	public static final BufferedImage SNAKE_HEAD_LEFT;
 	public static final BufferedImage SNAKE_HEAD_RIGHT;
-	public static final BufferedImage SNAKE_CORNER_RU;
-	public static final BufferedImage SNAKE_CORNER_LU;
-	public static final BufferedImage SNAKE_CORNER_RD;
-	public static final BufferedImage SNAKE_CORNER_LD;
+	public static final BufferedImage SNAKE_CORNER_BL;
+	public static final BufferedImage SNAKE_CORNER_BR;
+	public static final BufferedImage SNAKE_CORNER_TL;
+	public static final BufferedImage SNAKE_CORNER_TR;
+	public static final BufferedImage SNAKE_TAIL_UP;
+	public static final BufferedImage SNAKE_TAIL_DOWN;
+	public static final BufferedImage SNAKE_TAIL_LEFT;
+	public static final BufferedImage SNAKE_TAIL_RIGHT;
 	public static final BufferedImage SNAKE_HORIZONTAL;
 	public static final BufferedImage SNAKE_VERTICAL;
+	public static final BufferedImage CONTROLS;
 	public static final BufferedImage TITLE_GAME_OVER;
-	public static final BufferedImage TITLE_PAUSE;
+	public static final BufferedImage TITLE_GAME_WON;
+	public static final BufferedImage TITLE_PAUSED;
 	public static final BufferedImage TITLE_MENU;
+	public static final BufferedImage TITLE_CONTROLS;
 	public static final BufferedImage BUTTON_SINGLEPLAYER;
 	public static final BufferedImage BUTTON_MULTIPLAYER;
 	public static final BufferedImage BUTTON_CONTROLS;
@@ -31,28 +38,39 @@ public class Images {
 	public static final BufferedImage BUTTON_PLAY;
 	public static final BufferedImage BUTTON_PLAY_AGAIN; 
 	public static final BufferedImage BUTTON_MENU;
+	public static final BufferedImage BUTTON_BACK;
+	public static final BufferedImage DIFFICULTY_EASY;
+	public static final BufferedImage DIFFICULTY_INTERMEDIATE;
+	public static final BufferedImage DIFFICULTY_HARD;
 	
 	private static final String IMAGE_PATH = "resources/images/";
 
 	static {
-		LOGO = loadImage("snake-logo.png");
+		LOGO = loadImage("SnakeLogo.png");
 		BACKGROUND = loadImage("TileBackground.png");
 
-		APPLE = loadImage("apple.png");
-		SNAKE_HEAD_UP = loadImage("head_up.png");
-		SNAKE_HEAD_DOWN = loadImage("head_down.png");
-		SNAKE_HEAD_LEFT = loadImage("head_left.png");
-		SNAKE_HEAD_RIGHT = loadImage("head_right.png");
-		SNAKE_CORNER_RU = loadImage("SnakeCornerRU.png");
-		SNAKE_CORNER_LU = loadImage("SnakeCornerLU.png");
-		SNAKE_CORNER_RD = loadImage("SnakeCornerRD.png");
-		SNAKE_CORNER_LD = loadImage("SnakeCornerLD.png");
+		APPLE = loadImage("Apple.png");
+		SNAKE_HEAD_UP = loadImage("SnakeHeadU.png");
+		SNAKE_HEAD_DOWN = loadImage("SnakeHeadD.png");
+		SNAKE_HEAD_LEFT = loadImage("SnakeHeadL.png");
+		SNAKE_HEAD_RIGHT = loadImage("SnakeHeadR.png");
+		SNAKE_CORNER_BL = loadImage("SnakeCornerBL.png");
+		SNAKE_CORNER_BR = loadImage("SnakeCornerBR.png");
+		SNAKE_CORNER_TL = loadImage("SnakeCornerTL.png");
+		SNAKE_CORNER_TR = loadImage("SnakeCornerTR.png");
+		SNAKE_TAIL_UP = loadImage("SnakeTailU.png");
+		SNAKE_TAIL_DOWN = loadImage("SnakeTailD.png");
+		SNAKE_TAIL_LEFT = loadImage("SnakeTailL.png");
+		SNAKE_TAIL_RIGHT = loadImage("SnakeTailR.png");
 		SNAKE_HORIZONTAL = loadImage("SnakeHorizontal.png");
 		SNAKE_VERTICAL = loadImage("SnakeVertical.png");
 
+		CONTROLS = loadImage("ControlsImage.png");
 		TITLE_GAME_OVER = loadImage("TitleGameOver.png");
-		TITLE_PAUSE = loadImage("TitlePaused.png");
+		TITLE_GAME_WON = loadImage("TitleGameWon.png");
+		TITLE_PAUSED = loadImage("TitlePaused.png");
 		TITLE_MENU = loadImage("TitleMenu.png");
+		TITLE_CONTROLS = loadImage("TitleControls.png");
 
 		BUTTON_SINGLEPLAYER = loadImage("ButtonSingleplayer.png");
 		BUTTON_MULTIPLAYER = loadImage("ButtonMultiplayer.png");
@@ -62,6 +80,11 @@ public class Images {
 		BUTTON_PLAY = loadImage("ButtonPlay.png");
 		BUTTON_PLAY_AGAIN = loadImage("ButtonPlayAgain.png");
 		BUTTON_MENU = loadImage("ButtonMenu.png");
+		BUTTON_BACK = loadImage("ButtonBack.png");
+		
+		DIFFICULTY_EASY = loadImage("DifficultyEasy.png");
+		DIFFICULTY_INTERMEDIATE = loadImage("DifficultyIntermediate.png");
+		DIFFICULTY_HARD = loadImage("DifficultyHard.png");
 	}
 
 	private static BufferedImage loadImage(String filename) {

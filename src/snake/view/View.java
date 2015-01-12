@@ -14,7 +14,7 @@ public class View extends JFrame {
 		IN_GAME,
 		IN_MENU,
 		IN_MENU_SINGLE_PLAYER,
-		IN_PAUSE_SCREEN,
+		IN_MENU_CONTROLS
 	}
 	
 	private static final long serialVersionUID = 6240347347855679335L;
@@ -23,6 +23,7 @@ public class View extends JFrame {
 	private ViewHeader headerPanel;
 	private ViewMenu menuPanel;
 	private ViewMenuSinglePlayer menuSinglePlayerPanel;
+	private ViewMenuControls menuControlsPanel;
 	private ViewBoard boardPanel;
 	private Audio audio;
 	
@@ -34,9 +35,10 @@ public class View extends JFrame {
 		}
 		
 		this.headerPanel = new ViewHeader(game, false);
-		this.menuPanel = new ViewMenu();
+		this.menuPanel = new ViewMenu(this);
 		this.menuSinglePlayerPanel = new ViewMenuSinglePlayer(game, this);
-		this.boardPanel = new ViewBoard(game, menuPanel);
+		this.menuControlsPanel = new ViewMenuControls(this);
+		this.boardPanel = new ViewBoard(game, this);
 		this.audio = new Audio(game);
 		
 		showMenu();
@@ -65,20 +67,14 @@ public class View extends JFrame {
 		state = State.IN_MENU_SINGLE_PLAYER;
 	}
 	
-	public boolean inMenu() {
-		return state == State.IN_MENU;
-	}
-	
-	public boolean inMenuSinglePlayer() {
-		return state == State.IN_MENU_SINGLE_PLAYER;
+	public void showControlsMenu() {
+		setFrameComponents(headerPanel, menuControlsPanel);
+		headerPanel.hideScore();
+		state = State.IN_MENU_CONTROLS;
 	}
 	
 	public boolean inGame() {
 		return state == State.IN_GAME;
-	}
-	
-	public boolean inPauseScreen() {
-		return state == State.IN_PAUSE_SCREEN;
 	}
 	
 	public State getViewState() {
@@ -99,6 +95,10 @@ public class View extends JFrame {
 	
 	public ViewMenuSinglePlayer getViewMenuSinglePlayer() {
 		return menuSinglePlayerPanel;
+	}
+	
+	public ViewMenuControls getViewMenuControls() {
+		return menuControlsPanel;
 	}
 	
 	public ViewBoard getViewBoard() {

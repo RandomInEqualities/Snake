@@ -1,9 +1,12 @@
 
 package snake.control;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.*;
+
 import snake.model.*;
 import snake.view.*;
 
@@ -12,48 +15,91 @@ public class ControlMenuSinglePlayer implements ActionListener {
 	
 	private Game game;
 	private View view;
+	private int speed;
 	private ViewMenuSinglePlayer viewMenuSinglePlayer;
 
 	public ControlMenuSinglePlayer(Game game, View view) {
 		this.game = game;
 		this.view = view;
+		this.speed = 300;
 		this.viewMenuSinglePlayer = view.getViewMenuSinglePlayer();
-		this.viewMenuSinglePlayer.getPlayButton().addActionListener(this);
+		
+		JButton play = this.viewMenuSinglePlayer.getPlayButton();
+		JButton back = this.viewMenuSinglePlayer.getBackButton();
+		JButton easy = this.viewMenuSinglePlayer.getEasyButton();
+		JButton intermediate = this.viewMenuSinglePlayer.getIntermediateButton();
+		JButton hard = this.viewMenuSinglePlayer.getHardButton();
+		play.addActionListener(this);
+		back.addActionListener(this);
+		easy.addActionListener(this);
+		intermediate.addActionListener(this);
+		hard.addActionListener(this);
+		play.setActionCommand("play");
+		back.setActionCommand("back");
+		easy.setActionCommand("easy");
+		intermediate.setActionCommand("intermediate");
+		hard.setActionCommand("hard");
 	}
 
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (getInput(viewMenuSinglePlayer.getWidthInput()) == "" || getInput(viewMenuSinglePlayer.getHeightInput())==""){
-			viewMenuSinglePlayer.setFilled(false);
-			viewMenuSinglePlayer.repaint();
-		} else if (getInput(viewMenuSinglePlayer.getWidthInput()) !="" && getInput(viewMenuSinglePlayer.getHeightInput())!=""){ 
+		JButton easy, intermediate, hard;
+		easy = viewMenuSinglePlayer.getEasy();
+		intermediate = viewMenuSinglePlayer.getIntermediate();
+		hard = viewMenuSinglePlayer.getHard();
+		if (e.getActionCommand() == "play") {
+			String inputW = getInput(viewMenuSinglePlayer.getWidthInput());
+			String inputH = getInput(viewMenuSinglePlayer.getHeightInput());
 			
-			int inputWidth = Integer.parseInt(getInput(viewMenuSinglePlayer.getWidthInput()));
-			int inputHeight = Integer.parseInt(getInput(viewMenuSinglePlayer.getHeightInput()));
-			
-			if (inputWidth >= 5 && inputWidth <= 100 && inputHeight >= 5 && inputHeight <= 100) {
-				game.restart(inputWidth, inputHeight);
-				view.showGame();
-			} 
-			else { // if input is invalid
-				viewMenuSinglePlayer.setValid(false);
+			if (inputW.isEmpty() || inputH.isEmpty()) { // if no input
+				viewMenuSinglePlayer.setFilled(false);
 				viewMenuSinglePlayer.repaint();
+			} 
+			else { 
+				// if input is correct
+				int inputWidth = Integer.parseInt(inputW);
+				int inputHeight = Integer.parseInt(inputH);
+				if (inputWidth >= 5 && inputWidth <= 100 && inputHeight >= 5 && inputHeight <= 100) {
+					game.restart(inputWidth, inputHeight);
+					view.showGame();
+					viewMenuSinglePlayer.setValid(true);
+					viewMenuSinglePlayer.setFilled(true);
+				} 
+				else { 
+					// if input is invalid
+					viewMenuSinglePlayer.setValid(false);
+					viewMenuSinglePlayer.repaint();
+				}
 			}
+		} 
+		else if (e.getActionCommand() == "easy"){
+			easy.setBorderPainted(true);
+			intermediate.setBorderPainted(false);
+			hard.setBorderPainted(false);		
+			speed = 300;
+		} 
+		else if (e.getActionCommand() == "intermediate"){
+			easy.setBorderPainted(false);
+			intermediate.setBorderPainted(true);
+			hard.setBorderPainted(false);
+			speed = 150;
+		} 
+		else if (e.getActionCommand() == "hard"){
+			easy.setBorderPainted(false);
+			intermediate.setBorderPainted(false);
+			hard.setBorderPainted(true);
+			speed = 70;
+		} 
+		else if (e.getActionCommand() == "back"){
+			view.showMenu();
 		}
 	}
 
-	// Get input
+	// Get input without whitespace
 	public String getInput(JFormattedTextField input) {
 		String in = input.getText();
-		String out = "";
-
-		// Remove whitespace
-		for (int i = 0; i < in.length(); i++) {
-			if (!Character.isWhitespace(in.charAt(i))) {
-				out += in.charAt(i);
-			}
-		}
+		String out = in.replace(" ", "");
 		return out;
 	}
 }

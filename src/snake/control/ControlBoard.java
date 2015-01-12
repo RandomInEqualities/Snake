@@ -1,15 +1,14 @@
 
 package snake.control;
 
-import java.awt.Cursor;
 import java.awt.event.*;
-
+import javax.swing.JButton;
 import snake.model.*;
 import snake.model.Game.State;
 import snake.view.*;
 
 
-public class ControlBoard extends MouseAdapter implements KeyListener {
+public class ControlBoard extends KeyAdapter implements ActionListener {
 	
 	private Game game;
 	private View view;
@@ -23,6 +22,13 @@ public class ControlBoard extends MouseAdapter implements KeyListener {
 		this.view = view;
 		this.boardView = view.getViewBoard();
 		this.view.addKeyListener(this);
+		
+		JButton playAgain = boardView.getPlayAgainButton();
+		JButton menu = boardView.getMenuButton();
+		playAgain.addActionListener(this);
+		playAgain.setActionCommand("playAgain");
+		menu.addActionListener(this);
+		menu.setActionCommand("menu");
 	}
 	
 	@Override
@@ -66,38 +72,16 @@ public class ControlBoard extends MouseAdapter implements KeyListener {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent event) {
-		if (game.getState() == Game.State.LOST) {
-			if (boardView.getPlayAgainButton().contains(event.getPoint())) {
-				game.restart();
-			} 
-			else if (boardView.getMenuButton().contains(event.getPoint())) {
-				view.showMenu();
-			}
-			boardView.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	public void actionPerformed(ActionEvent e) {
+		if(e.getActionCommand()=="playAgain"){
+			game.restart();
+			view.showGame();
+			boardView.removeButtons();
+		} 
+		else if (e.getActionCommand()=="menu"){
+			view.showMenu();
+			boardView.removeButtons();
 		}
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent event) {
-		if (game.getState() == Game.State.LOST) {
-			if (boardView.getPlayAgainButton().contains(event.getPoint()) || boardView.getMenuButton().contains(event.getPoint())) {
-				boardView.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			} 
-			else  {
-				boardView.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-		}
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-
 	}
 
 }

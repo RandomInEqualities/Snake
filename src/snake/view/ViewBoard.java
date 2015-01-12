@@ -13,11 +13,15 @@ import snake.model.*;
 public class ViewBoard extends JPanel implements Observer {
 
 	private Game game;
-	private Rectangle playAgainButton;
-	private Rectangle menuButton;
+	private JButton playAgainButton, menuButton;
 	private static final long serialVersionUID = 9109362543987437505L;
 	
-	public ViewBoard(Game game, ViewMenu menu) {
+	int widthPopup;
+	int heightPopup;
+	int xPopup;
+	int yPopup;
+	
+	public ViewBoard(Game game, View view) {
 		super();
 
 		if (game == null) {
@@ -26,6 +30,11 @@ public class ViewBoard extends JPanel implements Observer {
 		this.game = game;
 		game.addObserver(this);
 		setBackground(Colors.PANEL_COLOUR);
+		
+		playAgainButton = new JButton(new ImageIcon(Images.BUTTON_PLAY_AGAIN));
+		view.getViewMenu().setButton(playAgainButton);
+		menuButton = new JButton(new ImageIcon(Images.BUTTON_MENU));
+		view.getViewMenu().setButton(menuButton);
 	}
 
 	@Override
@@ -48,12 +57,14 @@ public class ViewBoard extends JPanel implements Observer {
 		drawFood(context2D);
 		drawSnake(context2D);
 		
-		Game.State gameState = game.getState();
-		if (gameState == Game.State.LOST) {
-			drawGameOver(context2D);
+		if (game.getState() == Game.State.LOST) {
+			drawGameLost(context2D);
 		} 
-		if (gameState == Game.State.PAUSED){
+		else if (game.getState() == Game.State.PAUSED) {
 			drawPaused(context2D);
+		} 
+		else if (game.getState() == Game.State.WON){
+			drawGameWon(context2D);
 		}
 	}
 
@@ -64,14 +75,75 @@ public class ViewBoard extends JPanel implements Observer {
 
 	private void drawSnake(Graphics2D context) {
 		Snake snake = game.getSnake();
+		int lastRow = game.getBoard().getHeight()-1;
+		int lastColumn = game.getBoard().getWidth()-1;
 		
-		// Snake body.
-		context.setColor(Colors.SNAKE_COLOUR);
-		for (Field position : snake.getPositions()) {
-			context.fill(getRectangleForField(position));
-		}
+		//Draw body
+		for (int i = 1; i<snake.getPositions().size()-1; i++){ //run through every body piece
+			Rectangle bodyRectangle = getRectangleForField(snake.getPositions().get(i)); //the piece' position
+			Field current = snake.getPositions().get(i);
+			Field front = snake.getPositions().get(i-1);
+			Field behind = snake.getPositions().get(i+1);
+			Image body = null;
 
-		// Draw the head field with a different colour.
+			if (current.getRow() == front.getRow() && current.getRow() == behind.getRow()){ //if current piece and front and behind are in the same row 
+				body = Images.SNAKE_HORIZONTAL;
+			} else if (current.getColumn() == front.getColumn() && current.getColumn()==behind.getColumn()){ //if current piece and front and behind are in the same column
+				body = Images.SNAKE_VERTICAL;
+				//Corner pieces
+			} else if (current.getColumn()+1 == front.getColumn() && current.getRow()+1 == behind.getRow()//piece in the middle of the board
+					||current.getColumn()+1 == behind.getColumn() && current.getRow()+1 == front.getRow()
+					||current.getRow() == lastRow && current.getColumn()+1 == front.getColumn() && behind.getRow() == 0 //piece in the bottom row
+					||current.getRow() == lastRow && current.getColumn()+1 == behind.getColumn() && front.getRow() == 0
+					||current.getColumn() == lastColumn && current.getRow()+1 == front.getRow() && behind.getColumn() == 0 //piece in the last column
+					||current.getColumn() == lastColumn && current.getRow()+1 == behind.getRow() && front.getColumn() == 0
+					||current.getColumn() == lastColumn && current.getRow() == lastRow && front.getColumn() == 0 && behind.getRow() == 0 //piece in corner
+					||current.getColumn() == lastColumn && current.getRow() == lastRow && behind.getColumn() == 0 && front.getRow() == 0){
+				body = Images.SNAKE_CORNER_TL;
+			} else if (current.getColumn()-1 == front.getColumn() && current.getRow()+1 == behind.getRow() //piece in the middle of the board
+					||current.getColumn()-1 == behind.getColumn() && current.getRow()+1 == front.getRow()
+					||current.getRow() == lastRow && current.getColumn()-1 == front.getColumn() && behind.getRow() == 0 //piece in the bottom row
+					||current.getRow() == lastRow && current.getColumn()-1 == behind.getColumn() && front.getRow() == 0
+					||current.getColumn() == 0 && current.getRow()+1 == front.getRow() && behind.getColumn() == lastColumn //piece in the first column
+					||current.getColumn() == 0 && current.getRow()+1 == behind.getRow() && front.getColumn() == lastColumn
+					||current.getColumn()==0 && current.getRow() == lastRow && front.getRow() == 0 && behind.getColumn() == lastColumn
+					||current.getColumn()==0 && current.getRow() == lastRow && behind.getRow() == 0 && front.getColumn() == lastColumn){
+				body = Images.SNAKE_CORNER_TR;
+			} else if (current.getColumn()-1 == front.getColumn() && current.getRow()-1 == behind.getRow() //piece in the middle of the board
+					||current.getColumn()-1 == behind.getColumn() && current.getRow()-1 == front.getRow()
+					||current.getRow() == 0 && current.getColumn()-1 == front.getColumn() && behind.getRow() == lastRow //piece in the first row
+					||current.getRow() == 0 && current.getColumn()-1 == behind.getColumn() && front.getRow() == lastRow
+					||current.getColumn() == 0 && current.getRow()-1 == front.getRow() && behind.getColumn() == lastColumn //piece in the first column
+					||current.getColumn() == 0 && current.getRow()-1 == behind.getRow() && front.getColumn() == lastColumn
+					||current.getColumn() == 0 && current.getRow() == 0 && front.getColumn() == lastColumn && behind.getRow() == lastRow //piece in corner
+					||current.getColumn() == 0 && current.getRow() == 0 && behind.getColumn() == lastColumn && front.getRow() == lastRow){
+				body = Images.SNAKE_CORNER_BR;
+			} else {
+				body = Images.SNAKE_CORNER_BL;
+			}
+			Image bodyscaled = body.getScaledInstance(getFieldSideLength(), getFieldSideLength(), Image.SCALE_SMOOTH);
+			context.drawImage(bodyscaled, bodyRectangle.x, bodyRectangle.y, null);
+		}
+			
+		// Draw tail
+		Rectangle tailRectangle = getRectangleForField(snake.getTail());
+		Image tail = null;
+		Field tailPiece = snake.getTail();
+		Field beforeTail = snake.getPositions().get(snake.getSize()-2);
+		if (tailPiece.getColumn()+1 == beforeTail.getColumn()||tailPiece.getColumn() == lastColumn && beforeTail.getColumn()==0){
+			tail = Images.SNAKE_TAIL_RIGHT;
+		} else if (tailPiece.getColumn()-1 == beforeTail.getColumn() || tailPiece.getColumn()==0 && beforeTail.getColumn()==lastColumn){
+			tail = Images.SNAKE_TAIL_LEFT;
+		} else if (tailPiece.getRow()-1 == beforeTail.getRow() || tailPiece.getRow() == 0 && beforeTail.getRow()==lastRow){
+			tail = Images.SNAKE_TAIL_UP;
+		} else {
+			tail = Images.SNAKE_TAIL_DOWN;
+		}
+		Image tailscaled = tail.getScaledInstance(getFieldSideLength(), getFieldSideLength(), Image.SCALE_SMOOTH);
+		context.drawImage(tailscaled, tailRectangle.x, tailRectangle.y, null);
+		
+		
+		// Draw head
 		Rectangle headRectangle = getRectangleForField(snake.getHead());
 		Image head = null;
 		switch (snake.getHeadDirection()) {
@@ -89,8 +161,9 @@ public class ViewBoard extends JPanel implements Observer {
 			break;
 		}
 		
+		
 		Image headScaled = head.getScaledInstance(headRectangle.width, headRectangle.height, Image.SCALE_SMOOTH);
-		context.drawImage(headScaled, headRectangle.x, headRectangle.y, Colors.BOARD_COLOUR, null);
+		context.drawImage(headScaled, headRectangle.x, headRectangle.y, null);
 	}
 
 	private void drawFood(Graphics2D context) {
@@ -98,79 +171,82 @@ public class ViewBoard extends JPanel implements Observer {
 		Image scaledApple = Images.APPLE.getScaledInstance(foodRectangle.width, foodRectangle.height, Image.SCALE_SMOOTH);
 		context.drawImage(scaledApple, foodRectangle.x, foodRectangle.y, null);
 	}
-
-	private void drawGameOver(Graphics2D context){
-		Rectangle popupRectangle = drawPopupBackground(context);
-		
-		context.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		context.setFont(new Font("Sans_Serif", Font.BOLD, 20));
-		
-		// You lost the game title image.
-		Rectangle boardRectangle = getRectangleForBoard();
-		int titleX = boardRectangle.x + boardRectangle.width/2 - Images.TITLE_GAME_OVER.getWidth()/2;
-		int titleY = popupRectangle.y;
-		context.drawImage(Images.TITLE_GAME_OVER, titleX, titleY, null);
-		
-		// Score text
-		String scoreText = "Final Score: " + game.getScore();
-		int scoreX = boardRectangle.x + boardRectangle.width/2 - 5*scoreText.length();
-		int scoreY = boardRectangle.y + boardRectangle.height/2 + 5;
-		context.setColor(Colors.PANEL_COLOUR);
-		context.drawString(scoreText, scoreX, scoreY);
-
-		// Buttons with play again and go to menu.
-		int buttonWidth = 150;
-		int buttonHeight = 50;
-		int playAgainX = boardRectangle.x + boardRectangle.width/2- buttonWidth/2 - 100;
-		int menuX = boardRectangle.x + boardRectangle.width/2- buttonWidth/2 + 100;
-		int buttonY = popupRectangle.y + popupRectangle.height - buttonHeight - 20;
-		
-		context.setColor(Colors.PANEL_COLOUR);
-		playAgainButton = new Rectangle(playAgainX, buttonY, buttonWidth, buttonHeight);
-		menuButton = new Rectangle(menuX, buttonY, buttonWidth, buttonHeight);
-		context.fillRect(playAgainX, buttonY, buttonWidth, buttonHeight);
-		context.fillRect(menuX, buttonY, buttonWidth, buttonHeight);
-			 
-		// Text in buttons.
-		context.setColor(Colors.YELLOW);
-		context.drawString("Menu", menuX + 45, buttonY + 30);
-		context.drawString("Play Again", playAgainX + 20, buttonY + 30);
-	}
 	
-	private void drawPaused(Graphics2D context){
-		Rectangle popupRectangle = drawPopupBackground(context);
-		
-		context.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		context.setFont(new Font("Sans_Serif", Font.BOLD, 20));
-		
-		// You are paused title image.
-		Rectangle boardRectangle = getRectangleForBoard();
-		int titleX = boardRectangle.x + boardRectangle.width/2 - Images.TITLE_PAUSE.getWidth()/2;
-		int titleY = popupRectangle.y;
-		context.drawImage(Images.TITLE_PAUSE, titleX, titleY, null);
-		
-		String pauseMessage = "Press 'P' to resume game";
-		int messageX = boardRectangle.x + boardRectangle.width/2 - 5*pauseMessage.length();
-		int messageY = boardRectangle.y + boardRectangle.height/2 + 25;
-		context.setColor(Colors.PANEL_COLOUR);
-		context.drawString(pauseMessage, messageX, messageY);
-	}
-	
-	private Rectangle drawPopupBackground(Graphics2D context) {
-		// Dim the whole board.
+	private void drawPopup(Graphics2D context) {
+		// Behind
 		context.setColor(Colors.TRANSPARENT_BLACK);
 		context.fillRect(0, 0, getWidth(), getHeight());
-		
-		// Draw the pop up graphics.
-		Rectangle boardRectangle = getRectangleForBoard();
-		int popupWidth = getWidth();
-		int popupHeight = 200;
-		int popupX = 0;
-		int popupY = boardRectangle.y + boardRectangle.height / 2 - popupHeight / 2;
+
+		// Popup
+		widthPopup = getSize().width;
+		heightPopup = 200;
+		xPopup = 0;
+		yPopup = getRectangleForBoard().y + getRectangleForBoard().height / 2
+				- heightPopup / 2;
 		context.setColor(Colors.POPUP_COLOUR);
-		context.fillRect(popupX, popupY, popupWidth, popupHeight);
+		context.fillRect(xPopup, yPopup, widthPopup, heightPopup);
+		context.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+	}
+	private void drawGameLost(Graphics2D context) {
+		drawGameOver(context);
+		// Title
+		int x2 = getRectangleForBoard().x + getRectangleForBoard().width / 2 - Images.TITLE_GAME_OVER.getWidth() / 2;
+		int y2 = yPopup;
+		context.drawImage(Images.TITLE_GAME_OVER, x2, y2, null);
 		
-		return new Rectangle(popupX, popupY, popupWidth, popupHeight);
+	}
+	private void drawGameWon(Graphics2D context){
+		drawGameOver(context);
+		// Title
+		int x2 = getRectangleForBoard().x + getRectangleForBoard().width / 2 - Images.TITLE_GAME_WON.getWidth() / 2;
+		int y2 = yPopup;
+		context.drawImage(Images.TITLE_GAME_WON, x2, y2, null);
+	}
+	
+	private void drawGameOver(Graphics2D context) {
+		drawPopup(context);
+
+		// Text
+		String scoreTxt = "Final Score: " + game.getScore();
+		int x3 = getRectangleForBoard().x + getRectangleForBoard().width / 2 - scoreTxt.length() * 10 / 2;
+		int y3 = getRectangleForBoard().y + getRectangleForBoard().height / 2 + 5;
+		context.setColor(Colors.PANEL_COLOUR);
+		context.setFont(new Font("Sans_Serif", Font.BOLD, 20));
+		context.drawString(scoreTxt, x3, y3);
+
+		// Buttons
+		int buttonWidth = 140;
+		int buttonHeight = 50;
+		int xPlayAgain = getRectangleForBoard().x + getRectangleForBoard().width / 2 - buttonWidth / 2 - 100;
+		int xMenu = getRectangleForBoard().x + getRectangleForBoard().width / 2 - buttonWidth / 2 + 100;
+		int yPlayAgain = yPopup + heightPopup - buttonHeight - 20;
+
+		playAgainButton.setBounds(xPlayAgain, yPlayAgain, buttonWidth, buttonHeight);
+		menuButton.setBounds(xMenu, yPlayAgain, buttonWidth, buttonHeight);
+		this.add(playAgainButton);
+		this.add(menuButton);
+	}
+
+	private void drawPaused(Graphics2D context) {
+		drawPopup(context);
+
+		// Title
+		int x2 = getRectangleForBoard().x + getRectangleForBoard().width / 2
+				- Images.TITLE_PAUSED.getWidth() / 2;
+		int y2 = yPopup;
+		context.drawImage(Images.TITLE_PAUSED, x2, y2, null);
+
+		// Text
+		String pauseMessage = "Press 'P' to resume game";
+		int x3 = getRectangleForBoard().x + getRectangleForBoard().width / 2
+				- pauseMessage.length() * 10 / 2;
+		int y3 = getRectangleForBoard().y + getRectangleForBoard().height / 2
+				+ 25;
+		context.setColor(Colors.PANEL_COLOUR);
+		context.setFont(new Font("Sans_Serif", Font.BOLD, 20));
+		context.drawString(pauseMessage, x3, y3);
 	}
 	
 	public void drawBackground(Graphics2D context) {
@@ -181,12 +257,17 @@ public class ViewBoard extends JPanel implements Observer {
 		}
 	}
 	
-	public Rectangle getPlayAgainButton() {
+	public JButton getPlayAgainButton() {
 		return playAgainButton;
 	}
 	
-	public Rectangle getMenuButton() {
+	public JButton getMenuButton() {
 		return menuButton;
+	}
+	
+	public void removeButtons() {
+		remove(playAgainButton);
+		remove(menuButton);
 	}
 	
 	public Rectangle getRectangleForField(Field position) {
