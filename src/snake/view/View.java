@@ -19,7 +19,7 @@ public class View extends JFrame {
 	
 	private static final long serialVersionUID = 6240347347855679335L;
 	
-	private State state;
+	public State state;
 	private ViewHeader headerPanel;
 	private ViewMenu menuPanel;
 	private ViewMenuSinglePlayer menuSinglePlayerPanel;
