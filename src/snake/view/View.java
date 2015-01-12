@@ -37,7 +37,7 @@ public class View extends JFrame {
 			throw new NullPointerException();
 		}
 		
-		this.headerPanel = new ViewHeader(game, false);
+		this.headerPanel = new ViewHeader(this, game, false);
 		this.menuPanel = new ViewMenu(this);
 		this.menuSinglePlayerPanel = new ViewMenuSinglePlayer(this, game);
 		this.menuMultiPlayerPanel = new ViewMenuMultiplayer(this, game);
@@ -120,6 +120,9 @@ public class View extends JFrame {
 		System.exit(0);
 	}
 	
+	public ViewHeader getHeader(){
+		return headerPanel;
+	}
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(800, 800);

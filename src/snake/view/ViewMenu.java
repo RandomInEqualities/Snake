@@ -102,4 +102,9 @@ public class ViewMenu extends JPanel {
 		button.setPreferredSize(new Dimension(140, 50));
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	}
+	
+	public void setOptionButton(JButton button){
+		setButton(button);
+		button.setBorderPainted(false);
+	}
 }

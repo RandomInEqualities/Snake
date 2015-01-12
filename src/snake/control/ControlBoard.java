@@ -11,7 +11,7 @@ import snake.model.*;
 import snake.view.*;
 
 
-public class ControlBoard extends KeyAdapter implements ActionListener , Observer {
+public class ControlBoard extends KeyAdapter implements ActionListener, Observer {
 	
 	private Game game;
 	private View view;
@@ -67,6 +67,7 @@ public class ControlBoard extends KeyAdapter implements ActionListener , Observe
 			case KeyEvent.VK_SPACE:
 				if (game.getState() == Game.State.LOST){
 					game.restart();
+					view.showGame();
 					boardView.removeButtons();
 				}
 				break;

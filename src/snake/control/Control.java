@@ -46,10 +46,13 @@ public class Control extends KeyAdapter {
 			case KeyEvent.VK_M:
 				Audio audio = view.getAudio();
 				audio.setMuted(!audio.isMuted());
+				System.out.println(audio.isMuted());
+				view.getHeader().repaint();
 				break;
 			case KeyEvent.VK_ESCAPE:
 				view.showMenu();
 				view.getViewBoard().removeButtons();
+				System.out.println("escaped");
 				break;
 			default:
 				break;

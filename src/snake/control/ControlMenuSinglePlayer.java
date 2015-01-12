@@ -1,6 +1,5 @@
 package snake.control;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -12,13 +11,12 @@ import javax.swing.border.LineBorder;
 
 import snake.model.*;
 import snake.view.*;
-public class ControlMenuSinglePlayer extends KeyAdapter implements
-		ActionListener {
+public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListener {
 
 	private Game game;
 	private View view;
 	private ViewMenuSinglePlayer viewMenuSinglePlayer;
-	private JButton play, back, easy, intermediate, hard, green, blue, red, yellow;
+	private JButton play, back, kindergarten, easy, intermediate, hard, green, blue, red, yellow;
 	private Border thickBorder;
 	
 	public ControlMenuSinglePlayer(Game game, View view) {
@@ -26,9 +24,9 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements
 		this.view = view;
 		this.viewMenuSinglePlayer = view.getViewMenuSinglePlayer();
 		this.view.addKeyListener(this);
-		game.setTimedMovementSpeed(300); //default difficulty = easy
 		play = this.viewMenuSinglePlayer.getPlayButton();
 		back = this.viewMenuSinglePlayer.getBackButton();
+		kindergarten = this.viewMenuSinglePlayer.getKindergartenButton();
 		easy = this.viewMenuSinglePlayer.getEasyButton();
 		intermediate = this.viewMenuSinglePlayer.getIntermediateButton();
 		hard = this.viewMenuSinglePlayer.getHardButton();
@@ -36,8 +34,12 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements
 		blue = this.viewMenuSinglePlayer.getBlueButton();
 		red = this.viewMenuSinglePlayer.getRedButton();
 		yellow = this.viewMenuSinglePlayer.getYellowButton();
+		game.disableTimedMovement(); //default difficulty = kindergarten
+		kindergarten.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
+		
 		play.addActionListener(this);
 		back.addActionListener(this);
+		kindergarten.addActionListener(this);
 		easy.addActionListener(this);
 		intermediate.addActionListener(this);
 		hard.addActionListener(this);
@@ -45,8 +47,10 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements
 		blue.addActionListener(this);
 		red.addActionListener(this);
 		yellow.addActionListener(this);
+		
 		play.setActionCommand("play");
 		back.setActionCommand("back");
+		kindergarten.setActionCommand("kindergarten");
 		easy.setActionCommand("easy");
 		intermediate.setActionCommand("intermediate");
 		hard.setActionCommand("hard");
@@ -63,34 +67,35 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements
 		if (e.getActionCommand() == "play") {
 			playGame();
 		} else if (e.getActionCommand() == "kindergarten") {
-			// kindergarten.setBorderPainted(false);
-			//kindergarten.setBorderPainted(true);
+			kindergarten.setBorderPainted(true);
+			kindergarten.setBorder(thickBorder);
 			easy.setBorderPainted(false);
 			intermediate.setBorderPainted(false);
 			hard.setBorderPainted(false);
 			game.disableTimedMovement();
 		} else if (e.getActionCommand() == "easy") {
-			// kindergarten.setBorderPainted(false);
-			easy.setBorder(thickBorder);
+			kindergarten.setBorderPainted(false);
 			easy.setBorderPainted(true);
+			easy.setBorder(thickBorder);
 			intermediate.setBorderPainted(false);
 			hard.setBorderPainted(false);
 			game.enableTimedMovement();
 			game.setTimedMovementSpeed(300);
 		} else if (e.getActionCommand() == "intermediate"){
-			// kindergarten.setBorder(BorderFactory.createEmptyBorder());
+			kindergarten.setBorderPainted(false);
 			easy.setBorderPainted(false);
-			intermediate.setBorder(thickBorder);
 			intermediate.setBorderPainted(true);
+			intermediate.setBorder(thickBorder);
 			hard.setBorderPainted(false);
 			game.enableTimedMovement();
 			game.setTimedMovementSpeed(150);
 		} else if (e.getActionCommand() == "hard") {
-			// kindergarten.setBorderPainted(false);
+			kindergarten.setBorderPainted(false);
 			easy.setBorderPainted(false);
 			intermediate.setBorderPainted(false);
-			hard.setBorder(thickBorder);
 			hard.setBorderPainted(true);
+			hard.setBorder(thickBorder);
+			game.enableTimedMovement();
 			game.setTimedMovementSpeed(70);
 		} else if (e.getActionCommand() == "back") {
 			view.showMenu();

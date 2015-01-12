@@ -19,7 +19,7 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 	private JFormattedTextField inputWidth, inputHeight;
 	private boolean valid, filled;
 	private JPanel panel;
-	private JButton play, easy, intermediate, hard, back, green, blue, red, yellow;
+	private JButton play, kindergarten, easy, intermediate, hard, back, green, blue, red, yellow;
 	
 	public ViewMenuSinglePlayer(View view, Game game){
 		this.view = view;
@@ -51,37 +51,34 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		play = new JButton(new ImageIcon(Images.BUTTON_PLAY));
 		view.getViewMenu().setButton(play);
 		
+		kindergarten = new JButton(new ImageIcon(Images.DIFFICULTY_KINDERGARTEN));
+		view.getViewMenu().setButton(kindergarten);
 		easy = new JButton(new ImageIcon(Images.DIFFICULTY_EASY));
-		view.getViewMenu().setButton(easy);
-		easy.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
+		view.getViewMenu().setOptionButton(easy);
 		intermediate = new JButton(new ImageIcon(Images.DIFFICULTY_INTERMEDIATE));
-		view.getViewMenu().setButton(intermediate);
-		intermediate.setBorderPainted(false);
+		view.getViewMenu().setOptionButton(intermediate);
 		hard = new JButton(new ImageIcon(Images.DIFFICULTY_HARD));
-		view.getViewMenu().setButton(hard);
-		hard.setBorderPainted(false);
+		view.getViewMenu().setOptionButton(hard);
 		
 		green = new JButton();
 		view.getViewMenu().setButton(green);
 		green.setBackground(Colors.GREEN);
 		green.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
 		blue = new JButton();
-		view.getViewMenu().setButton(blue);
-		blue.setBorderPainted(false);
+		view.getViewMenu().setOptionButton(blue);
 		blue.setBackground(Colors.BLUE);
 		red = new JButton();
-		view.getViewMenu().setButton(red);
-		red.setBorderPainted(false);
+		view.getViewMenu().setOptionButton(red);
 		red.setBackground(Colors.RED);
 		yellow = new JButton();
-		view.getViewMenu().setButton(yellow);
-		yellow.setBorderPainted(false);
+		view.getViewMenu().setOptionButton(yellow);
 		yellow.setBackground(Colors.YELLOW);
 		
 		//adds
 		this.add(panel);
 		panel.add(inputWidth);
 		panel.add(inputHeight);
+		panel.add(kindergarten);
 		panel.add(easy);
 		panel.add(intermediate);
 		panel.add(hard);
@@ -100,6 +97,10 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 	
 	public JButton getBackButton() {
 		return back;
+	}
+	
+	public JButton getKindergartenButton() {
+		return kindergarten;
 	}
 	
 	public JButton getEasyButton() {
@@ -161,14 +162,17 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		//Buttons
 		int buttonWidth = Images.BUTTON_PLAY.getWidth();
 		int buttonHeight = Images.BUTTON_PLAY.getHeight();
+		int difficultyWidth = Images.DIFFICULTY_EASY.getWidth();
+		int difficultyHeight = Images.DIFFICULTY_EASY.getHeight();
 
 		drawColourButtons(context2D);
 		
 		//Difficulty buttons
-		int space = (panel.getWidth()-3*buttonWidth)/4; //space between buttons
-		easy.setBounds(space, panel.getY()+280, buttonWidth, buttonHeight);
-		intermediate.setBounds(2*space+buttonWidth, panel.getY()+280, buttonWidth, buttonHeight);
-		hard.setBounds(3*space+2*buttonWidth, panel.getY()+280, buttonWidth, buttonHeight);
+		int space = (panel.getWidth()-4*difficultyWidth)/5; //space between buttons
+		kindergarten.setBounds(space, panel.getY()+280, difficultyWidth, difficultyHeight);
+		easy.setBounds(2*space+difficultyWidth, panel.getY()+280, difficultyWidth, difficultyHeight);
+		intermediate.setBounds(3*space+2*difficultyWidth, panel.getY()+280, difficultyWidth, difficultyHeight);
+		hard.setBounds(4*space+3*difficultyWidth, panel.getY()+280, difficultyWidth, difficultyHeight);
 	
 		//Play button and back button
 		int xBack = getSize().width/2-buttonWidth-10;

@@ -25,6 +25,9 @@ public class Images {
 	public static final BufferedImage SNAKE_HORIZONTAL;
 	public static final BufferedImage SNAKE_VERTICAL;
 	public static final BufferedImage CONTROLS;
+	public static final BufferedImage INFO_KEYS;
+	public static final BufferedImage SOUND_ON;
+	public static final BufferedImage SOUND_OFF;
 	public static final BufferedImage TITLE_GAME_OVER;
 	public static final BufferedImage TITLE_GAME_WON;
 	public static final BufferedImage TITLE_PAUSED;
@@ -39,6 +42,7 @@ public class Images {
 	public static final BufferedImage BUTTON_PLAY_AGAIN; 
 	public static final BufferedImage BUTTON_MENU;
 	public static final BufferedImage BUTTON_BACK;
+	public static final BufferedImage DIFFICULTY_KINDERGARTEN;
 	public static final BufferedImage DIFFICULTY_EASY;
 	public static final BufferedImage DIFFICULTY_INTERMEDIATE;
 	public static final BufferedImage DIFFICULTY_HARD;
@@ -66,6 +70,9 @@ public class Images {
 		SNAKE_VERTICAL = loadImage("SnakeVertical.png");
 
 		CONTROLS = loadImage("ControlsImage.png");
+		INFO_KEYS = loadImage("InfoKeys.png");
+		SOUND_ON = loadImage("InfoNotMuted.png");
+		SOUND_OFF = loadImage("InfoMuted.png");
 		TITLE_GAME_OVER = loadImage("TitleGameOver.png");
 		TITLE_GAME_WON = loadImage("TitleGameWon.png");
 		TITLE_PAUSED = loadImage("TitlePaused.png");
@@ -82,6 +89,7 @@ public class Images {
 		BUTTON_MENU = loadImage("ButtonMenu.png");
 		BUTTON_BACK = loadImage("ButtonBack.png");
 		
+		DIFFICULTY_KINDERGARTEN = loadImage("DifficultyKindergarten.png");
 		DIFFICULTY_EASY = loadImage("DifficultyEasy.png");
 		DIFFICULTY_INTERMEDIATE = loadImage("DifficultyIntermediate.png");
 		DIFFICULTY_HARD = loadImage("DifficultyHard.png");

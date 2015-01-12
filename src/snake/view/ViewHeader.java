@@ -15,17 +15,19 @@ public class ViewHeader extends JPanel implements Observer {
 	private static final int DEFAULT_LOGO_HEIGHT = 80;
 	
 	private Game game;
+	private View view;
 	private boolean showScore;
 	private Image logo;
 	private Font font;
 
-	public ViewHeader(Game game, boolean showScore) {
+	public ViewHeader(View view, Game game, boolean showScore) {
 		super();
 		
 		if (game == null) {
 			throw new NullPointerException();
 		}
 		this.font = new Font("Sans_Serif", Font.BOLD, 20);
+		this.view = view;
 		this.game = game;
 		this.showScore = showScore;
 		this.logo = Images.LOGO.getScaledInstance(DEFAULT_LOGO_WIDTH, DEFAULT_LOGO_HEIGHT, Image.SCALE_SMOOTH);
@@ -66,10 +68,23 @@ public class ViewHeader extends JPanel implements Observer {
 		
 		// Update the score (if we need to show scores).
 		if (showScore) {
+			((Graphics2D) context).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 			context.setFont(this.font);
 			int fontSize = font.getSize();
 			context.setColor(Color.WHITE);
 			context.drawString("Score: " + game.getScore(), fontSize, size.height/2 - fontSize/2);
+			
+			//Sound icon
+			Image soundIcon;		
+			if (view.getAudio().isMuted()){
+				soundIcon = Images.SOUND_OFF;
+			} else {
+				soundIcon = Images.SOUND_ON;
+			}
+			context.drawImage(soundIcon, size.width-Images.SOUND_OFF.getWidth()-10, 0, null);
+			
+			//Key info
+			context.drawImage(Images.INFO_KEYS, size.width-Images.INFO_KEYS.getWidth()-10, 35, null);
 		}
 	}
 	

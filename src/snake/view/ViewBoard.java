@@ -10,6 +10,7 @@ import snake.model.*;
 
 public class ViewBoard extends JPanel implements Observer {
 	private Game game;
+	private View view;
 	private JButton playAgainButton, menuButton;
 	private static final long serialVersionUID = 9109362543987437505L;
 
@@ -23,6 +24,7 @@ public class ViewBoard extends JPanel implements Observer {
 			throw new NullPointerException();
 		}
 		this.game = game;
+		this.view = view;
 		game.addObserver(this);
 		setBackground(Colors.PANEL_COLOUR);
 		
@@ -44,11 +46,6 @@ public class ViewBoard extends JPanel implements Observer {
 			this.add(menuButton);
 		}
 		repaint();
-	}
-
-	@Override
-	public Dimension getPreferredSize() {
-		return new Dimension(800, 100);
 	}
 
 	@Override
@@ -190,8 +187,7 @@ public class ViewBoard extends JPanel implements Observer {
 				- heightPopup / 2;
 		context.setColor(Colors.POPUP_COLOUR);
 		context.fillRect(xPopup, yPopup, widthPopup, heightPopup);
-		context.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		context.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
 	}
 	private void drawGameLost(Graphics2D context) {
@@ -211,6 +207,7 @@ public class ViewBoard extends JPanel implements Observer {
 	}
 	
 	private void drawGameOver(Graphics2D context) {
+		view.getHeader().hideScore();
 		drawPopup(context);
 
 		// Text
