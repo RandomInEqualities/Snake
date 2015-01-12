@@ -63,9 +63,11 @@ public class ViewHeader extends JPanel implements Observer {
 		if (size.width > logoWidth + 230 || (!showScore && size.width > logoWidth)) {
 			context.drawImage(logo, size.width/2 - logo.getWidth(null)/2, 0, null);
 		}
+		Graphics2D context2D = (Graphics2D) context;
 		
 		// Update the score (if we need to show scores).
 		if (showScore) {
+			context2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 			context.setFont(this.font);
 			int fontSize = font.getSize();
 			context.setColor(Color.WHITE);
