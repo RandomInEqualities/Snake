@@ -4,7 +4,9 @@ package snake.view;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+
 import javax.swing.*;
+
 import snake.model.*;
 
 
@@ -106,7 +108,7 @@ public class View extends JFrame {
 	}
 	
 	public void closeWindow() {
-		dispose();
+		System.exit(0);
 	}
 	
 	@Override

@@ -55,18 +55,33 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 			playGame();
 		} 
 		else if (e.getActionCommand() == "easy"){
+			if (intermediate.isEnabled() == false || hard.isEnabled() == false) {
+				intermediate.setEnabled(true);
+				hard.setEnabled(true);
+			}
+			easy.setEnabled(false);
 			easy.setBorderPainted(true);
 			intermediate.setBorderPainted(false);
 			hard.setBorderPainted(false);		
 			speed = 300;
 		} 
 		else if (e.getActionCommand() == "intermediate"){
+			if (easy.isEnabled() == false || hard.isEnabled() == false) {
+				easy.setEnabled(true);
+				hard.setEnabled(true);
+			}
+			intermediate.setEnabled(false);
 			easy.setBorderPainted(false);
 			intermediate.setBorderPainted(true);
 			hard.setBorderPainted(false);
 			speed = 150;
 		} 
 		else if (e.getActionCommand() == "hard"){
+			if (intermediate.isEnabled() == false || easy.isEnabled() == false) {
+				intermediate.setEnabled(true);
+				easy.setEnabled(true);
+			}
+			hard.setEnabled(false);
 			easy.setBorderPainted(false);
 			intermediate.setBorderPainted(false);
 			hard.setBorderPainted(true);
