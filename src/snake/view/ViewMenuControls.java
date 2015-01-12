@@ -19,6 +19,9 @@ public class ViewMenuControls extends JPanel {
 		this.view = view;
 		back = new JButton(new ImageIcon(Images.BUTTON_BACK));
 		view.getViewMenu().setButton(back);
+		
+		//add
+		this.add(back);
 	}
 	
 	public JButton getBackButton() {
@@ -48,7 +51,6 @@ public class ViewMenuControls extends JPanel {
 		int xBack = getSize().width/2-buttonWidth/2;
 		int yBack = view.getViewMenu().getRectangleForMenu(getSize().width).height - buttonHeight - 20;
 		back.setBounds(xBack, yBack, buttonWidth, buttonHeight);
-		this.add(back);
 	}
 	
 }

@@ -35,6 +35,7 @@ public class ViewBoard extends JPanel implements Observer {
 		view.getViewMenu().setButton(playAgainButton);
 		menuButton = new JButton(new ImageIcon(Images.BUTTON_MENU));
 		view.getViewMenu().setButton(menuButton);
+		
 	}
 
 	@Override

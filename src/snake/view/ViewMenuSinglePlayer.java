@@ -54,7 +54,17 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		hard = new JButton(new ImageIcon(Images.DIFFICULTY_HARD));
 		view.getViewMenu().setButton(hard);
 		hard.setBorderPainted(false);
-
+		
+		//adds
+		this.add(panel);
+		panel.add(inputWidth);
+		panel.add(inputHeight);
+		panel.add(easy);
+		panel.add(intermediate);
+		panel.add(hard);
+		this.add(back);
+		this.add(play);
+		
 	}
 	
 	public JButton getPlayButton() {
@@ -91,7 +101,6 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		board.height = 400;
 		panel.setBounds(board);
 		panel.setOpaque(false);
-		this.add(panel);
 		
 		//Text
 		context2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -109,10 +118,7 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		context2D.drawString("height", getWidth()/2-8, panel.getY()+70);
 		inputWidth.setBounds(150, panel.getY()+40, 50, 30);
 		inputHeight.setBounds(panel.getWidth()-200, panel.getY()+40, 50, 30);
-		panel.add(inputWidth);
-		panel.add(inputHeight);
 
-		
 		//Buttons
 		int buttonWidth = Images.BUTTON_PLAY.getWidth();
 		int buttonHeight = Images.BUTTON_PLAY.getHeight();
@@ -122,9 +128,6 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		easy.setBounds(space, panel.getY()+280, buttonWidth, buttonHeight);
 		intermediate.setBounds(2*space+buttonWidth, panel.getY()+280, buttonWidth, buttonHeight);
 		hard.setBounds(3*space+2*buttonWidth, panel.getY()+280, buttonWidth, buttonHeight);
-		panel.add(easy);
-		panel.add(intermediate);
-		panel.add(hard);
 		
 		//Add play button and back button
 		int xBack = getSize().width/2-buttonWidth-10;
@@ -132,9 +135,6 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		int yPlay = view.getViewMenu().getRectangleForMenu(getSize().width).height - buttonHeight - 20;
 		back.setBounds(xBack, yPlay, buttonWidth, buttonHeight);
 		play.setBounds(xPlay, yPlay, buttonWidth, buttonHeight);
-		this.add(back);
-		this.add(play);
-		
 		
 		//Error message
 		int y = 110;

@@ -2,7 +2,11 @@
 package snake.view;
 
 import java.awt.*;
+
 import javax.swing.*;
+import javax.swing.border.Border;
+
+import snake.control.ControlMenu;
 
 
 public class ViewMenu extends JPanel {
@@ -10,6 +14,7 @@ public class ViewMenu extends JPanel {
 	private static final long serialVersionUID = 4427452065585644066L;
 	
 	private JButton singleplayer, controls, quit;
+	private View view;
 
 	public ViewMenu(View view){
 		
@@ -20,6 +25,14 @@ public class ViewMenu extends JPanel {
 		setButton(controls);
 		quit = new JButton(new ImageIcon(Images.BUTTON_QUIT));
 		setButton(quit);
+		this.view = view;
+		
+		int x = getSize().width/2-Images.TITLE_MENU.getWidth()/2;
+		int y = 20;
+
+		this.add(singleplayer);
+		this.add(controls);
+		this.add(quit);
 		
 	}
 	
@@ -54,7 +67,7 @@ public class ViewMenu extends JPanel {
 		int x = getSize().width/2-Images.TITLE_MENU.getWidth()/2;
 		int y = 20;
 		context.drawImage(Images.TITLE_MENU, x, y, null);
-
+		
 		// Buttons
 		int buttonWidth = Images.BUTTON_SINGLEPLAYER.getWidth();
 		int buttonHeight = Images.BUTTON_SINGLEPLAYER.getHeight();
@@ -66,10 +79,6 @@ public class ViewMenu extends JPanel {
 		controls.setBounds(xSingleplayer, ySingleplayer+2*(buttonHeight+gap), buttonWidth, buttonHeight);
 		quit.setBounds(xSingleplayer, ySingleplayer+4*(buttonHeight+gap), buttonWidth, buttonHeight);
 		
-		this.add(singleplayer);
-		this.add(controls);
-		this.add(quit);
-
 	}
 
 	public Rectangle getRectangleForMenu(int width) {
@@ -92,6 +101,8 @@ public class ViewMenu extends JPanel {
 	public void setButton(JButton button){
 		button.setPreferredSize(new Dimension(140, 50));
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		Border emptyBorder = BorderFactory.createEmptyBorder();
+		button.setBorder(emptyBorder);
 	}
 	
 }
