@@ -46,6 +46,7 @@ public class Control extends KeyAdapter {
 				break;
 			case KeyEvent.VK_ESCAPE:
 				view.showMenu();
+				view.getViewBoard().removeButtons();
 				break;
 			default:
 				break;
