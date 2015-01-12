@@ -37,6 +37,7 @@ public class Game extends Observable implements ActionListener {
 	private Timer timer;
 	boolean timerEnabled = true;
 	private int timerUpdateInterval = 200;
+	private int speedIncrease = 0;
 	private long timerLastUpdateTime = 0;
 	private static final int TIMER_INTERVAL = 16;
 	private static final int TIMER_INITIAL_DELAY = 500;
@@ -68,6 +69,8 @@ public class Game extends Observable implements ActionListener {
 		score = 0;
 		snake.setupStartingSnake();
 		food = Food.generateRandomFood(snake, board);
+		timerUpdateInterval += speedIncrease;
+		speedIncrease = 0;
 		setChanged();
 		notifyObservers(Event.RESTART);
 	}
@@ -169,9 +172,9 @@ public class Game extends Observable implements ActionListener {
 			score++;
 			food = Food.generateRandomFood(snake, board);
 			if (score%5 == 0){
+				speedIncrease += 5;
 				timerUpdateInterval -= 5;
 			}
-			System.out.println(timerUpdateInterval);
 		}
 		
 		if (snakeEatsItSelf) {
