@@ -50,12 +50,11 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		
 		easy = new JButton(new ImageIcon(Images.DIFFICULTY_EASY));
 		view.getViewMenu().setButton(easy);
+		easy.setEnabled(false);
 		intermediate = new JButton(new ImageIcon(Images.DIFFICULTY_INTERMEDIATE));
 		view.getViewMenu().setButton(intermediate);
-		intermediate.setBorderPainted(false);
 		hard = new JButton(new ImageIcon(Images.DIFFICULTY_HARD));
 		view.getViewMenu().setButton(hard);
-		hard.setBorderPainted(false);
 		
 		//adds
 		this.add(panel);

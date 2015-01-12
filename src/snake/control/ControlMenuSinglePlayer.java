@@ -50,45 +50,31 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements
 		if (e.getActionCommand() == "play") {
 			playGame();
 		} else if (e.getActionCommand() == "kindergarten") {
-			// kindergarten.setBorderPainted(true);
-			easy.setBorderPainted(false);
-			intermediate.setBorderPainted(false);
-			hard.setBorderPainted(false);
+			// kindergarten.setEnabled(false);
+			easy.setEnabled(true);
+			intermediate.setEnabled(true);
+			hard.setEnabled(true);
 			game.disableTimedMovement();
 		} else if (e.getActionCommand() == "easy") {
-			// kindergarten.setBorderPainted(false);
-			if (intermediate.isEnabled() == false || hard.isEnabled() == false) {
-				intermediate.setEnabled(true);
-				hard.setEnabled(true);
-			}
+			// kindergarten.setEnabled(true);
 			easy.setEnabled(false);
-			easy.setBorderPainted(true);
-			intermediate.setBorderPainted(false);
-			hard.setBorderPainted(false);		
+			intermediate.setEnabled(true);
+			hard.setEnabled(true);	
 			game.enableTimedMovement();
 			game.setTimedMovementSpeed(300);
 		} else if (e.getActionCommand() == "intermediate"){
-			// kindergarten.setBorderPainted(false);
-			if (easy.isEnabled() == false || hard.isEnabled() == false) {
-				easy.setEnabled(true);
-				hard.setEnabled(true);
-			}
+			// kindergarten.setBorderPainted(true);
+			easy.setEnabled(true);
 			intermediate.setEnabled(false);
-			easy.setBorderPainted(false);
-			intermediate.setBorderPainted(true);
-			hard.setBorderPainted(false);
+			hard.setEnabled(true);
 			game.enableTimedMovement();
 			game.setTimedMovementSpeed(150);
 		} else if (e.getActionCommand() == "hard") {
-			// kindergarten.setBorderPainted(false);
-			if (intermediate.isEnabled() == false || easy.isEnabled() == false) {
-				intermediate.setEnabled(true);
-				easy.setEnabled(true);
-			}
+			// kindergarten.setBorderPainted(true);
+			hard.setEnabled(true);
+			easy.setEnabled(true);
+			intermediate.setEnabled(true);
 			hard.setEnabled(false);
-			easy.setBorderPainted(false);
-			intermediate.setBorderPainted(false);
-			hard.setBorderPainted(true);
 			game.setTimedMovementSpeed(70);
 		} else if (e.getActionCommand() == "back") {
 			view.showMenu();

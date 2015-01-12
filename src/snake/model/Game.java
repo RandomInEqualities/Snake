@@ -168,6 +168,10 @@ public class Game extends Observable implements ActionListener {
 		if (snakeEatsFood) {
 			score++;
 			food = Food.generateRandomFood(snake, board);
+			if (score%5 == 0){
+				timerUpdateInterval -= 5;
+			}
+			System.out.println(timerUpdateInterval);
 		}
 		
 		if (snakeEatsItSelf) {
