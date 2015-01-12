@@ -2,13 +2,16 @@
 package snake.control;
 
 import java.awt.event.*;
+
 import snake.model.*;
+import snake.model.Game.State;
 import snake.view.*;
 
 
 public class Control extends KeyAdapter {
 	
 	private View view;
+	private Game game;
 	
 	@SuppressWarnings("unused")
 	private ControlBoard boardControl;
@@ -45,8 +48,8 @@ public class Control extends KeyAdapter {
 				audio.setMuted(!audio.isMuted());
 				break;
 			case KeyEvent.VK_ESCAPE:
+				game.state = State.PAUSED;
 				view.showMenu();
-				view.getViewBoard().removeButtons();
 				break;
 			default:
 				break;

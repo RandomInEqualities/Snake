@@ -28,7 +28,7 @@ public class Game extends Observable implements ActionListener {
 	protected static final int DEFAULT_WIDTH = 20;
 	protected static final int DEFAULT_HEIGHT = 20;
 	
-	private State state;
+	public State state;
 	private int score;
 	private Board board;
 	private Snake snake;
