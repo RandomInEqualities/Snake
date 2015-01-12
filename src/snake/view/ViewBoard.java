@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.util.*;
 
 import snake.model.*;
+import snake.model.Game.State;
 
 
 public class ViewBoard extends JPanel implements Observer {
@@ -40,6 +41,10 @@ public class ViewBoard extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		if (game.getState() == Game.State.LOST) {
+			this.add(playAgainButton);
+			this.add(menuButton);
+		}
 		repaint();
 	}
 
@@ -226,8 +231,6 @@ public class ViewBoard extends JPanel implements Observer {
 
 		playAgainButton.setBounds(xPlayAgain, yPlayAgain, buttonWidth, buttonHeight);
 		menuButton.setBounds(xMenu, yPlayAgain, buttonWidth, buttonHeight);
-		this.add(playAgainButton);
-		this.add(menuButton);
 	}
 
 	private void drawPaused(Graphics2D context) {
