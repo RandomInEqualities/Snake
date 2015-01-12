@@ -2,13 +2,16 @@
 package snake.control;
 
 import java.awt.event.*;
+import java.util.Observable;
+import java.util.Observer;
+
 import javax.swing.JButton;
+
 import snake.model.*;
-import snake.model.Game.State;
 import snake.view.*;
 
 
-public class ControlBoard extends KeyAdapter implements ActionListener {
+public class ControlBoard extends KeyAdapter implements ActionListener , Observer {
 	
 	private Game game;
 	private View view;
@@ -62,8 +65,9 @@ public class ControlBoard extends KeyAdapter implements ActionListener {
 				break;
 			case KeyEvent.VK_ENTER: 
 			case KeyEvent.VK_SPACE:
-				if (game.getState() == State.LOST){
+				if (game.getState() == Game.State.LOST){
 					game.restart();
+					boardView.removeButtons();
 				}
 				break;
 			default:
@@ -82,6 +86,12 @@ public class ControlBoard extends KeyAdapter implements ActionListener {
 			view.showMenu();
 			boardView.removeButtons();
 		}
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
