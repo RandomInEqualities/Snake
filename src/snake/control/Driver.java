@@ -1,9 +1,8 @@
 
 package snake.control;
-import java.awt.Dimension;
 
+import java.awt.Dimension;
 import snake.model.Game;
-import snake.model.GameWithTimer;
 import snake.view.View;
 
 
@@ -19,10 +18,10 @@ public class Driver {
 		Dimension size = parseArguments(args);
 		Game game;
 		if (size == null) {
-			game = new GameWithTimer();
+			game = new Game();
 		}
 		else {
-			game = new GameWithTimer(size.width, size.height);
+			game = new Game(size.width, size.height);
 		}
 
 		// Create the view which displays the game.
