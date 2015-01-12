@@ -180,7 +180,7 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 
 	@Override
 	public void focusLost(FocusEvent e) {
-
+		view.requestFocus();
 	}
 	
 	public JButton getEasy(){

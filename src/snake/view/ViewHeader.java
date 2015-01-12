@@ -25,11 +25,10 @@ public class ViewHeader extends JPanel implements Observer {
 		if (game == null) {
 			throw new NullPointerException();
 		}
-		
+		this.font = new Font("Sans_Serif", Font.BOLD, 20);
 		this.game = game;
 		this.showScore = showScore;
 		this.logo = Images.LOGO.getScaledInstance(DEFAULT_LOGO_WIDTH, DEFAULT_LOGO_HEIGHT, Image.SCALE_SMOOTH);
-		this.font = new Font("Sans_Serif", Font.BOLD, 20);
 		game.addObserver(this);
 		setBackground(Colors.PANEL_COLOUR);
 	}
@@ -61,12 +60,13 @@ public class ViewHeader extends JPanel implements Observer {
 		// Only show logo if board is wide enough to contain it.
 		Dimension size = getSize();
 		int logoWidth = logo.getWidth(null);
-		if (size.width > logoWidth + 100 || (!showScore && size.width > logoWidth)) {
+		if (size.width > logoWidth + 230 || (!showScore && size.width > logoWidth)) {
 			context.drawImage(logo, size.width/2 - logo.getWidth(null)/2, 0, null);
 		}
 		
 		// Update the score (if we need to show scores).
 		if (showScore) {
+			context.setFont(this.font);
 			int fontSize = font.getSize();
 			context.setColor(Color.WHITE);
 			context.drawString("Score: " + game.getScore(), fontSize, size.height/2 - fontSize/2);

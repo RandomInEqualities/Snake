@@ -4,6 +4,8 @@ package snake.control;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 
@@ -11,7 +13,7 @@ import snake.model.*;
 import snake.view.*;
 
 
-public class ControlMenuSinglePlayer implements ActionListener {
+public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListener {
 	
 	private Game game;
 	private View view;
@@ -23,6 +25,7 @@ public class ControlMenuSinglePlayer implements ActionListener {
 		this.view = view;
 		this.speed = 300;
 		this.viewMenuSinglePlayer = view.getViewMenuSinglePlayer();
+		this.view.addKeyListener(this);
 		
 		JButton play = this.viewMenuSinglePlayer.getPlayButton();
 		JButton back = this.viewMenuSinglePlayer.getBackButton();
@@ -49,29 +52,7 @@ public class ControlMenuSinglePlayer implements ActionListener {
 		intermediate = viewMenuSinglePlayer.getIntermediate();
 		hard = viewMenuSinglePlayer.getHard();
 		if (e.getActionCommand() == "play") {
-			String inputW = getInput(viewMenuSinglePlayer.getWidthInput());
-			String inputH = getInput(viewMenuSinglePlayer.getHeightInput());
-			
-			if (inputW.isEmpty() || inputH.isEmpty()) { // if no input
-				viewMenuSinglePlayer.setFilled(false);
-				viewMenuSinglePlayer.repaint();
-			} 
-			else { 
-				// if input is correct
-				int inputWidth = Integer.parseInt(inputW);
-				int inputHeight = Integer.parseInt(inputH);
-				if (inputWidth >= 5 && inputWidth <= 100 && inputHeight >= 5 && inputHeight <= 100) {
-					game.restart(inputWidth, inputHeight);
-					view.showGame();
-					viewMenuSinglePlayer.setValid(true);
-					viewMenuSinglePlayer.setFilled(true);
-				} 
-				else { 
-					// if input is invalid
-					viewMenuSinglePlayer.setValid(false);
-					viewMenuSinglePlayer.repaint();
-				}
-			}
+			playGame();
 		} 
 		else if (e.getActionCommand() == "easy"){
 			easy.setBorderPainted(true);
@@ -96,6 +77,53 @@ public class ControlMenuSinglePlayer implements ActionListener {
 		}
 	}
 
+	@Override
+	public void keyPressed(KeyEvent event) {
+		if (event == null) {
+			throw new NullPointerException();
+		}
+		if (view.inGame()) {
+			return;
+		}
+		
+		switch (event.getKeyCode()) {
+			case KeyEvent.VK_BACK_SPACE:
+				view.showMenu();
+				break;
+			case KeyEvent.VK_ENTER:
+				playGame();
+				break;
+			default:
+				break;
+		}
+	}
+	
+	public void playGame() {
+		String inputW = getInput(viewMenuSinglePlayer.getWidthInput());
+		String inputH = getInput(viewMenuSinglePlayer.getHeightInput());
+		
+		if (inputW.isEmpty() || inputH.isEmpty()) { // if no input
+			viewMenuSinglePlayer.setFilled(false);
+			viewMenuSinglePlayer.repaint();
+		} 
+		else { 
+			// if input is correct
+			int inputWidth = Integer.parseInt(inputW);
+			int inputHeight = Integer.parseInt(inputH);
+			if (inputWidth >= 5 && inputWidth <= 100 && inputHeight >= 5 && inputHeight <= 100) {
+				game.restart(inputWidth, inputHeight);
+				view.showGame();
+				viewMenuSinglePlayer.setValid(true);
+				viewMenuSinglePlayer.setFilled(true);
+			} 
+			else { 
+				// if input is invalid
+				viewMenuSinglePlayer.setValid(false);
+				viewMenuSinglePlayer.repaint();
+			}
+		}
+	}
+	
 	// Get input without whitespace
 	public String getInput(JFormattedTextField input) {
 		String in = input.getText();
