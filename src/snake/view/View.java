@@ -36,7 +36,7 @@ public class View extends JFrame {
 		
 		this.headerPanel = new ViewHeader(game, false);
 		this.menuPanel = new ViewMenu(this);
-		this.menuSinglePlayerPanel = new ViewMenuSinglePlayer(game, this);
+		this.menuSinglePlayerPanel = new ViewMenuSinglePlayer(this);
 		this.menuControlsPanel = new ViewMenuControls(this);
 		this.boardPanel = new ViewBoard(game, this);
 		this.audio = new Audio(game);

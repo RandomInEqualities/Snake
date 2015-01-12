@@ -2,18 +2,13 @@
 package snake.view;
 
 import java.awt.*;
-
 import javax.swing.*;
-import javax.swing.border.Border;
-
-import snake.control.ControlMenu;
-
 
 public class ViewMenu extends JPanel {
 	
 	private static final long serialVersionUID = 4427452065585644066L;
 	
-	private JButton singleplayer, controls, quit;
+	private JButton singleplayer, multiplayer, controls, quit;
 	private View view;
 
 	public ViewMenu(View view){
@@ -21,16 +16,16 @@ public class ViewMenu extends JPanel {
 		//Buttons
 		singleplayer = new JButton(new ImageIcon(Images.BUTTON_SINGLEPLAYER));
 		setButton(singleplayer);
+		multiplayer = new JButton(new ImageIcon(Images.BUTTON_MULTIPLAYER));
+		setButton(multiplayer);
 		controls = new JButton(new ImageIcon(Images.BUTTON_CONTROLS));
 		setButton(controls);
 		quit = new JButton(new ImageIcon(Images.BUTTON_QUIT));
 		setButton(quit);
 		this.view = view;
-		
-		int x = getSize().width/2-Images.TITLE_MENU.getWidth()/2;
-		int y = 20;
 
 		this.add(singleplayer);
+		this.add(multiplayer);
 		this.add(controls);
 		this.add(quit);
 		
@@ -67,7 +62,7 @@ public class ViewMenu extends JPanel {
 		int x = getSize().width/2-Images.TITLE_MENU.getWidth()/2;
 		int y = 20;
 		context.drawImage(Images.TITLE_MENU, x, y, null);
-		
+
 		// Buttons
 		int buttonWidth = Images.BUTTON_SINGLEPLAYER.getWidth();
 		int buttonHeight = Images.BUTTON_SINGLEPLAYER.getHeight();
@@ -76,9 +71,9 @@ public class ViewMenu extends JPanel {
 		int gap = 10;
 		
 		singleplayer.setBounds(xSingleplayer, ySingleplayer, buttonWidth, buttonHeight);
+		multiplayer.setBounds(xSingleplayer, ySingleplayer+(buttonHeight+gap), buttonWidth, buttonHeight);
 		controls.setBounds(xSingleplayer, ySingleplayer+2*(buttonHeight+gap), buttonWidth, buttonHeight);
 		quit.setBounds(xSingleplayer, ySingleplayer+4*(buttonHeight+gap), buttonWidth, buttonHeight);
-		
 	}
 
 	public Rectangle getRectangleForMenu(int width) {
@@ -102,5 +97,4 @@ public class ViewMenu extends JPanel {
 		button.setPreferredSize(new Dimension(140, 50));
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	}
-	
 }

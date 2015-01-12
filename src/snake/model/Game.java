@@ -1,9 +1,13 @@
 
 package snake.model;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 
+import javax.swing.Timer;
 
-public class Game extends Observable {
+
+public class Game extends Observable implements ActionListener {
 	
 	public enum State {
 		ONGOING,
@@ -30,17 +34,30 @@ public class Game extends Observable {
 	private Snake snake;
 	private Food food;
 	
+	private Timer timer;
+	boolean timerEnabled = true;
+	private int timerUpdateInterval = 200;
+	private long timerLastUpdateTime = 0;
+	private static final int TIMER_INTERVAL = 16;
+	private static final int TIMER_INITIAL_DELAY = 500;
+	
 	public Game() {
 		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
 	
 	public Game(int width, int height) {
 		super();
-		this.state = State.ONGOING;
+		this.state = State.PAUSED;
 		this.score = 0;
 		this.board = new Board(width, height);
 		this.snake = new Snake(this.board);
 		this.food = Food.generateRandomFood(snake, board);
+		
+		// Create a timer object that java swing will call in a periodic
+		// interval. The timer will then send an ActionEvent to this class.
+		this.timer = new Timer(TIMER_INTERVAL, this);
+		this.timer.setInitialDelay(TIMER_INITIAL_DELAY);
+		this.timer.start();
 	}
 	
 	/**
@@ -74,12 +91,12 @@ public class Game extends Observable {
 		return state == State.LOST;
 	}
 	
-	public boolean isOngoing() {
-		return state == State.ONGOING;
-	}
-	
 	public boolean isPaused() {
 		return state == State.PAUSED;
+	}
+	
+	public boolean isTimedMovementEnabled() {
+		return timerEnabled;
 	}
 	
 	public State getState() {
@@ -117,6 +134,21 @@ public class Game extends Observable {
 			notifyObservers(Event.UNPAUSE);
 		}
 	}
+	
+	public void enableTimedMovement() {
+		timerEnabled = true;
+	}
+	
+	public void disableTimedMovement() {
+		timerEnabled = false;
+	}
+	
+	public void setTimedMovementSpeed(int speed) {
+		if (speed <= 0) {
+			throw new IllegalArgumentException("speed " + speed + " is not allowed");
+		}
+		this.timerUpdateInterval = speed;
+	}
 
 	public void moveSnake(Direction moveDirection) {
 		
@@ -124,6 +156,11 @@ public class Game extends Observable {
 			return;
 		}
 		
+		if (!snake.canMove(moveDirection)) {
+			return;
+		}
+		
+		timerLastUpdateTime = System.currentTimeMillis();
 		Field newHeadPosition = snake.getNewHeadPosition(moveDirection);
 		boolean snakeEatsFood = newHeadPosition.equals(food.getPosition());
 		boolean snakeEatsItSelf = snake.move(moveDirection, snakeEatsFood);
@@ -154,6 +191,16 @@ public class Game extends Observable {
 		}
 		setChanged();
 		notifyObservers(event);
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		long currentTime = System.currentTimeMillis();
+		long elapsedTime = currentTime - timerLastUpdateTime;
+		if (state == State.ONGOING && timerEnabled && elapsedTime > timerUpdateInterval) {
+			moveSnake(snake.getHeadDirection());
+			timerLastUpdateTime = currentTime;
+		}
 	}
 	
 }
