@@ -39,7 +39,7 @@ public class ViewBoard extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (game.getState() == Game.State.LOST) {
+		if (game.getState() == Game.State.LOST || game.getState() == Game.State.WON) {
 			this.add(playAgainButton);
 			this.add(menuButton);
 		}
