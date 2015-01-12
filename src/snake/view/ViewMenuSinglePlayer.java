@@ -16,7 +16,7 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 	private JFormattedTextField inputWidth, inputHeight;
 	private boolean valid, filled;
 	private JPanel panel;
-	private JButton play, easy, intermediate, hard, back;
+	private JButton play, easy, intermediate, hard, back, green, blue, red, yellow;
 	
 	public ViewMenuSinglePlayer(View view, Game game){
 		this.view = view;
@@ -56,6 +56,19 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		hard = new JButton(new ImageIcon(Images.DIFFICULTY_HARD));
 		view.getViewMenu().setButton(hard);
 		
+		green = new JButton();
+		view.getViewMenu().setButton(green);
+		green.setBackground(Colors.GREEN);
+		blue = new JButton();
+		view.getViewMenu().setButton(blue);
+		blue.setBackground(Colors.BLUE);
+		red = new JButton();
+		view.getViewMenu().setButton(red);
+		red.setBackground(Colors.RED);
+		yellow = new JButton();
+		view.getViewMenu().setButton(yellow);
+		yellow.setBackground(Colors.YELLOW);
+		
 		//adds
 		this.add(panel);
 		panel.add(inputWidth);
@@ -63,6 +76,10 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		panel.add(easy);
 		panel.add(intermediate);
 		panel.add(hard);
+		panel.add(green);
+		panel.add(blue);
+		panel.add(red);
+		panel.add(yellow);
 		this.add(back);
 		this.add(play);
 		
@@ -88,6 +105,18 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		return hard;
 	}
 
+	public JButton getGreenButton() {
+		return green;
+	}
+	public JButton getBlueButton() {
+		return blue;
+	}
+	public JButton getRedButton() {
+		return red;
+	}
+	public JButton getYellowButton() {
+		return yellow;
+	}
 	@Override
 	protected void paintComponent(Graphics context) {
 		super.paintComponent(context);
@@ -124,13 +153,24 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		int buttonWidth = Images.BUTTON_PLAY.getWidth();
 		int buttonHeight = Images.BUTTON_PLAY.getHeight();
 
-		//Add difficulty buttons
+		//Colour buttons
+		int gap = 10;
+		
+		int xBlue = panel.getWidth()/2-blue.getWidth()-gap/2;
+		int yColour = panel.getY()+180;
+		int sizeColour = 30;
+		green.setBounds(xBlue-gap-sizeColour, yColour, sizeColour, sizeColour);
+		blue.setBounds(xBlue, yColour, sizeColour, sizeColour);
+		red.setBounds(xBlue+gap+sizeColour, yColour, sizeColour, sizeColour);
+		yellow.setBounds(xBlue+2*gap+2*sizeColour, yColour, sizeColour, sizeColour);
+		
+		//Difficulty buttons
 		int space = (panel.getWidth()-3*buttonWidth)/4; //space between buttons
 		easy.setBounds(space, panel.getY()+280, buttonWidth, buttonHeight);
 		intermediate.setBounds(2*space+buttonWidth, panel.getY()+280, buttonWidth, buttonHeight);
 		hard.setBounds(3*space+2*buttonWidth, panel.getY()+280, buttonWidth, buttonHeight);
-		
-		//Add play button and back button
+	
+		//Play button and back button
 		int xBack = getSize().width/2-buttonWidth-10;
 		int xPlay = getSize().width/2+10;
 		int yPlay = view.getViewMenu().getRectangleForMenu(getSize().width).height - buttonHeight - 20;

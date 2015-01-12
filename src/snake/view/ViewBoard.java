@@ -2,25 +2,19 @@
 package snake.view;
 
 import java.awt.*;
-
+import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
 import javax.swing.*;
-
 import java.util.*;
-
 import snake.model.*;
-import snake.model.Game.State;
-
 
 public class ViewBoard extends JPanel implements Observer {
-
 	private Game game;
 	private JButton playAgainButton, menuButton;
 	private static final long serialVersionUID = 9109362543987437505L;
-	
-	int widthPopup;
-	int heightPopup;
-	int xPopup;
-	int yPopup;
+
+	int widthPopup, heightPopup, xPopup, yPopup;
+	int r, g, b;
 	
 	public ViewBoard(Game game, View view) {
 		super();
@@ -37,6 +31,10 @@ public class ViewBoard extends JPanel implements Observer {
 		menuButton = new JButton(new ImageIcon(Images.BUTTON_MENU));
 		view.getViewMenu().setButton(menuButton);
 		
+		//Default colour
+		this.r = 84;
+		this.g = 216;
+		this.b = 81;
 	}
 
 	@Override
@@ -56,7 +54,6 @@ public class ViewBoard extends JPanel implements Observer {
 	@Override
 	protected void paintComponent(Graphics context) {
 		super.paintComponent(context);
-		
 		Graphics2D context2D = (Graphics2D) context;
 		drawBackground(context2D);
 		drawBoard(context2D);
@@ -90,7 +87,7 @@ public class ViewBoard extends JPanel implements Observer {
 			Field current = snake.getPositions().get(i);
 			Field front = snake.getPositions().get(i-1);
 			Field behind = snake.getPositions().get(i+1);
-			Image body = null;
+			BufferedImage body = null;
 
 			if (current.getRow() == front.getRow() && current.getRow() == behind.getRow()){ //if current piece and front and behind are in the same row 
 				body = Images.SNAKE_HORIZONTAL;
@@ -127,13 +124,14 @@ public class ViewBoard extends JPanel implements Observer {
 			} else {
 				body = Images.SNAKE_CORNER_BL;
 			}
-			Image bodyscaled = body.getScaledInstance(getFieldSideLength(), getFieldSideLength(), Image.SCALE_SMOOTH);
+			BufferedImage bodyColoured = colourSnake(body, r, g, b);
+			Image bodyscaled = bodyColoured.getScaledInstance(getFieldSideLength(), getFieldSideLength(), Image.SCALE_SMOOTH);
 			context.drawImage(bodyscaled, bodyRectangle.x, bodyRectangle.y, null);
 		}
 			
 		// Draw tail
 		Rectangle tailRectangle = getRectangleForField(snake.getTail());
-		Image tail = null;
+		BufferedImage tail = null;
 		Field tailPiece = snake.getTail();
 		Field beforeTail = snake.getPositions().get(snake.getSize()-2);
 		if (tailPiece.getColumn()+1 == beforeTail.getColumn()||tailPiece.getColumn() == lastColumn && beforeTail.getColumn()==0){
@@ -145,13 +143,14 @@ public class ViewBoard extends JPanel implements Observer {
 		} else {
 			tail = Images.SNAKE_TAIL_DOWN;
 		}
-		Image tailscaled = tail.getScaledInstance(getFieldSideLength(), getFieldSideLength(), Image.SCALE_SMOOTH);
+		BufferedImage tailColoured = colourSnake(tail, r, g, b);
+		Image tailscaled = tailColoured.getScaledInstance(getFieldSideLength(), getFieldSideLength(), Image.SCALE_SMOOTH);
 		context.drawImage(tailscaled, tailRectangle.x, tailRectangle.y, null);
 		
 		
 		// Draw head
 		Rectangle headRectangle = getRectangleForField(snake.getHead());
-		Image head = null;
+		BufferedImage head = null;
 		switch (snake.getHeadDirection()) {
 		case UP:
 			head = Images.SNAKE_HEAD_UP;
@@ -167,8 +166,8 @@ public class ViewBoard extends JPanel implements Observer {
 			break;
 		}
 		
-		
-		Image headScaled = head.getScaledInstance(headRectangle.width, headRectangle.height, Image.SCALE_SMOOTH);
+		BufferedImage headColoured = colourSnake(head, r, g, b);
+		Image headScaled = headColoured.getScaledInstance(headRectangle.width, headRectangle.height, Image.SCALE_SMOOTH);
 		context.drawImage(headScaled, headRectangle.x, headRectangle.y, null);
 	}
 
@@ -315,4 +314,26 @@ public class ViewBoard extends JPanel implements Observer {
 		}
 		return fieldWidth;
 	}
+	
+	public void setColour(int r, int g, int b){
+		this.r = r;
+		this.g = g;
+		this.b = b;
+	}
+	
+	 private BufferedImage colourSnake(BufferedImage img, int r, int g, int b) {
+	    WritableRaster raster = img.getRaster();
+	    for (int x = 0; x < img.getWidth(); x++) {
+	    	for (int y = 0; y < img.getHeight(); y++) {
+	    		if (img.getRGB(x, y) != -13547430){ //colour the green parts only
+	    			int[] colour = raster.getPixel(x, y, (int[]) null);
+	            	colour[0] = r;
+	            	colour[1] = g;
+	            	colour[2] = b;
+	            	raster.setPixel(x, y, colour);
+	            	}
+	            }
+	        }
+	        return img;
+	 }
 }

@@ -10,43 +10,51 @@ import javax.swing.*;
 
 import snake.model.*;
 import snake.view.*;
-
 public class ControlMenuSinglePlayer extends KeyAdapter implements
 		ActionListener {
 
 	private Game game;
 	private View view;
 	private ViewMenuSinglePlayer viewMenuSinglePlayer;
-
+	private JButton play, back, easy, intermediate, hard, green, blue, red, yellow;
+	
 	public ControlMenuSinglePlayer(Game game, View view) {
 		this.game = game;
 		this.view = view;
 		this.viewMenuSinglePlayer = view.getViewMenuSinglePlayer();
 		this.view.addKeyListener(this);
 		game.setTimedMovementSpeed(300); //default difficulty = easy
-		JButton play = this.viewMenuSinglePlayer.getPlayButton();
-		JButton back = this.viewMenuSinglePlayer.getBackButton();
-		JButton easy = this.viewMenuSinglePlayer.getEasyButton();
-		JButton intermediate = this.viewMenuSinglePlayer.getIntermediateButton();
-		JButton hard = this.viewMenuSinglePlayer.getHardButton();
+		play = this.viewMenuSinglePlayer.getPlayButton();
+		back = this.viewMenuSinglePlayer.getBackButton();
+		easy = this.viewMenuSinglePlayer.getEasyButton();
+		intermediate = this.viewMenuSinglePlayer.getIntermediateButton();
+		hard = this.viewMenuSinglePlayer.getHardButton();
+		green = this.viewMenuSinglePlayer.getGreenButton();
+		blue = this.viewMenuSinglePlayer.getBlueButton();
+		red = this.viewMenuSinglePlayer.getRedButton();
+		yellow = this.viewMenuSinglePlayer.getYellowButton();
 		play.addActionListener(this);
 		back.addActionListener(this);
 		easy.addActionListener(this);
 		intermediate.addActionListener(this);
 		hard.addActionListener(this);
+		green.addActionListener(this);
+		blue.addActionListener(this);
+		red.addActionListener(this);
+		yellow.addActionListener(this);
 		play.setActionCommand("play");
 		back.setActionCommand("back");
 		easy.setActionCommand("easy");
 		intermediate.setActionCommand("intermediate");
 		hard.setActionCommand("hard");
+		green.setActionCommand("green");
+		blue.setActionCommand("blue");
+		red.setActionCommand("red");
+		yellow.setActionCommand("yellow");
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton easy, intermediate, hard;
-		easy = viewMenuSinglePlayer.getEasy();
-		intermediate = viewMenuSinglePlayer.getIntermediate();
-		hard = viewMenuSinglePlayer.getHard();
 		if (e.getActionCommand() == "play") {
 			playGame();
 		} else if (e.getActionCommand() == "kindergarten") {
@@ -78,6 +86,30 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements
 			game.setTimedMovementSpeed(70);
 		} else if (e.getActionCommand() == "back") {
 			view.showMenu();
+		} else if (e.getActionCommand() == "green") {
+			green.setEnabled(false);
+			blue.setEnabled(true);
+			red.setEnabled(true);
+			yellow.setEnabled(true);
+			view.getViewBoard().setColour(84, 216, 81);
+		} else if (e.getActionCommand() == "blue") {
+			green.setEnabled(true);
+			blue.setEnabled(false);
+			red.setEnabled(true);
+			yellow.setEnabled(true);
+			view.getViewBoard().setColour(80, 152, 218);
+		} else if (e.getActionCommand() == "red"){
+			green.setEnabled(true);
+			blue.setEnabled(true);
+			red.setEnabled(false);
+			yellow.setEnabled(true);
+			view.getViewBoard().setColour(237, 75, 66);
+		} else if (e.getActionCommand() == "yellow"){
+			green.setEnabled(true);
+			blue.setEnabled(true);
+			red.setEnabled(true);
+			yellow.setEnabled(false);
+			view.getViewBoard().setColour(243, 196, 67);
 		}
 	}
 
