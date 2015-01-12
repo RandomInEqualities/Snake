@@ -21,8 +21,8 @@ public class Game extends Observable {
 		UNPAUSE
 	}
 	
-	protected static final int DEFAULT_WIDTH = 40;
-	protected static final int DEFAULT_HEIGHT = 40;
+	protected static final int DEFAULT_WIDTH = 20;
+	protected static final int DEFAULT_HEIGHT = 20;
 	
 	private State state;
 	private int score;
