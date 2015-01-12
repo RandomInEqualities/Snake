@@ -3,8 +3,11 @@ package snake.view;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.text.*;
+
 import snake.model.Game;
 
 
@@ -59,6 +62,7 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		green = new JButton();
 		view.getViewMenu().setButton(green);
 		green.setBackground(Colors.GREEN);
+		green.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
 		blue = new JButton();
 		view.getViewMenu().setButton(blue);
 		blue.setBackground(Colors.BLUE);

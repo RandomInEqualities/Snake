@@ -7,6 +7,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 import snake.model.*;
 import snake.view.*;
@@ -17,6 +19,7 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements
 	private View view;
 	private ViewMenuSinglePlayer viewMenuSinglePlayer;
 	private JButton play, back, easy, intermediate, hard, green, blue, red, yellow;
+	private Border thickBorder;
 	
 	public ControlMenuSinglePlayer(Game game, View view) {
 		this.game = game;
@@ -51,6 +54,7 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements
 		blue.setActionCommand("blue");
 		red.setActionCommand("red");
 		yellow.setActionCommand("yellow");
+		thickBorder = new LineBorder(Colors.PANEL_COLOUR, 3);
 	}
 
 	@Override
@@ -87,28 +91,32 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements
 		} else if (e.getActionCommand() == "back") {
 			view.showMenu();
 		} else if (e.getActionCommand() == "green") {
-			green.setEnabled(false);
-			blue.setEnabled(true);
-			red.setEnabled(true);
-			yellow.setEnabled(true);
+			green.setBorder(thickBorder);
+			green.setBorderPainted(true);
+			blue.setBorderPainted(false);
+			red.setBorderPainted(false);
+			yellow.setBorderPainted(false);
 			view.getViewBoard().setColour(84, 216, 81);
 		} else if (e.getActionCommand() == "blue") {
-			green.setEnabled(true);
-			blue.setEnabled(false);
-			red.setEnabled(true);
-			yellow.setEnabled(true);
+			green.setBorderPainted(false);
+			blue.setBorder(thickBorder);
+			blue.setBorderPainted(true);
+			red.setBorderPainted(false);
+			yellow.setBorderPainted(false);
 			view.getViewBoard().setColour(80, 152, 218);
 		} else if (e.getActionCommand() == "red"){
-			green.setEnabled(true);
-			blue.setEnabled(true);
-			red.setEnabled(false);
-			yellow.setEnabled(true);
+			green.setBorderPainted(false);
+			blue.setBorderPainted(false);
+			red.setBorderPainted(true);
+			red.setBorder(thickBorder);
+			yellow.setBorderPainted(false);
 			view.getViewBoard().setColour(237, 75, 66);
 		} else if (e.getActionCommand() == "yellow"){
-			green.setEnabled(true);
-			blue.setEnabled(true);
-			red.setEnabled(true);
-			yellow.setEnabled(false);
+			green.setBorderPainted(false);
+			blue.setBorderPainted(false);
+			red.setBorderPainted(false);
+			yellow.setBorderPainted(true);
+			yellow.setBorder(thickBorder);
 			view.getViewBoard().setColour(243, 196, 67);
 		}
 	}
