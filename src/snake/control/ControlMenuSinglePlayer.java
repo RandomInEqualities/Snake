@@ -16,21 +16,18 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements
 
 	private Game game;
 	private View view;
-	private int speed;
 	private ViewMenuSinglePlayer viewMenuSinglePlayer;
 
 	public ControlMenuSinglePlayer(Game game, View view) {
 		this.game = game;
 		this.view = view;
-		this.speed = 300;
 		this.viewMenuSinglePlayer = view.getViewMenuSinglePlayer();
 		this.view.addKeyListener(this);
-
+		game.setTimedMovementSpeed(300); //default difficulty = easy
 		JButton play = this.viewMenuSinglePlayer.getPlayButton();
 		JButton back = this.viewMenuSinglePlayer.getBackButton();
 		JButton easy = this.viewMenuSinglePlayer.getEasyButton();
-		JButton intermediate = this.viewMenuSinglePlayer
-				.getIntermediateButton();
+		JButton intermediate = this.viewMenuSinglePlayer.getIntermediateButton();
 		JButton hard = this.viewMenuSinglePlayer.getHardButton();
 		play.addActionListener(this);
 		back.addActionListener(this);
@@ -57,25 +54,27 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements
 			easy.setBorderPainted(false);
 			intermediate.setBorderPainted(false);
 			hard.setBorderPainted(false);
-			speed = 0;
+			game.disableTimedMovement();
 		} else if (e.getActionCommand() == "easy") {
 			// kindergarten.setBorderPainted(false);
 			easy.setBorderPainted(true);
 			intermediate.setBorderPainted(false);
 			hard.setBorderPainted(false);
-			speed = 300;
+			game.enableTimedMovement();
+			game.setTimedMovementSpeed(300);
 		} else if (e.getActionCommand() == "intermediate") {
 			// kindergarten.setBorderPainted(false);
 			easy.setBorderPainted(false);
 			intermediate.setBorderPainted(true);
 			hard.setBorderPainted(false);
-			speed = 150;
+			game.enableTimedMovement();
+			game.setTimedMovementSpeed(150);
 		} else if (e.getActionCommand() == "hard") {
 			// kindergarten.setBorderPainted(false);
 			easy.setBorderPainted(false);
 			intermediate.setBorderPainted(false);
 			hard.setBorderPainted(true);
-			speed = 70;
+			game.setTimedMovementSpeed(70);
 		} else if (e.getActionCommand() == "back") {
 			view.showMenu();
 		}
@@ -113,8 +112,7 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements
 			// if input is correct
 			int inputWidth = Integer.parseInt(inputW);
 			int inputHeight = Integer.parseInt(inputH);
-			if (inputWidth >= 5 && inputWidth <= 100 && inputHeight >= 5
-					&& inputHeight <= 100) {
+			if (inputWidth >= 5 && inputWidth <= 100 && inputHeight >= 5 && inputHeight <= 100) {
 				game.restart(inputWidth, inputHeight);
 				view.showGame();
 				viewMenuSinglePlayer.setValid(true);
