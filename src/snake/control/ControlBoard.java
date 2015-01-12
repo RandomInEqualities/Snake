@@ -88,7 +88,6 @@ public class ControlBoard extends KeyAdapter implements ActionListener, Observer
 			boardView.removeButtons();
 		}
 	}
-
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub

@@ -73,6 +73,7 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 			intermediate.setBorderPainted(false);
 			hard.setBorderPainted(false);
 			game.disableTimedMovement();
+			view.requestFocus();
 		} else if (e.getActionCommand() == "easy") {
 			kindergarten.setBorderPainted(false);
 			easy.setBorderPainted(true);
@@ -81,6 +82,7 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 			hard.setBorderPainted(false);
 			game.enableTimedMovement();
 			game.setTimedMovementSpeed(300);
+			view.requestFocus();
 		} else if (e.getActionCommand() == "intermediate"){
 			kindergarten.setBorderPainted(false);
 			easy.setBorderPainted(false);
@@ -89,6 +91,7 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 			hard.setBorderPainted(false);
 			game.enableTimedMovement();
 			game.setTimedMovementSpeed(150);
+			view.requestFocus();
 		} else if (e.getActionCommand() == "hard") {
 			kindergarten.setBorderPainted(false);
 			easy.setBorderPainted(false);
@@ -97,6 +100,7 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 			hard.setBorder(thickBorder);
 			game.enableTimedMovement();
 			game.setTimedMovementSpeed(70);
+			view.requestFocus();
 		} else if (e.getActionCommand() == "back") {
 			view.showMenu();
 		} else if (e.getActionCommand() == "green") {
@@ -106,6 +110,7 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 			red.setBorderPainted(false);
 			yellow.setBorderPainted(false);
 			view.getViewBoard().setColour(84, 216, 81);
+			view.requestFocus();
 		} else if (e.getActionCommand() == "blue") {
 			green.setBorderPainted(false);
 			blue.setBorder(thickBorder);
@@ -113,6 +118,7 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 			red.setBorderPainted(false);
 			yellow.setBorderPainted(false);
 			view.getViewBoard().setColour(80, 152, 218);
+			view.requestFocus();
 		} else if (e.getActionCommand() == "red"){
 			green.setBorderPainted(false);
 			blue.setBorderPainted(false);
@@ -120,6 +126,7 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 			red.setBorder(thickBorder);
 			yellow.setBorderPainted(false);
 			view.getViewBoard().setColour(237, 75, 66);
+			view.requestFocus();
 		} else if (e.getActionCommand() == "yellow"){
 			green.setBorderPainted(false);
 			blue.setBorderPainted(false);
@@ -127,6 +134,7 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 			yellow.setBorderPainted(true);
 			yellow.setBorder(thickBorder);
 			view.getViewBoard().setColour(243, 196, 67);
+			view.requestFocus();
 		}
 	}
 

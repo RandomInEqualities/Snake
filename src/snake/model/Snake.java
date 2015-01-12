@@ -2,14 +2,14 @@ package snake.model;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 
 public class Snake {
 	
 	private Board board;
 	private Direction headDirection;
-	private ArrayList<Field> positions;
+	private LinkedList<Field> positions;
 
 	public Snake(Board board) {
 		if (board == null) {
@@ -17,7 +17,7 @@ public class Snake {
 		}
 		
 		this.board = board;
-		this.positions = new ArrayList<>();
+		this.positions = new LinkedList<>();
 		setupStartingSnake();
 	}
 	
@@ -38,8 +38,8 @@ public class Snake {
 	}
 	
 	public List<Field> getPositions() {
-		// Return an array that can't be changed. This prevent outside classes
-		// from changing the snake array.
+		// Return a list that can't be changed. This prevent outside classes
+		// from changing the snake list.
 		return Collections.unmodifiableList(positions);
 	}
 	
