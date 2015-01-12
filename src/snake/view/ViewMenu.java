@@ -6,12 +6,10 @@ import java.awt.*;
 import javax.swing.*;
 
 public class ViewMenu extends JPanel {
-	
 	private static final long serialVersionUID = 4427452065585644066L;
-	
 	private JButton singleplayer, multiplayer, controls, quit;
 	private View view;
-
+	
 	public ViewMenu(View view){
 		
 		//Buttons
@@ -78,7 +76,7 @@ public class ViewMenu extends JPanel {
 		singleplayer.setBounds(xSingleplayer, ySingleplayer, buttonWidth, buttonHeight);
 		multiplayer.setBounds(xSingleplayer, ySingleplayer+(buttonHeight+gap), buttonWidth, buttonHeight);
 		controls.setBounds(xSingleplayer, ySingleplayer+2*(buttonHeight+gap), buttonWidth, buttonHeight);
-		quit.setBounds(xSingleplayer, ySingleplayer+4*(buttonHeight+gap), buttonWidth, buttonHeight);
+		quit.setBounds(xSingleplayer, ySingleplayer+3*(buttonHeight+gap)+20, buttonWidth, buttonHeight);
 	}
 
 	public Rectangle getRectangleForMenu(int width) {

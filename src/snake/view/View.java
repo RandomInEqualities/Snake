@@ -15,7 +15,8 @@ public class View extends JFrame {
 	public enum State {
 		IN_GAME,
 		IN_MENU,
-		IN_MENU_SINGLE_PLAYER,
+		IN_MENU_SINGLEPLAYER,
+		IN_MENU_MULTIPLAYER,
 		IN_MENU_CONTROLS
 	}
 	
@@ -24,8 +25,8 @@ public class View extends JFrame {
 	public State state;
 	private ViewHeader headerPanel;
 	private ViewMenu menuPanel;
-	private ViewMenuSinglePlayer menuSinglePlayerPanel;
-	private ViewMenuMultiplayer menuMultiPlayerPanel;
+	private ViewMenuSingleplayer menuSingleplayerPanel;
+	private ViewMenuMultiplayer menuMultiplayerPanel;
 	private ViewMenuControls menuControlsPanel;
 	private ViewBoard boardPanel;
 	private Audio audio;
@@ -39,8 +40,8 @@ public class View extends JFrame {
 		
 		this.headerPanel = new ViewHeader(this, game, false);
 		this.menuPanel = new ViewMenu(this);
-		this.menuSinglePlayerPanel = new ViewMenuSinglePlayer(this, game);
-		this.menuMultiPlayerPanel = new ViewMenuMultiplayer(this, game);
+		this.menuSingleplayerPanel = new ViewMenuSingleplayer(this, game);
+		//this.menuMultiplayerPanel = new ViewMenuMultiplayer(this, game);
 		this.menuControlsPanel = new ViewMenuControls(this);
 		this.boardPanel = new ViewBoard(game, this);
 		this.audio = new Audio(game);
@@ -65,15 +66,16 @@ public class View extends JFrame {
 		state = State.IN_MENU;
 	}
 	
-	public void showSinglePlayerMenu() {
-		setFrameComponents(headerPanel, menuSinglePlayerPanel);
+	public void showSingleplayerMenu() {
+		setFrameComponents(headerPanel, menuSingleplayerPanel);
 		headerPanel.hideScore();
-		state = State.IN_MENU_SINGLE_PLAYER;
+		state = State.IN_MENU_SINGLEPLAYER;
 	}
 	
-	public void showMultiPlayerMenu(){
-		setFrameComponents(headerPanel, menuMultiPlayerPanel);
+	public void showMultiplayerMenu(){
+		//setFrameComponents(headerPanel, menuMultiplayerPanel);
 		headerPanel.hideScore();
+		state = State.IN_MENU_MULTIPLAYER;
 	}
 	public void showControlsMenu() {
 		setFrameComponents(headerPanel, menuControlsPanel);
@@ -101,11 +103,11 @@ public class View extends JFrame {
 		return menuPanel;
 	}
 	
-	public ViewMenuSinglePlayer getViewMenuSinglePlayer() {
-		return menuSinglePlayerPanel;
+	public ViewMenuSingleplayer getViewMenuSingleplayer() {
+		return menuSingleplayerPanel;
 	}
-	public ViewMenuMultiplayer getViewMenuMultiPlayer() {
-		return menuMultiPlayerPanel;
+	public ViewMenuMultiplayer getViewMenuMultiplayer() {
+		return menuMultiplayerPanel;
 	}
 	
 	public ViewMenuControls getViewMenuControls() {

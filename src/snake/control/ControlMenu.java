@@ -31,10 +31,10 @@ public class ControlMenu implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "singleplayer") {
-			view.showSinglePlayerMenu();
+			view.showSingleplayerMenu();
 		} 
 		else if (e.getActionCommand() == "multiplayer"){
-			view.showMultiPlayerMenu();
+			view.showMultiplayerMenu();
 		}
 		else if (e.getActionCommand() == "controls"){
 			view.showControlsMenu();

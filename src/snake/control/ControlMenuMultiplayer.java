@@ -11,29 +11,29 @@ import javax.swing.border.LineBorder;
 
 import snake.model.*;
 import snake.view.*;
-public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListener {
+public class ControlMenuMultiplayer extends KeyAdapter implements ActionListener {
 
 	private Game game;
 	private View view;
-	private ViewMenuSinglePlayer viewMenuSinglePlayer;
+	private ViewMenuMultiplayer viewMenuMultiplayer;
 	private JButton play, back, kindergarten, easy, intermediate, hard, green, blue, red, yellow;
 	private Border thickBorder;
 	
-	public ControlMenuSinglePlayer(Game game, View view) {
+	public ControlMenuMultiplayer(Game game, View view) {
 		this.game = game;
 		this.view = view;
-		this.viewMenuSinglePlayer = view.getViewMenuSinglePlayer();
+		this.viewMenuMultiplayer = view.getViewMenuMultiplayer();
 		this.view.addKeyListener(this);
-		play = this.viewMenuSinglePlayer.getPlayButton();
-		back = this.viewMenuSinglePlayer.getBackButton();
-		kindergarten = this.viewMenuSinglePlayer.getKindergartenButton();
-		easy = this.viewMenuSinglePlayer.getEasyButton();
-		intermediate = this.viewMenuSinglePlayer.getIntermediateButton();
-		hard = this.viewMenuSinglePlayer.getHardButton();
-		green = this.viewMenuSinglePlayer.getGreenButton();
-		blue = this.viewMenuSinglePlayer.getBlueButton();
-		red = this.viewMenuSinglePlayer.getRedButton();
-		yellow = this.viewMenuSinglePlayer.getYellowButton();
+		play = this.viewMenuMultiplayer.getPlayButton();
+		back = this.viewMenuMultiplayer.getBackButton();
+		kindergarten = this.viewMenuMultiplayer.getKindergartenButton();
+		easy = this.viewMenuMultiplayer.getEasyButton();
+		intermediate = this.viewMenuMultiplayer.getIntermediateButton();
+		hard = this.viewMenuMultiplayer.getHardButton();
+		green = this.viewMenuMultiplayer.getGreenButton();
+		blue = this.viewMenuMultiplayer.getBlueButton();
+		red = this.viewMenuMultiplayer.getRedButton();
+		yellow = this.viewMenuMultiplayer.getYellowButton();
 		game.disableTimedMovement(); //default difficulty = kindergarten
 		kindergarten.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
 		
@@ -67,74 +67,34 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 		if (e.getActionCommand() == "play") {
 			playGame();
 		} else if (e.getActionCommand() == "kindergarten") {
-			kindergarten.setBorderPainted(true);
-			kindergarten.setBorder(thickBorder);
-			easy.setBorderPainted(false);
-			intermediate.setBorderPainted(false);
-			hard.setBorderPainted(false);
+			active(kindergarten, easy, intermediate, hard);
 			game.disableTimedMovement();
-			view.requestFocus();
 		} else if (e.getActionCommand() == "easy") {
-			kindergarten.setBorderPainted(false);
-			easy.setBorderPainted(true);
-			easy.setBorder(thickBorder);
-			intermediate.setBorderPainted(false);
-			hard.setBorderPainted(false);
+			active(easy, kindergarten, intermediate, hard);
 			game.enableTimedMovement();
 			game.setTimedMovementSpeed(300);
-			view.requestFocus();
 		} else if (e.getActionCommand() == "intermediate"){
-			kindergarten.setBorderPainted(false);
-			easy.setBorderPainted(false);
-			intermediate.setBorderPainted(true);
-			intermediate.setBorder(thickBorder);
-			hard.setBorderPainted(false);
+			active(intermediate, kindergarten, easy, hard);
 			game.enableTimedMovement();
 			game.setTimedMovementSpeed(150);
-			view.requestFocus();
 		} else if (e.getActionCommand() == "hard") {
-			kindergarten.setBorderPainted(false);
-			easy.setBorderPainted(false);
-			intermediate.setBorderPainted(false);
-			hard.setBorderPainted(true);
-			hard.setBorder(thickBorder);
+			active(hard, kindergarten, easy, intermediate);
 			game.enableTimedMovement();
 			game.setTimedMovementSpeed(70);
-			view.requestFocus();
 		} else if (e.getActionCommand() == "back") {
 			view.showMenu();
 		} else if (e.getActionCommand() == "green") {
-			green.setBorder(thickBorder);
-			green.setBorderPainted(true);
-			blue.setBorderPainted(false);
-			red.setBorderPainted(false);
-			yellow.setBorderPainted(false);
+			active(green, blue, red, yellow);
 			view.getViewBoard().setColour(84, 216, 81);
-			view.requestFocus();
 		} else if (e.getActionCommand() == "blue") {
-			green.setBorderPainted(false);
-			blue.setBorder(thickBorder);
-			blue.setBorderPainted(true);
-			red.setBorderPainted(false);
-			yellow.setBorderPainted(false);
+			active(blue, green, red, yellow);
 			view.getViewBoard().setColour(80, 152, 218);
-			view.requestFocus();
 		} else if (e.getActionCommand() == "red"){
-			green.setBorderPainted(false);
-			blue.setBorderPainted(false);
-			red.setBorderPainted(true);
-			red.setBorder(thickBorder);
-			yellow.setBorderPainted(false);
+			active(red, green, blue, yellow);
 			view.getViewBoard().setColour(237, 75, 66);
-			view.requestFocus();
 		} else if (e.getActionCommand() == "yellow"){
-			green.setBorderPainted(false);
-			blue.setBorderPainted(false);
-			red.setBorderPainted(false);
-			yellow.setBorderPainted(true);
-			yellow.setBorder(thickBorder);
+			active(yellow, green, blue, red);
 			view.getViewBoard().setColour(243, 196, 67);
-			view.requestFocus();
 		}
 	}
 
@@ -160,12 +120,12 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 	}
 
 	public void playGame() {
-		String inputW = getInput(viewMenuSinglePlayer.getWidthInput());
-		String inputH = getInput(viewMenuSinglePlayer.getHeightInput());
+		String inputW = getInput(viewMenuMultiplayer.getWidthInput());
+		String inputH = getInput(viewMenuMultiplayer.getHeightInput());
 
 		if (inputW.isEmpty() || inputH.isEmpty()) { // if no input
-			viewMenuSinglePlayer.setFilled(false);
-			viewMenuSinglePlayer.repaint();
+			viewMenuMultiplayer.setFilled(false);
+			viewMenuMultiplayer.repaint();
 		} else {
 			// if input is correct
 			int inputWidth = Integer.parseInt(inputW);
@@ -173,12 +133,12 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 			if (inputWidth >= 5 && inputWidth <= 100 && inputHeight >= 5 && inputHeight <= 100) {
 				game.restart(inputWidth, inputHeight);
 				view.showGame();
-				viewMenuSinglePlayer.setValid(true);
-				viewMenuSinglePlayer.setFilled(true);
+				viewMenuMultiplayer.setValid(true);
+				viewMenuMultiplayer.setFilled(true);
 			} else {
 				// if input is invalid
-				viewMenuSinglePlayer.setValid(false);
-				viewMenuSinglePlayer.repaint();
+				viewMenuMultiplayer.setValid(false);
+				viewMenuMultiplayer.repaint();
 			}
 		}
 	}
@@ -188,5 +148,14 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements ActionListene
 		String in = input.getText();
 		String out = in.replace(" ", "");
 		return out;
+	}
+	
+	private void active(JButton active, JButton b1, JButton b2, JButton b3){
+		active.setBorderPainted(true);
+		active.setBorder(thickBorder);
+		b1.setBorderPainted(false);
+		b2.setBorderPainted(false);
+		b3.setBorderPainted(false);
+		view.requestFocus();
 	}
 }

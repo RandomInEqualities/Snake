@@ -1,17 +1,20 @@
 package snake.view;
 
 import java.awt.*;
+import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.event.CaretListener;
 import javax.swing.text.*;
 
 import snake.model.Game;
 
 
-public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
+public class ViewMenuSingleplayer extends JPanel implements FocusListener {
 	
 	private static final long serialVersionUID = 3906794996977484644L;
 	
@@ -21,7 +24,7 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 	private JPanel panel;
 	private JButton play, kindergarten, easy, intermediate, hard, back, green, blue, red, yellow;
 	
-	public ViewMenuSinglePlayer(View view, Game game){
+	public ViewMenuSingleplayer(View view, Game game){
 		this.view = view;
 		this.valid = true;
 		this.filled = true;
@@ -32,12 +35,14 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		try {
 			formatter = new MaskFormatter("###");
 		} catch (java.text.ParseException exc) {
-				throw new RuntimeException("Formatter error");
+			throw new RuntimeException("Formatter error");
 		}
 		
+
 		//Text input fields
 		inputWidth = new JFormattedTextField(formatter);
 		inputHeight = new JFormattedTextField(formatter);
+		
 		inputWidth.addFocusListener(this);
 		inputHeight.addFocusListener(this);
 		String gameWidth = Integer.toString(game.getBoard().getWidth());
@@ -217,10 +222,17 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		filled = b;		
 	}
 
+	//Place caret after the number when focus in the text field is gained
 	@Override
 	public void focusGained(FocusEvent e) {
-		String text = ((JTextComponent) e.getSource()).getText();
-		((JTextComponent) e.getSource()).setText(text.trim()); //remove whitespace from text fields
+		SwingUtilities.invokeLater(new Runnable(){
+            public void run()
+            {
+                JTextField text = (JTextField)e.getSource();
+                String s = text.getText().replace(" ", ""); //get text without whitespace
+                text.setCaretPosition(s.length()); //position caret
+            }
+        });
 	}
 
 	@Override

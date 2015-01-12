@@ -55,8 +55,12 @@ public class Food {
 			}
 			
 			// Select a random food location.
-			int selection = random.nextInt(foodPositions.size());
-			foodPosition = foodPositions.get(selection);
+			if (foodPositions.size()!=0){
+				int selection = random.nextInt(foodPositions.size());
+				foodPosition = foodPositions.get(selection);
+			} else {
+				return new Food(new Field(101,101)); //return unattainable food
+			}
 		}
 
 		return new Food(foodPosition);

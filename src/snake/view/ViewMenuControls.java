@@ -41,7 +41,7 @@ public class ViewMenuControls extends JPanel {
 		int xTitle = getSize().width/2-Images.TITLE_CONTROLS.getWidth()/2;
 		int yTitle = 20;
 		int xImage = getSize().width/2-Images.CONTROLS.getWidth()/2;
-		int yImage = yTitle+80;
+		int yImage = yTitle+60;
 		context.drawImage(Images.TITLE_CONTROLS, xTitle, yTitle, null);
 		context.drawImage(Images.CONTROLS, xImage, yImage, null);
 		

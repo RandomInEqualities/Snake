@@ -8,7 +8,7 @@ import javax.swing.border.LineBorder;
 
 import snake.model.*;
 
-public class ViewMenuMultiplayer extends ViewMenuSinglePlayer{
+public class ViewMenuMultiplayer extends ViewMenuSingleplayer{
 	private JButton green2, blue2, red2, yellow2;
 	public ViewMenuMultiplayer(View view, Game game){
 		super(view, game);
