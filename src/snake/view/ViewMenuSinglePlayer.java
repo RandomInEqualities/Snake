@@ -62,15 +62,19 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 		green = new JButton();
 		view.getViewMenu().setButton(green);
 		green.setBackground(Colors.GREEN);
+		green.setBorderPainted(true);
 		green.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
 		blue = new JButton();
 		view.getViewMenu().setButton(blue);
+		blue.setBorderPainted(false);
 		blue.setBackground(Colors.BLUE);
 		red = new JButton();
 		view.getViewMenu().setButton(red);
+		red.setBorderPainted(false);
 		red.setBackground(Colors.RED);
 		yellow = new JButton();
 		view.getViewMenu().setButton(yellow);
+		yellow.setBorderPainted(false);
 		yellow.setBackground(Colors.YELLOW);
 		
 		//adds
@@ -159,10 +163,9 @@ public class ViewMenuSinglePlayer extends JPanel implements FocusListener {
 
 		//Colour buttons
 		int gap = 10;
-		
-		int xBlue = panel.getWidth()/2-blue.getWidth()-gap/2;
-		int yColour = panel.getY()+180;
 		int sizeColour = 30;
+		int xBlue = panel.getWidth()/2-sizeColour-gap/2;
+		int yColour = panel.getY()+180;
 		green.setBounds(xBlue-gap-sizeColour, yColour, sizeColour, sizeColour);
 		blue.setBounds(xBlue, yColour, sizeColour, sizeColour);
 		red.setBounds(xBlue+gap+sizeColour, yColour, sizeColour, sizeColour);

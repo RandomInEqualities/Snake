@@ -54,6 +54,7 @@ public class ControlMenuSinglePlayer extends KeyAdapter implements
 		blue.setActionCommand("blue");
 		red.setActionCommand("red");
 		yellow.setActionCommand("yellow");
+		
 		thickBorder = new LineBorder(Colors.PANEL_COLOUR, 3);
 	}
 
