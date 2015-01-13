@@ -65,7 +65,6 @@ public class ControlMenuMultiplayer extends ControlMenuSingleplayer {
 	public void actionPerformed(ActionEvent event) {
 		super.actionPerformed(event);
 		if (event.getActionCommand() == "green2") {
-			System.out.println("test");
 			setActiveButton(green2, blue2, red2, yellow2);
 			//view.getViewBoard().setSnakeColour2(84, 216, 81);
 		} 

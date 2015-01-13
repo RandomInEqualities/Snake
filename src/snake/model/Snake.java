@@ -2,14 +2,14 @@ package snake.model;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 
 public class Snake {
 	
 	private Board board;
 	private Direction headDirection;
-	private LinkedList<Field> positions;
+	private ArrayList<Field> positions;
 
 	public Snake(Board board) {
 		if (board == null) {
@@ -17,7 +17,7 @@ public class Snake {
 		}
 		
 		this.board = board;
-		this.positions = new LinkedList<>();
+		this.positions = new ArrayList<>();
 		
 		// Setup a snake at the centre of the board.
 		Field center = board.getCenter();
