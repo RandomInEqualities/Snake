@@ -31,7 +31,6 @@ public class ControlMenuSingleplayer extends KeyAdapter implements ActionListene
 		red = this.viewMenuSingleplayer.getRedButton();
 		yellow = this.viewMenuSingleplayer.getYellowButton();
 		game.disableTimedMovement(); //default difficulty = kindergarten
-		kindergarten.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
 		
 		play.addActionListener(this);
 		back.addActionListener(this);
@@ -175,7 +174,7 @@ public class ControlMenuSingleplayer extends KeyAdapter implements ActionListene
 		return out;
 	}
 	
-	private void setActiveButton(JButton active, JButton b1, JButton b2, JButton b3){
+	protected void setActiveButton(JButton active, JButton b1, JButton b2, JButton b3){
 		active.setBorderPainted(true);
 		active.setBorder(thickBorder);
 		b1.setBorderPainted(false);

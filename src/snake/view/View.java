@@ -42,7 +42,7 @@ public class View extends JFrame {
 		this.menuPanel = new ViewMenu();
 		this.headerPanel = new ViewHeader(this, game, false);
 		this.menuSingleplayerPanel = new ViewMenuSingleplayer(this, game);
-		//this.menuMultiplayerPanel = new ViewMenuMultiplayer(this, game);
+		this.menuMultiplayerPanel = new ViewMenuMultiplayer(this, game);
 		this.menuControlsPanel = new ViewMenuControls(this);
 		this.boardPanel = new ViewBoard(game, this);
 		this.audio = new Audio(game);
@@ -83,7 +83,7 @@ public class View extends JFrame {
 	
 	public void showMultiplayerMenu(){
 		if (state != State.IN_MENU_MULTIPLAYER) {
-			//setFrameComponents(headerPanel, menuMultiplayerPanel);
+			setFrameComponents(headerPanel, menuMultiplayerPanel);
 			headerPanel.hideScore();
 			state = State.IN_MENU_MULTIPLAYER;
 		}
@@ -151,7 +151,7 @@ public class View extends JFrame {
 	}
 	
 	private void setFrameComponents(Component northPanel, Component centerPanel) {
-		// Remove the current contents pane components and add the new ones.
+		// Remove the current content pane components and add the new ones.
 		getContentPane().removeAll();
 		getContentPane().add(northPanel, BorderLayout.NORTH);
 		getContentPane().add(centerPanel, BorderLayout.CENTER);

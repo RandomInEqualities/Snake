@@ -59,6 +59,7 @@ public class ViewMenuSingleplayer extends JPanel implements FocusListener {
 		
 		kindergarten = new JButton(new ImageIcon(Images.DIFFICULTY_KINDERGARTEN));
 		view.getViewMenu().setCommonButtonParameters(kindergarten);
+		kindergarten.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3)); //default difficulty = kindergarten
 		easy = new JButton(new ImageIcon(Images.DIFFICULTY_EASY));
 		view.getViewMenu().setOptionButton(easy);
 		intermediate = new JButton(new ImageIcon(Images.DIFFICULTY_INTERMEDIATE));
