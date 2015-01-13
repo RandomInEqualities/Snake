@@ -15,13 +15,17 @@ public class Audio implements Observer {
 	private Clip eatSound;
 	private Clip endSound;
 	private Clip winSound;
+	private Clip startSound;
 	
 	private AudioInputStream eatSoundStream;
 	private AudioInputStream endSoundStream;
 	private AudioInputStream winSoundStream;
+	private AudioInputStream startSoundStream;
+
 	private static final String EAT_SOUND_FILENAME = "resources/sounds/nom.wav";
 	private static final String END_SOUND_FILENAME = "resources/sounds/ohno.wav";
 	private static final String WIN_SOUND_FILENAME = "resources/sounds/yes.wav";
+	private static final String START_SOUND_FILENAME = "resources/sounds/hereicome.wav";
 	
 	public Audio(GameSinglePlayer game) {
 		if (game == null) {
@@ -53,6 +57,9 @@ public class Audio implements Observer {
 			else if (event == GameSinglePlayer.Event.WIN) {
 				playWinSound();
 			}
+			else if (event == GameSinglePlayer.Event.START) {
+				playStartSound();
+			}
 		}
 	}
 	
@@ -69,26 +76,26 @@ public class Audio implements Observer {
 		winSound.setFramePosition(0);
 		winSound.start();
 	}
-	
+	private void playStartSound() {
+		startSound.setFramePosition(0);
+		startSound.start();
+	}
 	private void loadSounds() {
 		try {
 			eatSoundStream = AudioSystem.getAudioInputStream(new File(EAT_SOUND_FILENAME));
 			endSoundStream = AudioSystem.getAudioInputStream(new File(END_SOUND_FILENAME));
 			winSoundStream = AudioSystem.getAudioInputStream(new File(WIN_SOUND_FILENAME));
+			startSoundStream = AudioSystem.getAudioInputStream(new File(START_SOUND_FILENAME));
 			eatSound = AudioSystem.getClip();
 			endSound = AudioSystem.getClip();
 			winSound = AudioSystem.getClip();
+			startSound = AudioSystem.getClip();
 			eatSound.open(eatSoundStream);
 			endSound.open(endSoundStream);
 			winSound.open(winSoundStream);
+			startSound.open(startSoundStream);
 		} catch (Exception error) {
 			throw new RuntimeException("unable to load sounds: " + error.getMessage());
 		}
-		
-		// Lower the sound volumes, it is really loud with headphones on.
-		FloatControl eatSoundGain = (FloatControl) eatSound.getControl(FloatControl.Type.MASTER_GAIN);
-		eatSoundGain.setValue(-30.0f);
-		FloatControl endSoundGain = (FloatControl) endSound.getControl(FloatControl.Type.MASTER_GAIN);
-		endSoundGain.setValue(-20.0f);
 	}
 }
