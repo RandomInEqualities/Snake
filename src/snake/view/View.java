@@ -4,7 +4,9 @@ package snake.view;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 
 import javax.swing.*;
 
@@ -50,6 +52,10 @@ public class View extends JFrame {
 		showMenu();
 		
 		setTitle("Snake");
+		
+		BufferedImage appleIcon = Images.APPLE;
+		Image scaledIcon = appleIcon.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+		setIconImage(scaledIcon);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
 		setLocationRelativeTo(null);
