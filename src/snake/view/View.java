@@ -32,7 +32,7 @@ public class View extends JFrame {
 	private ViewBoard boardPanel;
 	private Audio audio;
 	
-	public View(Game game) {
+	public View(GameSinglePlayer game) {
 		super();
 		
 		if (game == null) {

@@ -6,15 +6,13 @@ import javax.swing.*;
 
 import snake.model.*;
 import snake.view.*;
-import snake.view.View.State;
 
 public class ControlMenuMultiplayer extends ControlMenuSingleplayer {
 
-	private Game game;
-	private View view;
 	private ViewMenuMultiplayer viewMenuMultiplayer;
 	private JButton green2, blue2, red2, yellow2;
-	public ControlMenuMultiplayer(Game game, View view) {
+	
+	public ControlMenuMultiplayer(GameSinglePlayer game, View view) {
 		super(game, view);
 		this.viewMenuMultiplayer = view.getViewMenuMultiplayer();
 		green2 = this.viewMenuMultiplayer.getGreenButton();

@@ -1,11 +1,11 @@
-
 package snake.view;
+
 import java.awt.*;
 import java.util.*;
 
 import javax.swing.*;
 
-import snake.model.*;
+import snake.model.GameSinglePlayer;
 
 
 public class ViewHeader extends JPanel implements Observer {
@@ -14,14 +14,14 @@ public class ViewHeader extends JPanel implements Observer {
 	private static final int DEFAULT_LOGO_WIDTH = 300;
 	private static final int DEFAULT_LOGO_HEIGHT = 80;
 	
-	private Game game;
+	private GameSinglePlayer game;
 	private View view;
 	private boolean showScore;
 	private Image logo;
 	private Font font;
 	private JButton sound;
 
-	public ViewHeader(View view, Game game, boolean showScore) {
+	public ViewHeader(View view, GameSinglePlayer game, boolean showScore) {
 		super();
 		
 		if (game == null) {

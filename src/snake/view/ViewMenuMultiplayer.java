@@ -15,7 +15,7 @@ public class ViewMenuMultiplayer extends ViewMenuSingleplayer {
 	
 	private JButton green2, blue2, red2, yellow2;
 	
-	public ViewMenuMultiplayer(View view, Game game){
+	public ViewMenuMultiplayer(View view, GameSinglePlayer game){
 		super(view, game);
 		
 		// 2nd player buttons

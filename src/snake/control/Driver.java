@@ -2,7 +2,7 @@
 package snake.control;
 
 import java.awt.Dimension;
-import snake.model.Game;
+import snake.model.GameSinglePlayer;
 import snake.view.View;
 
 
@@ -16,12 +16,12 @@ public class Driver {
 		
 		// Create the game.
 		Dimension size = parseArguments(args);
-		Game game;
+		GameSinglePlayer game;
 		if (size == null) {
-			game = new Game();
+			game = new GameSinglePlayer();
 		}
 		else {
-			game = new Game(size.width, size.height);
+			game = new GameSinglePlayer(size.width, size.height);
 		}
 
 		// Create the view which displays the game.

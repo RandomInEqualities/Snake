@@ -9,7 +9,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.text.*;
 
 import snake.model.Board;
-import snake.model.Game;
+import snake.model.GameSinglePlayer;
 
 
 public class ViewMenuSingleplayer extends JPanel implements FocusListener {
@@ -22,7 +22,7 @@ public class ViewMenuSingleplayer extends JPanel implements FocusListener {
 	private JPanel panel;
 	private JButton play, kindergarten, easy, intermediate, hard, back, green, blue, red, yellow;
 	
-	public ViewMenuSingleplayer(View view, Game game){
+	public ViewMenuSingleplayer(View view, GameSinglePlayer game){
 		if (view == null || game == null) {
 			throw new NullPointerException();
 		}

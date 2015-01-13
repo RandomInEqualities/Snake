@@ -11,7 +11,7 @@ import snake.model.*;
 
 public class ViewBoard extends JPanel implements Observer {
 	
-	private Game game;
+	private GameSinglePlayer game;
 	private View view;
 	private JButton playAgainButton, menuButton;
 	private static final long serialVersionUID = 9109362543987437505L;
@@ -19,7 +19,7 @@ public class ViewBoard extends JPanel implements Observer {
 	int widthPopup, heightPopup, xPopup, yPopup;
 	int snakeRed, snakeGreen, snakeBlue;
 	
-	public ViewBoard(Game game, View view) {
+	public ViewBoard(GameSinglePlayer game, View view) {
 		super();
 
 		if (game == null) {
@@ -43,7 +43,7 @@ public class ViewBoard extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (game.getState() == Game.State.LOST || game.getState() == Game.State.WON) {
+		if (game.getState() == Game.State.LOSE || game.getState() == Game.State.WIN) {
 			this.add(playAgainButton);
 			this.add(menuButton);
 		}
@@ -59,13 +59,13 @@ public class ViewBoard extends JPanel implements Observer {
 		drawFood(context2D);
 		drawSnake(context2D);
 		
-		if (game.getState() == Game.State.LOST) {
+		if (game.getState() == Game.State.LOSE) {
 			drawGameLost(context2D);
 		} 
-		else if (game.getState() == Game.State.PAUSED) {
+		else if (game.getState() == Game.State.PAUSE) {
 			drawPaused(context2D);
 		} 
-		else if (game.getState() == Game.State.WON){
+		else if (game.getState() == Game.State.WIN){
 			drawGameWon(context2D);
 		}
 	}

@@ -25,7 +25,7 @@ public class Control extends KeyAdapter implements ActionListener{
 	private ControlMenuControls menuControlsControl;
 	private JButton soundButton;
 	
-	public Control(Game game, View view) {
+	public Control(GameSinglePlayer game, View view) {
 		if (view == null || game == null) {
 			throw new NullPointerException();
 		}
