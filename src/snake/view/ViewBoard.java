@@ -74,7 +74,42 @@ public class ViewBoard extends JPanel implements Observer {
 		context.setColor(Colors.BOARD_COLOUR);
 		context.fill(getRectangleForBoard());
 	}
-
+	
+	/* a: Current piece compare to adjacent column, b: Current piece compare to adjacent row, 
+	 * c/d: Outer rows, e/f: Outer columns, g/h: Corner in board.
+	 * see more info in report.
+	 */
+	private boolean snakeCorner(Field current, Field front, Field behind, String corner) {
+		int a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, g = 0, h = 0, w = 0, x = 0, y = 0, z = 0;
+		int lastRow = game.getBoard().getHeight()-1;
+		int lastColumn = game.getBoard().getWidth()-1;
+		if (corner.equals("TL")) {
+			a = 1; b = 1; c = lastRow; d = 0; e = lastColumn; f = 0; g = 0; h = 0;
+			w = front.getColumn(); x = behind.getRow(); y = behind.getColumn(); z = front.getRow();
+		} else if (corner.equals("TR")) {
+			a = -1; b = 1; c = lastRow; d = 0; e = 0; f = lastColumn; g = 0; h = lastColumn;	
+			w = front.getRow(); x = behind.getColumn(); y = behind.getRow(); z = front.getColumn();
+		} else if (corner.equals("BR")) {
+			a = -1; b = -1; c = 0; d = lastRow; e = 0; f = lastColumn; g = lastColumn; h = lastRow;
+			w = front.getColumn(); x = behind.getRow(); y = behind.getColumn(); z = front.getRow();
+		} else if (corner.equals("BL")){
+			a = 1; b = -1; c = 0; d = lastRow; e = lastColumn; f = 0; g = lastColumn; h = 0;
+			w = front.getRow(); x = behind.getColumn(); y = behind.getRow(); z = front.getColumn();
+		} else {
+			System.out.println("corner does not exist");
+		}
+		
+		boolean isCorner = current.getColumn()+a == front.getColumn() && current.getRow()+b == behind.getRow()//piece in the middle of the board
+				||current.getColumn()+a == behind.getColumn() && current.getRow()+b == front.getRow()
+				||current.getRow() == c && current.getColumn()+a == front.getColumn() && behind.getRow() == d //piece in the bottom row
+				||current.getRow() == c && current.getColumn()+a == behind.getColumn() && front.getRow() == d
+				||current.getColumn() == e && current.getRow()+b == front.getRow() && behind.getColumn() == f //piece in the last column
+				||current.getColumn() == e && current.getRow()+b == behind.getRow() && front.getColumn() == f
+				||current.getColumn() == e && current.getRow() == c && w == g && x == h //piece in corner
+				||current.getColumn() == e && current.getRow() == c && y == g && z == h;
+		return isCorner;
+	}
+	
 	private void drawSnake(Graphics2D context) {
 		Snake snake = game.getSnake();
 		int lastRow = game.getBoard().getHeight()-1;
@@ -92,33 +127,13 @@ public class ViewBoard extends JPanel implements Observer {
 				body = Images.SNAKE_HORIZONTAL;
 			} else if (current.getColumn() == front.getColumn() && current.getColumn()==behind.getColumn()){ //if current piece and front and behind are in the same column
 				body = Images.SNAKE_VERTICAL;
+				
 				//Corner pieces
-			} else if (current.getColumn()+1 == front.getColumn() && current.getRow()+1 == behind.getRow()//piece in the middle of the board
-					||current.getColumn()+1 == behind.getColumn() && current.getRow()+1 == front.getRow()
-					||current.getRow() == lastRow && current.getColumn()+1 == front.getColumn() && behind.getRow() == 0 //piece in the bottom row
-					||current.getRow() == lastRow && current.getColumn()+1 == behind.getColumn() && front.getRow() == 0
-					||current.getColumn() == lastColumn && current.getRow()+1 == front.getRow() && behind.getColumn() == 0 //piece in the last column
-					||current.getColumn() == lastColumn && current.getRow()+1 == behind.getRow() && front.getColumn() == 0
-					||current.getColumn() == lastColumn && current.getRow() == lastRow && front.getColumn() == 0 && behind.getRow() == 0 //piece in corner
-					||current.getColumn() == lastColumn && current.getRow() == lastRow && behind.getColumn() == 0 && front.getRow() == 0){
+			} else if (snakeCorner(current, front, behind, "TL")){
 				body = Images.SNAKE_CORNER_TL;
-			} else if (current.getColumn()-1 == front.getColumn() && current.getRow()+1 == behind.getRow() //piece in the middle of the board
-					||current.getColumn()-1 == behind.getColumn() && current.getRow()+1 == front.getRow()
-					||current.getRow() == lastRow && current.getColumn()-1 == front.getColumn() && behind.getRow() == 0 //piece in the bottom row
-					||current.getRow() == lastRow && current.getColumn()-1 == behind.getColumn() && front.getRow() == 0
-					||current.getColumn() == 0 && current.getRow()+1 == front.getRow() && behind.getColumn() == lastColumn //piece in the first column
-					||current.getColumn() == 0 && current.getRow()+1 == behind.getRow() && front.getColumn() == lastColumn
-					||current.getColumn()==0 && current.getRow() == lastRow && front.getRow() == 0 && behind.getColumn() == lastColumn
-					||current.getColumn()==0 && current.getRow() == lastRow && behind.getRow() == 0 && front.getColumn() == lastColumn){
+			} else if (snakeCorner(current, front, behind, "TR")){
 				body = Images.SNAKE_CORNER_TR;
-			} else if (current.getColumn()-1 == front.getColumn() && current.getRow()-1 == behind.getRow() //piece in the middle of the board
-					||current.getColumn()-1 == behind.getColumn() && current.getRow()-1 == front.getRow()
-					||current.getRow() == 0 && current.getColumn()-1 == front.getColumn() && behind.getRow() == lastRow //piece in the first row
-					||current.getRow() == 0 && current.getColumn()-1 == behind.getColumn() && front.getRow() == lastRow
-					||current.getColumn() == 0 && current.getRow()-1 == front.getRow() && behind.getColumn() == lastColumn //piece in the first column
-					||current.getColumn() == 0 && current.getRow()-1 == behind.getRow() && front.getColumn() == lastColumn
-					||current.getColumn() == 0 && current.getRow() == 0 && front.getColumn() == lastColumn && behind.getRow() == lastRow //piece in corner
-					||current.getColumn() == 0 && current.getRow() == 0 && behind.getColumn() == lastColumn && front.getRow() == lastRow){
+			} else if (snakeCorner(current, front, behind, "BR")){
 				body = Images.SNAKE_CORNER_BR;
 			} else {
 				body = Images.SNAKE_CORNER_BL;
@@ -127,7 +142,7 @@ public class ViewBoard extends JPanel implements Observer {
 			Image bodyscaled = bodyColoured.getScaledInstance(getFieldSideLength(), getFieldSideLength(), Image.SCALE_SMOOTH);
 			context.drawImage(bodyscaled, bodyRectangle.x, bodyRectangle.y, null);
 		}
-			
+		
 		// Draw tail
 		Rectangle tailRectangle = getRectangleForField(snake.getTail());
 		BufferedImage tail = null;
