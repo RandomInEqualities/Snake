@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.text.*;
 
+import snake.model.Board;
 import snake.model.Game;
 
 
@@ -159,7 +160,8 @@ public class ViewMenuSingleplayer extends JPanel implements FocusListener {
 		context2D.drawString("DIFFICULTY", panel.getX()+20, panel.getY()+270);
 		
 		context2D.setFont(new Font("Sans_Serif", Font.PLAIN, 11));
-		context2D.drawString("(Type in dimensions between 5 and 100)", panel.getX()+230, panel.getY()+26);
+		String message = "(Type in dimensions between " + Board.MIN_WIDTH + " and " + Board.MAX_WIDTH + ")";
+		context2D.drawString(message, panel.getX()+230, panel.getY()+26);
 		
 		context2D.setFont(new Font("Sans_Serif", Font.BOLD, 15));
 		context2D.drawString("width", getWidth()/2-150, panel.getY()+70);

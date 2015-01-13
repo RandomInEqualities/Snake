@@ -59,37 +59,43 @@ public class ControlMenuSingleplayer extends KeyAdapter implements ActionListene
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand() == "play") {
+	public void actionPerformed(ActionEvent event) {
+		if (event.getActionCommand() == "play") {
 			playGame();
-		} else if (e.getActionCommand() == "kindergarten") {
-			active(kindergarten, easy, intermediate, hard);
-			game.disableTimedMovement();
-		} else if (e.getActionCommand() == "easy") {
-			active(easy, kindergarten, intermediate, hard);
-			game.enableTimedMovement();
-			game.setTimedMovementSpeed(300);
-		} else if (e.getActionCommand() == "intermediate"){
-			active(intermediate, kindergarten, easy, hard);
-			game.enableTimedMovement();
-			game.setTimedMovementSpeed(150);
-		} else if (e.getActionCommand() == "hard") {
-			active(hard, kindergarten, easy, intermediate);
-			game.enableTimedMovement();
-			game.setTimedMovementSpeed(70);
-		} else if (e.getActionCommand() == "back") {
+		} 
+		else if (event.getActionCommand() == "kindergarten") {
+			setActiveButton(kindergarten, easy, intermediate, hard);
+			setKindergardenDifficulty();
+		} 
+		else if (event.getActionCommand() == "easy") {
+			setActiveButton(easy, kindergarten, intermediate, hard);
+			setEasyDifficulty();
+		} 
+		else if (event.getActionCommand() == "intermediate"){
+			setActiveButton(intermediate, kindergarten, easy, hard);
+			setIntermediatDifficulty();
+		} 
+		else if (event.getActionCommand() == "hard") {
+			setActiveButton(hard, kindergarten, easy, intermediate);
+			setHardDifficulty();
+		} 
+		else if (event.getActionCommand() == "back") {
 			view.showMenu();
-		} else if (e.getActionCommand() == "green") {
-			active(green, blue, red, yellow);
+		} 
+		else if (event.getActionCommand() == "green") {
+			setActiveButton(green, blue, red, yellow);
 			view.getViewBoard().setSnakeColour(84, 216, 81);
-		} else if (e.getActionCommand() == "blue") {
-			active(blue, green, red, yellow);
+		} 
+		else if (event.getActionCommand() == "blue") {
+			setActiveButton(blue, green, red, yellow);
 			view.getViewBoard().setSnakeColour(80, 152, 218);
-		} else if (e.getActionCommand() == "red"){
-			active(red, green, blue, yellow);
+		} 
+		else if (event.getActionCommand() == "red"){
+			setActiveButton(red, green, blue, yellow);
 			view.getViewBoard().setSnakeColour(237, 75, 66);
-		} else if (e.getActionCommand() == "yellow"){
-			active(yellow, green, blue, red);
+		} 
+		else if (event.getActionCommand() == "yellow"){
+			setActiveButton(yellow, green, blue, red);
 			view.getViewBoard().setSnakeColour(243, 196, 67);
 		}
 	}
@@ -99,7 +105,8 @@ public class ControlMenuSingleplayer extends KeyAdapter implements ActionListene
 		if (event == null) {
 			throw new NullPointerException();
 		}
-		if (view.inGame() || view.inControls()) {
+		
+		if (view.getViewState() != View.State.IN_MENU_SINGLEPLAYER) {
 			return;
 		}
 
@@ -114,6 +121,25 @@ public class ControlMenuSingleplayer extends KeyAdapter implements ActionListene
 				break;
 		}
 	}
+	
+	private void setKindergardenDifficulty() {
+		game.disableTimedMovement();
+	}
+	
+	private void setEasyDifficulty() {
+		game.enableTimedMovement();
+		game.setTimedMovementSpeed(300);
+	}
+	
+	private void setIntermediatDifficulty() {
+		game.enableTimedMovement();
+		game.setTimedMovementSpeed(150);
+	}
+	
+	private void setHardDifficulty() {
+		game.enableTimedMovement();
+		game.setTimedMovementSpeed(70);
+	}
 
 	public void playGame() {
 		String inputW = getInput(viewMenuSingleplayer.getWidthInput());
@@ -122,7 +148,8 @@ public class ControlMenuSingleplayer extends KeyAdapter implements ActionListene
 		if (inputW.isEmpty() || inputH.isEmpty()) { // if no input
 			viewMenuSingleplayer.setFilled(false);
 			viewMenuSingleplayer.repaint();
-		} else {
+		} 
+		else {
 			// if input is correct
 			int inputWidth = Integer.parseInt(inputW);
 			int inputHeight = Integer.parseInt(inputH);
@@ -132,7 +159,8 @@ public class ControlMenuSingleplayer extends KeyAdapter implements ActionListene
 				view.showGame();
 				viewMenuSingleplayer.setValid(true);
 				viewMenuSingleplayer.setFilled(true);
-			} else {
+			} 
+			else {
 				// input is invalid
 				viewMenuSingleplayer.setValid(false);
 				viewMenuSingleplayer.repaint();
@@ -147,12 +175,15 @@ public class ControlMenuSingleplayer extends KeyAdapter implements ActionListene
 		return out;
 	}
 	
-	private void active(JButton active, JButton b1, JButton b2, JButton b3){
+	private void setActiveButton(JButton active, JButton b1, JButton b2, JButton b3){
 		active.setBorderPainted(true);
 		active.setBorder(thickBorder);
 		b1.setBorderPainted(false);
 		b2.setBorderPainted(false);
 		b3.setBorderPainted(false);
+		active.repaint();
+		
+		// Request focus so we still receive keyboard events.
 		view.requestFocus();
 	}
 	
