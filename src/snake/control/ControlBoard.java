@@ -81,6 +81,7 @@ public class ControlBoard extends KeyAdapter implements ActionListener {
 			game.restart();
 			view.showGame();
 			boardView.removeButtons();
+			view.requestFocus();
 		} 
 		else if (e.getActionCommand()=="menu"){
 			view.showMenu();
