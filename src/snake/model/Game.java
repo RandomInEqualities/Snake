@@ -172,7 +172,9 @@ public class Game extends Observable implements ActionListener {
 		
 		if (snakeEatsFood) {
 			score++;
-			food = Food.generateRandomFood(snake, board);
+			if(!snake.fillsBoard()){
+				food = Food.generateRandomFood(snake, board);
+			}
 			if (score % 5 == 0){
 				speedIncrease += 5;
 				timerUpdateInterval -= 5;
