@@ -3,11 +3,13 @@ package snake.control;
 
 import java.awt.event.*;
 
+import javax.swing.JButton;
+
 import snake.model.*;
 import snake.view.*;
 
 
-public class Control extends KeyAdapter {
+public class Control extends KeyAdapter implements ActionListener{
 	
 	private View view;
 	
@@ -16,9 +18,10 @@ public class Control extends KeyAdapter {
 	@SuppressWarnings("unused")
 	private ControlMenu menuControl;
 	@SuppressWarnings("unused")
-	private ControlMenuSingleplayer menuSinglePlayerConstrol;
+	private ControlMenuSingleplayer menuSinglePlayerControl;
 	@SuppressWarnings("unused")
 	private ControlMenuControls menuControlsControl;
+	private JButton soundButton;
 	
 	public Control(Game game, View view) {
 		if (view == null || game == null) {
@@ -29,8 +32,12 @@ public class Control extends KeyAdapter {
 		
 		boardControl = new ControlBoard(game, view);
 		menuControl = new ControlMenu(view);
-		menuSinglePlayerConstrol = new ControlMenuSingleplayer(game, view);
+		menuSinglePlayerControl = new ControlMenuSingleplayer(game, view);
 		menuControlsControl = new ControlMenuControls(view);
+		
+		this.soundButton = view.getHeader().getSoundButton();
+		soundButton.addActionListener(this);
+		soundButton.setActionCommand("mute");
 	}
 
 	@Override
@@ -42,9 +49,7 @@ public class Control extends KeyAdapter {
 		
 		switch (event.getKeyCode()) {
 			case KeyEvent.VK_M:
-				Audio audio = view.getAudio();
-				audio.setMuted(!audio.isMuted());
-				view.getHeader().repaint();
+				toggleSound();
 				break;
 			case KeyEvent.VK_ESCAPE:
 				view.showMenu();
@@ -56,4 +61,17 @@ public class Control extends KeyAdapter {
 		
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getActionCommand() == "mute"){
+			toggleSound();
+		}
+	}
+	
+	private void toggleSound(){
+		Audio audio = view.getAudio();
+		audio.setMuted(!audio.isMuted());
+		view.getHeader().repaint();
+		view.requestFocus();
+	}
 }

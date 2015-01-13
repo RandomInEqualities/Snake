@@ -75,8 +75,8 @@ public class Images {
 
 		CONTROLS = loadImage("ControlsImage.png");
 		INFO_KEYS = loadImage("InfoKeys.png");
-		SOUND_ON = loadImage("InfoNotMuted.png");
-		SOUND_OFF = loadImage("InfoMuted.png");
+		SOUND_ON = loadImage("SoundOn.png");
+		SOUND_OFF = loadImage("SoundOff.png");
 		TITLE_GAME_OVER = loadImage("TitleGameOver.png");
 		TITLE_GAME_WON = loadImage("TitleGameWon.png");
 		TITLE_PAUSED = loadImage("TitlePaused.png");

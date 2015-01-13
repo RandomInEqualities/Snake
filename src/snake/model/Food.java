@@ -59,8 +59,6 @@ public class Food {
 			if (foodPositions.size()!=0){
 				int selection = random.nextInt(foodPositions.size());
 				foodPosition = foodPositions.get(selection);
-			} else {
-				return new Food(new Field(101,101)); //return unattainable food
 			}
 		}
 
