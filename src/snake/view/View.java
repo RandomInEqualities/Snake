@@ -39,8 +39,8 @@ public class View extends JFrame {
 			throw new NullPointerException();
 		}
 		
-		this.headerPanel = new ViewHeader(this, game, false);
 		this.menuPanel = new ViewMenu();
+		this.headerPanel = new ViewHeader(this, game, false);
 		this.menuSingleplayerPanel = new ViewMenuSingleplayer(this, game);
 		//this.menuMultiplayerPanel = new ViewMenuMultiplayer(this, game);
 		this.menuControlsPanel = new ViewMenuControls(this);
@@ -53,6 +53,8 @@ public class View extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
 		setLocationRelativeTo(null);
+		setFocusable(true);
+		requestFocus();
 	}
 	
 	public void showGame() {

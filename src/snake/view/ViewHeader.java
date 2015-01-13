@@ -1,9 +1,9 @@
-
 package snake.view;
+
 import java.awt.*;
 import java.util.*;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import snake.model.GameSinglePlayer;
 
@@ -19,6 +19,7 @@ public class ViewHeader extends JPanel implements Observer {
 	private boolean showScore;
 	private Image logo;
 	private Font font;
+	private JButton sound;
 
 	public ViewHeader(View view, GameSinglePlayer game, boolean showScore) {
 		super();
@@ -31,8 +32,12 @@ public class ViewHeader extends JPanel implements Observer {
 		this.game = game;
 		this.showScore = showScore;
 		this.logo = Images.LOGO.getScaledInstance(DEFAULT_LOGO_WIDTH, DEFAULT_LOGO_HEIGHT, Image.SCALE_SMOOTH);
+		this.sound = new JButton();
+		view.getViewMenu().setOptionButton(sound);
+		sound.setContentAreaFilled(false);
 		game.addObserver(this);
 		setBackground(Colors.PANEL_COLOUR);
+		this.add(sound);
 	}
 	
 	public void showScore() {
@@ -83,10 +88,19 @@ public class ViewHeader extends JPanel implements Observer {
 		} else {
 			soundIcon = Images.SOUND_ON;
 		}
-		context2D.drawImage(soundIcon, size.width-Images.SOUND_OFF.getWidth()-10, 0, null);
+		int xSound = size.width-Images.SOUND_OFF.getWidth()-10;
+		int ySound = 8;
+		int width = Images.SOUND_ON.getWidth();
+		int height = Images.SOUND_ON.getHeight();
+		sound.setIcon(new ImageIcon(soundIcon));
+		sound.setBounds(xSound, ySound, width, height);
 		
 		// Key info
 		context2D.drawImage(Images.INFO_KEYS, size.width-Images.INFO_KEYS.getWidth()-10, 35, null);
+	}
+	
+	public JButton getSoundButton(){
+		return sound;
 	}
 	
 }

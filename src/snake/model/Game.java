@@ -66,6 +66,18 @@ public class Game extends Observable {
 		return Collections.unmodifiableList(foods);
 	}
 	
+	public boolean isBoardCompletelyFilled() {
+		int totalOccupiedFields = 0;
+		for (Snake snake : snakes) {
+			totalOccupiedFields += snake.getSize();
+		}
+		totalOccupiedFields += foods.size();
+		if (totalOccupiedFields == board.getSize()) {
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean isPaused() {
 		return state == State.PAUSE;
 	}
@@ -126,7 +138,7 @@ public class Game extends Observable {
 			if (food.getPosition().equals(newHeadPosition)) {
 				foods.remove(food);
 				generateSingleRandomFood();
-				scores.set(movingSnakeIndex, scores.get(movingSnakeIndex) + 1);
+				incrementScore(movingSnakeIndex);
 				eatsFood = true;
 				break;
 			}
@@ -139,11 +151,7 @@ public class Game extends Observable {
 		}
 		
 		// Check win state.
-		int totalOccupiedFields = 0;
-		for (Snake snake : snakes) {
-			totalOccupiedFields += snake.getSize();
-		}
-		if (totalOccupiedFields == board.getSize()) {
+		if (isBoardCompletelyFilled()) {
 			state = State.END;
 		}
 
@@ -239,6 +247,10 @@ public class Game extends Observable {
 	}
 	
 	protected void generateSingleRandomFood() {
+		if (isBoardCompletelyFilled()) {
+			state = State.END;
+		}
+		
 		// Find all locations on the board that can contain food.
 		int width = board.getWidth();
 		int height = board.getHeight();
