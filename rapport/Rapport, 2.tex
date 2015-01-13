@@ -77,6 +77,7 @@ Brugerfladen er samlet i klassen View. View har en række funktioner, som sætte
 Formålet med projektet var at starte med at lave en simpel udgave af snake, og derefter tilføje flere funktioner til at lave en mere avanceret version. Dette gør det ideelt at tilføje en funktion af gangen, hvormed programmet starter ud simpelt, men fungerende, hvorefter yderligere funktioner kan tilføjes. Programmet er altså udviklet iterativt, hvormed der opstår flere fungerende versioner af spillet, men med forskellige funktioner. Dette gør det muligt at tilpasse programmet, hvis der opstår ideer undervejs. 
 
 Den iterative tilgang gør det muligt at have en "cyklus" for udviklingen af programmet. Først bestemmes det, hvad der skal tilføjes til programmet. Herefter kan opgaverne blive fordelt blandt gruppens medlemmer. Gruppemedlemmet afgør selv, hvordan en funktion skal designes og implementeres. Når en ny tilføjelse til programmet er færdig, testes den. Eventuelle justering til programmet laves for at undgå fejl med den nye funktion, hvorefter "cyklussen" starter forfra ved
+
 \subsection{Controller}
 	
 \subsection{Model}
@@ -106,6 +107,14 @@ Området, som spillet foregår på, skal kunne bestemmes til at være mellem 5x5
 En anden metode er at gøre vinduet justerbart. Denne løsning er mere brugervenlig, idet vinduets størrelse frit kan justeres så det passer til den enkelte person. Denne metode introducerer dog et andet problem, nemlig at felternes størrelse skal skaleres til at passe vinduet. Nogle opløsninger af vinduet vil ikke være et multiplum af banens størrelse, hvormed elementerne i spillet vil blive aflange. Dette problem blev løst ved at lave en baggrund og låse banens forhold, hvormed banen altid fylder mest muligt af vinduet ud, og den resterende plads bliver udfyldt af baggrunden. Idet denne løsning var mere nemmere at bruge og forstå, og giver bedre mulighed for justering af spillet, blev den valgt i stedet for løsning 1.
 
 \section{Evaluering}
+-To eller en Arraylist -> linklist ?
+-Point -> Field
+-Int -> Enum (direction)
+-width+height <-> kvadratisk variabel ?
+-Banens opbygning: double-array -> positions-placering
+-Optimering af runtime i “food”-klassen (dobbelt for-loop eller random placering)
+-brug af observer - får model-view-controller til at gå op
+-Flere opgaver er givet til “game”-klassen frem for de andre klasser
 
 \chapter{Avanceret Snake}
 \section{Afgrænsning}
@@ -139,10 +148,15 @@ Som en mindre tilføjelse til spillet er lyd tilføjet i form af Audio-klassen. 
 \subsection{Menu}
 
 \subsection{Automatisk bevægelse}
+-----Husk at skriv noget om incrementet timer-------
 
 \subsection{Multiplayer}
 
 \section{Evaluering}
+-ingen brug af jbutton -> jbutton
+-Se alle slangens led - gør den lidt forsinket, når den er lang
+
+
 
 \chapter{Konklusion}
 
