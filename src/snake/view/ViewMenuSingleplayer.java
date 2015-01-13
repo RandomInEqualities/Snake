@@ -66,19 +66,15 @@ public class ViewMenuSingleplayer extends JPanel implements FocusListener {
 		hard = new JButton(new ImageIcon(Images.DIFFICULTY_HARD));
 		view.getViewMenu().setOptionButton(hard);
 		
-		green = new JButton();
+		green = new JButton(new ImageIcon (Images.BUTTON_GREEN));
 		view.getViewMenu().setCommonButtonParameters(green);
-		green.setBackground(Colors.GREEN);
 		green.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
-		blue = new JButton();
+		blue = new JButton(new ImageIcon (Images.BUTTON_BLUE));
 		view.getViewMenu().setOptionButton(blue);
-		blue.setBackground(Colors.BLUE);
-		red = new JButton();
+		red = new JButton(new ImageIcon (Images.BUTTON_RED));
 		view.getViewMenu().setOptionButton(red);
-		red.setBackground(Colors.RED);
-		yellow = new JButton();
+		yellow = new JButton(new ImageIcon(Images.BUTTON_YELLOW));
 		view.getViewMenu().setOptionButton(yellow);
-		yellow.setBackground(Colors.YELLOW);
 		
 		this.add(panel);
 		panel.add(inputWidth);

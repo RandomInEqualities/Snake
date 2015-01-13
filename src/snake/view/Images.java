@@ -46,6 +46,10 @@ public class Images {
 	public static final BufferedImage DIFFICULTY_EASY;
 	public static final BufferedImage DIFFICULTY_INTERMEDIATE;
 	public static final BufferedImage DIFFICULTY_HARD;
+	public static final BufferedImage BUTTON_GREEN;
+	public static final BufferedImage BUTTON_BLUE;
+	public static final BufferedImage BUTTON_RED;
+	public static final BufferedImage BUTTON_YELLOW;
 	
 	private static final String IMAGE_PATH = "resources/images/";
 
@@ -88,6 +92,10 @@ public class Images {
 		BUTTON_PLAY_AGAIN = loadImage("ButtonPlayAgain.png");
 		BUTTON_MENU = loadImage("ButtonMenu.png");
 		BUTTON_BACK = loadImage("ButtonBack.png");
+		BUTTON_GREEN = loadImage("ColourGreen.png");
+		BUTTON_BLUE = loadImage("ColourBlue.png");
+		BUTTON_RED = loadImage("ColourRed.png");
+		BUTTON_YELLOW = loadImage("ColourYellow.png");
 		
 		DIFFICULTY_KINDERGARTEN = loadImage("DifficultyKindergarten.png");
 		DIFFICULTY_EASY = loadImage("DifficultyEasy.png");
