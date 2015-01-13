@@ -79,6 +79,8 @@ public class ControlMenuSingleplayer extends KeyAdapter implements ActionListene
 		} 
 		else if (event.getActionCommand() == "back") {
 			view.showMenu();
+			viewMenuSingleplayer.setValid(true);
+			viewMenuSingleplayer.setFilled(true);
 		} 
 		else if (event.getActionCommand() == "green") {
 			setActiveButton(green, blue, red, yellow);
@@ -111,6 +113,8 @@ public class ControlMenuSingleplayer extends KeyAdapter implements ActionListene
 		switch (event.getKeyCode()) {
 			case KeyEvent.VK_BACK_SPACE:
 				view.showMenu();
+				viewMenuSingleplayer.setValid(true);
+				viewMenuSingleplayer.setFilled(true);
 				break;
 			case KeyEvent.VK_ENTER:
 				playGame();

@@ -2,6 +2,7 @@ package snake.model;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.Timer;
 
 
@@ -42,16 +43,14 @@ public class GameSinglePlayer extends Game implements ActionListener {
 	 * Restart the game.
 	 */
 	public void restart() {
-		
 		setState(State.RUN);
 		setScore(0, 0);
 		removeFood(0);
 		generateSingleRandomFood();
 		setupInitialSnake();
-
 		timerUpdateInterval += timerDecrease;
 		timerDecrease = 0;
-		
+		System.out.println("update");
 		setChanged();
 		notifyObservers(Event.START);
 	}
