@@ -2,16 +2,19 @@
 \usepackage[utf8]{inputenc}
 \usepackage[danish]{babel}
 \usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{subfig}
 \begin{document}
 \setcounter{chapter}{0}
 
 %Forside
 \title{Projektarbejde, Snake}
 \date{18. januar, 2015}
-\author{	Anna Ølgaard Nielsen - s144437\\
-			Christian Søholm Andersen - s103080\\
-			Mathias Enggrob Boon - s144484\\
-			Van Anh Tri Trinh - s144449}
+\author{	Anna Ølgaard Nielsen - 			s144437\\
+Christian Søholm Andersen 	- s103080\\
+Mathias Enggrob Boon - 			s144484\\
+Van Anh Tri Trinh - 				s144449}
+
 \maketitle
 
 %Indholdfortegnelse
@@ -24,6 +27,14 @@
 Formålet med projektopgaven er at genskabe det klassiske spil "Snake", samt dokumentere hvordan spillet blev lavet.
 Spillet er gengivet i to versioner: Simpel-snake og Avanceret Snake. Simpel-snake er en primitiv version af spillet, hvor styring kun foregår vha. input fra brugeren. I Avanceret Snake er der tilføjet forskellige funktioner, som enten forbedrer brugerfladen, f.eks. tilføjelse af hovedmenu, eller ændrer spillet, f.eks. automatisk bevægelse af slangen.
 I rapporten vil designet af begge spillets versioner blive forklaret, samt implementationen af spillet. Kapitlet "Udviklingsproces" forklarer de tanker der ligger bag implementationen, og de valg der blev foretaget når der var flere mulige implementationer.
+
+\begin{figure}[b]
+	\centering
+	\graphicspath{ {pics/} }
+	\subfloat[Snake Menu]{\label{fig:menu}\includegraphics[width=0.3\textwidth]{snake.png}}
+	\hspace{0.1\textwidth}
+	\subfloat[Snake Game]{\label{fig:game}\includegraphics[width=0.31\textwidth]{snake2.png}}
+\end{figure}
 
 \chapter{Simple Snake}
 \section{Afgrænsning}
@@ -42,11 +53,6 @@ Snake-spillet er lavet efter et MVC-design, hvormed selve spillet, styringen af 
 
 \subsection{Control (Styring)}
 I simpel-snake bruges der kun 4 taster til input, nemlig de fire retningstaster, som derfor er defineret i control. Control-klassen har en metode, keyPressed, der kaldes hver gang der tastes. Hvis tasten er en af de fire retningstaster, kaldes funktionen moveSnake i Snake-klassen, med den tilsvarende retning som argument.
-
-Derudover er der også implementeret en masse shortcuts, som nemt styrer en igennem menu'en og giver ekstra funtioner i spillet. Fra keyboarded er der blevet implementeret følgende shortcuts: Mute-button (M), pause-button (P), menu-button (Esc), tilbage-button (Back-Space), (re)start-button (enter/space), som (gen)starter spillet i default-mode.
-Gennem JButton er der også blevet implementeret en masse knapper i menu'en, game-over-mode, og restart-mode, som er styret af musen i ActionListener.
-
-Der er lavet en controller-klasse for hver menu-side og en for spillet (ControlBoard), derudover har vi en control-klasse, der skal gælde for både menu'en og spillet, heri ligger både mute-funktionen og tilbage-til-menu'en-funktionen.
 
 \subsection{Model}
 Spillets model består af en række klasser, der tilsammen udgør selve spillet.
@@ -127,11 +133,16 @@ På den måde har vi prioriteret de elementer, som "burde" være implementeret i
 \section{Implementering}
 
 \subsection{Control (Styring)}
+Derudover er der også implementeret en masse shortcuts, som nemt styrer en igennem menu'en og giver ekstra funtioner i spillet. Fra keyboarded er der blevet implementeret følgende shortcuts: Mute-button (M), pause-button (P), menu-button (Esc), tilbage-button (Back-Space), (re)start-button (enter/space), som (gen)starter spillet i default-mode.
+Gennem JButton er der også blevet implementeret en masse knapper i menu'en, game-over-mode, og restart-mode, som er styret af musen i ActionListener.
+
+Der er lavet en controller-klasse for hver menu-side og en for spillet (ControlBoard), derudover har vi en control-klasse, der skal gælde for både menu'en og spillet, heri ligger både mute-funktionen og tilbage-til-menu'en-funktionen.
 
 \subsection{Model}
 
 \subsection{View (Brugerflade)}
 ----Selv lavet logo, slange, æble, knapper, baggrund og alle andre billeder selv - intet fra nettet (uden audio)----
+-color (dobbelt for-loop - pixels)
 
 
 \section{Udviklingsproces}
