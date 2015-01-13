@@ -14,12 +14,15 @@ public class Audio implements Observer {
 	private boolean muted;
 	private Clip eatSound;
 	private Clip endSound;
+	private Clip winSound;
 	
 	private AudioInputStream eatSoundStream;
 	private AudioInputStream endSoundStream;
+	private AudioInputStream winSoundStream;
 	private static final String EAT_SOUND_FILENAME = "resources/sounds/nom.wav";
 	private static final String END_SOUND_FILENAME = "resources/sounds/ohno.wav";
-
+	private static final String WIN_SOUND_FILENAME = "resources/sounds/yes.wav";
+	
 	public Audio(Game game) {
 		if (game == null) {
 			throw new NullPointerException();
@@ -47,6 +50,9 @@ public class Audio implements Observer {
 			else if (event == Game.Event.DIE) {
 				playEndSound();
 			}
+			else if (event == Game.Event.WIN) {
+				playWinSound();
+			}
 		}
 	}
 	
@@ -59,15 +65,22 @@ public class Audio implements Observer {
 		endSound.setFramePosition(0);
 		endSound.start();
 	}
+	private void playWinSound() {
+		winSound.setFramePosition(0);
+		winSound.start();
+	}
 	
 	private void loadSounds() {
 		try {
 			eatSoundStream = AudioSystem.getAudioInputStream(new File(EAT_SOUND_FILENAME));
 			endSoundStream = AudioSystem.getAudioInputStream(new File(END_SOUND_FILENAME));
+			winSoundStream = AudioSystem.getAudioInputStream(new File(WIN_SOUND_FILENAME));
 			eatSound = AudioSystem.getClip();
 			endSound = AudioSystem.getClip();
+			winSound = AudioSystem.getClip();
 			eatSound.open(eatSoundStream);
 			endSound.open(endSoundStream);
+			winSound.open(winSoundStream);
 		} catch (Exception error) {
 			throw new RuntimeException("unable to load sounds: " + error.getMessage());
 		}

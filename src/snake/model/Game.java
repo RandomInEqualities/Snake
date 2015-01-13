@@ -20,6 +20,7 @@ public class Game extends Observable implements ActionListener {
 		MOVE,
 		EAT,
 		DIE,
+		WIN,
 		RESTART,
 		PAUSE,
 		UNPAUSE
@@ -87,6 +88,7 @@ public class Game extends Observable implements ActionListener {
 	}
 	
 	public boolean hasWon() {
+		
 		return state == State.WON;
 	}
 	
@@ -181,6 +183,7 @@ public class Game extends Observable implements ActionListener {
 			state = State.LOST;
 		}
 		else if (snake.fillsBoard()) {
+			
 			state = State.WON;
 		}
 		
@@ -189,6 +192,9 @@ public class Game extends Observable implements ActionListener {
 		Event event = null;
 		if (snakeEatsItSelf) {
 			event = Event.DIE;
+		}
+		else if (snake.fillsBoard()) {
+			event = Event.WIN;
 		}
 		else if (snakeEatsFood) {
 			event = Event.EAT;
