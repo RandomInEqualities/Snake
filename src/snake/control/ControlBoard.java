@@ -11,11 +11,11 @@ import snake.view.*;
 
 public class ControlBoard extends KeyAdapter implements ActionListener {
 	
-	private Game game;
+	private GameSinglePlayer game;
 	private View view;
 	private ViewBoard boardView;
 
-	public ControlBoard(Game game, View view) {
+	public ControlBoard(GameSinglePlayer game, View view) {
 		if (game == null || view == null) {
 			throw new NullPointerException();
 		}
@@ -64,7 +64,7 @@ public class ControlBoard extends KeyAdapter implements ActionListener {
 				break;
 			case KeyEvent.VK_ENTER: 
 			case KeyEvent.VK_SPACE:
-				if (game.getState() == Game.State.LOST){
+				if (game.getState() == Game.State.LOSE){
 					game.restart();
 					view.showGame();
 					boardView.removeButtons();

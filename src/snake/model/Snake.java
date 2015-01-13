@@ -18,7 +18,13 @@ public class Snake {
 		
 		this.board = board;
 		this.positions = new LinkedList<>();
-		setupStartingSnake();
+		
+		// Setup a snake at the centre of the board.
+		Field center = board.getCenter();
+		Field head = new Field(center.getRow(), center.getColumn());
+		Field tail = new Field(center.getRow(), center.getColumn() + 1);
+		Direction direction = Direction.LEFT;
+		setup(head, tail, direction);
 	}
 	
 	public Field getHead() {
@@ -115,14 +121,11 @@ public class Snake {
 		return board.wrap(newHeadRow, newHeadColumn);
 	}
 	
-	void setupStartingSnake() {
-		Field center = board.getCenter();
-		Field head = new Field(center.getRow(), center.getColumn());
-		Field tail = new Field(center.getRow(), center.getColumn() + 1);
-		headDirection = Direction.LEFT;
-		positions.clear();
-		positions.add(head);
-		positions.add(tail);
+	void setup(Field headPos, Field tailPos, Direction headDirection) {
+		this.headDirection = headDirection;
+		this.positions.clear();
+		this.positions.add(headPos);
+		this.positions.add(tailPos);
 	}
 	
 	private static Field getDirectionAsField(Direction direction) {

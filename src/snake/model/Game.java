@@ -1,19 +1,17 @@
-
 package snake.model;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Observable;
 
-import javax.swing.Timer;
+import java.util.*;
 
 
-public class Game extends Observable implements ActionListener {
-	
+public class Game extends Observable {
+
 	public enum State {
-		ONGOING,
-		WON,
-		LOST,
-		PAUSED
+		START,
+		PAUSE,
+		RUN,
+		END,
+		WIN,
+		LOSE
 	}
 	
 	public enum Event {
@@ -21,27 +19,19 @@ public class Game extends Observable implements ActionListener {
 		EAT,
 		DIE,
 		WIN,
-		RESTART,
+		START,
 		PAUSE,
 		UNPAUSE
 	}
 	
+	protected State state;
+	private Board board;
+	private ArrayList<Snake> snakes;
+	private ArrayList<Integer> scores;
+	private ArrayList<Food> foods;
 	protected static final int DEFAULT_WIDTH = 20;
 	protected static final int DEFAULT_HEIGHT = 20;
-	
-	public State state;
-	private int score;
-	private Board board;
-	private Snake snake;
-	private Food food;
-	
-	private Timer timer;
-	boolean timerEnabled = true;
-	private int timerUpdateInterval = 200;
-	private int speedIncrease = 0;
-	private long timerLastUpdateTime = 0;
-	private static final int TIMER_INTERVAL = 16;
-	private static final int TIMER_INITIAL_DELAY = 500;
+	private static final Random random = new Random();
 	
 	public Game() {
 		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -49,59 +39,11 @@ public class Game extends Observable implements ActionListener {
 	
 	public Game(int width, int height) {
 		super();
-		this.state = State.PAUSED;
-		this.score = 0;
+		this.state = State.START;
 		this.board = new Board(width, height);
-		this.snake = new Snake(this.board);
-		this.food = Food.generateRandomFood(snake, board);
-		
-		// Create a timer object that java swing will call in a periodic
-		// interval. The timer will then send an ActionEvent to this class.
-		this.timer = new Timer(TIMER_INTERVAL, this);
-		this.timer.setInitialDelay(TIMER_INITIAL_DELAY);
-		this.timer.start();
-	}
-	
-	/**
-	 * Restart the game.
-	 */
-	public void restart() {
-		state = State.ONGOING;
-		score = 0;
-		snake.setupStartingSnake();
-		food = Food.generateRandomFood(snake, board);
-		timerUpdateInterval += speedIncrease;
-		speedIncrease = 0;
-		setChanged();
-		notifyObservers(Event.RESTART);
-	}
-	
-	/**
-	 * Restart the game, with a new width and height.
-	 * @param width the new width
-	 * @param height the new height
-	 */
-	public void restart(int width, int height) {
-		this.board = new Board(width, height);
-		this.snake = new Snake(this.board);
-		restart();
-	}
-	
-	public boolean hasWon() {
-		
-		return state == State.WON;
-	}
-	
-	public boolean hasLost() {
-		return state == State.LOST;
-	}
-	
-	public boolean isPaused() {
-		return state == State.PAUSED;
-	}
-	
-	public boolean isTimedMovementEnabled() {
-		return timerEnabled;
+		this.snakes = new ArrayList<Snake>();
+		this.scores = new ArrayList<Integer>();
+		this.foods = new ArrayList<Food>();
 	}
 	
 	public State getState() {
@@ -112,108 +54,229 @@ public class Game extends Observable implements ActionListener {
 		return board;
 	}
 	
-	public Food getFood() {
-		return food;
+	public List<Snake> getSnakes() {
+		return Collections.unmodifiableList(snakes);
 	}
 	
-	public Snake getSnake() {
-		return snake;
+	public List<Integer> getScores() {
+		return Collections.unmodifiableList(scores);
 	}
 	
-	public int getScore() {
-		return score;
+	public List<Food> getFoods() {
+		return Collections.unmodifiableList(foods);
+	}
+	
+	public boolean isPaused() {
+		return state == State.PAUSE;
 	}
 	
 	public void pause() {
-		if (state == State.ONGOING) {
-			state = State.PAUSED;
+		if (state == State.RUN) {
+			state = State.PAUSE;
 			setChanged();
 			notifyObservers(Event.PAUSE);
 		}
 	}
 	
 	public void unPause() {
-		if (state == State.PAUSED) {
-			state = State.ONGOING;
+		if (state == State.PAUSE) {
+			state = State.RUN;
 			setChanged();
 			notifyObservers(Event.UNPAUSE);
 		}
 	}
 	
-	public void enableTimedMovement() {
-		timerEnabled = true;
-	}
-	
-	public void disableTimedMovement() {
-		timerEnabled = false;
-	}
-	
-	public void setTimedMovementSpeed(int speed) {
-		if (speed <= 0) {
-			throw new IllegalArgumentException("speed " + speed + " is not allowed");
-		}
-		this.timerUpdateInterval = speed;
-	}
-
-	public void moveSnake(Direction moveDirection) {
+	/**
+	 * Move a snake in a specified direction. The specified snake must be in the game.
+	 * This move implementation is bare bones. Consider extending this class and 
+	 * implementing new custom snake movement/game play logic.
+	 * 
+	 * @param movingSnake the snake to move. It must be part of the board.
+	 * @param moveDirection the direction to move the snake in.
+	 */
+	protected void move(Snake movingSnake, Direction moveDirection) {
 		
-		if (state != State.ONGOING) {
+		// Test that the snake can move.
+		int movingSnakeIndex = snakes.indexOf(movingSnake);
+		if (movingSnakeIndex == -1) {
+			throw new IllegalArgumentException("snake is not in the game");
+		}
+		
+		if (state != State.RUN) {
 			return;
 		}
 		
-		if (!snake.canMove(moveDirection)) {
+		// Snake and only move forward, left and right.
+		if (!movingSnake.canMove(moveDirection)) {
 			return;
 		}
 		
-		timerLastUpdateTime = System.currentTimeMillis();
-		Field newHeadPosition = snake.getNewHeadPosition(moveDirection);
-		boolean snakeEatsFood = newHeadPosition.equals(food.getPosition());
-		boolean snakeEatsItSelf = snake.move(moveDirection, snakeEatsFood);
-		
-		if (snakeEatsFood) {
-			score++;
-			food = Food.generateRandomFood(snake, board);
-			if (score % 5 == 0){
-				speedIncrease += 5;
-				timerUpdateInterval -= 5;
+		// Snake can not move into other snakes.
+		Field newHeadPosition = movingSnake.getNewHeadPosition(moveDirection);
+		for (Snake snake : snakes) {
+			if (snake != movingSnake && snake.contains(newHeadPosition)) {
+				return;
 			}
 		}
 		
-		if (snakeEatsItSelf) {
-			state = State.LOST;
-		}
-		else if (snake.fillsBoard()) {
-			
-			state = State.WON;
+		// Are we eating food?
+		boolean eatsFood = false;
+		for (int index = 0; index < foods.size(); index++) {
+			Food food = foods.get(index);
+			if (food.getPosition().equals(newHeadPosition)) {
+				foods.remove(food);
+				generateSingleRandomFood();
+				scores.set(movingSnakeIndex, scores.get(movingSnakeIndex) + 1);
+				eatsFood = true;
+				break;
+			}
 		}
 		
+		// Move the snake.
+		boolean eatsItself = movingSnake.move(moveDirection, eatsFood);
+		if (eatsItself) {
+			state = State.END;
+		}
+		
+		// Check win state.
+		int totalOccupiedFields = 0;
+		for (Snake snake : snakes) {
+			totalOccupiedFields += snake.getSize();
+		}
+		if (totalOccupiedFields == board.getSize()) {
+			state = State.END;
+		}
+
 		// Notify the observing classes that the game changed. Send an argument with 
 		// the type of event that happened.
 		Event event = null;
-		if (snakeEatsItSelf) {
+		if (eatsItself) {
 			event = Event.DIE;
 		}
-		else if (snake.fillsBoard()) {
-			event = Event.WIN;
-		}
-		else if (snakeEatsFood) {
+		else if (eatsFood) {
 			event = Event.EAT;
 		}
 		else {
 			event = Event.MOVE;
 		}
+		
 		setChanged();
 		notifyObservers(event);
 	}
 	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		long currentTime = System.currentTimeMillis();
-		long elapsedTime = currentTime - timerLastUpdateTime;
-		if (state == State.ONGOING && timerEnabled && elapsedTime > timerUpdateInterval) {
-			moveSnake(snake.getHeadDirection());
-			timerLastUpdateTime = currentTime;
+	protected int getSnakeAmount() {
+		return snakes.size();
+	}
+	
+	protected int getFoodAmount() {
+		return foods.size();
+	}
+	
+	protected Snake getSnake(int index) {
+		return snakes.get(index);
+	}
+	
+	protected Food getFood(int index) {
+		return foods.get(index);
+	}
+	
+	protected int getScore(int index) {
+		return scores.get(index);
+	}
+	
+	protected void setState(State newState) {
+		state = newState;
+	}
+	
+	protected void setBoard(Board newBoard) {
+		emptyBoard();
+		board = newBoard;
+	}
+	
+	protected void setSnake(int index, Snake snake) {
+		snakes.set(index, snake);
+	}
+	
+	protected void setFood(int index, Food food) {
+		foods.set(index, food);
+	}
+	
+	protected void setScore(int index, int score) {
+		scores.set(index, score);
+	}
+
+	protected void add(Snake snake) {
+		snakes.add(snake);
+		scores.add(0);
+	}
+	
+	protected void add(Food food) {
+		foods.add(food);
+	}
+	
+	protected void removeSnake(int index) {
+		snakes.remove(index);
+		scores.remove(index);
+	}
+	
+	protected void removeFood(int index) {
+		foods.remove(index);
+	}
+	
+	/**
+	 * Removes all snakes and foods from the board.
+	 */
+	protected void emptyBoard() {
+		snakes.clear();
+		scores.clear();
+		foods.clear();
+	}
+	
+	protected void generateRandomFood(int amount) {
+		for (int food = 0; food < amount; food++) {
+			generateSingleRandomFood();
 		}
+	}
+	
+	protected void generateSingleRandomFood() {
+		// Find all locations on the board that can contain food.
+		int width = board.getWidth();
+		int height = board.getHeight();
+		ArrayList<Field> foodPositions = new ArrayList<Field>();
+		for (int column = 0; column < width; column++) {
+			for (int row = 0; row < height; row++) {
+				
+				Field position = new Field(row, column);
+				boolean occupied = false;
+				
+				for (Food food : foods) {
+					if (food.getPosition().equals(position)) {
+						occupied = true;
+						break;
+					}
+				}
+				
+				for (Snake snake : snakes) {
+					if (occupied || snake.contains(position)) {
+						occupied = true;
+						break;
+					}
+				}
+				
+				if (!occupied) {
+					foodPositions.add(position);
+				}
+			}
+		}
+		
+		// Select a random food location.
+		int selection = random.nextInt(foodPositions.size());
+		Field foodPosition = foodPositions.get(selection);
+		add(new Food(foodPosition));
+	}
+	
+	protected void incrementScore(int index) {
+		scores.set(index, scores.get(0) + 1);
 	}
 	
 }

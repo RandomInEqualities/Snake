@@ -10,13 +10,13 @@ import snake.view.*;
 
 public class ControlMenuMultiplayer extends KeyAdapter implements ActionListener {
 
-	private Game game;
+	private GameSinglePlayer game;
 	private View view;
 	private ViewMenuMultiplayer viewMenuMultiplayer;
 	private JButton play, back, kindergarten, easy, intermediate, hard, green, blue, red, yellow;
 	private Border thickBorder;
 	
-	public ControlMenuMultiplayer(Game game, View view) {
+	public ControlMenuMultiplayer(GameSinglePlayer game, View view) {
 		this.game = game;
 		this.view = view;
 		this.viewMenuMultiplayer = view.getViewMenuMultiplayer();

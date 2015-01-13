@@ -6,7 +6,7 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.sound.sampled.*;
 
-import snake.model.Game;
+import snake.model.GameSinglePlayer;
 
 
 public class Audio implements Observer {
@@ -23,7 +23,7 @@ public class Audio implements Observer {
 	private static final String END_SOUND_FILENAME = "resources/sounds/ohno.wav";
 	private static final String WIN_SOUND_FILENAME = "resources/sounds/yes.wav";
 	
-	public Audio(Game game) {
+	public Audio(GameSinglePlayer game) {
 		if (game == null) {
 			throw new NullPointerException();
 		}
@@ -42,15 +42,15 @@ public class Audio implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (o instanceof Game && !muted) {
-			Game.Event event = (Game.Event)arg;
-			if (event == Game.Event.EAT) {
+		if (o instanceof GameSinglePlayer && !muted) {
+			GameSinglePlayer.Event event = (GameSinglePlayer.Event)arg;
+			if (event == GameSinglePlayer.Event.EAT) {
 				playEatSound();
 			}
-			else if (event == Game.Event.DIE) {
+			else if (event == GameSinglePlayer.Event.DIE) {
 				playEndSound();
 			}
-			else if (event == Game.Event.WIN) {
+			else if (event == GameSinglePlayer.Event.WIN) {
 				playWinSound();
 			}
 		}

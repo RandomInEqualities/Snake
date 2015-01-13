@@ -20,7 +20,7 @@ public class Control extends KeyAdapter {
 	@SuppressWarnings("unused")
 	private ControlMenuControls menuControlsControl;
 	
-	public Control(Game game, View view) {
+	public Control(GameSinglePlayer game, View view) {
 		if (view == null || game == null) {
 			throw new NullPointerException();
 		}

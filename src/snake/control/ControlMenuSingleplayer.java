@@ -9,13 +9,13 @@ import snake.view.*;
 
 public class ControlMenuSingleplayer extends KeyAdapter implements ActionListener {
 
-	private Game game;
+	private GameSinglePlayer game;
 	private View view;
 	private ViewMenuSingleplayer viewMenuSingleplayer;
 	private JButton play, back, kindergarten, easy, intermediate, hard, green, blue, red, yellow;
 	private Border thickBorder;
 	
-	public ControlMenuSingleplayer(Game game, View view) {
+	public ControlMenuSingleplayer(GameSinglePlayer game, View view) {
 		this.game = game;
 		this.view = view;
 		this.viewMenuSingleplayer = view.getViewMenuSingleplayer();
