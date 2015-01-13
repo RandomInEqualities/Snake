@@ -8,7 +8,6 @@ import snake.model.*;
 import snake.view.*;
 
 public class ControlMenuSingleplayer extends KeyAdapter implements ActionListener {
-
 	private GameSinglePlayer game;
 	private View view;
 	private ViewMenuSingleplayer viewMenuSingleplayer;

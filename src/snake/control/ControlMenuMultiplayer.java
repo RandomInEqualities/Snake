@@ -10,15 +10,15 @@ import snake.view.*;
 public class ControlMenuMultiplayer extends ControlMenuSingleplayer {
 
 	private ViewMenuMultiplayer viewMenuMultiplayer;
-	private JButton green2, blue2, red2, yellow2;
+	private JButton green, blue, red, yellow, green2, blue2, red2, yellow2, kindergarten, easy, intermediate, hard;
 	
-	public ControlMenuMultiplayer(GameSinglePlayer game, View view) {
+	public ControlMenuMultiplayer(GameSinglePlayer game, View view) { //tbchanged
 		super(game, view);
 		this.viewMenuMultiplayer = view.getViewMenuMultiplayer();
-		green2 = this.viewMenuMultiplayer.getGreenButton();
-		blue2 = this.viewMenuMultiplayer.getBlueButton();
-		red2 = this.viewMenuMultiplayer.getRedButton();
-		yellow2 = this.viewMenuMultiplayer.getYellowButton();
+		green2 = this.viewMenuMultiplayer.getGreenButton2();
+		blue2 = this.viewMenuMultiplayer.getBlueButton2();
+		red2 = this.viewMenuMultiplayer.getRedButton2();
+		yellow2 = this.viewMenuMultiplayer.getYellowButton2();
 		
 		green2.addActionListener(this);
 		blue2.addActionListener(this);
@@ -31,26 +31,35 @@ public class ControlMenuMultiplayer extends ControlMenuSingleplayer {
 		yellow2.setActionCommand("yellow2");
 		
 		//Inherited buttons
+		kindergarten = viewMenuMultiplayer.getKindergartenButton();
+		easy = viewMenuMultiplayer.getEasyButton();
+		intermediate = viewMenuMultiplayer.getIntermediateButton();
+		hard = viewMenuMultiplayer.getHardButton();
+		green = viewMenuMultiplayer.getGreenButton();
+		blue = viewMenuMultiplayer.getBlueButton();
+		red = viewMenuMultiplayer.getRedButton();
+		yellow = viewMenuMultiplayer.getYellowButton();
+		
 		viewMenuMultiplayer.getPlayButton().addActionListener(this);
 		viewMenuMultiplayer.getBackButton().addActionListener(this);
-//		viewMenuMultiplayer.getKindergartenButton().addActionListener(this);
-//		viewMenuMultiplayer.getEasyButton().addActionListener(this);
-//		viewMenuMultiplayer.getIntermediateButton().addActionListener(this);
-//		viewMenuMultiplayer.getHardButton().addActionListener(this);
-//		viewMenuMultiplayer.getGreenButton().addActionListener(this);
-//		viewMenuMultiplayer.getBlueButton().addActionListener(this);
-//		viewMenuMultiplayer.getRedButton().addActionListener(this);
+		kindergarten.addActionListener(this);
+		easy.addActionListener(this);
+		intermediate.addActionListener(this);
+		hard.addActionListener(this);
+		green.addActionListener(this);
+		blue.addActionListener(this);
+		red.addActionListener(this);
 		
 		viewMenuMultiplayer.getPlayButton().setActionCommand("play");
 		viewMenuMultiplayer.getBackButton().setActionCommand("back");
-//		viewMenuMultiplayer.getKindergartenButton().setActionCommand("kindergarten");
-//		viewMenuMultiplayer.getEasy().setActionCommand("easy");
-//		viewMenuMultiplayer.getIntermediateButton().setActionCommand("intermediate");
-//		viewMenuMultiplayer.getHardButton().setActionCommand("hard");
-//		viewMenuMultiplayer.getGreenButton().setActionCommand("green");
-//		viewMenuMultiplayer.getBlueButton().setActionCommand("blue");
-//		viewMenuMultiplayer.getRedButton().setActionCommand("red");
-//		viewMenuMultiplayer.getYellowButton().setActionCommand("yellow");
+		kindergarten.setActionCommand("kindergarten");
+		easy.setActionCommand("easy");
+		intermediate.setActionCommand("intermediate");
+		hard.setActionCommand("hard");
+		green.setActionCommand("green");
+		blue.setActionCommand("blue");
+		red.setActionCommand("red");
+		yellow.setActionCommand("yellow");
 	}
 	@Override
 	public void actionPerformed(ActionEvent event) {

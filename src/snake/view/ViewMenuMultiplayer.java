@@ -12,7 +12,6 @@ import snake.model.*;
 public class ViewMenuMultiplayer extends ViewMenuSingleplayer {
 
 	private static final long serialVersionUID = -494390249706219313L;
-	
 	private JButton green2, blue2, red2, yellow2;
 	
 	public ViewMenuMultiplayer(View view, GameSinglePlayer game){
@@ -57,19 +56,19 @@ public class ViewMenuMultiplayer extends ViewMenuSingleplayer {
 		yellow2.setBounds(xBlue+2*gap+2*sizeColour+shift, yColour, sizeColour, sizeColour);
 	}
 	
-	public JButton getGreenButton() {
+	public JButton getGreenButton2() {
 		return green2;
 	}
 	
-	public JButton getBlueButton() {
+	public JButton getBlueButton2() {
 		return blue2;
 	}
 	
-	public JButton getRedButton() {
+	public JButton getRedButton2() {
 		return red2;
 	}
 	
-	public JButton getYellowButton() {
+	public JButton getYellowButton2() {
 		return yellow2;
 	}
 }
