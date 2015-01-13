@@ -226,6 +226,7 @@ public class ViewBoard extends JPanel implements Observer {
 	
 	private void drawGameOver(Graphics2D context) {
 		view.getHeader().hideScore();
+		view.getHeader().repaint();
 		drawPopup(context);
 
 		// Text

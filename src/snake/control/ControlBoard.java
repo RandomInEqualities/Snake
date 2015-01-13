@@ -65,9 +65,7 @@ public class ControlBoard extends KeyAdapter implements ActionListener {
 			case KeyEvent.VK_ENTER: 
 			case KeyEvent.VK_SPACE:
 				if (game.getState() == Game.State.LOSE){
-					game.restart();
-					view.showGame();
-					boardView.removeButtons();
+					playAgain();
 				}
 				break;
 			default:
@@ -78,15 +76,17 @@ public class ControlBoard extends KeyAdapter implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand()=="playAgain"){
-			game.restart();
-			view.showGame();
-			boardView.removeButtons();
-			view.requestFocus();
+			playAgain();
 		} 
 		else if (e.getActionCommand()=="menu"){
 			view.showMenu();
 			boardView.removeButtons();
 		}
 	}
-
+	public void playAgain(){
+		game.restart();
+		boardView.removeButtons();
+		view.getHeader().showScore();
+		view.requestFocus();
+	}
 }
