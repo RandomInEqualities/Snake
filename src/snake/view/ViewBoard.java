@@ -11,15 +11,18 @@ import snake.model.*;
 
 public class ViewBoard extends JPanel implements Observer {
 	
-	private Game game;
+	private GameSinglePlayer game;
 	private View view;
 	private JButton playAgainButton, menuButton;
 	private static final long serialVersionUID = 9109362543987437505L;
 
 	int widthPopup, heightPopup, xPopup, yPopup;
 	int snakeRed, snakeGreen, snakeBlue;
+	BufferedImage bodyBottomLeft, bodyBottomRight, bodyTopLeft, bodyTopRight, 
+	bodyVertical, bodyHorizontal, headUp, headDown, headLeft, headRight, 
+	tailUp, tailDown, tailLeft, tailRight;
 	
-	public ViewBoard(Game game, View view) {
+	public ViewBoard(GameSinglePlayer game, View view) {
 		super();
 
 		if (game == null) {
@@ -39,11 +42,12 @@ public class ViewBoard extends JPanel implements Observer {
 		this.snakeRed = 84;
 		this.snakeGreen = 216;
 		this.snakeBlue = 81;
+		setSnakeColour(snakeRed, snakeGreen, snakeBlue);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (game.getState() == Game.State.LOST || game.getState() == Game.State.WON) {
+		if (game.getState() == Game.State.LOSE || game.getState() == Game.State.WIN) {
 			this.add(playAgainButton);
 			this.add(menuButton);
 		}
@@ -59,13 +63,13 @@ public class ViewBoard extends JPanel implements Observer {
 		drawFood(context2D);
 		drawSnake(context2D);
 		
-		if (game.getState() == Game.State.LOST) {
+		if (game.getState() == Game.State.LOSE) {
 			drawGameLost(context2D);
 		} 
-		else if (game.getState() == Game.State.PAUSED) {
+		else if (game.getState() == Game.State.PAUSE) {
 			drawPaused(context2D);
 		} 
-		else if (game.getState() == Game.State.WON){
+		else if (game.getState() == Game.State.WIN){
 			drawGameWon(context2D);
 		}
 	}
@@ -114,6 +118,7 @@ public class ViewBoard extends JPanel implements Observer {
 		Snake snake = game.getSnake();
 		int lastRow = game.getBoard().getHeight()-1;
 		int lastColumn = game.getBoard().getWidth()-1;
+		BufferedImage body = null;
 		
 		//Draw body
 		for (int i = 1; i<snake.getPositions().size()-1; i++){ //run through every body piece
@@ -121,25 +126,23 @@ public class ViewBoard extends JPanel implements Observer {
 			Field current = snake.getPositions().get(i);
 			Field front = snake.getPositions().get(i-1);
 			Field behind = snake.getPositions().get(i+1);
-			BufferedImage body = null;
 
 			if (current.getRow() == front.getRow() && current.getRow() == behind.getRow()){ //if current piece and front and behind are in the same row 
-				body = Images.SNAKE_HORIZONTAL;
+				body = bodyHorizontal;
 			} else if (current.getColumn() == front.getColumn() && current.getColumn()==behind.getColumn()){ //if current piece and front and behind are in the same column
-				body = Images.SNAKE_VERTICAL;
-				
+				body = bodyVertical;
+
 				//Corner pieces
 			} else if (snakeCorner(current, front, behind, "TL")){
-				body = Images.SNAKE_CORNER_TL;
+				body = bodyTopLeft;
 			} else if (snakeCorner(current, front, behind, "TR")){
-				body = Images.SNAKE_CORNER_TR;
+				body = bodyTopRight;
 			} else if (snakeCorner(current, front, behind, "BR")){
-				body = Images.SNAKE_CORNER_BR;
+				body = bodyBottomRight;
 			} else {
-				body = Images.SNAKE_CORNER_BL;
+				body = bodyBottomLeft;
 			}
-			BufferedImage bodyColoured = colourSnake(body, snakeRed, snakeGreen, snakeBlue);
-			Image bodyscaled = bodyColoured.getScaledInstance(getFieldSideLength(), getFieldSideLength(), Image.SCALE_SMOOTH);
+			Image bodyscaled = body.getScaledInstance(getFieldSideLength(), getFieldSideLength(), Image.SCALE_SMOOTH);
 			context.drawImage(bodyscaled, bodyRectangle.x, bodyRectangle.y, null);
 		}
 		
@@ -149,16 +152,16 @@ public class ViewBoard extends JPanel implements Observer {
 		Field tailPiece = snake.getTail();
 		Field beforeTail = snake.getPositions().get(snake.getSize()-2);
 		if (tailPiece.getColumn()+1 == beforeTail.getColumn()||tailPiece.getColumn() == lastColumn && beforeTail.getColumn()==0){
-			tail = Images.SNAKE_TAIL_RIGHT;
+			tail = tailRight;
 		} else if (tailPiece.getColumn()-1 == beforeTail.getColumn() || tailPiece.getColumn()==0 && beforeTail.getColumn()==lastColumn){
-			tail = Images.SNAKE_TAIL_LEFT;
+			tail = tailLeft;
 		} else if (tailPiece.getRow()-1 == beforeTail.getRow() || tailPiece.getRow() == 0 && beforeTail.getRow()==lastRow){
-			tail = Images.SNAKE_TAIL_UP;
+			tail = tailUp;
 		} else {
-			tail = Images.SNAKE_TAIL_DOWN;
+			tail = tailDown;
 		}
-		BufferedImage tailColoured = colourSnake(tail, snakeRed, snakeGreen, snakeBlue);
-		Image tailscaled = tailColoured.getScaledInstance(getFieldSideLength(), getFieldSideLength(), Image.SCALE_SMOOTH);
+		
+		Image tailscaled = tail.getScaledInstance(getFieldSideLength(), getFieldSideLength(), Image.SCALE_SMOOTH);
 		context.drawImage(tailscaled, tailRectangle.x, tailRectangle.y, null);
 		
 		
@@ -167,21 +170,20 @@ public class ViewBoard extends JPanel implements Observer {
 		BufferedImage head = null;
 		switch (snake.getHeadDirection()) {
 		case UP:
-			head = Images.SNAKE_HEAD_UP;
+			head = headUp;
 			break;
 		case DOWN:
-			head = Images.SNAKE_HEAD_DOWN;
+			head = headDown;
 			break;
 		case LEFT:
-			head = Images.SNAKE_HEAD_LEFT;
+			head = headLeft;
 			break;
 		case RIGHT:
-			head = Images.SNAKE_HEAD_RIGHT;
+			head = headRight;
 			break;
 		}
 		
-		BufferedImage headColoured = colourSnake(head, snakeRed, snakeGreen, snakeBlue);
-		Image headScaled = headColoured.getScaledInstance(headRectangle.width, headRectangle.height, Image.SCALE_SMOOTH);
+		Image headScaled = head.getScaledInstance(headRectangle.width, headRectangle.height, Image.SCALE_SMOOTH);
 		context.drawImage(headScaled, headRectangle.x, headRectangle.y, null);
 	}
 
@@ -326,9 +328,21 @@ public class ViewBoard extends JPanel implements Observer {
 	}
 	
 	public void setSnakeColour(int red, int green, int blue){
-		this.snakeRed = red;
-		this.snakeGreen = green;
-		this.snakeBlue = blue;
+		//Colour snake
+		bodyBottomLeft = colourSnake(Images.SNAKE_CORNER_BL, red, green, blue);
+		bodyBottomRight = colourSnake(Images.SNAKE_CORNER_BR, red, green, blue);
+		bodyTopLeft = colourSnake(Images.SNAKE_CORNER_TL, red, green, blue);
+		bodyTopRight = colourSnake(Images.SNAKE_CORNER_TR, red, green, blue);
+		bodyVertical = colourSnake(Images.SNAKE_VERTICAL, red, green, blue);
+		bodyHorizontal = colourSnake(Images.SNAKE_HORIZONTAL, red, green, blue);
+		headUp = colourSnake(Images.SNAKE_HEAD_UP, red, green, blue);
+		headDown = colourSnake(Images.SNAKE_HEAD_DOWN, red, green, blue);
+		headLeft = colourSnake(Images.SNAKE_HEAD_LEFT, red, green, blue);
+		headRight = colourSnake(Images.SNAKE_HEAD_RIGHT, red, green, blue);
+		tailUp = colourSnake(Images.SNAKE_TAIL_UP, red, green, blue);
+		tailDown = colourSnake(Images.SNAKE_TAIL_DOWN, red, green, blue);
+		tailLeft = colourSnake(Images.SNAKE_TAIL_LEFT, red, green, blue);
+		tailRight = colourSnake(Images.SNAKE_TAIL_RIGHT, red, green, blue);
 	}
 	
 	 private BufferedImage colourSnake(BufferedImage image, int red, int green, int blue) {

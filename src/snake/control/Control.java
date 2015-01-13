@@ -18,12 +18,14 @@ public class Control extends KeyAdapter implements ActionListener{
 	@SuppressWarnings("unused")
 	private ControlMenu menuControl;
 	@SuppressWarnings("unused")
-	private ControlMenuSingleplayer menuSinglePlayerControl;
+	private ControlMenuSingleplayer menuSingleplayerControl;
+	@SuppressWarnings("unused")
+	private ControlMenuMultiplayer menuMultiplayerControl;
 	@SuppressWarnings("unused")
 	private ControlMenuControls menuControlsControl;
 	private JButton soundButton;
 	
-	public Control(Game game, View view) {
+	public Control(GameSinglePlayer game, View view) {
 		if (view == null || game == null) {
 			throw new NullPointerException();
 		}
@@ -32,7 +34,8 @@ public class Control extends KeyAdapter implements ActionListener{
 		
 		boardControl = new ControlBoard(game, view);
 		menuControl = new ControlMenu(view);
-		menuSinglePlayerControl = new ControlMenuSingleplayer(game, view);
+		menuSingleplayerControl = new ControlMenuSingleplayer(game, view);
+		menuMultiplayerControl = new ControlMenuMultiplayer(game, view);
 		menuControlsControl = new ControlMenuControls(view);
 		
 		this.soundButton = view.getHeader().getSoundButton();

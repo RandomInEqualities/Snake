@@ -2,14 +2,14 @@ package snake.model;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 
 public class Snake {
 	
 	private Board board;
 	private Direction headDirection;
-	private LinkedList<Field> positions;
+	private ArrayList<Field> positions;
 
 	public Snake(Board board) {
 		if (board == null) {
@@ -17,8 +17,14 @@ public class Snake {
 		}
 		
 		this.board = board;
-		this.positions = new LinkedList<>();
-		setupStartingSnake();
+		this.positions = new ArrayList<>();
+		
+		// Setup a snake at the centre of the board.
+		Field center = board.getCenter();
+		Field head = new Field(center.getRow(), center.getColumn());
+		Field tail = new Field(center.getRow(), center.getColumn() + 1);
+		Direction direction = Direction.LEFT;
+		setup(head, tail, direction);
 	}
 	
 	public Field getHead() {
@@ -115,14 +121,11 @@ public class Snake {
 		return board.wrap(newHeadRow, newHeadColumn);
 	}
 	
-	void setupStartingSnake() {
-		Field center = board.getCenter();
-		Field head = new Field(center.getRow(), center.getColumn());
-		Field tail = new Field(center.getRow(), center.getColumn() + 1);
-		headDirection = Direction.LEFT;
-		positions.clear();
-		positions.add(head);
-		positions.add(tail);
+	void setup(Field headPos, Field tailPos, Direction headDirection) {
+		this.headDirection = headDirection;
+		this.positions.clear();
+		this.positions.add(headPos);
+		this.positions.add(tailPos);
 	}
 	
 	private static Field getDirectionAsField(Direction direction) {

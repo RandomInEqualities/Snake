@@ -12,29 +12,21 @@ import snake.model.*;
 public class ViewMenuMultiplayer extends ViewMenuSingleplayer {
 
 	private static final long serialVersionUID = -494390249706219313L;
-	
 	private JButton green2, blue2, red2, yellow2;
 	
-	public ViewMenuMultiplayer(View view, Game game){
+	public ViewMenuMultiplayer(View view, GameSinglePlayer game){
 		super(view, game);
 		
 		// 2nd player buttons
-		green2 = new JButton();
+		green2 = new JButton(new ImageIcon(Images.BUTTON_GREEN));
 		view.getViewMenu().setCommonButtonParameters(green2);
-		green2.setBackground(Colors.GREEN);
 		green2.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
-		blue2 = new JButton();
-		view.getViewMenu().setCommonButtonParameters(blue2);
-		blue2.setBorderPainted(false);
-		blue2.setBackground(Colors.BLUE);
-		red2 = new JButton();
-		view.getViewMenu().setCommonButtonParameters(red2);
-		red2.setBorderPainted(false);
-		red2.setBackground(Colors.RED);
-		yellow2 = new JButton();
-		view.getViewMenu().setCommonButtonParameters(yellow2);
-		yellow2.setBorderPainted(false);
-		yellow2.setBackground(Colors.YELLOW);
+		blue2 = new JButton(new ImageIcon(Images.BUTTON_BLUE));
+		view.getViewMenu().setOptionButton(blue2);
+		red2 = new JButton(new ImageIcon(Images.BUTTON_RED));
+		view.getViewMenu().setOptionButton(red2);
+		yellow2 = new JButton(new ImageIcon(Images.BUTTON_YELLOW));
+		view.getViewMenu().setOptionButton(yellow2);
 		
 		// Add new buttons
 		super.getPanel().add(green2);
@@ -64,4 +56,19 @@ public class ViewMenuMultiplayer extends ViewMenuSingleplayer {
 		yellow2.setBounds(xBlue+2*gap+2*sizeColour+shift, yColour, sizeColour, sizeColour);
 	}
 	
+	public JButton getGreenButton2() {
+		return green2;
+	}
+	
+	public JButton getBlueButton2() {
+		return blue2;
+	}
+	
+	public JButton getRedButton2() {
+		return red2;
+	}
+	
+	public JButton getYellowButton2() {
+		return yellow2;
+	}
 }
