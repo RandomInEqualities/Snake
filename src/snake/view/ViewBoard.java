@@ -87,16 +87,16 @@ public class ViewBoard extends JPanel implements Observer {
 		int a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, g = 0, h = 0, w = 0, x = 0, y = 0, z = 0;
 		int lastRow = game.getBoard().getHeight()-1;
 		int lastColumn = game.getBoard().getWidth()-1;
-		if (corner.equals("TL")) {
+		if (corner.equals("TR")) {
 			a = 1; b = 1; c = lastRow; d = 0; e = lastColumn; f = 0; g = 0; h = 0;
 			w = front.getColumn(); x = behind.getRow(); y = behind.getColumn(); z = front.getRow();
-		} else if (corner.equals("TR")) {
+		} else if (corner.equals("TL")) {
 			a = -1; b = 1; c = lastRow; d = 0; e = 0; f = lastColumn; g = 0; h = lastColumn;	
 			w = front.getRow(); x = behind.getColumn(); y = behind.getRow(); z = front.getColumn();
-		} else if (corner.equals("BR")) {
+		} else if (corner.equals("BL")) {
 			a = -1; b = -1; c = 0; d = lastRow; e = 0; f = lastColumn; g = lastColumn; h = lastRow;
 			w = front.getColumn(); x = behind.getRow(); y = behind.getColumn(); z = front.getRow();
-		} else if (corner.equals("BL")){
+		} else if (corner.equals("BR")){
 			a = 1; b = -1; c = 0; d = lastRow; e = lastColumn; f = 0; g = lastColumn; h = 0;
 			w = front.getRow(); x = behind.getColumn(); y = behind.getRow(); z = front.getColumn();
 		} else {
@@ -119,7 +119,7 @@ public class ViewBoard extends JPanel implements Observer {
 		int lastRow = game.getBoard().getHeight()-1;
 		int lastColumn = game.getBoard().getWidth()-1;
 		BufferedImage body = null;
-		
+		System.out.println("hej");
 		//Draw body
 		for (int i = 1; i<snake.getPositions().size()-1; i++){ //run through every body piece
 			Rectangle bodyRectangle = getRectangleForField(snake.getPositions().get(i)); //the piece' position
@@ -131,16 +131,15 @@ public class ViewBoard extends JPanel implements Observer {
 				body = bodyHorizontal;
 			} else if (current.getColumn() == front.getColumn() && current.getColumn()==behind.getColumn()){ //if current piece and front and behind are in the same column
 				body = bodyVertical;
-
 				//Corner pieces
-			} else if (snakeCorner(current, front, behind, "TL")){
-				body = bodyTopLeft;
 			} else if (snakeCorner(current, front, behind, "TR")){
 				body = bodyTopRight;
-			} else if (snakeCorner(current, front, behind, "BR")){
-				body = bodyBottomRight;
-			} else {
+			} else if (snakeCorner(current, front, behind, "TL")){
+				body = bodyTopLeft;
+			} else if (snakeCorner(current, front, behind, "BL")){
 				body = bodyBottomLeft;
+			} else {
+				body = bodyBottomRight;
 			}
 			Image bodyscaled = body.getScaledInstance(getFieldSideLength(), getFieldSideLength(), Image.SCALE_SMOOTH);
 			context.drawImage(bodyscaled, bodyRectangle.x, bodyRectangle.y, null);
