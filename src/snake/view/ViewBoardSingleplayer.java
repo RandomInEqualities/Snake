@@ -16,7 +16,7 @@ public class ViewBoardSingleplayer extends ViewBoard  implements Observer {
 	
 	private GameSingleplayer game;
 	private Color snakeColor;
-	private static Color DEFAULT_SNAKE_COLOR = new Color(81, 216, 167);
+	private static Color DEFAULT_SNAKE_COLOR = new Color(84, 216, 81);
 	
 	public ViewBoardSingleplayer(GameSingleplayer game) {
 		super();

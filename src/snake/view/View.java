@@ -27,13 +27,7 @@ public class View extends JFrame {
 	private State state;
 	private ViewHeader headerPanel;
 	private ViewMenu menuPanel;
-	//private ViewHeaderSingleplayer headerPanelSingleplayer;
-	//private ViewMenuSinglePlayer menuSingleplayer;
-	//private ViewMenuMultiplayer menuMultiplayer;
-	//private ViewBoardSinglePlayer boardSingleplayer;
-	//private ViewBoardMultiPlayer boardMultiplayer;
 	private ViewControls menuControlsPanel;
-	//private ViewBoardSingleplayer boardPanel;
 	private ViewAudio audio;
 	
 	public View() {

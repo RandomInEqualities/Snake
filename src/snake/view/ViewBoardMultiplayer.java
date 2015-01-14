@@ -15,8 +15,8 @@ public class ViewBoardMultiplayer extends ViewBoard  implements Observer {
 	private GameMultiplayer game;
 	private Color snakeColorPlayerOne;
 	private Color snakeColorPlayerTwo;
-	private static Color DEFAULT_SNAKE_COLOR_PLAYER_ONE = new Color(81, 216, 167);
-	private static Color DEFAULT_SNAKE_COLOR_PLAYER_TWO = new Color(201, 167, 167);
+	private static Color DEFAULT_SNAKE_COLOR_PLAYER_ONE = new Color(84, 216, 81);
+	private static Color DEFAULT_SNAKE_COLOR_PLAYER_TWO = new Color(84, 216, 81);
 	
 	public ViewBoardMultiplayer(GameMultiplayer game) {
 		super();

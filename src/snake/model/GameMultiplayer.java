@@ -37,6 +37,10 @@ public class GameMultiplayer extends Observable implements Game {
 		reset();
 	}
 	
+	public void setBoardSize(int width, int height){
+		board = new Board(width, height);
+	}
+	
 	public Board getBoard() {
 		return board;
 	}

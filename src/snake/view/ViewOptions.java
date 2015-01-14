@@ -169,19 +169,19 @@ public class ViewOptions extends JPanel implements FocusListener {
 	
 	public void createButtons(){
 		back = new JButton(new ImageIcon(Images.BUTTON_BACK));
-		view.getViewMenu().setCommonButtonParameters(back);
+		ViewMenu.setCommonButtonParameters(back);
 		play = new JButton(new ImageIcon(Images.BUTTON_PLAY));
-		view.getViewMenu().setCommonButtonParameters(play);
+		ViewMenu.setCommonButtonParameters(play);
 		
 		kindergarten = new JButton(new ImageIcon(Images.DIFFICULTY_KINDERGARTEN));
-		view.getViewMenu().setCommonButtonParameters(kindergarten);
+		ViewMenu.setCommonButtonParameters(kindergarten);
 		kindergarten.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3)); //default difficulty = kindergarten
 		easy = new JButton(new ImageIcon(Images.DIFFICULTY_EASY));
-		view.getViewMenu().setOptionButton(easy);
+		ViewMenu.setOptionButton(easy);
 		intermediate = new JButton(new ImageIcon(Images.DIFFICULTY_INTERMEDIATE));
-		view.getViewMenu().setOptionButton(intermediate);
+		ViewMenu.setOptionButton(intermediate);
 		hard = new JButton(new ImageIcon(Images.DIFFICULTY_HARD));
-		view.getViewMenu().setOptionButton(hard);
+		ViewMenu.setOptionButton(hard);
 	}
 	private void printErrorMessage(Graphics2D context){
 		int y = 110;

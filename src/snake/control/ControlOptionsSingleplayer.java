@@ -11,11 +11,11 @@ import snake.view.*;
 
 public class ControlOptionsSingleplayer extends ControlOptions {
 	
-	private Game game;
 	private View view;
 	private ViewOptionsSingleplayer viewMenuSingleplayer;
 	private JButton green, blue, red, yellow;
 	ViewBoardSingleplayer boardView;
+	private GameSingleplayer game;
 	
 	public ControlOptionsSingleplayer(GameSingleplayer game, View view, ViewOptionsSingleplayer menuView, ViewBoardSingleplayer boardView) {
 		super(view, menuView);
@@ -46,10 +46,7 @@ public class ControlOptionsSingleplayer extends ControlOptions {
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		super.actionPerformed(event);
-		if (event.getActionCommand() == "play") {
-			playGame();
-		}  
-		else if (event.getActionCommand() == "green") {
+		if (event.getActionCommand() == "green") {
 			setActiveButton(green, blue, red, yellow);
 			boardView.setSnakeColor(new Color(84, 216, 81));
 		} 
@@ -105,6 +102,9 @@ public class ControlOptionsSingleplayer extends ControlOptions {
 			int inputHeight = Integer.parseInt(inputH);
 			if (inputWidth >= Board.MIN_WIDTH && inputWidth <= Board.MAX_WIDTH && inputHeight >= Board.MIN_HEIGHT && inputHeight <= Board.MAX_HEIGHT) {
 				view.showGame(boardView);
+				game.setBoardSize(inputWidth, inputHeight);
+				setSpeed();
+				game.reset();
 				game.start();
 				viewMenuSingleplayer.setValid(true);
 				viewMenuSingleplayer.setFilled(true);
@@ -116,11 +116,19 @@ public class ControlOptionsSingleplayer extends ControlOptions {
 			}
 		}
 	}
-
-	// Get input without whitespace
-	public String getInput(JFormattedTextField input) {
-		String in = input.getText();
-		String out = in.replace(" ", "");
-		return out;
-	}	
+	
+	public void setSpeed(){
+		if (getDifficulty() == Difficulty.KINDERGARTEN){
+			game.disableTimedMovement(); 
+		} else if (getDifficulty() == Difficulty.EASY){
+			game.enableTimedMovement();
+			game.setTimedMovementSpeed(300);
+		} else if (getDifficulty() == Difficulty.INTERMEDIATE){
+			game.enableTimedMovement();
+			game.setTimedMovementSpeed(150);
+		} else if (getDifficulty() == Difficulty.HARD){
+			game.enableTimedMovement();
+			game.setTimedMovementSpeed(70);
+		}
+	}
 }

@@ -52,6 +52,10 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 		reset();
 	}
 	
+	public void setBoardSize(int width, int height){
+		board = new Board(width, height);
+	}
+	
 	public Board getBoard() {
 		return board;
 	}

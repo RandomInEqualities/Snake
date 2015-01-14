@@ -11,15 +11,8 @@ import snake.view.*;
 public class Control extends KeyAdapter implements ActionListener{
 	
 	private View view;
-	
-	//@SuppressWarnings("unused")
-	//private ControlBoardSingleplayer boardControl;
 	@SuppressWarnings("unused")
 	private ControlMenu menuControl;
-	//@SuppressWarnings("unused")
-	//private ControlMenuSingleplayer menuSingleplayerControl;
-	//@SuppressWarnings("unused")
-	//private ControlMenuMultiplayer menuMultiplayerControl;
 	@SuppressWarnings("unused")
 	private ControlControls menuControlsControl;
 	private JButton soundButton;

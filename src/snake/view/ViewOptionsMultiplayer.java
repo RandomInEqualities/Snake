@@ -17,23 +17,23 @@ public class ViewOptionsMultiplayer extends ViewOptions {
 		
 		//Colour buttons
 		green = new JButton(new ImageIcon (Images.BUTTON_GREEN));
-		view.getViewMenu().setCommonButtonParameters(green);
+		ViewMenu.setCommonButtonParameters(green);
 		green.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
 		blue = new JButton(new ImageIcon (Images.BUTTON_BLUE));
-		view.getViewMenu().setOptionButton(blue);
+		ViewMenu.setOptionButton(blue);
 		red = new JButton(new ImageIcon (Images.BUTTON_RED));
-		view.getViewMenu().setOptionButton(red);
+		ViewMenu.setOptionButton(red);
 		yellow = new JButton(new ImageIcon(Images.BUTTON_YELLOW));
-		view.getViewMenu().setOptionButton(yellow);
+		ViewMenu.setOptionButton(yellow);
 		green2 = new JButton(new ImageIcon(Images.BUTTON_GREEN));
-		view.getViewMenu().setCommonButtonParameters(green2);
+		ViewMenu.setCommonButtonParameters(green2);
 		green2.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
 		blue2 = new JButton(new ImageIcon(Images.BUTTON_BLUE));
-		view.getViewMenu().setOptionButton(blue2);
+		ViewMenu.setOptionButton(blue2);
 		red2 = new JButton(new ImageIcon(Images.BUTTON_RED));
-		view.getViewMenu().setOptionButton(red2);
+		ViewMenu.setOptionButton(red2);
 		yellow2 = new JButton(new ImageIcon(Images.BUTTON_YELLOW));
-		view.getViewMenu().setOptionButton(yellow2);
+		ViewMenu.setOptionButton(yellow2);
 		
 		// Add new buttons
 		super.panel.add(green);

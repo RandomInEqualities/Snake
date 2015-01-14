@@ -46,7 +46,7 @@ public class ViewHeaderMultiplayer extends ViewHeader implements Observer {
 			int fontSize = font.getSize();
 			context2D.setColor(Color.WHITE);
 			context2D.drawString("Player 1: " + game.getScore(Player.ONE), fontSize, size.height / 2 - fontSize / 2);
-			context2D.drawString("Player 2: " + game.getScore(Player.TWO), fontSize, size.height / 2 + fontSize / 2);
+			context2D.drawString("Player 2: " + game.getScore(Player.TWO), fontSize, size.height / 2 + fontSize);
 		}
 	}
 

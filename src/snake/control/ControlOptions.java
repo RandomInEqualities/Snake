@@ -1,8 +1,10 @@
 package snake.control;
 
 import java.awt.event.*;
+
 import javax.swing.*;
 import javax.swing.border.*;
+
 import snake.view.*;
 
 public abstract class ControlOptions extends KeyAdapter implements ActionListener {
@@ -119,7 +121,6 @@ public abstract class ControlOptions extends KeyAdapter implements ActionListene
 		b1.setBorderPainted(false);
 		b2.setBorderPainted(false);
 		b3.setBorderPainted(false);
-		active.repaint();
 		
 		// Request focus so we still receive keyboard events.
 		view.requestFocus();
@@ -130,5 +131,12 @@ public abstract class ControlOptions extends KeyAdapter implements ActionListene
 	
 	public Difficulty getDifficulty(){
 		return difficulty;
+	}
+	
+	// Get input without whitespace
+	public String getInput(JFormattedTextField input) {
+		String in = input.getText();
+		String out = in.replace(" ", "");
+		return out;
 	}
 }

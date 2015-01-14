@@ -43,7 +43,7 @@ public class Snake {
 	}
 	
 	public List<Field> getPositions() {
-		// Return a list that can't be changed. This prevent outside classes
+		// Return a list that can't be changed. This prevents outside classes
 		// from changing the snake list.
 		return Collections.unmodifiableList(positions);
 	}

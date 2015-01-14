@@ -47,14 +47,14 @@ public class ControlMenu implements ActionListener {
 		gameSingle = new GameSingleplayer();
 		boardViewSingle = new ViewBoardSingleplayer(gameSingle);
 		menuViewSingle = new ViewOptionsSingleplayer(view, gameSingle);
-		headerSingle = new ViewHeaderSingleplayer(view, gameSingle, true);
+		headerSingle = new ViewHeaderSingleplayer(view, gameSingle, false);
 		boardControlSingle = new ControlBoardSingleplayer(gameSingle, view, boardViewSingle);
 		menuControlSingle = new ControlOptionsSingleplayer(gameSingle, view, menuViewSingle, boardViewSingle);
 		
 		gameMulti = new GameMultiplayer();
 		boardViewMulti = new ViewBoardMultiplayer(gameMulti);
 		menuViewMulti = new ViewOptionsMultiplayer(view, gameMulti);
-		headerMulti = new ViewHeaderMultiplayer(view, gameMulti, true);
+		headerMulti = new ViewHeaderMultiplayer(view, gameMulti, false);
 		boardControlMulti = new ControlBoardMultiplayer(gameMulti, view, boardViewMulti);
 		menuControlMulti = new ControlOptionsMultiplayer(gameMulti, view, menuViewMulti, boardViewMulti);
 	}
@@ -62,12 +62,6 @@ public class ControlMenu implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "singleplayer") {
-			//GameSingleplayer game = new GameSingleplayer();
-			//ViewBoardSingleplayer boardView = new ViewBoardSingleplayer(game);
-			//ViewMenuSingleplayer menuView = new ViewMenuSingleplayer(view, game);
-			//ViewHeaderSingleplayer header = new ViewHeaderSingleplayer(view, game, true);
-			//ControlBoardSingleplayer boardControl = new ControlBoardSingleplayer(game, view, boardView);
-			//ControlMenuSingleplayer menuControl = new ControlMenuSingleplayer(game, view, menuView, boardView);
 			view.getAudio().registerGame(gameSingle);
 			view.showMenu(headerSingle, menuViewSingle);
 		} 

@@ -56,8 +56,7 @@ public interface Game {
 				throw new RuntimeException("event has no player");
 			}
 			return player;
-		}
-		
+		}		
 	}
 	
 }
