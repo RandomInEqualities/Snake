@@ -31,9 +31,9 @@ I rapporten vil designet af begge spillets versioner blive forklaret, samt imple
 \begin{figure}[b]
 	\centering
 	\graphicspath{ {pics/} }
-	\subfloat[Snake Menu]{\label{fig:menu}\includegraphics[width=0.3\textwidth]{snake.png}}
+	\subfloat[Simpel Snake]{\label{fig:simplesnake}\includegraphics[width=0.4\textwidth]{SimpelSnake.png}}
 	\hspace{0.1\textwidth}
-	\subfloat[Snake Game]{\label{fig:game}\includegraphics[width=0.31\textwidth]{snake2.png}}
+	\subfloat[Advanced Snake]{\label{fig:advancedsnake}\includegraphics[width=0.32\textwidth]{snake2.png}}
 \end{figure}
 
 \chapter{Simpel Snake}
@@ -110,6 +110,14 @@ tilføjes en observer til Score-klassen, som dermed kun opdateres, når scoren �
 Området, som spillet foregår på, skal kunne bestemmes til at være mellem 5x5 og 100x100. Dette kan dog skabe problemer, hvis størrelsen bliver for stor, idet banen både skal være synlig, men også passe på en gennemsnitlig computerskærm. En bane på 10x10 kan sagtens passe på en opløsning af f.eks. 400x400, men øges banens størrelse til 50x50, bliver banen svær at se. Herudover varierer skærmstørrelser, og det er derfor nødvendigt at gøre spillets vinduestørrelse fleksibel. En løsning på dette problem ville være at bestemme en fast størrelse for felterne, og lade vinduet justere sin størrelse efter dette. Ønskes det f.eks. at felterne altid har størrelsen 20x20, og at banen skal være 15x25, vil vinduets størrelse blive 300x500. Fordelen ved denne metode er at det sikres, at banen altid er synlig, og at der ikke opstår problemer, fordi forholdet mellem vinduets størrelse og banen størrelse ikke passer sammen. Ulempen ved metoden er, at store baner kan blive for store til at være på en normal skærm. F.eks. vil en bane med felter af størrelsen 20x20 og banestørrelsen 75x75 fylde 1500x1500. Herudover er løsningen ikke brugervenlig, idet en bruger kan blive forvirret over hvorfor vinduets størrelse ændrer sig fra bane til bane, og måske ligefrem ikke passer på skærmen.
 
 En anden metode er at gøre vinduet justerbart. Denne løsning er mere brugervenlig, idet vinduets størrelse frit kan justeres så det passer til den enkelte person. Denne metode introducerer dog et andet problem, nemlig at felternes størrelse skal skaleres til at passe vinduet. Nogle opløsninger af vinduet vil ikke være et multiplum af banens størrelse, hvormed elementerne i spillet vil blive aflange. Dette problem blev løst ved at lave en baggrund og låse banens forhold, hvormed banen altid fylder mest muligt af vinduet ud, og den resterende plads bliver udfyldt af baggrunden. Idet denne løsning var nemmere at bruge og forstå, og giver bedre mulighed for justering af spillet, blev den valgt i stedet for den første løsning.
+\begin{figure}[h]
+	\centering
+	\graphicspath{ {pics/} }
+	\includegraphics[width=0.5\textwidth]{WindowSize.png}
+	\label{fig:windowsize}
+	\caption{windowsize}
+\end{figure}
+
 
 \section{Evaluering}
 -To eller en Arraylist -> linklist ?
