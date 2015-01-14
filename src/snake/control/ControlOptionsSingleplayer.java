@@ -40,7 +40,6 @@ public class ControlOptionsSingleplayer extends ControlOptions {
 		blue.setActionCommand("blue");
 		red.setActionCommand("red");
 		yellow.setActionCommand("yellow");
-		
 	}
 
 	@Override

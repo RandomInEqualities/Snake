@@ -32,9 +32,6 @@ public class ControlControls extends KeyAdapter implements ActionListener {
 		if (event == null) {
 			throw new NullPointerException();
 		}
-		if (view.inGame()) {
-			return;
-		}
 		if (event.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
 			view.showMenu();
 		}

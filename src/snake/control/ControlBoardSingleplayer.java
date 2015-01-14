@@ -78,9 +78,11 @@ public class ControlBoardSingleplayer extends KeyAdapter implements ActionListen
 		if(e.getActionCommand()=="restart") {
 			game.reset();
 			game.start();
+			view.requestFocus();
 		} 
 		else if (e.getActionCommand()=="menu") {
 			view.showMenu();
+			view.requestFocus();
 		}
 	}
 	

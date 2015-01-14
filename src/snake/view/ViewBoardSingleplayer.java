@@ -31,7 +31,7 @@ public class ViewBoardSingleplayer extends ViewBoard  implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		
+		System.out.print("enter");
 		if (game.isEnded()) {
 			showButtons();
 		}

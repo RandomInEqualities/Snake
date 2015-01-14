@@ -180,8 +180,8 @@ public class ViewBoard extends JPanel {
 		}
 	}
 	
-	/* a: Current piece compare to adjacent column, b: Current piece compare to adjacent row, 
-	 * c/d: Outer rows, e/f: Outer columns, g/h: Corner in board.
+	/* a: Current piece compared to adjacent column, b: Current piece compared to adjacent row, 
+	 * c/d: Outer rows, e/f: Outer columns, g/h: Corners of the board.
 	 * see more info in report.
 	 */
 	protected boolean isSnakeCorner(String corner, Field current, Field front, Field behind, Board board) {
@@ -210,7 +210,7 @@ public class ViewBoard extends JPanel {
 				||current.getRow() == c && current.getColumn()+a == behind.getColumn() && front.getRow() == d
 				||current.getColumn() == e && current.getRow()+b == front.getRow() && behind.getColumn() == f //piece in the last column
 				||current.getColumn() == e && current.getRow()+b == behind.getRow() && front.getColumn() == f
-				||current.getColumn() == e && current.getRow() == c && w == g && x == h //piece in corner
+				||current.getColumn() == e && current.getRow() == c && w == g && x == h //piece in corner of the board
 				||current.getColumn() == e && current.getRow() == c && y == g && z == h;
 		return isCorner;
 	}
@@ -243,6 +243,7 @@ public class ViewBoard extends JPanel {
 	}
 	
 	protected void drawGameOver(Graphics2D context, Board board) {
+		context.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		Rectangle boardRectangle = getRectangleForBoard(board);
 		Rectangle popupRectangle = getRectangleForPopUp(board);
 		
@@ -299,6 +300,7 @@ public class ViewBoard extends JPanel {
 		if (!showingButtons) {
 			add(buttonPlayAgain);
 			add(buttonMenu);
+			showingButtons = true;
 			validate();
 		}
 	}
@@ -307,6 +309,7 @@ public class ViewBoard extends JPanel {
 		if (showingButtons) {
 			remove(buttonPlayAgain);
 			remove(buttonMenu);
+			showingButtons = false;
 			validate();
 		}
 	}

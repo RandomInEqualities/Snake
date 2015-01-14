@@ -24,7 +24,6 @@ public class Control extends KeyAdapter implements ActionListener{
 		this.view = view;
 		view.addKeyListener(this);
 		
-		//boardControl = new ControlBoardSingleplayer(game, view, view.getViewBoard());
 		menuControl = new ControlMenu(view);
 		menuControlsControl = new ControlControls(view);
 		
@@ -35,7 +34,6 @@ public class Control extends KeyAdapter implements ActionListener{
 
 	@Override
 	public void keyPressed(KeyEvent event) {
-		
 		if (event == null) {
 			throw new NullPointerException();
 		}

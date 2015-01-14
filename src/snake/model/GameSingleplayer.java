@@ -26,7 +26,7 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 	private State state;
 	private Board board;
 	private Snake snake;
-	private int score;
+	private int score, speedIncrease;
 	private Food food;
 	private boolean isWon = false;
 	private boolean isLost = false;
@@ -48,7 +48,7 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 		// Create a timer object that send an ActionEvent to this class, in a periodic interval.
 		this.timer = new Timer(TIMER_UPDATE_INTERVAL, this);
 		this.timer.setInitialDelay(TIMER_INITIAL_DELAY);
-		
+		this.speedIncrease = 0;
 		reset();
 	}
 	
@@ -143,6 +143,7 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 		state = State.START;
 		score = 0;
 		food = Food.generateRandomFood(snake, board);
+		timerUpdateInterval -= speedIncrease;
 		timer.stop();
 	}
 	
@@ -173,6 +174,10 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 		boolean snakeEatsFood = newHeadPosition.equals(food.getPosition());
 		if (snakeEatsFood) {
 			score++;
+			if(score % 5 == 0){ //acceleration
+				speedIncrease +=5;
+				this.timerUpdateInterval -=5;
+			}
 			food = Food.generateRandomFood(snake, board);
 		}
 		

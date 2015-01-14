@@ -38,13 +38,11 @@ public class View extends JFrame {
 		this.menuPanel = new ViewMenu();
 		this.headerPanel = new ViewHeader(this.audio);
 		this.menuControlsPanel = new ViewControls(this);
-		
 		showMenu();
 		
 		setTitle("Snake");
-		
 		BufferedImage appleIcon = Images.APPLE;
-		Image scaledIcon = appleIcon.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+		Image scaledIcon = appleIcon.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		setIconImage(scaledIcon);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
@@ -93,10 +91,6 @@ public class View extends JFrame {
 			setFrameComponents(headerPanel, menuControlsPanel);
 			state = State.IN_MENU_CONTROLS;
 		}
-	}
-	
-	public boolean inGame() {
-		return state == State.IN_GAME;
 	}
 	
 	public boolean inControls() {
@@ -149,7 +143,6 @@ public class View extends JFrame {
 		// objects won't receive keyboard events!
 		requestFocus();
 	}
-	
 }
 
 

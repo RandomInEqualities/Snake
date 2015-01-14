@@ -1,15 +1,10 @@
 
 package snake.view;
-
 import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
-
 import javax.sound.sampled.*;
-
-import snake.model.Game;
-import snake.model.GameMultiplayer;
-import snake.model.GameSingleplayer;
+import snake.model.*;
 
 
 public class ViewAudio implements Observer {
@@ -116,7 +111,7 @@ public class ViewAudio implements Observer {
 			startSound.open(startSoundStream);
 		} 
 		catch (Exception error) {
-			throw new RuntimeException("unable to load sounds: " + error.getMessage());
+			throw new RuntimeException("Unable to load sounds: " + error.getMessage());
 		}
 	}
 	

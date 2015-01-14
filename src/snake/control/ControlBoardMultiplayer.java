@@ -17,6 +17,7 @@ public class ControlBoardMultiplayer extends KeyAdapter implements ActionListene
 
 	private GameMultiplayer game;
 	private View view;
+	private ViewBoardMultiplayer viewBoard;
 
 	public ControlBoardMultiplayer(GameMultiplayer game, View view, ViewBoardMultiplayer viewBoard) {
 		if (game == null || view == null) {
@@ -24,6 +25,7 @@ public class ControlBoardMultiplayer extends KeyAdapter implements ActionListene
 		}
 		this.game = game;
 		this.view = view;
+		this.viewBoard = viewBoard;
 		
 		view.addKeyListener(this);
 		
@@ -91,9 +93,11 @@ public class ControlBoardMultiplayer extends KeyAdapter implements ActionListene
 		if(e.getActionCommand()=="restart") {
 			game.reset();
 			game.start();
+			view.requestFocus();
 		} 
 		else if (e.getActionCommand()=="menu") {
 			view.showMenu();
+			view.requestFocus();
 		}
 	}
 	

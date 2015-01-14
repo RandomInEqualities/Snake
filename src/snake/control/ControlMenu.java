@@ -13,19 +13,19 @@ public class ControlMenu implements ActionListener {
 
 	private View view;
 	
-	GameSingleplayer gameSingle;
-	ViewBoardSingleplayer boardViewSingle;
-	ViewOptionsSingleplayer menuViewSingle;
-	ViewHeaderSingleplayer headerSingle;
-	ControlBoardSingleplayer boardControlSingle;
-	ControlOptionsSingleplayer menuControlSingle;
+	private GameSingleplayer gameSingle;
+	private ViewBoardSingleplayer boardViewSingle;
+	private ViewOptionsSingleplayer menuViewSingle;
+	private ViewHeaderSingleplayer headerSingle;
+	private ControlBoardSingleplayer boardControlSingle;
+	private ControlOptionsSingleplayer menuControlSingle;
 	
-	GameMultiplayer gameMulti;
-	ViewBoardMultiplayer boardViewMulti;
-	ViewOptionsMultiplayer menuViewMulti;
-	ViewHeaderMultiplayer headerMulti;
-	ControlBoardMultiplayer boardControlMulti;
-	ControlOptionsMultiplayer menuControlMulti;
+	private GameMultiplayer gameMulti;
+	private ViewBoardMultiplayer boardViewMulti;
+	private ViewOptionsMultiplayer menuViewMulti;
+	private ViewHeaderMultiplayer headerMulti;
+	private ControlBoardMultiplayer boardControlMulti;
+	private ControlOptionsMultiplayer menuControlMulti;
 	
 	public ControlMenu(View view) {
 		this.view = view;
@@ -43,7 +43,6 @@ public class ControlMenu implements ActionListener {
 		controls.setActionCommand("controls");
 		quit.addActionListener(this);
 		quit.setActionCommand("quit");
-		
 		gameSingle = new GameSingleplayer();
 		boardViewSingle = new ViewBoardSingleplayer(gameSingle);
 		menuViewSingle = new ViewOptionsSingleplayer(view, gameSingle);

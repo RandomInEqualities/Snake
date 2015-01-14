@@ -22,5 +22,4 @@ public class Driver {
 		// Show the window.
 		view.setVisible(true);
 	}
-	
 }
