@@ -1,6 +1,10 @@
 
 package snake.model;
 
+
+/**
+ * Class representing a position on a game board.
+ */
 public class Field {
 	
 	private final int row;

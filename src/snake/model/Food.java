@@ -6,10 +6,14 @@ import java.util.List;
 import java.util.Random;
 
 
+/**
+ * Class representing a food object that a snake can eat.
+ */
 public class Food {
 	
-	private Field position;
 	private static final Random random = new Random();
+	
+	private final Field position;
 
 	public Food(Field position){
 		if (position == null) {
@@ -41,24 +45,22 @@ public class Food {
 	}
 	
 	private static Food generateFood(List<Field> snakeFields, Board board) {
-		
 		if (snakeFields == null || board == null) {
 			throw new NullPointerException();
 		}
+		
 		int width = board.getWidth();
 		int height = board.getHeight();
-		Field foodPosition = null;
+		Field foodPosition;
 		
 		// If the snake is small we select a random location until the
 		// location is not occupied.
 		if (2*snakeFields.size() < board.getSize()) {
-			int randomDraws = 0;
 			do {
-				randomDraws++;
 				int column = random.nextInt(width);
 				int row = random.nextInt(height);
 				foodPosition = new Field(row, column);
-			} while (snakeFields.contains(foodPosition) && randomDraws < 10);
+			} while (snakeFields.contains(foodPosition));
 		}
 		else {
 			// Find all locations on the board that can contain food.

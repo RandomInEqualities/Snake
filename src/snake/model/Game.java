@@ -1,5 +1,9 @@
 package snake.model;
 
+
+/**
+ * The interface for a generic game.
+ */
 public interface Game {
 	
 	public boolean isStarted();
@@ -12,9 +16,13 @@ public interface Game {
 	public void resume();
 	public void reset();
 	
+	/**
+	 * An event class representing possible game events. Is general enough to handle
+	 * both singleplayer and multiplayer events.
+	 */
 	public class Event {
 		
-		// Type of events.
+		// The events that can happen.
 		public static final int MOVE = 0;
 		public static final int EAT = 1;
 		public static final int LOSE = 2;
@@ -44,10 +52,10 @@ public interface Game {
 		}
 		
 		public Player getPlayer() {
-			if (havePlayer) {
-				return player;
+			if (!havePlayer) {
+				throw new RuntimeException("event has no player");
 			}
-			throw new RuntimeException("event has no player");
+			return player;
 		}
 		
 	}

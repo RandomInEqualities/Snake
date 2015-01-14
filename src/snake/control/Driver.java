@@ -1,25 +1,22 @@
-
 package snake.control;
 
-import java.awt.Dimension;
-import snake.model.GameSingleplayer;
 import snake.view.View;
 
 
-@SuppressWarnings("unused")
+/**
+ * Opens a window for playing the snake game.
+ */
 public class Driver {
 
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
-		
-		// We use the Model-View-Controller pattern to implement a snake game.
-		// In this file we set up the model (game), its view and the control.
-		//GameSinglePlayer game = new GameSinglePlayer();
-		
-		// Create the view which displays the game. It will open a menu where the
-		// user can choose what game they want to play (singleplayer or multiplayer).
+		// The View displays the game. It will open a window with a menu where the user 
+		// can choose what game they want to play. It is possible to choose between 
+		// multiplayer snake and singleplayer snake.
 		View view = new View();
 
-		// Create the controls which controls the game and what happens in menus.
+		// To control listens to input events and control the game with them. It requires
+		// the view window to do this.
 		Control control = new Control(view);
 
 		// Show the window.

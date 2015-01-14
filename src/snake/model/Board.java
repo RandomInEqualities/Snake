@@ -1,16 +1,18 @@
 package snake.model;
 
-import java.awt.Dimension;
 
+/**
+ * Class representing a game board.
+ */
 public class Board {
-
-	private int width;
-	private int height;
 	
 	public static final int MIN_WIDTH = 5;
 	public static final int MAX_WIDTH = 100;
 	public static final int MIN_HEIGHT = 5;
 	public static final int MAX_HEIGHT = 100;
+	
+	private final int width;
+	private final int height;
 	
 	public Board(int width, int height) {
 		if (width < MIN_WIDTH || width > MAX_WIDTH) {
@@ -29,10 +31,6 @@ public class Board {
 	
 	public int getHeight() {
 		return height;
-	}
-	
-	public Dimension getDimension() {
-		return new Dimension(width, height);
 	}
 
 	public int getSize() {

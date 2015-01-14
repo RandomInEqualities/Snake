@@ -325,7 +325,7 @@ public class ViewBoard extends JPanel {
 
 	protected Rectangle getRectangleForBoard(Board board) {
 		Dimension windowSize = getSize();
-		Dimension gameSize = board.getDimension();
+		Dimension gameSize = new Dimension(board.getWidth(), board.getHeight());
 		int fieldSideLength = getFieldSideLength(board);
 
 		int offsetHeight = 10;
@@ -351,7 +351,7 @@ public class ViewBoard extends JPanel {
 	
 	protected int getFieldSideLength(Board board) {
 		Dimension windowSize = getSize();
-		Dimension gameSize = board.getDimension();
+		Dimension gameSize = new Dimension(board.getWidth(), board.getHeight());
 		int fieldWidth = windowSize.width / gameSize.width;
 		int fieldHeight = (windowSize.height-20) / gameSize.height;
 		if (fieldWidth >= fieldHeight) {

@@ -1,10 +1,13 @@
 package snake.model;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
+/**
+ * A snake located on board positions.
+ */
 public class Snake {
 	
 	private ArrayList<Field> positions;
@@ -12,7 +15,7 @@ public class Snake {
 	
 	public Snake() {
 		this.positions = new ArrayList<Field>();
-		this.headDirection = Direction.LEFT;
+		this.headDirection = Direction.RIGHT;
 	}
 
 	public Snake(ArrayList<Field> snake) {
@@ -33,6 +36,9 @@ public class Snake {
 	}
 	
 	public Direction getHeadDirection() {
+		if (positions.size() < 2) {
+			throw new IndexOutOfBoundsException("snake is too small");
+		}
 		return headDirection;
 	}
 	
