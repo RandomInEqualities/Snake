@@ -52,24 +52,23 @@ Snake-spillet er lavet efter et \textit{Model-View-Controller}-design (MVC), hvo
 
 \subsection{Model}
 Spillets model består af en række klasser, der tilsammen udgør selve spillets funktioner og objekter.
-Klassen \textit{Field} bruges til at definere et objekt, som opdeler banen og repræsenterer et felt i banen. Den fungerer på samme måde som \textit{Point}-objekt-klassen, hvor koordinatsystemet starter oppe i venstre hjørne. Den eneste forskel mellem \textit{Point}- og \textit{Field}-klassen, er hvordan man kommer frem til et punkt. \textit{Point}-klassen går først ud ad x-aksen og derefter ned ad y-aksen, hvorimod \textit{Field}-klassen gør det i omvendt rækkefølge. Da hele vores spilleplade er delt op i rows og column frem for x og y, er \textit{Field} lettere at bruge for at undgå forvirring (????).
+Klassen \textit{Field} bruges til at definere et objekt, som opdeler banen og repræsenterer et felt i banen. Den fungerer på samme måde som \textit{Point}-objekt-klassen, hvor koordinatsystemet starter oppe i venstre hjørne. Den eneste forskel mellem \textit{Point}- og \textit{Field}-klassen, er hvordan man kommer frem til et punkt. \textit{Point}-klassen går først ud ad x-aksen og derefter ned ad y-aksen, hvorimod \textit{Field}-klassen gør det i omvendt rækkefølge. Da hele vores spilleplade er delt op i rows og column frem for x og y, er \textit{Field} lettere at bruge for at undgå forvirring, når man er vant til, hvordan dobbeltarrays opdeler deres rows og colums.
+
+Funktionenen \textit{equals} er defineret i denne klasse, og bruges til at undersøge om to objekter ligger på samme felt, f.eks. slangens hoved og æblet. Æblet bliver oprettet i klassen \textit{Game}, hvor datafeltet \textit{position} afgør dets nuværende position gennem Fields. 
 \linebreak
 
-Funktionenen \textit{equals} er defineret i denne klasse, og bruges til at undersøge om to objekter ligger på samme felt, f.eks. slangens hoved og æblet. Æblet er defineret i klassen \textit{Food}, hvor datafeltet \textit{position} afgør dets nuværende position. 
+Slangen selv er defineret i klassen \textit{Snake}. Slangens krop består af en række felter, hvoraf det første er hovedet, og de resterende er kroppen (inklusiv halen til sidst). Koordinaterne for disse felter er gemt som elementer i en ArrayList kaldet \textit{positions}. Det første element er slangens første led, hovedet, andet element er slangens andet led osv. Når et nyt led tilføjes, tilføjes et nyt element til listen. Dette bruges, når slangen spiser et æble. Her ligger slangen stille, mens et nyt hoved tilføjes i æblets felt i den retning, der er trykket. 
 
-Slangen selv er defineret i klassen \textit{Snake}. Slangens krop består af en række felter, hvoraf det første er hovedet, og de resterende er kroppen. Koordinaterne for disse felter er gemt som elementer i en LinkedList (???) kaldet \textit{positions}. Det første element er slangens første led, hovedet, andet element er slangens andet led osv. Når et nyt led tilføjes, tilføjes et nyt element til listen. Dette bruges, når slangen spiser et æble. Her ligger slangen stille, mens et nyt hoved tilføjes i æblets felt i den retning, der er trykket. 
-((((Vi bruger linkedlist i stedet for arraylist, som vi startede med, fordi når man hver gang tilføjer et nyt hovede, så får hovedet den første plads, og alle andre elementer flyttes en gang tilbage. Når slangen er stor nok, kan dette godt komme til at lacke spillet lidt. Derfor er linkedlist helt klart mest optimalt at bruge, da den bare tilføjer et nyt element forrest uden at rykke alle de andre elementer.)))) - evaluering?
+I \textit{Snake}-constructoren bliver slangens hovede og hale oprettet, hvor hovedet bliver placeret i banens centrum, og halen bliver placeret ved siden af til højre.
 
-Funktionen \textit{setupStartingSnake} opretter en slange ved at beregne banens centrum, og tilføje to elementer til \textit{positions}-listen: centrumfeltet og feltet til højre for dette felt.
+I \textit{move}-metoden bruger vi Action-klassen, der er oprettet som en enum, og betegner om slangen spiser, er død eller bevæger sig (hhv. EAT, KILL, MOVE). I \textit{move}-metoden tjekker den for, hvis der er mad på hovedets placering, for så skal Action-statementet være EAT, ellers skal hele slangens positioner tjekkes for om den rammer sig selv, og så vil Action-statementet være KILL. Til sidst hvis spillet ikke er slut, så skal hele slangens krop rykke en plads frem, og hovedet rykkes hen på den position man har trykket på keyboardet.
+\linebreak
 
-Selve banen er defineret i \textit{Board}-klassen, som har datafelterne \textit{height} og \textit{width}. Funktionen \textit{wrap} undersøger om slangen er ved at bevæge sig ud over banens grænser. Er dette tilfældet, fortsætter slangen i stedet på den modsatte side af banen.
+I \textit{Game}-klassen er der en \textit{checkAction}-metode, der tjekker om slangen spiser eller dør. Hvis Action-statementet er EAT, så tilføjer den madens position som det nye hoved, incrementer scoren, genererer ny mad og sætter Action-statement til MOVE.
+Ellers hvis Action-statementet er KILL, så bliver scores reset'et og spillet stopper.
+Derudover er der en \textit{generateFood}-metode, som sikre, at maden altid placeres på et gyldigt felt. Så længe slangen er under en hvis størrelse, placeres maden på et tilfældigt felt, hvorefter det sikres at feltet ikke er optaget af slangen. Er den det, placeres maden et nyt sted.
 
-Når \textit{move}-funktionen kaldes, undersøges der først, om den nye retning er modsatrettet slangens nuværende retning. Er dette tilfældet, sker intet. Er retningen gyldig, undersøges der om der ligger et æble på den nye plads. Hvis der gør, tilføjes et nyt element i ArrayListen \textit{positions}.
-Der undersøges næst, om slangen rammer sig selv, ved at sammenligne om det ønskede felt har samme koordinater som et af slangens led, udover halen. Er dette tilfældet, sættes spillets tilstand til \textit{LOST}, hvorved spillet slutter. Hvis ikke, flytter slangen sin position, således at hovedet indtager et nyt felt, andet led tager hovedets tidligere plads, tredje led tager andet leds plads osv. Dette gøres ved, at ArrayListen opdateres bagfra, således at halen tager næstsidste leds koordinater, næstsidste led tager tredjesidste led osv. Når dette er gjort, tager hovedet den nye position, som afhænger af hvilket input der gives.
-
-For at sikre, at maden altid placeres på et gyldigt felt, benyttes funktionen generateRandomFood i Food-klassen. Så længe slangen er under en hvis størrelse, placeres maden på et tilfældigt felt, hvorefter det sikres at feltet ikke er optaget af slangen. Er den det, placeres maden et nyt sted.
-
-Er slangen større end $2*bredde*højde$, laves en ArrayListe over de felter, maden kan placeres på, hvorefter maden placeres tilfældigt på en af disse felter.
+Er slangen større end end en tredjedel af spillets størrelse, laves et dobbelt for-loop for højde og bredde af spillet, der tjekker om området er frit. Den tilføjer de felter, maden kan placeres på i en ArrayListe, hvorefter maden placeres tilfældigt på et af disse felter.
 
 \subsection{View (Brugergrænseflade)}
 Brugerfladen er samlet i klassen \textit{View} der [EXTENDS] \textit{JFrame}. I \textit{View} oprettes et score-panel, der placeres øverst i vinduet, og et board-panel, der placeres lige under det. Board-panelet viser selve spillepladen med slangen og æblet, der begge er vist ved farvede firkanter, som repræsenterer felterne i brættet, hvor slangen og æblet ligger.
@@ -129,6 +128,8 @@ En anden metode er at gøre vinduet justerbart. Denne løsning er mere brugerven
 -brug af observer - får model-view-controller til at gå op
 -Flere opgaver er givet til “game”-klassen frem for de andre klasser
 
+(??) Vi bruger linkedlist i stedet for arraylist, som vi startede med, fordi når man hver gang tilføjer et nyt hovede, så får hovedet den første plads, og alle andre elementer flyttes en gang tilbage. Når slangen er stor nok, kan dette godt komme til at lacke spillet lidt. Derfor er linkedlist helt klart mest optimalt at bruge, da den bare tilføjer et nyt element forrest uden at rykke alle de andre elementer.
+
 \chapter{Avanceret Snake}
 \section{Afgrænsning}
 I den avancerede del af spillet skal slangen bevæge sig ved hjælp af en timer og altså ikke vente på input fra tastaturet. Input fra tastaturet ændrer derimod kun retning eller sætter farten op. Derudover skal slangen accelerere - dvs. slangens hastighed øges efter et vis antal samlede æbler, hvilket gør spillet mere udfordrende og mindre ensartet. Vi har derudover også valgt at lave spillet, som skulle det udgives helt færdiggjort. Derfor er det holdt simpelt med kun få funktioner. Der er derimod lagt fokus på høj kvalitet af spillets grafik og brugervenlighed med hensyn til navigering. Brugergrænsefladen skal tilpasses brugerens skærmstørrelse, ønskede vinduesstørelse og brugerens operativsystem. Det skal også være muligt at navigere både igennem tastatur-input og mussekliks-input. Brugeren skal derudover også have frihed til at vælge slangens hastighed og farve og banens størrelse - stadig uden at dette kommer til at hæmme spillets udseende eller kvalitet. Simpel Snakes bevægelsesfunktion, der ikke er afhængig af en timer, er beholdt som en "kindergarten"-sværhedsgrad, som brugeren kan vælge i menuen.
@@ -149,6 +150,11 @@ I \textit{Model}-pakken findes den abstrakte klasse \textit{Game}, som klasserne
 \section{Implementering}
 
 \subsection{Model}
+Selve banen er defineret i \textit{Board}-klassen, som har datafelterne \textit{height} og \textit{width}. Funktionen \textit{wrap} undersøger om slangen er ved at bevæge sig ud over banens grænser. Er dette tilfældet, fortsætter slangen i stedet på den modsatte side af banen.
+
+Når \textit{move}-funktionen kaldes, undersøges der først, om den nye retning er modsatrettet slangens nuværende retning. Er dette tilfældet, sker intet. Er retningen gyldig, undersøges der om der ligger et æble på den nye plads. Hvis der gør, tilføjes et nyt element i ArrayListen \textit{positions}.
+Der undersøges næst, om slangen rammer sig selv, ved at sammenligne om det ønskede felt har samme koordinater som et af slangens led, udover halen. Er dette tilfældet, sættes spillets tilstand til \textit{LOST}, hvorved spillet slutter. Hvis ikke, flytter slangen sin position, således at hovedet indtager et nyt felt, andet led tager hovedets tidligere plads, tredje led tager andet leds plads osv. Dette gøres ved, at ArrayListen opdateres bagfra, således at halen tager næstsidste leds koordinater, næstsidste led tager tredjesidste led osv. Når dette er gjort, tager hovedet den nye position, som afhænger af hvilket input der gives.
+
 
 \subsection{View (Brugergrænseflade)}
 Al grafik, som ikke er fra \textit{Swing}-biblioteket, er importeret i en fælles klasse \textit{Image}, der gør det muligt for enhver view-klasse at få fat i alle billeder. På samme måde er selv-definerede farver oprettet i klassen Colors.
