@@ -98,12 +98,12 @@ public class ViewMenu extends JPanel {
 		}
 	}
 	
-	public void setCommonButtonParameters(JButton button){
+	public static void setCommonButtonParameters(JButton button){
 		button.setPreferredSize(new Dimension(140, 50));
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	}
 	
-	public void setOptionButton(JButton button){
+	public static void setOptionButton(JButton button){
 		setCommonButtonParameters(button);
 		button.setBorderPainted(false);
 	}

@@ -9,29 +9,22 @@ import javax.swing.border.*;
 import snake.model.*;
 import snake.view.*;
 
-public class ControlMenuSingleplayer extends KeyAdapter implements ActionListener {
-	private GameSinglePlayer game;
+public class ControlMenuOptions extends KeyAdapter implements ActionListener {
+	private Game game;
 	private View view;
-	private ViewMenuSingleplayer viewMenuSingleplayer;
-	private JButton play, back, kindergarten, easy, intermediate, hard, green, blue, red, yellow;
+	private ViewMenuOptions viewMenuOptions;
+	private JButton play, back, kindergarten, easy, intermediate, hard;
 	private Border thickBorder;
 	
-	public ControlMenuSingleplayer(GameSinglePlayer game, View view) {
-		this.game = game;
+	public ControlMenuOptions(View view, Game game) {
 		this.view = view;
-		this.viewMenuSingleplayer = view.getViewMenuSingleplayer();
 		this.view.addKeyListener(this);
-		play = this.viewMenuSingleplayer.getPlayButton();
-		back = this.viewMenuSingleplayer.getBackButton();
-		kindergarten = this.viewMenuSingleplayer.getKindergartenButton();
-		easy = this.viewMenuSingleplayer.getEasyButton();
-		intermediate = this.viewMenuSingleplayer.getIntermediateButton();
-		hard = this.viewMenuSingleplayer.getHardButton();
-		green = this.viewMenuSingleplayer.getGreenButton();
-		blue = this.viewMenuSingleplayer.getBlueButton();
-		red = this.viewMenuSingleplayer.getRedButton();
-		yellow = this.viewMenuSingleplayer.getYellowButton();
-		game.disableTimedMovement(); //default difficulty = kindergarten
+		play = this.viewMenuOptions.getPlayButton();
+		back = this.viewMenuOptions.getBackButton();
+		kindergarten = this.viewMenuOptions.getKindergartenButton();
+		easy = this.viewMenuOptions.getEasyButton();
+		intermediate = this.viewMenuOptions.getIntermediateButton();
+		hard = this.viewMenuOptions.getHardButton();
 		
 		play.addActionListener(this);
 		back.addActionListener(this);
@@ -39,22 +32,14 @@ public class ControlMenuSingleplayer extends KeyAdapter implements ActionListene
 		easy.addActionListener(this);
 		intermediate.addActionListener(this);
 		hard.addActionListener(this);
-		green.addActionListener(this);
-		blue.addActionListener(this);
-		red.addActionListener(this);
-		yellow.addActionListener(this);
-		
+
 		play.setActionCommand("play");
 		back.setActionCommand("back");
 		kindergarten.setActionCommand("kindergarten");
 		easy.setActionCommand("easy");
 		intermediate.setActionCommand("intermediate");
 		hard.setActionCommand("hard");
-		green.setActionCommand("green");
-		blue.setActionCommand("blue");
-		red.setActionCommand("red");
-		yellow.setActionCommand("yellow");
-		
+
 		thickBorder = new LineBorder(Colors.PANEL_COLOUR, 3);
 	}
 
@@ -81,25 +66,9 @@ public class ControlMenuSingleplayer extends KeyAdapter implements ActionListene
 		} 
 		else if (event.getActionCommand() == "back") {
 			view.showMenu();
-			viewMenuSingleplayer.setValid(true);
-			viewMenuSingleplayer.setFilled(true);
+			viewMenuOptions.setValid(true);
+			viewMenuOptions.setFilled(true);
 		} 
-		else if (event.getActionCommand() == "green") {
-			setActiveButton(green, blue, red, yellow);
-			view.getViewBoard().setSnakeColor(new Color(84, 216, 81));
-		} 
-		else if (event.getActionCommand() == "blue") {
-			setActiveButton(blue, green, red, yellow);
-			view.getViewBoard().setSnakeColor(new Color(80, 152, 218));
-		} 
-		else if (event.getActionCommand() == "red"){
-			setActiveButton(red, green, blue, yellow);
-			view.getViewBoard().setSnakeColor(new Color(237, 75, 66));
-		} 
-		else if (event.getActionCommand() == "yellow"){
-			setActiveButton(yellow, green, blue, red);
-			view.getViewBoard().setSnakeColor(new Color(243, 196, 67));
-		}
 	}
 
 	@Override
@@ -107,16 +76,12 @@ public class ControlMenuSingleplayer extends KeyAdapter implements ActionListene
 		if (event == null) {
 			throw new NullPointerException();
 		}
-		
-		if (view.getViewState() != View.State.IN_MENU_SINGLEPLAYER) {
-			return;
-		}
 
 		switch (event.getKeyCode()) {
 			case KeyEvent.VK_BACK_SPACE:
 				view.showMenu();
-				viewMenuSingleplayer.setValid(true);
-				viewMenuSingleplayer.setFilled(true);
+				viewMenuOptions.setValid(true);
+				viewMenuOptions.setFilled(true);
 				break;
 			case KeyEvent.VK_ENTER:
 				playGame();

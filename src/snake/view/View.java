@@ -32,7 +32,7 @@ public class View extends JFrame {
 	private ViewMenuSingleplayer menuSingleplayerPanel;
 	private ViewMenuMultiplayer menuMultiplayerPanel;
 	private ViewMenuControls menuControlsPanel;
-	private ViewBoard boardPanel;
+	private ViewBoardSinglePlayer boardPanel;
 	private Audio audio;
 	
 	public View(GameSinglePlayer game) {
@@ -45,7 +45,7 @@ public class View extends JFrame {
 		this.menuSingleplayerPanel = new ViewMenuSingleplayer(this, game);
 		this.menuMultiplayerPanel = new ViewMenuMultiplayer(this, game);
 		this.menuControlsPanel = new ViewMenuControls(this);
-		this.boardPanel = new ViewBoard(game, this);
+		this.boardPanel = new ViewBoardSinglePlayer(game);
 		this.audio = new Audio(game);
 		
 		showMenu();
@@ -132,7 +132,7 @@ public class View extends JFrame {
 		return menuControlsPanel;
 	}
 	
-	public ViewBoard getViewBoard() {
+	public ViewBoardSinglePlayer getViewBoard() {
 		return boardPanel;
 	}
 	
