@@ -171,7 +171,7 @@ public class ViewBoardBase extends JPanel {
 			else if (isSnakeCorner("BottomLeft", current, front, behind, board)) {
 				body = snakeBodyBL.get(colorIndex);;
 			} 
-			else if (isSnakeCorner("BottomLeft", current, front, behind, board)) {
+			else if (isSnakeCorner("BottomRight", current, front, behind, board)) {
 				body = snakeBodyBR.get(colorIndex);;
 			}
 			Rectangle bodyRect = getRectangleForField(snakeArray.get(index), board);
