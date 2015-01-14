@@ -20,6 +20,7 @@ public class ViewBoardSinglePlayer extends ViewBoardBase  implements Observer {
 		super();
 		this.game = game;
 		this.snakeColor = DEFAULT_SNAKE_COLOR;
+		game.addObserver(this);
 	}
 	
 	public void setSnakeColor(Color color) {
@@ -35,7 +36,6 @@ public class ViewBoardSinglePlayer extends ViewBoardBase  implements Observer {
 		else {
 			removeButtons();
 		}
-		
 		repaint();
 	}
 

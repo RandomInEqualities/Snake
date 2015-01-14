@@ -14,7 +14,7 @@ public class Control extends KeyAdapter implements ActionListener{
 	private View view;
 	
 	@SuppressWarnings("unused")
-	private ControlBoard boardControl;
+	private ControlBoardSinglePlayer boardControl;
 	@SuppressWarnings("unused")
 	private ControlMenu menuControl;
 	@SuppressWarnings("unused")
@@ -32,7 +32,7 @@ public class Control extends KeyAdapter implements ActionListener{
 		this.view = view;
 		view.addKeyListener(this);
 		
-		boardControl = new ControlBoard(game, view);
+		boardControl = new ControlBoardSinglePlayer(game, view, view.getViewBoard());
 		menuControl = new ControlMenu(view);
 		menuSingleplayerControl = new ControlMenuSingleplayer(game, view);
 		menuMultiplayerControl = new ControlMenuMultiplayer(game, view);
@@ -56,7 +56,6 @@ public class Control extends KeyAdapter implements ActionListener{
 				break;
 			case KeyEvent.VK_ESCAPE:
 				view.showMenu();
-				view.getViewBoard().removeButtons();
 				break;
 			default:
 				break;

@@ -45,14 +45,30 @@ public class ViewBoardBase extends JPanel {
 	public ViewBoardBase() {
 		super();
 		
-		buttonPlayAgain = new JButton(new ImageIcon(Images.BUTTON_PLAY_AGAIN));
-		buttonMenu = new JButton(new ImageIcon(Images.BUTTON_MENU));
-		showingButtons = false;
+		this.buttonPlayAgain = new JButton(new ImageIcon(Images.BUTTON_PLAY_AGAIN));
+		this.buttonMenu = new JButton(new ImageIcon(Images.BUTTON_MENU));
+		this.showingButtons = false;
 		
 		ViewMenu.setCommonButtonParameters(buttonPlayAgain);
 		ViewMenu.setCommonButtonParameters(buttonMenu);
 
 		setBackground(Colors.PANEL_COLOUR);
+		
+		this.snakeColors = new ArrayList<Color>();
+		this.snakeBodyBL = new ArrayList<BufferedImage>();
+		this.snakeBodyBR = new ArrayList<BufferedImage>();
+		this.snakeBodyTL = new ArrayList<BufferedImage>();
+		this.snakeBodyTR = new ArrayList<BufferedImage>();
+		this.snakeBodyVertical = new ArrayList<BufferedImage>();
+		this.snakeBodyHorizontal = new ArrayList<BufferedImage>();
+		this.snakeHeadUp = new ArrayList<BufferedImage>();
+		this.snakeHeadDown = new ArrayList<BufferedImage>();
+		this.snakeHeadLeft = new ArrayList<BufferedImage>();
+		this.snakeHeadRight = new ArrayList<BufferedImage>();
+		this.snakeTailUp = new ArrayList<BufferedImage>();
+		this.snakeTailDown = new ArrayList<BufferedImage>();
+		this.snakeTailLeft = new ArrayList<BufferedImage>();
+		this.snakeTailRight = new ArrayList<BufferedImage>();
 	}
 	
 	public JButton getButtonPlayAgain() {
@@ -363,6 +379,7 @@ public class ViewBoardBase extends JPanel {
 			return;
 		}
 		// Generate images with the colour.
+		snakeColors.add(color);
 		snakeBodyBL.add(colourSnakeImage(Images.SNAKE_CORNER_BL, color));
 		snakeBodyBR.add(colourSnakeImage(Images.SNAKE_CORNER_BR, color));
 		snakeBodyTL.add(colourSnakeImage(Images.SNAKE_CORNER_TL, color));
@@ -388,8 +405,11 @@ public class ViewBoardBase extends JPanel {
 			for (int y = 0; y < image.getHeight(); y++) {
 				// Do not colour the eye pixels.
 				if (image.getRGB(x, y) != -13547430){ 
-					int[] colour = {red, green, blue};
-					raster.setPixel(x, y, colour);
+					int[] pixel = raster.getPixel(x, y, (int[]) null);
+					pixel[0] = red;
+					pixel[1] = green;
+					pixel[2] = blue;
+					raster.setPixel(x, y, pixel);
 				}
 			}
 		}

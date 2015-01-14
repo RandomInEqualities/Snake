@@ -23,6 +23,7 @@ public class ViewBoardMultiPlayer extends ViewBoardBase  implements Observer {
 		this.game = game;
 		this.snakeColorPlayerOne = DEFAULT_SNAKE_COLOR_PLAYER_ONE;
 		this.snakeColorPlayerTwo = DEFAULT_SNAKE_COLOR_PLAYER_TWO;
+		game.addObserver(this);
 	}
 	
 	public void setSnakeColor(Player player, Color color) {

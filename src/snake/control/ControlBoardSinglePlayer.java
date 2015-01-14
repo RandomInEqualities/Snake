@@ -43,6 +43,7 @@ public class ControlBoardSinglePlayer extends KeyAdapter implements ActionListen
 		switch (event.getKeyCode()) {
 			case KeyEvent.VK_UP:
 				game.move(Direction.UP);
+				break;
 			case KeyEvent.VK_DOWN:
 				game.move(Direction.DOWN);
 				break;

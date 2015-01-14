@@ -44,6 +44,7 @@ public class ControlBoardMultiPlayer extends KeyAdapter implements ActionListene
 		switch (event.getKeyCode()) {
 			case KeyEvent.VK_UP:
 				game.move(Player.ONE, Direction.UP);
+				break;
 			case KeyEvent.VK_DOWN:
 				game.move(Player.ONE, Direction.DOWN);
 				break;
@@ -55,6 +56,7 @@ public class ControlBoardMultiPlayer extends KeyAdapter implements ActionListene
 				break;
 			case KeyEvent.VK_W:
 				game.move(Player.TWO, Direction.UP);
+				break;
 			case KeyEvent.VK_S:
 				game.move(Player.TWO, Direction.DOWN);
 				break;

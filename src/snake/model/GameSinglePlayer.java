@@ -136,6 +136,8 @@ public class GameSinglePlayer extends Observable implements Game , ActionListene
 	@Override
 	public void reset() {
 		// Set the game variables.
+		isLost = false;
+		isWon = false;
 		snake.setup(getInitialSnake());
 		state = State.START;
 		score = 0;
