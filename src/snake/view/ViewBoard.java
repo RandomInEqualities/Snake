@@ -119,7 +119,6 @@ public class ViewBoard extends JPanel implements Observer {
 		int lastRow = game.getBoard().getHeight()-1;
 		int lastColumn = game.getBoard().getWidth()-1;
 		BufferedImage body = null;
-		System.out.println("hej");
 		//Draw body
 		for (int i = 1; i<snake.getPositions().size()-1; i++){ //run through every body piece
 			Rectangle bodyRectangle = getRectangleForField(snake.getPositions().get(i)); //the piece' position
@@ -205,7 +204,6 @@ public class ViewBoard extends JPanel implements Observer {
 		context.setColor(Colors.POPUP_COLOUR);
 		context.fillRect(xPopup, yPopup, widthPopup, heightPopup);
 		context.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-
 	}
 	private void drawGameLost(Graphics2D context) {
 		drawGameOver(context);
@@ -224,8 +222,8 @@ public class ViewBoard extends JPanel implements Observer {
 	}
 	
 	private void drawGameOver(Graphics2D context) {
-		view.getHeader().hideScore();
-		view.getHeader().repaint();
+		view.getHeaderSingleplayer().hideScore();
+		view.getHeaderSingleplayer().repaint();
 		drawPopup(context);
 
 		// Text

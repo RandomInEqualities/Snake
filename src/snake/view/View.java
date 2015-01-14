@@ -28,17 +28,20 @@ public class View extends JFrame {
 	private State state;
 	private ViewHeader headerPanel;
 	private ViewMenu menuPanel;
+	private ViewHeaderSingleplayer headerPanelSingleplayer;
 	private ViewMenuSingleplayer menuSingleplayerPanel;
 	private ViewMenuMultiplayer menuMultiplayerPanel;
 	private ViewMenuControls menuControlsPanel;
 	private ViewBoard boardPanel;
 	private Audio audio;
 	
-	public View() {
+	public View(GameSinglePlayer game) {
 		super();
 		
 		this.menuPanel = new ViewMenu();
-		this.headerPanel = new ViewHeader(this, game, false);
+		this.headerPanel = new ViewHeader(this);
+		this.headerPanelSingleplayer = new ViewHeaderSingleplayer(this, game, true);
+		//this.headerMultiplayer = new ViewHeaderMultiplayer(this, game, true);
 		this.menuSingleplayerPanel = new ViewMenuSingleplayer(this, game);
 		this.menuMultiplayerPanel = new ViewMenuMultiplayer(this, game);
 		this.menuControlsPanel = new ViewMenuControls(this);
@@ -61,8 +64,7 @@ public class View extends JFrame {
 	
 	public void showGame() {
 		if (state != State.IN_GAME) {
-			setFrameComponents(headerPanel, boardPanel);
-			headerPanel.showScore();
+			setFrameComponents(headerPanelSingleplayer, boardPanel);
 			state = State.IN_GAME;
 		}
 	}
@@ -70,7 +72,6 @@ public class View extends JFrame {
 	public void showMenu() {
 		if (state != State.IN_MENU) {
 			setFrameComponents(headerPanel, menuPanel);
-			headerPanel.hideScore();
 			state = State.IN_MENU;
 		}
 	}
@@ -78,7 +79,6 @@ public class View extends JFrame {
 	public void showSingleplayerMenu() {
 		if (state != State.IN_MENU_SINGLEPLAYER) {
 			setFrameComponents(headerPanel, menuSingleplayerPanel);
-			headerPanel.hideScore();
 			state = State.IN_MENU_SINGLEPLAYER;
 		}
 	}
@@ -86,7 +86,6 @@ public class View extends JFrame {
 	public void showMultiplayerMenu(){
 		if (state != State.IN_MENU_MULTIPLAYER) {
 			setFrameComponents(headerPanel, menuMultiplayerPanel);
-			headerPanel.hideScore();
 			state = State.IN_MENU_MULTIPLAYER;
 		}
 	}
@@ -94,7 +93,6 @@ public class View extends JFrame {
 	public void showControlsMenu() {
 		if (state != State.IN_MENU_CONTROLS) {
 			setFrameComponents(headerPanel, menuControlsPanel);
-			headerPanel.hideScore();
 			state = State.IN_MENU_CONTROLS;
 		}
 	}
@@ -145,6 +143,10 @@ public class View extends JFrame {
 	
 	public ViewHeader getHeader(){
 		return headerPanel;
+	}
+	
+	public ViewHeaderSingleplayer getHeaderSingleplayer(){
+		return headerPanelSingleplayer;
 	}
 	
 	@Override
