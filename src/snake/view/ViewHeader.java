@@ -19,6 +19,10 @@ public class ViewHeader extends JPanel {
 	private JButton sound;
 
 	public ViewHeader(Audio audio) {
+		if (audio == null) {
+			throw new NullPointerException();
+		}
+		this.audio = audio;
 		this.logo = Images.LOGO.getScaledInstance(DEFAULT_LOGO_WIDTH, DEFAULT_LOGO_HEIGHT, Image.SCALE_SMOOTH);
 		this.sound = new JButton();
 		ViewMenu.setOptionButton(sound);

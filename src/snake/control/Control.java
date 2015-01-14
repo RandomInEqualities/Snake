@@ -54,8 +54,6 @@ public class Control extends KeyAdapter implements ActionListener{
 			case KeyEvent.VK_ESCAPE:
 				view.showMenu();
 				break;
-			case KeyEvent.VK_T:
-				view.getViewMenu().repaint();
 			default:
 				break;
 		}

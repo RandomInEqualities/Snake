@@ -10,8 +10,6 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.*;
 
-import snake.model.*;
-
 
 public class View extends JFrame {
 	
@@ -61,6 +59,13 @@ public class View extends JFrame {
 		requestFocus();
 	}
 	
+	public void showMenu() {
+		if (state != State.IN_MENU) {
+			setFrameComponents(headerPanel, menuPanel);
+			state = State.IN_MENU;
+		}
+	}
+	
 	public void showGame(ViewBoardSingleplayer boardView) {
 		if (state != State.IN_GAME) {
 			setFrameComponents(headerPanel, boardView);
@@ -75,23 +80,16 @@ public class View extends JFrame {
 		}
 	}
 	
-	public void showMenu() {
-		if (state != State.IN_MENU) {
-			setFrameComponents(headerPanel, menuPanel);
-			state = State.IN_MENU;
-		}
-	}
-	
-	public void showSingleplayerMenu(ViewMenuSingleplayer menu) {
+	public void showMenu(ViewHeaderSingleplayer header, ViewMenuSingleplayer menu) {
 		if (state != State.IN_MENU_SINGLEPLAYER) {
-			setFrameComponents(headerPanel, menu);
+			setFrameComponents(header, menu);
 			state = State.IN_MENU_SINGLEPLAYER;
 		}
 	}
 	
-	public void showMultiplayerMenu(ViewMenuMultiplayer menu){
+	public void showMenu(ViewHeaderMultiplayer header, ViewMenuMultiplayer menu){
 		if (state != State.IN_MENU_MULTIPLAYER) {
-			setFrameComponents(headerPanel, menu);
+			setFrameComponents(header, menu);
 			state = State.IN_MENU_MULTIPLAYER;
 		}
 	}

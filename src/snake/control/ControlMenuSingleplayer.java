@@ -11,6 +11,7 @@ import snake.view.*;
 
 public class ControlMenuSingleplayer extends ControlMenuOptions {
 	
+	private Game game;
 	private View view;
 	private ViewMenuSingleplayer viewMenuSingleplayer;
 	private JButton green, blue, red, yellow;
@@ -19,6 +20,7 @@ public class ControlMenuSingleplayer extends ControlMenuOptions {
 	public ControlMenuSingleplayer(GameSingleplayer game, View view, ViewMenuSingleplayer menuView, ViewBoardSingleplayer boardView) {
 		super(view, menuView);
 		this.view = view;
+		this.game = game;
 		this.boardView = boardView;
 		this.viewMenuSingleplayer = menuView;
 		this.view.addKeyListener(this);
@@ -103,6 +105,7 @@ public class ControlMenuSingleplayer extends ControlMenuOptions {
 			int inputHeight = Integer.parseInt(inputH);
 			if (inputWidth >= Board.MIN_WIDTH && inputWidth <= Board.MAX_WIDTH && inputHeight >= Board.MIN_HEIGHT && inputHeight <= Board.MAX_HEIGHT) {
 				view.showGame(boardView);
+				game.start();
 				viewMenuSingleplayer.setValid(true);
 				viewMenuSingleplayer.setFilled(true);
 			} 

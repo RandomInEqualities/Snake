@@ -9,14 +9,19 @@ import snake.model.*;
 import snake.view.*;
 
 public class ControlMenuMultiplayer extends ControlMenuOptions {
-	private GameSingleplayer game;
+
+	private Game game;
 	private View view;
 	private ViewMenuMultiplayer viewMenuMultiplayer;
 	private JButton green, blue, red, yellow, green2, blue2, red2, yellow2;
+	ViewBoardMultiplayer boardView;
 	
 	public ControlMenuMultiplayer(GameMultiplayer game, View view, ViewMenuMultiplayer menuView, ViewBoardMultiplayer boardView) {
 		super(view, menuView);
+		this.game = game;
+		this.view = view;
 		this.viewMenuMultiplayer = menuView;
+		this.boardView = boardView;
 		
 		
 		green2 = this.viewMenuMultiplayer.getGreenButton();
@@ -24,20 +29,11 @@ public class ControlMenuMultiplayer extends ControlMenuOptions {
 		red2 = this.viewMenuMultiplayer.getRedButton();
 		yellow2 = this.viewMenuMultiplayer.getYellowButton();
 		
-		
-		green.addActionListener(this);
-		blue.addActionListener(this);
-		red.addActionListener(this);
-		yellow.addActionListener(this);
 		green2.addActionListener(this);
 		blue2.addActionListener(this);
 		red2.addActionListener(this);
 		yellow2.addActionListener(this);
 		
-		green.setActionCommand("green");
-		blue.setActionCommand("blue");
-		red.setActionCommand("red");
-		yellow.setActionCommand("yellow");
 		green2.setActionCommand("green2");
 		blue2.setActionCommand("blue2");
 		red2.setActionCommand("red2");
@@ -66,6 +62,7 @@ public class ControlMenuMultiplayer extends ControlMenuOptions {
 	}
 	
 	public void playGame() {
-		System.out.print("play");
+		view.showGame(boardView);
+		game.start();
 	}	
 }

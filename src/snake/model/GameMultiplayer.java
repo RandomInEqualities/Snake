@@ -136,8 +136,12 @@ public class GameMultiplayer extends Observable implements Game {
 		if (!snake.validMoveDirection(moveDirection)) {
 			return;
 		}
-	
+		
 		Field newHeadPosition = snake.getNewHeadPosition(moveDirection, board);
+		if (getSnake(player == Player.ONE ? Player.TWO : Player.ONE).contains(newHeadPosition)) {
+			return;
+		}
+	
 		boolean snakeEatsFood = newHeadPosition.equals(food.getPosition());
 		if (snakeEatsFood) {
 			if (player == Player.ONE) {
