@@ -29,8 +29,10 @@ public class View extends JFrame {
 	private ViewHeader headerPanel;
 	private ViewMenu menuPanel;
 	private ViewHeaderSingleplayer headerPanelSingleplayer;
-	private ViewMenuSingleplayer menuSingleplayerPanel;
-	private ViewMenuMultiplayer menuMultiplayerPanel;
+	private ViewMenuSingleplayer menuSingleplayer;
+	private ViewMenuMultiplayer menuMultiplayer;
+	private ViewBoardSinglePlayer boardSingleplayer;
+	private ViewBoardMultiPlayer boardMultiplayer;
 	private ViewMenuControls menuControlsPanel;
 	private ViewBoardSinglePlayer boardPanel;
 	private Audio audio;
@@ -41,9 +43,6 @@ public class View extends JFrame {
 		this.menuPanel = new ViewMenu();
 		this.headerPanel = new ViewHeader(this);
 		this.headerPanelSingleplayer = new ViewHeaderSingleplayer(this, game, true);
-		//this.headerMultiplayer = new ViewHeaderMultiplayer(this, game, true);
-		this.menuSingleplayerPanel = new ViewMenuSingleplayer(this, game);
-		this.menuMultiplayerPanel = new ViewMenuMultiplayer(this, game);
 		this.menuControlsPanel = new ViewMenuControls(this);
 		this.boardPanel = new ViewBoardSinglePlayer(game);
 		this.audio = new Audio(game);
@@ -68,6 +67,31 @@ public class View extends JFrame {
 			state = State.IN_GAME;
 		}
 	}
+	public void createGameView(GameSinglePlayer game){
+		menuSingleplayer = new ViewMenuSingleplayer(this, game);
+		boardSingleplayer = new ViewBoardSinglePlayer(game);
+	}
+	
+	public void createGameView(GameMultiPlayer game){
+		menuMultiplayer = new ViewMenuMultiplayer (this, game);
+		boardMultiplayer = new ViewBoardMultiPlayer(game);
+	}
+	
+	public ViewMenuSingleplayer getMenuSingleplayer(){
+		return menuSingleplayer;
+	}
+	
+	public ViewMenuMultiplayer getMenuMultiplayer(){
+		return menuMultiplayer;
+	}
+	
+	public ViewBoardSinglePlayer getBoardSingleplayer(){
+		return boardSingleplayer;
+	}
+	
+	public ViewBoardMultiPlayer getBoardMultiplayer(){
+		return boardMultiplayer;
+	}
 	
 	public void showMenu() {
 		if (state != State.IN_MENU) {
@@ -78,14 +102,14 @@ public class View extends JFrame {
 	
 	public void showSingleplayerMenu() {
 		if (state != State.IN_MENU_SINGLEPLAYER) {
-			setFrameComponents(headerPanel, menuSingleplayerPanel);
+			setFrameComponents(headerPanel, menuSingleplayer);
 			state = State.IN_MENU_SINGLEPLAYER;
 		}
 	}
 	
 	public void showMultiplayerMenu(){
 		if (state != State.IN_MENU_MULTIPLAYER) {
-			setFrameComponents(headerPanel, menuMultiplayerPanel);
+			setFrameComponents(headerPanel, menuMultiplayer);
 			state = State.IN_MENU_MULTIPLAYER;
 		}
 	}
@@ -119,13 +143,6 @@ public class View extends JFrame {
 	
 	public ViewMenu getViewMenu() {
 		return menuPanel;
-	}
-	
-	public ViewMenuSingleplayer getViewMenuSingleplayer() {
-		return menuSingleplayerPanel;
-	}
-	public ViewMenuMultiplayer getViewMenuMultiplayer() {
-		return menuMultiplayerPanel;
 	}
 	
 	public ViewMenuControls getViewMenuControls() {

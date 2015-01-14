@@ -34,8 +34,6 @@ public class Control extends KeyAdapter implements ActionListener{
 		
 		boardControl = new ControlBoardSinglePlayer(game, view, view.getViewBoard());
 		menuControl = new ControlMenu(view);
-		menuSingleplayerControl = new ControlMenuSingleplayer(game, view);
-		menuMultiplayerControl = new ControlMenuMultiplayer(game, view);
 		menuControlsControl = new ControlMenuControls(view);
 		
 		this.soundButton = view.getHeader().getSoundButton();

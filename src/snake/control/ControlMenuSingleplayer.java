@@ -13,44 +13,27 @@ public class ControlMenuSingleplayer extends ControlMenuOptions {
 	private GameSinglePlayer game;
 	private View view;
 	private ViewMenuSingleplayer viewMenuSingleplayer;
-	private JButton play, back, kindergarten, easy, intermediate, hard, green, blue, red, yellow;
+	private JButton green, blue, red, yellow;
 	private Border thickBorder;
 	
 	public ControlMenuSingleplayer(GameSinglePlayer game, View view) {
 		super(view);
 		this.game = game;
 		this.view = view;
-		this.viewMenuSingleplayer = view.getViewMenuSingleplayer();
+		this.viewMenuSingleplayer = view.getMenuSingleplayer();
 		this.view.addKeyListener(this);
-		play = this.viewMenuSingleplayer.getPlayButton();
-		back = this.viewMenuSingleplayer.getBackButton();
-		kindergarten = this.viewMenuSingleplayer.getKindergartenButton();
-		easy = this.viewMenuSingleplayer.getEasyButton();
-		intermediate = this.viewMenuSingleplayer.getIntermediateButton();
-		hard = this.viewMenuSingleplayer.getHardButton();
+		
 		green = this.viewMenuSingleplayer.getGreenButton();
 		blue = this.viewMenuSingleplayer.getBlueButton();
 		red = this.viewMenuSingleplayer.getRedButton();
 		yellow = this.viewMenuSingleplayer.getYellowButton();
 		game.disableTimedMovement(); //default difficulty = kindergarten
 		
-		play.addActionListener(this);
-		back.addActionListener(this);
-		kindergarten.addActionListener(this);
-		easy.addActionListener(this);
-		intermediate.addActionListener(this);
-		hard.addActionListener(this);
 		green.addActionListener(this);
 		blue.addActionListener(this);
 		red.addActionListener(this);
 		yellow.addActionListener(this);
-		
-		play.setActionCommand("play");
-		back.setActionCommand("back");
-		kindergarten.setActionCommand("kindergarten");
-		easy.setActionCommand("easy");
-		intermediate.setActionCommand("intermediate");
-		hard.setActionCommand("hard");
+
 		green.setActionCommand("green");
 		blue.setActionCommand("blue");
 		red.setActionCommand("red");
@@ -120,10 +103,8 @@ public class ControlMenuSingleplayer extends ControlMenuOptions {
 			// if input is correct
 			int inputWidth = Integer.parseInt(inputW);
 			int inputHeight = Integer.parseInt(inputH);
-			if (inputWidth >= Board.MIN_WIDTH && inputWidth <= Board.MAX_WIDTH && 
-					inputHeight >= Board.MIN_HEIGHT && inputHeight <= Board.MAX_HEIGHT) {
-				game.setBoard(new Board(inputWidth, inputHeight));
-				game.start();
+			if (inputWidth >= Board.MIN_WIDTH && inputWidth <= Board.MAX_WIDTH && inputHeight >= Board.MIN_HEIGHT && inputHeight <= Board.MAX_HEIGHT) {
+				GameSinglePlayer game = new GameSinglePlayer(inputWidth, inputHeight);
 				view.showGame();
 				viewMenuSingleplayer.setValid(true);
 				viewMenuSingleplayer.setFilled(true);

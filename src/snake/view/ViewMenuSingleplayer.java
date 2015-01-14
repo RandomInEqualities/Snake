@@ -11,7 +11,7 @@ public class ViewMenuSingleplayer extends ViewMenuOptions{
 	private JButton green, blue, red, yellow;
 	
 	public ViewMenuSingleplayer(View view, GameSinglePlayer game){
-		super(view, game);
+		super(view, game.getBoard());
 		// Formatter (limit input to three digits)
 		
 		green = new JButton(new ImageIcon (Images.BUTTON_GREEN));

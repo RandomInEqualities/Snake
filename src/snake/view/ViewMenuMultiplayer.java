@@ -11,12 +11,9 @@ import snake.model.*;
 
 
 public class ViewMenuMultiplayer extends ViewMenuOptions {
-
-	private static final long serialVersionUID = -494390249706219313L;
 	private JButton green, blue, red, yellow, green2, blue2, red2, yellow2;
-	
-	public ViewMenuMultiplayer(View view, GameSinglePlayer game){
-		super(view, game);
+	public ViewMenuMultiplayer(View view, GameMultiPlayer game){
+		super(view, game.getBoard());
 		
 		//Colour buttons
 		green = new JButton(new ImageIcon (Images.BUTTON_GREEN));

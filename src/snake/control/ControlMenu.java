@@ -2,8 +2,10 @@ package snake.control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 
+import snake.model.GameSinglePlayer;
 import snake.view.*;
 
 public class ControlMenu implements ActionListener {

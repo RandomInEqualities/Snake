@@ -20,11 +20,7 @@ public class ViewMenuOptions extends JPanel implements FocusListener {
 	private JButton play, kindergarten, easy, intermediate, hard, back;
 	private int buttonWidth, buttonHeight, difficultyWidth, difficultyHeight;
 	
-	public ViewMenuOptions(View view, GameSinglePlayer game){
-		if (view == null || game == null) {
-			throw new NullPointerException();
-		}
-		
+	public ViewMenuOptions(View view, Board board){
 		this.view = view;
 		this.valid = true;
 		this.filled = true;
@@ -50,8 +46,8 @@ public class ViewMenuOptions extends JPanel implements FocusListener {
 		
 		inputWidth.addFocusListener(this);
 		inputHeight.addFocusListener(this);
-		String gameWidth = Integer.toString(game.getBoard().getWidth());
-		String gameHeight = Integer.toString(game.getBoard().getHeight());
+		String gameWidth = Integer.toString(board.getWidth());
+		String gameHeight = Integer.toString(board.getHeight());
 		setTextFieldFormat(inputWidth, gameWidth);
 		setTextFieldFormat(inputHeight, gameHeight);
 		
