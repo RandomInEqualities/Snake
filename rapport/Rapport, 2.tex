@@ -70,14 +70,23 @@ Derudover er der en \textit{generateFood}-metode, som sikre, at maden altid plac
 
 Er slangen større end end en tredjedel af spillets størrelse, laves et dobbelt for-loop for højde og bredde af spillet, der tjekker om området er frit. Den tilføjer de felter, maden kan placeres på i en ArrayListe, hvorefter maden placeres tilfældigt på et af disse felter.
 
-
 De fire klasser \textit{Food, Score, Game} og \textit{Snake} extender Observable, så det er muligt at for View at modtage ændringerne i Model, uden at Model afhænger af view.
 
 \subsection{View (Brugergrænseflade)}
-Brugerfladen er samlet i klassen \textit{View} der [EXTENDS] \textit{JFrame}. I \textit{View} oprettes et score-panel, der placeres øverst i vinduet, og et board-panel, der placeres lige under det. Board-panelet viser selve spillepladen med slangen og æblet, der begge er vist ved farvede firkanter, som repræsenterer felterne i brættet, hvor slangen og æblet ligger.
+Brugerfladen er samlet i klassen \textit{GameView} der extender \textit{JFrame}. I \textit{GameView} findes kun en construstor, hvor der oprettes et score-panel, der placeres øverst i vinduet, og et board-panel, der placeres lige under det. Board-panelet viser selve spillepladen med slangen og æblet, der begge er vist ved farvede firkanter. 
+\linebreak
+
+\textit{ScorePanel}-klassen extender \textit{JPanel} og implementer \textit{Observer}, derved har klassen en \textit{update}-metode, der repainter, hver gang noget ændrer sig i de klasser i Model, der extender \textit{Observable}.
+Ellers er der en \textit{paintComponent}-metode, der laver score-teksen, og ellers bliver selve panelen oprettet i constructoren.
+\linebreak
+
+\textit{BoardPanel} extender også \textit{JPanel} og implementerer også \textit{Observer}, så klassen derved også haren \textit{update}-metode. \textit{BoardPanel} består af en masse draw-metoder og en \textit{paintComponent}, der tegner det hele på panelet.
+I \textit{drawSnake}-metoden bliver hver Field-position i snake-arraylisten farvet. Der bruger vi størrelsen for et felt, som bliver udregnet i \textit{getWindowRectangle}-metoden. Et felt er selve vinduets højde og bredde divideret med spillets højde og bredde. 
 
 \subsection{Control (Styring)}
-I Simpel Snake bruges kun fire taster til input, nemlig de fire piletaster, som derfor er defineret i \textit{Control}.\textit{Control}-klassen har metoden, \textit{keyPressed}, som kaldes hver gang der tastes på tastaturet. Hvis tasten er en af de fire piletaster, kaldes funktionen \textit{moveSnake} i \textit{Snake}-klassen, med den tilsvarende retning som parameter.
+I Simpel Snake bruges kun fire taster til input, nemlig de fire piletaster, som derfor er defineret i \textit{Control}.\textit{Control}-klassen har metoden \textit{keyPressed}, som kommer af at \textit{Control}-klassen implementerer \textit{KeyListener}, som kaldes hver gang der tastes på tastaturet. Hvis tasten er en af de fire piletaster, kaldes funktionen \textit{move} i \textit{Snake}-klassen, der opretter hovedet det sted piletasten pegede.
+Der er også oprettet en enum-klasse \textit{Direction}, der giver \textit{RIGHT, LEFT, UP} og \textit{DOWN}. Dette bruges i \textit{Control}-klassen, det ikke skal være muligt at gå i den modsatte retning, af hvad slangen vender. 
+I \textit{Control}-klassens constructor er Direction sat til \textit{LEFT} af default, da slangen skal starte mod venstre. Hver gang man taster på piletasterne, tjekker \textit{KeyPressed}-metoden, at retningen ikke er modsat af den nuværende retning, derefter rykker den slangen både hvis den er midt på spillepladen eller hvis den går igennem torussen. Til sidst sætter den så \textit{Direction} til den nuværende retning, så når næste tast trykkes, kan det tjekkes at den ikke er den modsatte.
 
 \section{Udviklingsproces}
 \subsection{Arbejdsproces}
