@@ -10,7 +10,7 @@ import snake.model.Board;
 import snake.model.GameMultiplayer;
 import snake.model.Player;
 
-public class ViewBoardMultiplayer extends ViewBoardBase  implements Observer {
+public class ViewBoardMultiplayer extends ViewBoard  implements Observer {
 	
 	private GameMultiplayer game;
 	private Color snakeColorPlayerOne;

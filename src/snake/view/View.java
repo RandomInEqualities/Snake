@@ -32,18 +32,18 @@ public class View extends JFrame {
 	//private ViewMenuMultiplayer menuMultiplayer;
 	//private ViewBoardSinglePlayer boardSingleplayer;
 	//private ViewBoardMultiPlayer boardMultiplayer;
-	private ViewMenuControls menuControlsPanel;
+	private ViewControls menuControlsPanel;
 	//private ViewBoardSingleplayer boardPanel;
-	private Audio audio;
+	private ViewAudio audio;
 	
 	public View() {
 		super();
 		
 		this.state = State.STARTUP;
-		this.audio = new Audio();
+		this.audio = new ViewAudio();
 		this.menuPanel = new ViewMenu();
 		this.headerPanel = new ViewHeader(this.audio);
-		this.menuControlsPanel = new ViewMenuControls(this);
+		this.menuControlsPanel = new ViewControls(this);
 		
 		showMenu();
 		
@@ -80,14 +80,14 @@ public class View extends JFrame {
 		}
 	}
 	
-	public void showMenu(ViewHeaderSingleplayer header, ViewMenuSingleplayer menu) {
+	public void showMenu(ViewHeaderSingleplayer header, ViewOptionsSingleplayer menu) {
 		if (state != State.IN_MENU_SINGLEPLAYER) {
 			setFrameComponents(header, menu);
 			state = State.IN_MENU_SINGLEPLAYER;
 		}
 	}
 	
-	public void showMenu(ViewHeaderMultiplayer header, ViewMenuMultiplayer menu){
+	public void showMenu(ViewHeaderMultiplayer header, ViewOptionsMultiplayer menu){
 		if (state != State.IN_MENU_MULTIPLAYER) {
 			setFrameComponents(header, menu);
 			state = State.IN_MENU_MULTIPLAYER;
@@ -113,7 +113,7 @@ public class View extends JFrame {
 		return state;
 	}
 	
-	public Audio getAudio() {
+	public ViewAudio getAudio() {
 		return audio;
 	}
 	
@@ -125,7 +125,7 @@ public class View extends JFrame {
 		return menuPanel;
 	}
 	
-	public ViewMenuControls getViewMenuControls() {
+	public ViewControls getViewMenuControls() {
 		return menuControlsPanel;
 	}
 	

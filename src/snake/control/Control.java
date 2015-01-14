@@ -21,7 +21,7 @@ public class Control extends KeyAdapter implements ActionListener{
 	//@SuppressWarnings("unused")
 	//private ControlMenuMultiplayer menuMultiplayerControl;
 	@SuppressWarnings("unused")
-	private ControlMenuControls menuControlsControl;
+	private ControlControls menuControlsControl;
 	private JButton soundButton;
 	
 	public Control(View view) {
@@ -33,7 +33,7 @@ public class Control extends KeyAdapter implements ActionListener{
 		
 		//boardControl = new ControlBoardSingleplayer(game, view, view.getViewBoard());
 		menuControl = new ControlMenu(view);
-		menuControlsControl = new ControlMenuControls(view);
+		menuControlsControl = new ControlControls(view);
 		
 		this.soundButton = view.getHeader().getSoundButton();
 		soundButton.addActionListener(this);
@@ -68,7 +68,7 @@ public class Control extends KeyAdapter implements ActionListener{
 	}
 	
 	private void toggleSound(){
-		Audio audio = view.getAudio();
+		ViewAudio audio = view.getAudio();
 		audio.setMuted(!audio.isMuted());
 		view.getHeader().repaint();
 		view.requestFocus();

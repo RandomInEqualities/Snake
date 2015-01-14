@@ -8,15 +8,15 @@ import javax.swing.border.Border;
 import snake.model.*;
 import snake.view.*;
 
-public class ControlMenuMultiplayer extends ControlMenuOptions {
+public class ControlOptionsMultiplayer extends ControlOptions {
 
 	private Game game;
 	private View view;
-	private ViewMenuMultiplayer viewMenuMultiplayer;
+	private ViewOptionsMultiplayer viewMenuMultiplayer;
 	private JButton green, blue, red, yellow, green2, blue2, red2, yellow2;
 	ViewBoardMultiplayer boardView;
 	
-	public ControlMenuMultiplayer(GameMultiplayer game, View view, ViewMenuMultiplayer menuView, ViewBoardMultiplayer boardView) {
+	public ControlOptionsMultiplayer(GameMultiplayer game, View view, ViewOptionsMultiplayer menuView, ViewBoardMultiplayer boardView) {
 		super(view, menuView);
 		this.game = game;
 		this.view = view;

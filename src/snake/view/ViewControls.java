@@ -8,7 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 
-public class ViewMenuControls extends JPanel {
+public class ViewControls extends JPanel {
 
 
 	private static final long serialVersionUID = 6121636944519601998L;
@@ -16,7 +16,7 @@ public class ViewMenuControls extends JPanel {
 	private View view;
 	private JButton backButton;
 	
-	public ViewMenuControls(View view) {
+	public ViewControls(View view) {
 		if (view == null) {
 			throw new NullPointerException();
 		}

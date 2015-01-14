@@ -10,9 +10,9 @@ import javax.swing.border.LineBorder;
 import snake.model.*;
 
 
-public class ViewMenuMultiplayer extends ViewMenuOptions {
+public class ViewOptionsMultiplayer extends ViewOptions {
 	private JButton green, blue, red, yellow, green2, blue2, red2, yellow2;
-	public ViewMenuMultiplayer(View view, GameMultiplayer game){
+	public ViewOptionsMultiplayer(View view, GameMultiplayer game){
 		super(view, game.getBoard());
 		
 		//Colour buttons

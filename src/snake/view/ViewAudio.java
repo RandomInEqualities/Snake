@@ -12,7 +12,7 @@ import snake.model.GameMultiplayer;
 import snake.model.GameSingleplayer;
 
 
-public class Audio implements Observer {
+public class ViewAudio implements Observer {
 
 	private boolean muted;
 	
@@ -31,7 +31,7 @@ public class Audio implements Observer {
 	private static final String WIN_SOUND_FILENAME = "resources/sounds/yes.wav";
 	private static final String START_SOUND_FILENAME = "resources/sounds/hereicome.wav";
 	
-	public Audio() {
+	public ViewAudio() {
 		this.muted = false;
 		loadSounds();
 	}

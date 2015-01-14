@@ -5,7 +5,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 import snake.view.*;
 
-public abstract class ControlMenuOptions extends KeyAdapter implements ActionListener {
+public abstract class ControlOptions extends KeyAdapter implements ActionListener {
 	public enum Difficulty {
 		KINDERGARTEN,
 		EASY,
@@ -13,12 +13,12 @@ public abstract class ControlMenuOptions extends KeyAdapter implements ActionLis
 		HARD
 	}
 	private View view;
-	private ViewMenuOptions viewMenuOptions;
+	private ViewOptions viewMenuOptions;
 	private JButton play, back, kindergarten, easy, intermediate, hard;
 	private Border thickBorder;
 	private Difficulty difficulty;
 	
-	public ControlMenuOptions(View view, ViewMenuOptions viewOptions) {
+	public ControlOptions(View view, ViewOptions viewOptions) {
 		super();
 		this.view = view;
 		this.viewMenuOptions = viewOptions;

@@ -12,7 +12,7 @@ import snake.model.Board;
 import snake.model.GameSingleplayer;
 
 
-public class ViewMenuOptions extends JPanel implements FocusListener {
+public class ViewOptions extends JPanel implements FocusListener {
 	private View view;
 	private JFormattedTextField inputWidth, inputHeight;
 	private boolean valid, filled;
@@ -20,7 +20,7 @@ public class ViewMenuOptions extends JPanel implements FocusListener {
 	private JButton play, kindergarten, easy, intermediate, hard, back;
 	private int buttonWidth, buttonHeight, difficultyWidth, difficultyHeight;
 	
-	public ViewMenuOptions(View view, Board board){
+	public ViewOptions(View view, Board board){
 		this.view = view;
 		this.valid = true;
 		this.filled = true;

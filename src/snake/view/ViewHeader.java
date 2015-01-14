@@ -14,11 +14,11 @@ public class ViewHeader extends JPanel {
 	private static final int DEFAULT_LOGO_WIDTH = 300;
 	private static final int DEFAULT_LOGO_HEIGHT = 80;
 	
-	private Audio audio;
+	private ViewAudio audio;
 	private Image logo;
 	private JButton sound;
 
-	public ViewHeader(Audio audio) {
+	public ViewHeader(ViewAudio audio) {
 		if (audio == null) {
 			throw new NullPointerException();
 		}

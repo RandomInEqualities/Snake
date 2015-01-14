@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import snake.model.*;
 
 
-public class ViewBoardBase extends JPanel {
+public class ViewBoard extends JPanel {
 	
 	private JButton buttonPlayAgain;
 	private JButton buttonMenu;
@@ -42,7 +42,7 @@ public class ViewBoardBase extends JPanel {
 	private ArrayList<BufferedImage> snakeTailLeft;
 	private ArrayList<BufferedImage> snakeTailRight;
 	
-	public ViewBoardBase() {
+	public ViewBoard() {
 		super();
 		
 		this.buttonPlayAgain = new JButton(new ImageIcon(Images.BUTTON_PLAY_AGAIN));

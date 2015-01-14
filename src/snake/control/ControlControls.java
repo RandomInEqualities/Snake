@@ -11,11 +11,11 @@ import javax.swing.JButton;
 import snake.view.View;
 
 
-public class ControlMenuControls extends KeyAdapter implements ActionListener {
+public class ControlControls extends KeyAdapter implements ActionListener {
 	
 	private View view;
 	
-	public ControlMenuControls(View view) {
+	public ControlControls(View view) {
 		this.view = view;
 		JButton back = view.getViewMenuControls().getBackButton();
 		back.addActionListener(this);

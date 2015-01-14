@@ -15,17 +15,17 @@ public class ControlMenu implements ActionListener {
 	
 	GameSingleplayer gameSingle;
 	ViewBoardSingleplayer boardViewSingle;
-	ViewMenuSingleplayer menuViewSingle;
+	ViewOptionsSingleplayer menuViewSingle;
 	ViewHeaderSingleplayer headerSingle;
 	ControlBoardSingleplayer boardControlSingle;
-	ControlMenuSingleplayer menuControlSingle;
+	ControlOptionsSingleplayer menuControlSingle;
 	
 	GameMultiplayer gameMulti;
 	ViewBoardMultiplayer boardViewMulti;
-	ViewMenuMultiplayer menuViewMulti;
+	ViewOptionsMultiplayer menuViewMulti;
 	ViewHeaderMultiplayer headerMulti;
 	ControlBoardMultiplayer boardControlMulti;
-	ControlMenuMultiplayer menuControlMulti;
+	ControlOptionsMultiplayer menuControlMulti;
 	
 	public ControlMenu(View view) {
 		this.view = view;
@@ -46,17 +46,17 @@ public class ControlMenu implements ActionListener {
 		
 		gameSingle = new GameSingleplayer();
 		boardViewSingle = new ViewBoardSingleplayer(gameSingle);
-		menuViewSingle = new ViewMenuSingleplayer(view, gameSingle);
+		menuViewSingle = new ViewOptionsSingleplayer(view, gameSingle);
 		headerSingle = new ViewHeaderSingleplayer(view, gameSingle, true);
 		boardControlSingle = new ControlBoardSingleplayer(gameSingle, view, boardViewSingle);
-		menuControlSingle = new ControlMenuSingleplayer(gameSingle, view, menuViewSingle, boardViewSingle);
+		menuControlSingle = new ControlOptionsSingleplayer(gameSingle, view, menuViewSingle, boardViewSingle);
 		
 		gameMulti = new GameMultiplayer();
 		boardViewMulti = new ViewBoardMultiplayer(gameMulti);
-		menuViewMulti = new ViewMenuMultiplayer(view, gameMulti);
+		menuViewMulti = new ViewOptionsMultiplayer(view, gameMulti);
 		headerMulti = new ViewHeaderMultiplayer(view, gameMulti, true);
 		boardControlMulti = new ControlBoardMultiplayer(gameMulti, view, boardViewMulti);
-		menuControlMulti = new ControlMenuMultiplayer(gameMulti, view, menuViewMulti, boardViewMulti);
+		menuControlMulti = new ControlOptionsMultiplayer(gameMulti, view, menuViewMulti, boardViewMulti);
 	}
 
 	@Override
