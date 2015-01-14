@@ -11,14 +11,11 @@ import snake.model.Game;
 
 public class GameSinglePlayer extends Observable implements Game , ActionListener {
 	
-	public enum Event {
-		EAT,
-		MOVE,
-		LOSE,
-		WIN,
+	private enum State {
 		START,
+		RUN,
 		PAUSE,
-		RESUME
+		END
 	}
 	
 	private static final int DEFAULT_WIDTH = 20;
@@ -187,18 +184,18 @@ public class GameSinglePlayer extends Observable implements Game , ActionListene
 		
 		// Notify the observing classes that the game changed. Send an argument with 
 		// the type of event that happened.
-		Event event = null;
+		Event event;
 		if (snake.fills(board)) {
-			event = Event.WIN;
+			event = new Event(Event.WIN);
 		}
 		else if (snakeEatsItSelf) {
-			event = Event.LOSE;
+			event = new Event(Event.LOSE);
 		}
 		else if (snakeEatsFood) {
-			event = Event.EAT;
+			event = new Event(Event.EAT);
 		}
 		else {
-			event = Event.MOVE;
+			event = new Event(Event.MOVE);
 		}
 		timerLastUpdateTime = System.currentTimeMillis();
 		setChanged();
