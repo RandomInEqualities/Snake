@@ -62,10 +62,10 @@ public class Images {
 		SNAKE_HEAD_DOWN = loadImage("SnakeHeadD.png");
 		SNAKE_HEAD_LEFT = loadImage("SnakeHeadL.png");
 		SNAKE_HEAD_RIGHT = loadImage("SnakeHeadR.png");
-		SNAKE_CORNER_BL = loadImage("SnakeCornerBL.png");
-		SNAKE_CORNER_BR = loadImage("SnakeCornerBR.png");
-		SNAKE_CORNER_TL = loadImage("SnakeCornerTL.png");
-		SNAKE_CORNER_TR = loadImage("SnakeCornerTR.png");
+		SNAKE_CORNER_BR = loadImage("SnakeCornerBL.png");
+		SNAKE_CORNER_BL = loadImage("SnakeCornerBR.png");
+		SNAKE_CORNER_TR = loadImage("SnakeCornerTL.png");
+		SNAKE_CORNER_TL = loadImage("SnakeCornerTR.png");
 		SNAKE_TAIL_UP = loadImage("SnakeTailU.png");
 		SNAKE_TAIL_DOWN = loadImage("SnakeTailD.png");
 		SNAKE_TAIL_LEFT = loadImage("SnakeTailL.png");
