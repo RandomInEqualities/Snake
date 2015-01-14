@@ -8,16 +8,11 @@ import snake.model.Game;
 
 public class GameMultiPlayer extends Observable implements Game {
 	
-	public enum Event {
-		EAT_PLAYER_ONE,
-		EAT_PLAYER_TWO,
-		MOVE_PLAYER_ONE,
-		MOVE_PLAYER_TWO,
-		WIN_PLAYER_ONE,
-		WIN_PLAYER_TWO,
+	private enum State {
 		START,
+		RUN,
 		PAUSE,
-		RESUME
+		END
 	}
 	
 	private static final int DEFAULT_WIDTH = 20;
@@ -161,30 +156,15 @@ public class GameMultiPlayer extends Observable implements Game {
 		
 		// Notify the observing classes that the game changed. Send an argument with 
 		// the type of event that happened.
-		Event event = null;
+		Event event;
 		if (snakeEatsItSelf) {
-			if (player == Player.ONE) {
-				event = Event.WIN_PLAYER_TWO;
-			}
-			else {
-				event = Event.WIN_PLAYER_ONE;
-			}
+			event = new Event(Event.WIN, player);
 		}
 		else if (snakeEatsFood) {
-			if (player == Player.ONE) {
-				event = Event.EAT_PLAYER_ONE;
-			}
-			else {
-				event = Event.EAT_PLAYER_TWO;
-			}
+			event = new Event(Event.EAT, player);
 		}
 		else {
-			if (player == Player.ONE) {
-				event = Event.MOVE_PLAYER_ONE;
-			}
-			else {
-				event = Event.MOVE_PLAYER_TWO;
-			}
+			event = new Event(Event.MOVE, player);
 		}
 		setChanged();
 		notifyObservers(event);

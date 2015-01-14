@@ -4,14 +4,18 @@ package snake.view;
 import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
+
 import javax.sound.sampled.*;
 
+import snake.model.Game;
+import snake.model.GameMultiPlayer;
 import snake.model.GameSinglePlayer;
 
 
 public class Audio implements Observer {
 
 	private boolean muted;
+	
 	private Clip eatSound;
 	private Clip endSound;
 	private Clip winSound;
@@ -27,13 +31,9 @@ public class Audio implements Observer {
 	private static final String WIN_SOUND_FILENAME = "resources/sounds/yes.wav";
 	private static final String START_SOUND_FILENAME = "resources/sounds/hereicome.wav";
 	
-	public Audio(GameSinglePlayer game) {
-		if (game == null) {
-			throw new NullPointerException();
-		}
+	public Audio() {
 		this.muted = false;
 		loadSounds();
-		game.addObserver(this);
 	}
 	
 	public boolean isMuted() {
@@ -43,24 +43,41 @@ public class Audio implements Observer {
 	public void setMuted(boolean muted) {
 		this.muted = muted;
 	}
+	
+	public void registerGame(GameSinglePlayer game) {
+		if (game == null) {
+			throw new NullPointerException();
+		}
+		game.addObserver(this);
+	}
+	
+	public void registerGame(GameMultiPlayer game) {
+		if (game == null) {
+			throw new NullPointerException();
+		}
+		game.addObserver(this);
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (o instanceof GameSinglePlayer && !muted) {
-			GameSinglePlayer.Event event = (GameSinglePlayer.Event)arg;
-			if (event == GameSinglePlayer.Event.EAT) {
-				playEatSound();
-			}
-			else if (event == GameSinglePlayer.Event.LOSE) {
-				playEndSound();
-			}
-			else if (event == GameSinglePlayer.Event.WIN) {
-				playWinSound();
-			}
-			else if (event == GameSinglePlayer.Event.START) {
-				playStartSound();
-			}
+		if (muted) {
+			return;
 		}
+
+		Game.Event event = (Game.Event)arg;
+		if (event.getType() == Game.Event.EAT) {
+			playEatSound();
+		}
+		else if (event.getType() == Game.Event.LOSE) {
+			playEndSound();
+		}
+		else if (event.getType() == Game.Event.WIN) {
+			playWinSound();
+		}
+		else if (event.getType() == Game.Event.START) {
+			playStartSound();
+		}
+
 	}
 	
 	private void playEatSound() {
@@ -72,14 +89,17 @@ public class Audio implements Observer {
 		endSound.setFramePosition(0);
 		endSound.start();
 	}
+	
 	private void playWinSound() {
 		winSound.setFramePosition(0);
 		winSound.start();
 	}
+	
 	private void playStartSound() {
 		startSound.setFramePosition(0);
 		startSound.start();
 	}
+	
 	private void loadSounds() {
 		try {
 			eatSoundStream = AudioSystem.getAudioInputStream(new File(EAT_SOUND_FILENAME));
@@ -94,8 +114,10 @@ public class Audio implements Observer {
 			endSound.open(endSoundStream);
 			winSound.open(winSoundStream);
 			startSound.open(startSoundStream);
-		} catch (Exception error) {
+		} 
+		catch (Exception error) {
 			throw new RuntimeException("unable to load sounds: " + error.getMessage());
 		}
 	}
+	
 }

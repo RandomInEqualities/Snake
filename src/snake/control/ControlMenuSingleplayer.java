@@ -45,7 +45,6 @@ public class ControlMenuSingleplayer extends ControlMenuOptions {
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		super.actionPerformed(event);
-		
 		if (event.getActionCommand() == "play") {
 			playGame();
 		}  
