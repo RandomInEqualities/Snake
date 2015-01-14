@@ -1,8 +1,10 @@
 package snake.view;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -58,6 +60,20 @@ public class ViewBoardSinglePlayer extends ViewBoardBase  implements Observer {
 		else if (game.isWon()){
 			drawGameWon(context2D, board);
 		}
+	}
+	
+	@Override
+	protected void drawGameOver(Graphics2D context, Board board) {
+		super.drawGameOver(context, board);
+		
+		// Add score text.
+		Rectangle boardRect = getRectangleForBoard(board);
+		String scoreTxt = "Final Score: " + game.getScore();
+		int x = boardRect.x + boardRect.width/2 - scoreTxt.length()*10/2;
+		int y = boardRect.y + boardRect.height/2 + 5;
+		context.setColor(Colors.PANEL_COLOUR);
+		context.setFont(new Font("Sans_Serif", Font.BOLD, 20));
+		context.drawString(scoreTxt, x, y);
 	}
 	
 }
