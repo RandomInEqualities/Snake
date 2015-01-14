@@ -8,53 +8,26 @@ import javax.swing.*;
 import snake.model.GameSinglePlayer;
 
 
-public class ViewHeader extends JPanel implements Observer {
+public class ViewHeader extends JPanel {
 	
 	private static final long serialVersionUID = -3944388732646932230L;
 	private static final int DEFAULT_LOGO_WIDTH = 300;
 	private static final int DEFAULT_LOGO_HEIGHT = 80;
 	
-	private GameSinglePlayer game;
 	private View view;
-	private boolean showScore;
 	private Image logo;
-	private Font font;
 	private JButton sound;
 
-	public ViewHeader(View view, GameSinglePlayer game, boolean showScore) {
-		super();
-		
-		if (game == null) {
-			throw new NullPointerException();
-		}
-		this.font = new Font("Sans_Serif", Font.BOLD, 20);
+	public ViewHeader(View view) {
 		this.view = view;
-		this.game = game;
-		this.showScore = showScore;
 		this.logo = Images.LOGO.getScaledInstance(DEFAULT_LOGO_WIDTH, DEFAULT_LOGO_HEIGHT, Image.SCALE_SMOOTH);
 		this.sound = new JButton();
 		view.getViewMenu().setOptionButton(sound);
 		sound.setContentAreaFilled(false);
-		game.addObserver(this);
 		setBackground(Colors.PANEL_COLOUR);
 		this.add(sound);
 	}
-	
-	public void showScore() {
-		showScore = true;
-	}
-	
-	public void hideScore() {
-		showScore = false;
-	}
-	
-	@Override
-	public void update(Observable o, Object arg) {
-		if (showScore) {
-			repaint();
-		}
-	}
-	
+
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(400, 90);
@@ -68,17 +41,8 @@ public class ViewHeader extends JPanel implements Observer {
 		// Only show logo if board is wide enough to contain it.
 		Dimension size = getSize();
 		int logoWidth = logo.getWidth(null);
-		if (size.width > logoWidth + 230 || (!showScore && size.width > logoWidth)) {
+		if (size.width > logoWidth + 230) {
 			context2D.drawImage(logo, size.width/2 - logo.getWidth(null)/2, 0, null);
-		}
-		
-		// Update the score (if we need to show scores).
-		if (showScore) {
-			context2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-			context2D.setFont(this.font);
-			int fontSize = font.getSize();
-			context2D.setColor(Color.WHITE);
-			context2D.drawString("Score: " + game.getScore(), fontSize, size.height/2 - fontSize/2);
 		}
 		
 		// Sound icon
@@ -102,5 +66,4 @@ public class ViewHeader extends JPanel implements Observer {
 	public JButton getSoundButton(){
 		return sound;
 	}
-	
 }

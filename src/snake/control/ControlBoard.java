@@ -87,7 +87,7 @@ public class ControlBoard extends KeyAdapter implements ActionListener {
 		game.reset();
 		game.start();
 		boardView.removeButtons();
-		view.getHeader().showScore();
+		view.getHeaderSingleplayer().showScore();
 		view.requestFocus();
 	}
 }
