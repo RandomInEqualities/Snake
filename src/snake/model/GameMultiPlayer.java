@@ -14,7 +14,10 @@ public class GameMultiPlayer extends Observable implements Game {
 		MOVE_PLAYER_ONE,
 		MOVE_PLAYER_TWO,
 		WIN_PLAYER_ONE,
-		WIN_PLAYER_TWO
+		WIN_PLAYER_TWO,
+		START,
+		PAUSE,
+		RESUME
 	}
 	
 	private static final int DEFAULT_WIDTH = 20;
@@ -95,6 +98,8 @@ public class GameMultiPlayer extends Observable implements Game {
 	public void start() {
 		if (state == State.START) {
 			state = State.RUN;
+			setChanged();
+			notifyObservers(Event.START);
 		}
 	}
 
@@ -102,6 +107,8 @@ public class GameMultiPlayer extends Observable implements Game {
 	public void pause() {
 		if (state == State.RUN) {
 			state = State.PAUSE;
+			setChanged();
+			notifyObservers(Event.PAUSE);
 		}
 	}
 
@@ -109,6 +116,8 @@ public class GameMultiPlayer extends Observable implements Game {
 	public void resume() {
 		if (state == State.PAUSE) {
 			state = State.RUN;
+			setChanged();
+			notifyObservers(Event.RESUME);
 		}
 	}
 

@@ -1,6 +1,8 @@
 package snake.control;
 
+import java.awt.Color;
 import java.awt.event.*;
+
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -84,19 +86,19 @@ public class ControlMenuSingleplayer extends KeyAdapter implements ActionListene
 		} 
 		else if (event.getActionCommand() == "green") {
 			setActiveButton(green, blue, red, yellow);
-			view.getViewBoard().setSnakeColour(84, 216, 81);
+			view.getViewBoard().setSnakeColor(new Color(84, 216, 81));
 		} 
 		else if (event.getActionCommand() == "blue") {
 			setActiveButton(blue, green, red, yellow);
-			view.getViewBoard().setSnakeColour(80, 152, 218);
+			view.getViewBoard().setSnakeColor(new Color(80, 152, 218));
 		} 
 		else if (event.getActionCommand() == "red"){
 			setActiveButton(red, green, blue, yellow);
-			view.getViewBoard().setSnakeColour(237, 75, 66);
+			view.getViewBoard().setSnakeColor(new Color(237, 75, 66));
 		} 
 		else if (event.getActionCommand() == "yellow"){
 			setActiveButton(yellow, green, blue, red);
-			view.getViewBoard().setSnakeColour(243, 196, 67);
+			view.getViewBoard().setSnakeColor(new Color(243, 196, 67));
 		}
 	}
 
