@@ -13,43 +13,16 @@ public class Driver {
 		
 		// We use the Model-View-Controller pattern to implement a snake game.
 		// In this file we set up the model (game), its view and the control.
-		
-		// Create the game.
-		Dimension size = parseArguments(args);
-		GameSinglePlayer game;
-		if (size == null) {
-			game = new GameSinglePlayer();
-		}
-		else {
-			game = new GameSinglePlayer(size.width, size.height);
-		}
 
-		// Create the view which displays the game.
-		View view = new View(game);
+		// Create the view which displays the game. It will open a menu where the
+		// user can choose what game they want to play (singleplayer or multiplayer).
+		View view = new View();
 
-		// Create the controls which controls the game.
-		Control control = new Control(game, view);
+		// Create the controls which controls the game and what happens in menus.
+		Control control = new Control(view);
 
 		// Show the window.
 		view.setVisible(true);
-	}
-	
-	private static Dimension parseArguments(String[] args) {
-		if (args.length != 2) {
-			return null;
-		}
-		
-		// Try to determine the initial game width and height from the command line.
-		int width, height;
-		try {
-			width = Integer.parseInt(args[0]);
-			height = Integer.parseInt(args[1]);
-		} 
-		catch (NumberFormatException error) {
-			return null;
-		}
-		
-		return new Dimension(width, height);
 	}
 	
 }

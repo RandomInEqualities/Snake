@@ -47,7 +47,7 @@ public class ViewBoard extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (game.getState() == Game.State.LOSE || game.getState() == Game.State.WIN) {
+		if (game.isEnded()) {
 			this.add(playAgainButton);
 			this.add(menuButton);
 		}
@@ -63,13 +63,13 @@ public class ViewBoard extends JPanel implements Observer {
 		drawFood(context2D);
 		drawSnake(context2D);
 		
-		if (game.getState() == Game.State.LOSE) {
+		if (game.isLost()) {
 			drawGameLost(context2D);
 		} 
-		else if (game.getState() == Game.State.PAUSE) {
+		else if (game.isPaused()) {
 			drawPaused(context2D);
 		} 
-		else if (game.getState() == Game.State.WIN){
+		else if (game.isWon()){
 			drawGameWon(context2D);
 		}
 	}

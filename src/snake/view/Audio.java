@@ -51,7 +51,7 @@ public class Audio implements Observer {
 			if (event == GameSinglePlayer.Event.EAT) {
 				playEatSound();
 			}
-			else if (event == GameSinglePlayer.Event.DIE) {
+			else if (event == GameSinglePlayer.Event.LOSE) {
 				playEndSound();
 			}
 			else if (event == GameSinglePlayer.Event.WIN) {

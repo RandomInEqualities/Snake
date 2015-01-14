@@ -34,12 +34,8 @@ public class View extends JFrame {
 	private ViewBoard boardPanel;
 	private Audio audio;
 	
-	public View(GameSinglePlayer game) {
+	public View() {
 		super();
-		
-		if (game == null) {
-			throw new NullPointerException();
-		}
 		
 		this.menuPanel = new ViewMenu();
 		this.headerPanel = new ViewHeader(this, game, false);

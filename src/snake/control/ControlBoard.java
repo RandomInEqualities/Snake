@@ -44,19 +44,19 @@ public class ControlBoard extends KeyAdapter implements ActionListener {
 		
 		switch (event.getKeyCode()) {
 			case KeyEvent.VK_UP:
-				game.moveSnake(Direction.UP);
+				game.move(Direction.UP);
 			case KeyEvent.VK_DOWN:
-				game.moveSnake(Direction.DOWN);
+				game.move(Direction.DOWN);
 				break;
 			case KeyEvent.VK_LEFT:
-				game.moveSnake(Direction.LEFT);
+				game.move(Direction.LEFT);
 				break;
 			case KeyEvent.VK_RIGHT:
-				game.moveSnake(Direction.RIGHT);
+				game.move(Direction.RIGHT);
 				break;
 			case KeyEvent.VK_P:
 				if (game.isPaused()) {
-					game.unPause();
+					game.resume();
 				}
 				else {
 					game.pause();
@@ -64,7 +64,7 @@ public class ControlBoard extends KeyAdapter implements ActionListener {
 				break;
 			case KeyEvent.VK_ENTER: 
 			case KeyEvent.VK_SPACE:
-				if (game.getState() == Game.State.LOSE){
+				if (game.isLost()){
 					playAgain();
 				}
 				break;
@@ -84,7 +84,8 @@ public class ControlBoard extends KeyAdapter implements ActionListener {
 		}
 	}
 	public void playAgain(){
-		game.restart();
+		game.reset();
+		game.start();
 		boardView.removeButtons();
 		view.getHeader().showScore();
 		view.requestFocus();

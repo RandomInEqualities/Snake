@@ -7,24 +7,17 @@ import java.util.ArrayList;
 
 public class Snake {
 	
-	private Board board;
-	private Direction headDirection;
 	private ArrayList<Field> positions;
+	private Direction headDirection;
+	
+	public Snake() {
+		this.positions = new ArrayList<Field>();
+		this.headDirection = Direction.LEFT;
+	}
 
-	public Snake(Board board) {
-		if (board == null) {
-			throw new NullPointerException();
-		}
-		
-		this.board = board;
-		this.positions = new ArrayList<>();
-		
-		// Setup a snake at the centre of the board.
-		Field center = board.getCenter();
-		Field head = new Field(center.getRow(), center.getColumn());
-		Field tail = new Field(center.getRow(), center.getColumn() + 1);
-		Direction direction = Direction.LEFT;
-		setup(head, tail, direction);
+	public Snake(ArrayList<Field> snake) {
+		this.positions = snake;
+		this.headDirection = findHeadDirection(snake);
 	}
 	
 	public Field getHead() {
@@ -57,7 +50,7 @@ public class Snake {
 		return positions.contains(position);
 	}
 	
-	public boolean fillsBoard() {
+	public boolean fills(Board board) {
 		return getSize() == board.getSize();
 	}
 	
@@ -67,7 +60,7 @@ public class Snake {
 	 * @param direction the direction to test for
 	 * @return true if it can move in direction, otherwise false.
 	 */
-	public boolean canMove(Direction direction) {
+	boolean validMoveDirection(Direction direction) {
 		if (direction == Direction.getOppositeOf(headDirection)) {
 			return false;
 		}
@@ -75,44 +68,41 @@ public class Snake {
 	}
 	
 	/**
-	 * Move the snake. If the snake eat any food its tail will not move. The 
-	 * snake's head moves in the given direction. If the direction is towards
-	 * the snake's neck the head will not move.
+	 * Move the snake. If the snake eat any food its tail will not move. Will return
+	 * true if it tries to move into itself.
 	 * 
-	 * @param moveDirection direction of the move.
+	 * @param direction direction of the move.
 	 * @param eatFood set to true if the snakes eats something, false otherwise.
 	 * @return true if the snake tries to eat its own body, false otherwise.
 	 */
-	boolean move(Direction moveDirection, boolean eatFood) {
-		
-		// Test if the snakes neck blocks the move.
-		if (moveDirection == Direction.getOppositeOf(headDirection)) {
+	boolean move(Direction direction, boolean eatFood, Board board) {
+		if (!validMoveDirection(direction)) {
 			return false;
 		}
 		
-		// Find the position to move into.
-		Field newHeadPosition = getNewHeadPosition(moveDirection);
+		// Test if the snake eat its body.
+		Field newHeadPosition = getNewHeadPosition(direction, board);
+		if (positions.contains(newHeadPosition)) {
+			int headIndex = positions.indexOf(newHeadPosition);
+			int tailIndex = positions.size() - 1;
+			if (headIndex != tailIndex || eatFood) {
+				return true;
+			}
+		}
 		
-		// Remove tail if snake does not eat anything.
+		// Move tail if snake does not eat anything.
 		if (!eatFood) {
 			positions.remove(positions.size() - 1);
 		}
-		
-		// Test if the snake eat its body.
-		if (positions.contains(newHeadPosition)) {
-			return true;
-		}
-		
-		// Move to the new position.
 		positions.add(0, newHeadPosition);
-		headDirection = moveDirection;
+		headDirection = direction;
 		return false;
 	}
 	
-	Field getNewHeadPosition(Direction moveDirection) {
+	Field getNewHeadPosition(Direction moveDirection, Board board) {
 		// Find the row and column of the new head position.
 		Field currentHead = getHead();
-		Field direction = getDirectionAsField(moveDirection);
+		Field direction = directionToField(moveDirection);
 		int newHeadRow = currentHead.getRow() + direction.getRow();
 		int newHeadColumn = currentHead.getColumn() + direction.getColumn();
 		
@@ -121,14 +111,33 @@ public class Snake {
 		return board.wrap(newHeadRow, newHeadColumn);
 	}
 	
-	void setup(Field headPos, Field tailPos, Direction headDirection) {
-		this.headDirection = headDirection;
-		this.positions.clear();
-		this.positions.add(headPos);
-		this.positions.add(tailPos);
+	void setup(ArrayList<Field> snake) {
+		positions = snake;
+		headDirection = findHeadDirection(snake);
 	}
 	
-	private static Field getDirectionAsField(Direction direction) {
+	// Find the head direction from an array of fields.
+	private Direction findHeadDirection(ArrayList<Field> snake) {
+		Field head = snake.get(0);
+		Field neck = snake.get(1);
+		int rowDiff = head.getRow() - neck.getRow();
+		int columnDiff = head.getColumn() - neck.getColumn();
+		if (rowDiff == 0 && columnDiff == -1) {
+			return Direction.LEFT;
+		}
+		else if (rowDiff == 0 && columnDiff == 1) {
+			return Direction.RIGHT;
+		}
+		else if (rowDiff == -1 && columnDiff == 0) {
+			return Direction.UP;
+		}
+		else if (rowDiff == 1 && columnDiff == 0) {
+			return Direction.DOWN;
+		}
+		throw new IllegalArgumentException("snake array is malformed");
+	}
+	
+	private static Field directionToField(Direction direction) {
 		switch (direction) {
 			case UP:
 				return new Field(-1,0);

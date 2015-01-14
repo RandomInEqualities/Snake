@@ -157,7 +157,8 @@ public class ControlMenuSingleplayer extends KeyAdapter implements ActionListene
 			int inputHeight = Integer.parseInt(inputH);
 			if (inputWidth >= Board.MIN_WIDTH && inputWidth <= Board.MAX_WIDTH && 
 					inputHeight >= Board.MIN_HEIGHT && inputHeight <= Board.MAX_HEIGHT) {
-				game.restart(inputWidth, inputHeight);
+				game.setBoard(new Board(inputWidth, inputHeight));
+				game.start();
 				view.showGame();
 				viewMenuSingleplayer.setValid(true);
 				viewMenuSingleplayer.setFilled(true);
