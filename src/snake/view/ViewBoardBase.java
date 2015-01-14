@@ -98,7 +98,7 @@ public class ViewBoardBase extends JPanel {
 		drawSnakeHead(context, snake, board, colorIndex);
 	}
 	
-	private void drawSnakeHead(Graphics2D context, Snake snake, Board board, int colorIndex) {
+	protected void drawSnakeHead(Graphics2D context, Snake snake, Board board, int colorIndex) {
 		Rectangle headRect = getRectangleForField(snake.getHead(), board);
 		BufferedImage headImage = null;
 		switch (snake.getHeadDirection()) {
@@ -119,7 +119,7 @@ public class ViewBoardBase extends JPanel {
 		context.drawImage(headScaledImage, headRect.x, headRect.y, null);
 	}
 	
-	private void drawSnakeTail(Graphics2D context, Snake snake, Board board, int colorIndex) {
+	protected void drawSnakeTail(Graphics2D context, Snake snake, Board board, int colorIndex) {
 		
 		int lastRow = board.getHeight() - 1;
 		int lastCol = board.getWidth() - 1;
@@ -147,7 +147,7 @@ public class ViewBoardBase extends JPanel {
 		context.drawImage(tailScaledImage, tailRect.x, tailRect.y, null);
 	}
 	
-	private void drawSnakeBody(Graphics2D context, Snake snake, Board board, int colorIndex) {
+	protected void drawSnakeBody(Graphics2D context, Snake snake, Board board, int colorIndex) {
 		List<Field> snakeArray = snake.getPositions();
 		for (int index = 1; index < snakeArray.size() - 1; index++){ 
 
@@ -174,9 +174,9 @@ public class ViewBoardBase extends JPanel {
 			else if (isSnakeCorner("BottomLeft", current, front, behind, board)) {
 				body = snakeBodyBR.get(colorIndex);;
 			}
-			Rectangle bodyRectangle = getRectangleForField(snakeArray.get(index), board);
-			Image bodyScaled = body.getScaledInstance(bodyRectangle.width, bodyRectangle.height, Image.SCALE_SMOOTH);
-			context.drawImage(bodyScaled, bodyRectangle.x, bodyRectangle.y, null);
+			Rectangle bodyRect = getRectangleForField(snakeArray.get(index), board);
+			Image bodyScaled = body.getScaledInstance(bodyRect.width, bodyRect.height, Image.SCALE_SMOOTH);
+			context.drawImage(bodyScaled, bodyRect.x, bodyRect.y, null);
 		}
 	}
 	
@@ -184,20 +184,20 @@ public class ViewBoardBase extends JPanel {
 	 * c/d: Outer rows, e/f: Outer columns, g/h: Corner in board.
 	 * see more info in report.
 	 */
-	private boolean isSnakeCorner(String corner, Field current, Field front, Field behind, Board board) {
+	protected boolean isSnakeCorner(String corner, Field current, Field front, Field behind, Board board) {
 		int a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, g = 0, h = 0, w = 0, x = 0, y = 0, z = 0;
 		int lastRow = board.getHeight() - 1;
 		int lastColumn = board.getWidth() - 1;
-		if (corner.equals("TR")) {
+		if (corner.equals("TopRight")) {
 			a = 1; b = 1; c = lastRow; d = 0; e = lastColumn; f = 0; g = 0; h = 0;
 			w = front.getColumn(); x = behind.getRow(); y = behind.getColumn(); z = front.getRow();
-		} else if (corner.equals("TL")) {
+		} else if (corner.equals("TopLeft")) {
 			a = -1; b = 1; c = lastRow; d = 0; e = 0; f = lastColumn; g = 0; h = lastColumn;	
 			w = front.getRow(); x = behind.getColumn(); y = behind.getRow(); z = front.getColumn();
-		} else if (corner.equals("BL")) {
+		} else if (corner.equals("BottomLeft")) {
 			a = -1; b = -1; c = 0; d = lastRow; e = 0; f = lastColumn; g = lastColumn; h = lastRow;
 			w = front.getColumn(); x = behind.getRow(); y = behind.getColumn(); z = front.getRow();
-		} else if (corner.equals("BR")){
+		} else if (corner.equals("BottomRight")){
 			a = 1; b = -1; c = 0; d = lastRow; e = lastColumn; f = 0; g = lastColumn; h = 0;
 			w = front.getRow(); x = behind.getColumn(); y = behind.getRow(); z = front.getColumn();
 		} else {
@@ -246,19 +246,7 @@ public class ViewBoardBase extends JPanel {
 		Rectangle boardRectangle = getRectangleForBoard(board);
 		Rectangle popupRectangle = getRectangleForPopUp(board);
 		
-		//view.getHeader().hideScore();
-		//view.getHeader().repaint();
 		drawPopup(context, popupRectangle);
-
-		// Text
-		/*
-		String scoreTxt = "Final Score: " + game.getScore();
-		int x3 = boardRectangle.x + boardRectangle.width/2 - scoreTxt.length()*10/2;
-		int y3 = boardRectangle.y + boardRectangle.height/2 + 5;
-		context.setColor(Colors.PANEL_COLOUR);
-		context.setFont(new Font("Sans_Serif", Font.BOLD, 20));
-		context.drawString(scoreTxt, x3, y3);
-		*/
 
 		// Buttons
 		int buttonWidth = 140;
@@ -292,7 +280,7 @@ public class ViewBoardBase extends JPanel {
 		context.drawString(pauseMessage, x3, y3);
 	}
 	
-	private void drawBackground(Graphics2D context) {
+	protected void drawBackground(Graphics2D context) {
 		for (int x = 0; x < getWidth(); x += Images.BACKGROUND.getWidth()) {
 			for (int y = 0; y < getHeight(); y += Images.BACKGROUND.getHeight()) {
 				context.drawImage(Images.BACKGROUND, x, y, this);
@@ -300,7 +288,7 @@ public class ViewBoardBase extends JPanel {
 		}
 	}
 	
-	private void drawPopup(Graphics2D context, Rectangle popupRectangle) {
+	protected void drawPopup(Graphics2D context, Rectangle popupRectangle) {
 		context.setColor(Colors.TRANSPARENT_BLACK);
 		context.fillRect(0, 0, getWidth(), getHeight());
 		context.setColor(Colors.POPUP_COLOUR);
@@ -374,7 +362,7 @@ public class ViewBoardBase extends JPanel {
 		return fieldWidth;
 	}
 	
-	private void addSnakeColor(Color color) {
+	protected void addSnakeColor(Color color) {
 		if (snakeColors.contains(color)) {
 			return;
 		}

@@ -19,7 +19,9 @@ public abstract class ControlMenuOptions extends KeyAdapter implements ActionLis
 	private Difficulty difficulty;
 	
 	public ControlMenuOptions(View view) {
+		super();
 		this.view = view;
+		this.viewMenuOptions = view.getViewMenuSingleplayer();
 		this.view.addKeyListener(this);
 		play = this.viewMenuOptions.getPlayButton();
 		back = this.viewMenuOptions.getBackButton();
