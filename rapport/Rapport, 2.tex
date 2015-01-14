@@ -70,6 +70,9 @@ Derudover er der en \textit{generateFood}-metode, som sikre, at maden altid plac
 
 Er slangen større end end en tredjedel af spillets størrelse, laves et dobbelt for-loop for højde og bredde af spillet, der tjekker om området er frit. Den tilføjer de felter, maden kan placeres på i en ArrayListe, hvorefter maden placeres tilfældigt på et af disse felter.
 
+
+De fire klasser \textit{Food, Score, Game} og \textit{Snake} extender Observable, så det er muligt at for View at modtage ændringerne i Model, uden at Model afhænger af view.
+
 \subsection{View (Brugergrænseflade)}
 Brugerfladen er samlet i klassen \textit{View} der [EXTENDS] \textit{JFrame}. I \textit{View} oprettes et score-panel, der placeres øverst i vinduet, og et board-panel, der placeres lige under det. Board-panelet viser selve spillepladen med slangen og æblet, der begge er vist ved farvede firkanter, som repræsenterer felterne i brættet, hvor slangen og æblet ligger.
 
