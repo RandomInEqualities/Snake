@@ -9,7 +9,7 @@ import javax.swing.Timer;
 import snake.model.Game;
 
 
-public class GameSinglePlayer extends Observable implements Game , ActionListener {
+public class GameSingleplayer extends Observable implements Game , ActionListener {
 	
 	private enum State {
 		START,
@@ -37,11 +37,11 @@ public class GameSinglePlayer extends Observable implements Game , ActionListene
 	private int timerUpdateInterval = 200;
 	private long timerLastUpdateTime = 0;
 	
-	public GameSinglePlayer() {
+	public GameSingleplayer() {
 		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
 	
-	public GameSinglePlayer(int width, int height) {
+	public GameSingleplayer(int width, int height) {
 		this.board = new Board(width, height);
 		this.snake = new Snake();
 		

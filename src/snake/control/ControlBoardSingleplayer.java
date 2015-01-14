@@ -8,16 +8,16 @@ import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 
 import snake.model.Direction;
-import snake.model.GameSinglePlayer;
+import snake.model.GameSingleplayer;
 import snake.view.View;
-import snake.view.ViewBoardSinglePlayer;
+import snake.view.ViewBoardSingleplayer;
 
-public class ControlBoardSinglePlayer extends KeyAdapter implements ActionListener {
+public class ControlBoardSingleplayer extends KeyAdapter implements ActionListener {
 
-	private GameSinglePlayer game;
+	private GameSingleplayer game;
 	private View view;
 
-	public ControlBoardSinglePlayer(GameSinglePlayer game, View view, ViewBoardSinglePlayer viewBoard) {
+	public ControlBoardSingleplayer(GameSingleplayer game, View view, ViewBoardSingleplayer viewBoard) {
 		if (game == null || view == null) {
 			throw new NullPointerException();
 		}

@@ -16,6 +16,7 @@ import snake.model.*;
 public class View extends JFrame {
 	
 	public enum State {
+		STARTUP,
 		IN_GAME,
 		IN_MENU,
 		IN_MENU_SINGLEPLAYER,
@@ -28,24 +29,23 @@ public class View extends JFrame {
 	private State state;
 	private ViewHeader headerPanel;
 	private ViewMenu menuPanel;
-	private ViewHeaderSingleplayer headerPanelSingleplayer;
-	private ViewMenuSingleplayer menuSingleplayer;
-	private ViewMenuMultiplayer menuMultiplayer;
-	private ViewBoardSinglePlayer boardSingleplayer;
-	private ViewBoardMultiPlayer boardMultiplayer;
+	//private ViewHeaderSingleplayer headerPanelSingleplayer;
+	//private ViewMenuSinglePlayer menuSingleplayer;
+	//private ViewMenuMultiplayer menuMultiplayer;
+	//private ViewBoardSinglePlayer boardSingleplayer;
+	//private ViewBoardMultiPlayer boardMultiplayer;
 	private ViewMenuControls menuControlsPanel;
-	private ViewBoardSinglePlayer boardPanel;
+	//private ViewBoardSingleplayer boardPanel;
 	private Audio audio;
 	
-	public View(GameSinglePlayer game) {
+	public View() {
 		super();
 		
+		this.state = State.STARTUP;
+		this.audio = new Audio();
 		this.menuPanel = new ViewMenu();
-		this.headerPanel = new ViewHeader(this);
-		this.headerPanelSingleplayer = new ViewHeaderSingleplayer(this, game, true);
+		this.headerPanel = new ViewHeader(this.audio);
 		this.menuControlsPanel = new ViewMenuControls(this);
-		this.boardPanel = new ViewBoardSinglePlayer(game);
-		this.audio = new Audio(game);
 		
 		showMenu();
 		
@@ -61,36 +61,18 @@ public class View extends JFrame {
 		requestFocus();
 	}
 	
-	public void showGame() {
+	public void showGame(ViewBoardSingleplayer boardView) {
 		if (state != State.IN_GAME) {
-			setFrameComponents(headerPanelSingleplayer, boardPanel);
+			setFrameComponents(headerPanel, boardView);
 			state = State.IN_GAME;
 		}
 	}
-	public void createGameView(GameSinglePlayer game){
-		menuSingleplayer = new ViewMenuSingleplayer(this, game);
-		boardSingleplayer = new ViewBoardSinglePlayer(game);
-	}
 	
-	public void createGameView(GameMultiPlayer game){
-		menuMultiplayer = new ViewMenuMultiplayer (this, game);
-		boardMultiplayer = new ViewBoardMultiPlayer(game);
-	}
-	
-	public ViewMenuSingleplayer getMenuSingleplayer(){
-		return menuSingleplayer;
-	}
-	
-	public ViewMenuMultiplayer getMenuMultiplayer(){
-		return menuMultiplayer;
-	}
-	
-	public ViewBoardSinglePlayer getBoardSingleplayer(){
-		return boardSingleplayer;
-	}
-	
-	public ViewBoardMultiPlayer getBoardMultiplayer(){
-		return boardMultiplayer;
+	public void showGame(ViewBoardMultiplayer boardView) {
+		if (state != State.IN_GAME) {
+			setFrameComponents(headerPanel, boardView);
+			state = State.IN_GAME;
+		}
 	}
 	
 	public void showMenu() {
@@ -100,16 +82,16 @@ public class View extends JFrame {
 		}
 	}
 	
-	public void showSingleplayerMenu() {
+	public void showSingleplayerMenu(ViewMenuSingleplayer menu) {
 		if (state != State.IN_MENU_SINGLEPLAYER) {
-			setFrameComponents(headerPanel, menuSingleplayer);
+			setFrameComponents(headerPanel, menu);
 			state = State.IN_MENU_SINGLEPLAYER;
 		}
 	}
 	
-	public void showMultiplayerMenu(){
+	public void showMultiplayerMenu(ViewMenuMultiplayer menu){
 		if (state != State.IN_MENU_MULTIPLAYER) {
-			setFrameComponents(headerPanel, menuMultiplayer);
+			setFrameComponents(headerPanel, menu);
 			state = State.IN_MENU_MULTIPLAYER;
 		}
 	}
@@ -149,10 +131,6 @@ public class View extends JFrame {
 		return menuControlsPanel;
 	}
 	
-	public ViewBoardSinglePlayer getViewBoard() {
-		return boardPanel;
-	}
-	
 	public void closeWindow() {
 		// Send an event to the window system that we want to close the frame.
 		dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
@@ -160,10 +138,6 @@ public class View extends JFrame {
 	
 	public ViewHeader getHeader(){
 		return headerPanel;
-	}
-	
-	public ViewHeaderSingleplayer getHeaderSingleplayer(){
-		return headerPanelSingleplayer;
 	}
 	
 	@Override

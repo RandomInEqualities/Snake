@@ -7,18 +7,18 @@ import java.util.Observable;
 import java.util.Observer;
 
 import snake.model.Board;
-import snake.model.GameMultiPlayer;
+import snake.model.GameMultiplayer;
 import snake.model.Player;
 
-public class ViewBoardMultiPlayer extends ViewBoardBase  implements Observer {
+public class ViewBoardMultiplayer extends ViewBoardBase  implements Observer {
 	
-	private GameMultiPlayer game;
+	private GameMultiplayer game;
 	private Color snakeColorPlayerOne;
 	private Color snakeColorPlayerTwo;
 	private static Color DEFAULT_SNAKE_COLOR_PLAYER_ONE = new Color(81, 216, 167);
 	private static Color DEFAULT_SNAKE_COLOR_PLAYER_TWO = new Color(201, 167, 167);
 	
-	public ViewBoardMultiPlayer(GameMultiPlayer game) {
+	public ViewBoardMultiplayer(GameMultiplayer game) {
 		super();
 		this.game = game;
 		this.snakeColorPlayerOne = DEFAULT_SNAKE_COLOR_PLAYER_ONE;

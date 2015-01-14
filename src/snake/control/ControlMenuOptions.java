@@ -18,10 +18,10 @@ public abstract class ControlMenuOptions extends KeyAdapter implements ActionLis
 	private Border thickBorder;
 	private Difficulty difficulty;
 	
-	public ControlMenuOptions(View view) {
+	public ControlMenuOptions(View view, ViewMenuOptions viewOptions) {
 		super();
 		this.view = view;
-		this.viewMenuOptions = view.getMenuSingleplayer();
+		this.viewMenuOptions = viewOptions;
 		this.view.addKeyListener(this);
 		play = this.viewMenuOptions.getPlayButton();
 		back = this.viewMenuOptions.getBackButton();

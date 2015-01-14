@@ -4,13 +4,13 @@ import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-import snake.model.GameSinglePlayer;
+import snake.model.GameSingleplayer;
 
 
 public class ViewMenuSingleplayer extends ViewMenuOptions{	
 	private JButton green, blue, red, yellow;
 	
-	public ViewMenuSingleplayer(View view, GameSinglePlayer game){
+	public ViewMenuSingleplayer(View view, GameSingleplayer game){
 		super(view, game.getBoard());
 		// Formatter (limit input to three digits)
 		

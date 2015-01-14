@@ -10,17 +10,17 @@ import snake.model.*;
 import snake.view.*;
 
 public class ControlMenuSingleplayer extends ControlMenuOptions {
-	private GameSinglePlayer game;
+	
 	private View view;
 	private ViewMenuSingleplayer viewMenuSingleplayer;
 	private JButton green, blue, red, yellow;
-	private Border thickBorder;
+	ViewBoardSingleplayer boardView;
 	
-	public ControlMenuSingleplayer(GameSinglePlayer game, View view) {
-		super(view);
-		this.game = game;
+	public ControlMenuSingleplayer(GameSingleplayer game, View view, ViewMenuSingleplayer menuView, ViewBoardSingleplayer boardView) {
+		super(view, menuView);
 		this.view = view;
-		this.viewMenuSingleplayer = view.getMenuSingleplayer();
+		this.boardView = boardView;
+		this.viewMenuSingleplayer = menuView;
 		this.view.addKeyListener(this);
 		
 		green = this.viewMenuSingleplayer.getGreenButton();
@@ -39,7 +39,6 @@ public class ControlMenuSingleplayer extends ControlMenuOptions {
 		red.setActionCommand("red");
 		yellow.setActionCommand("yellow");
 		
-		thickBorder = new LineBorder(Colors.PANEL_COLOUR, 3);
 	}
 
 	@Override
@@ -50,19 +49,19 @@ public class ControlMenuSingleplayer extends ControlMenuOptions {
 		}  
 		else if (event.getActionCommand() == "green") {
 			setActiveButton(green, blue, red, yellow);
-			view.getViewBoard().setSnakeColor(new Color(84, 216, 81));
+			boardView.setSnakeColor(new Color(84, 216, 81));
 		} 
 		else if (event.getActionCommand() == "blue") {
 			setActiveButton(blue, green, red, yellow);
-			view.getViewBoard().setSnakeColor(new Color(80, 152, 218));
+			boardView.setSnakeColor(new Color(80, 152, 218));
 		} 
 		else if (event.getActionCommand() == "red"){
 			setActiveButton(red, green, blue, yellow);
-			view.getViewBoard().setSnakeColor(new Color(237, 75, 66));
+			boardView.setSnakeColor(new Color(237, 75, 66));
 		} 
 		else if (event.getActionCommand() == "yellow"){
 			setActiveButton(yellow, green, blue, red);
-			view.getViewBoard().setSnakeColor(new Color(243, 196, 67));
+			boardView.setSnakeColor(new Color(243, 196, 67));
 		}
 	}
 
@@ -103,8 +102,7 @@ public class ControlMenuSingleplayer extends ControlMenuOptions {
 			int inputWidth = Integer.parseInt(inputW);
 			int inputHeight = Integer.parseInt(inputH);
 			if (inputWidth >= Board.MIN_WIDTH && inputWidth <= Board.MAX_WIDTH && inputHeight >= Board.MIN_HEIGHT && inputHeight <= Board.MAX_HEIGHT) {
-				GameSinglePlayer game = new GameSinglePlayer(inputWidth, inputHeight);
-				view.showGame();
+				view.showGame(boardView);
 				viewMenuSingleplayer.setValid(true);
 				viewMenuSingleplayer.setFilled(true);
 			} 

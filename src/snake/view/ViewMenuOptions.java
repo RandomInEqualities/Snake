@@ -9,7 +9,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.text.*;
 
 import snake.model.Board;
-import snake.model.GameSinglePlayer;
+import snake.model.GameSingleplayer;
 
 
 public class ViewMenuOptions extends JPanel implements FocusListener {

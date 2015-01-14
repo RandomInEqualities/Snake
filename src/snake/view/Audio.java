@@ -8,8 +8,8 @@ import java.util.Observer;
 import javax.sound.sampled.*;
 
 import snake.model.Game;
-import snake.model.GameMultiPlayer;
-import snake.model.GameSinglePlayer;
+import snake.model.GameMultiplayer;
+import snake.model.GameSingleplayer;
 
 
 public class Audio implements Observer {
@@ -44,14 +44,14 @@ public class Audio implements Observer {
 		this.muted = muted;
 	}
 	
-	public void registerGame(GameSinglePlayer game) {
+	public void registerGame(GameSingleplayer game) {
 		if (game == null) {
 			throw new NullPointerException();
 		}
 		game.addObserver(this);
 	}
 	
-	public void registerGame(GameMultiPlayer game) {
+	public void registerGame(GameMultiplayer game) {
 		if (game == null) {
 			throw new NullPointerException();
 		}

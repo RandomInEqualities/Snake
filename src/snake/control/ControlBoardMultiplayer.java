@@ -8,17 +8,17 @@ import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 
 import snake.model.Direction;
-import snake.model.GameMultiPlayer;
+import snake.model.GameMultiplayer;
 import snake.model.Player;
 import snake.view.View;
-import snake.view.ViewBoardMultiPlayer;
+import snake.view.ViewBoardMultiplayer;
 
-public class ControlBoardMultiPlayer extends KeyAdapter implements ActionListener {
+public class ControlBoardMultiplayer extends KeyAdapter implements ActionListener {
 
-	private GameMultiPlayer game;
+	private GameMultiplayer game;
 	private View view;
 
-	public ControlBoardMultiPlayer(GameMultiPlayer game, View view, ViewBoardMultiPlayer viewBoard) {
+	public ControlBoardMultiplayer(GameMultiplayer game, View view, ViewBoardMultiplayer viewBoard) {
 		if (game == null || view == null) {
 			throw new NullPointerException();
 		}

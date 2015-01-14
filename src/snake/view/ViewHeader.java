@@ -5,7 +5,7 @@ import java.util.*;
 
 import javax.swing.*;
 
-import snake.model.GameSinglePlayer;
+import snake.model.GameSingleplayer;
 
 
 public class ViewHeader extends JPanel {
@@ -14,15 +14,14 @@ public class ViewHeader extends JPanel {
 	private static final int DEFAULT_LOGO_WIDTH = 300;
 	private static final int DEFAULT_LOGO_HEIGHT = 80;
 	
-	private View view;
+	private Audio audio;
 	private Image logo;
 	private JButton sound;
 
-	public ViewHeader(View view) {
-		this.view = view;
+	public ViewHeader(Audio audio) {
 		this.logo = Images.LOGO.getScaledInstance(DEFAULT_LOGO_WIDTH, DEFAULT_LOGO_HEIGHT, Image.SCALE_SMOOTH);
 		this.sound = new JButton();
-		view.getViewMenu().setOptionButton(sound);
+		ViewMenu.setOptionButton(sound);
 		sound.setContentAreaFilled(false);
 		setBackground(Colors.PANEL_COLOUR);
 		this.add(sound);
@@ -47,7 +46,7 @@ public class ViewHeader extends JPanel {
 		
 		// Sound icon
 		Image soundIcon;		
-		if (view.getAudio().isMuted()){
+		if (audio.isMuted()){
 			soundIcon = Images.SOUND_OFF;
 		} else {
 			soundIcon = Images.SOUND_ON;

@@ -9,16 +9,16 @@ import java.util.Observable;
 import java.util.Observer;
 
 import snake.model.Board;
-import snake.model.GameSinglePlayer;
+import snake.model.GameSingleplayer;
 
 
-public class ViewBoardSinglePlayer extends ViewBoardBase  implements Observer {
+public class ViewBoardSingleplayer extends ViewBoardBase  implements Observer {
 	
-	private GameSinglePlayer game;
+	private GameSingleplayer game;
 	private Color snakeColor;
 	private static Color DEFAULT_SNAKE_COLOR = new Color(81, 216, 167);
 	
-	public ViewBoardSinglePlayer(GameSinglePlayer game) {
+	public ViewBoardSingleplayer(GameSingleplayer game) {
 		super();
 		this.game = game;
 		this.snakeColor = DEFAULT_SNAKE_COLOR;

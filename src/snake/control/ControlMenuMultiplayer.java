@@ -9,14 +9,14 @@ import snake.model.*;
 import snake.view.*;
 
 public class ControlMenuMultiplayer extends ControlMenuOptions {
-	private GameSinglePlayer game;
+	private GameSingleplayer game;
 	private View view;
 	private ViewMenuMultiplayer viewMenuMultiplayer;
 	private JButton green, blue, red, yellow, green2, blue2, red2, yellow2;
 	
-	public ControlMenuMultiplayer(GameMultiPlayer game, View view) {
-		super(view);
-		this.viewMenuMultiplayer = view.getMenuMultiplayer();
+	public ControlMenuMultiplayer(GameMultiplayer game, View view, ViewMenuMultiplayer menuView, ViewBoardMultiplayer boardView) {
+		super(view, menuView);
+		this.viewMenuMultiplayer = menuView;
 		
 		
 		green2 = this.viewMenuMultiplayer.getGreenButton();
@@ -43,6 +43,7 @@ public class ControlMenuMultiplayer extends ControlMenuOptions {
 		red2.setActionCommand("red2");
 		yellow2.setActionCommand("yellow2");
 	}
+	
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		super.actionPerformed(event);

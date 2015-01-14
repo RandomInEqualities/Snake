@@ -4,18 +4,16 @@ import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 
-import snake.model.GameSinglePlayer;
+import snake.model.GameSingleplayer;
 
 public class ViewHeaderSingleplayer extends ViewHeader implements Observer {
 
-	private GameSinglePlayer game;
-	private View view;
+	private GameSingleplayer game;
 	private boolean showScore;
 	private Font font;
 	
-	public ViewHeaderSingleplayer(View view, GameSinglePlayer game, Boolean showScore) {
-		super(view);
-		this.view = view;
+	public ViewHeaderSingleplayer(View view, GameSingleplayer game, Boolean showScore) {
+		super(view.getAudio());
 		this.game = game;
 		this.showScore = showScore;
 		if (game == null) {

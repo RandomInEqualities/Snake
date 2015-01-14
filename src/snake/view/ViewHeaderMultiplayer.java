@@ -4,20 +4,18 @@ import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 
-import snake.model.GameMultiPlayer;
-import snake.model.GameSinglePlayer;
+import snake.model.GameMultiplayer;
+import snake.model.GameSingleplayer;
 import snake.model.Player;
 
 public class ViewHeaderMultiplayer extends ViewHeader implements Observer {
 
-	private GameMultiPlayer game;
-	private View view;
+	private GameMultiplayer game;
 	private boolean showScore;
 	private Font font;
 	
-	public ViewHeaderMultiplayer(View view, GameMultiPlayer game, Boolean showScore) {
-		super(view);
-		this.view = view;
+	public ViewHeaderMultiplayer(View view, GameMultiplayer game, Boolean showScore) {
+		super(view.getAudio());
 		this.game = game;
 		if (game == null) {
 			throw new NullPointerException();

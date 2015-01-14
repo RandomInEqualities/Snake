@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import snake.model.GameSinglePlayer;
+import snake.model.GameSingleplayer;
 import snake.view.*;
 
 public class ControlMenu implements ActionListener {
@@ -33,10 +33,19 @@ public class ControlMenu implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "singleplayer") {
-			view.showSingleplayerMenu();
+			GameSingleplayer game = new GameSingleplayer();
+			ViewBoardSingleplayer boardView = new ViewBoardSingleplayer(game);
+			ViewMenuSingleplayer menuView = new ViewMenuSingleplayer(view, game);
+			ControlBoardSingleplayer boardControl = new ControlBoardSingleplayer(game, view, boardView);
+			ControlMenuSingleplayer menuControl = new ControlMenuSingleplayer(game, view, menuView, boardView);
+			view.getAudio().registerGame(game);
+			view.showSingleplayerMenu(menuView);
+			
+			
+			view.showGame(boardView);
 		} 
 		else if (e.getActionCommand() == "multiplayer"){
-			view.showMultiplayerMenu();
+			//view.showMultiplayerMenu();
 		}
 		else if (e.getActionCommand() == "controls"){
 			view.showControlsMenu();

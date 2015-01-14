@@ -5,7 +5,6 @@ import java.awt.event.*;
 
 import javax.swing.JButton;
 
-import snake.model.*;
 import snake.view.*;
 
 
@@ -13,26 +12,26 @@ public class Control extends KeyAdapter implements ActionListener{
 	
 	private View view;
 	
-	@SuppressWarnings("unused")
-	private ControlBoardSinglePlayer boardControl;
+	//@SuppressWarnings("unused")
+	//private ControlBoardSingleplayer boardControl;
 	@SuppressWarnings("unused")
 	private ControlMenu menuControl;
-	@SuppressWarnings("unused")
-	private ControlMenuSingleplayer menuSingleplayerControl;
-	@SuppressWarnings("unused")
-	private ControlMenuMultiplayer menuMultiplayerControl;
+	//@SuppressWarnings("unused")
+	//private ControlMenuSingleplayer menuSingleplayerControl;
+	//@SuppressWarnings("unused")
+	//private ControlMenuMultiplayer menuMultiplayerControl;
 	@SuppressWarnings("unused")
 	private ControlMenuControls menuControlsControl;
 	private JButton soundButton;
 	
-	public Control(GameSinglePlayer game, View view) {
-		if (view == null || game == null) {
+	public Control(View view) {
+		if (view == null) {
 			throw new NullPointerException();
 		}
 		this.view = view;
 		view.addKeyListener(this);
 		
-		boardControl = new ControlBoardSinglePlayer(game, view, view.getViewBoard());
+		//boardControl = new ControlBoardSingleplayer(game, view, view.getViewBoard());
 		menuControl = new ControlMenu(view);
 		menuControlsControl = new ControlMenuControls(view);
 		
@@ -55,6 +54,8 @@ public class Control extends KeyAdapter implements ActionListener{
 			case KeyEvent.VK_ESCAPE:
 				view.showMenu();
 				break;
+			case KeyEvent.VK_T:
+				view.getViewMenu().repaint();
 			default:
 				break;
 		}

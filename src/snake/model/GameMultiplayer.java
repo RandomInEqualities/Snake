@@ -6,7 +6,7 @@ import java.util.Observable;
 import snake.model.Game;
 
 
-public class GameMultiPlayer extends Observable implements Game {
+public class GameMultiplayer extends Observable implements Game {
 	
 	private enum State {
 		START,
@@ -26,11 +26,11 @@ public class GameMultiPlayer extends Observable implements Game {
 	private int score2;
 	private Food food;
 	
-	public GameMultiPlayer() {
+	public GameMultiplayer() {
 		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
 	
-	public GameMultiPlayer(int width, int height) {
+	public GameMultiplayer(int width, int height) {
 		this.board = new Board(width, height);
 		this.snake1 = new Snake();
 		this.snake2 = new Snake();
