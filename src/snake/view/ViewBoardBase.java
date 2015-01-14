@@ -188,16 +188,16 @@ public class ViewBoardBase extends JPanel {
 		int a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, g = 0, h = 0, w = 0, x = 0, y = 0, z = 0;
 		int lastRow = board.getHeight() - 1;
 		int lastColumn = board.getWidth() - 1;
-		if (corner.equals("TR")) {
+		if (corner.equals("TopRight")) {
 			a = 1; b = 1; c = lastRow; d = 0; e = lastColumn; f = 0; g = 0; h = 0;
 			w = front.getColumn(); x = behind.getRow(); y = behind.getColumn(); z = front.getRow();
-		} else if (corner.equals("TL")) {
+		} else if (corner.equals("TopLeft")) {
 			a = -1; b = 1; c = lastRow; d = 0; e = 0; f = lastColumn; g = 0; h = lastColumn;	
 			w = front.getRow(); x = behind.getColumn(); y = behind.getRow(); z = front.getColumn();
-		} else if (corner.equals("BL")) {
+		} else if (corner.equals("BottomLeft")) {
 			a = -1; b = -1; c = 0; d = lastRow; e = 0; f = lastColumn; g = lastColumn; h = lastRow;
 			w = front.getColumn(); x = behind.getRow(); y = behind.getColumn(); z = front.getRow();
-		} else if (corner.equals("BR")){
+		} else if (corner.equals("BottomRight")){
 			a = 1; b = -1; c = 0; d = lastRow; e = lastColumn; f = 0; g = lastColumn; h = 0;
 			w = front.getRow(); x = behind.getColumn(); y = behind.getRow(); z = front.getColumn();
 		} else {
