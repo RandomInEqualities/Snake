@@ -1,22 +1,24 @@
 package snake.control;
 
-import java.awt.Color;
 import java.awt.event.*;
-
 import javax.swing.*;
 import javax.swing.border.*;
-
-import snake.model.*;
 import snake.view.*;
 
-public class ControlMenuOptions extends KeyAdapter implements ActionListener {
-	private Game game;
+public abstract class ControlMenuOptions extends KeyAdapter implements ActionListener {
+	public enum Difficulty {
+		KINDERGARTEN,
+		EASY,
+		INTERMEDIATE,
+		HARD
+	}
 	private View view;
 	private ViewMenuOptions viewMenuOptions;
 	private JButton play, back, kindergarten, easy, intermediate, hard;
 	private Border thickBorder;
+	private Difficulty difficulty;
 	
-	public ControlMenuOptions(View view, Game game) {
+	public ControlMenuOptions(View view) {
 		this.view = view;
 		this.view.addKeyListener(this);
 		play = this.viewMenuOptions.getPlayButton();
@@ -92,60 +94,24 @@ public class ControlMenuOptions extends KeyAdapter implements ActionListener {
 	}
 	
 	private void setKindergardenDifficulty() {
-		game.disableTimedMovement();
+		setDifficulty(Difficulty.KINDERGARTEN);
 	}
 	
 	private void setEasyDifficulty() {
-		game.enableTimedMovement();
-		game.setTimedMovementSpeed(300);
+		setDifficulty(Difficulty.EASY);
 	}
 	
 	private void setIntermediatDifficulty() {
-		game.enableTimedMovement();
-		game.setTimedMovementSpeed(150);
+		setDifficulty(Difficulty.INTERMEDIATE);
 	}
 	
 	private void setHardDifficulty() {
-		game.enableTimedMovement();
-		game.setTimedMovementSpeed(70);
+		setDifficulty(Difficulty.HARD);
 	}
 
-	public void playGame() {
-		String inputW = getInput(viewMenuSingleplayer.getWidthInput());
-		String inputH = getInput(viewMenuSingleplayer.getHeightInput());
-
-		if (inputW.isEmpty() || inputH.isEmpty()) { // if no input
-			viewMenuSingleplayer.setFilled(false);
-			viewMenuSingleplayer.repaint();
-		} 
-		else {
-			// if input is correct
-			int inputWidth = Integer.parseInt(inputW);
-			int inputHeight = Integer.parseInt(inputH);
-			if (inputWidth >= Board.MIN_WIDTH && inputWidth <= Board.MAX_WIDTH && 
-					inputHeight >= Board.MIN_HEIGHT && inputHeight <= Board.MAX_HEIGHT) {
-				game.setBoard(new Board(inputWidth, inputHeight));
-				game.start();
-				view.showGame();
-				viewMenuSingleplayer.setValid(true);
-				viewMenuSingleplayer.setFilled(true);
-			} 
-			else {
-				// input is invalid
-				viewMenuSingleplayer.setValid(false);
-				viewMenuSingleplayer.repaint();
-			}
-		}
-	}
-
-	// Get input without whitespace
-	public String getInput(JFormattedTextField input) {
-		String in = input.getText();
-		String out = in.replace(" ", "");
-		return out;
-	}
+	public abstract void playGame();
 	
-	protected void setActiveButton(JButton active, JButton b1, JButton b2, JButton b3){
+	public void setActiveButton(JButton active, JButton b1, JButton b2, JButton b3){
 		active.setBorderPainted(true);
 		active.setBorder(thickBorder);
 		b1.setBorderPainted(false);
@@ -156,5 +122,11 @@ public class ControlMenuOptions extends KeyAdapter implements ActionListener {
 		// Request focus so we still receive keyboard events.
 		view.requestFocus();
 	}
+	public void setDifficulty(Difficulty d){
+		this.difficulty = d;
+	}
 	
+	public Difficulty getDifficulty(){
+		return difficulty;
+	}
 }
