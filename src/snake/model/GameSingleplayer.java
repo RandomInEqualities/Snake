@@ -110,7 +110,7 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 			state = State.RUN;
 			timer.start();
 			setChanged();
-			notifyObservers(Event.START);
+			notifyObservers(new Event (Event.START));
 		}
 	}
 
@@ -120,7 +120,7 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 			state = State.PAUSE;
 			timer.stop();
 			setChanged();
-			notifyObservers(Event.PAUSE);
+			notifyObservers(new Event (Event.PAUSE));
 		}
 	}
 
@@ -130,7 +130,7 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 			state = State.RUN;
 			timer.start();
 			setChanged();
-			notifyObservers(Event.RESUME);
+			notifyObservers(new Event (Event.RESUME));
 		}
 	}
 

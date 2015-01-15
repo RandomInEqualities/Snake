@@ -37,14 +37,12 @@ public class ViewBoardMultiplayer extends ViewBoard  implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		
 		if (game.isEnded()) {
 			showButtons();
 		}
 		else {
 			removeButtons();
-		}
-		
+		}	
 		repaint();
 	}
 
@@ -66,5 +64,4 @@ public class ViewBoardMultiplayer extends ViewBoard  implements Observer {
 			drawGameOver(context2D, board);
 		}
 	}
-	
 }

@@ -98,7 +98,7 @@ public class GameMultiplayer extends Observable implements Game {
 		if (state == State.START) {
 			state = State.RUN;
 			setChanged();
-			notifyObservers(Event.START);
+			notifyObservers(new Event(Event.START));
 		}
 	}
 
@@ -107,7 +107,7 @@ public class GameMultiplayer extends Observable implements Game {
 		if (state == State.RUN) {
 			state = State.PAUSE;
 			setChanged();
-			notifyObservers(Event.PAUSE);
+			notifyObservers(new Event(Event.PAUSE));
 		}
 	}
 
@@ -116,7 +116,7 @@ public class GameMultiplayer extends Observable implements Game {
 		if (state == State.PAUSE) {
 			state = State.RUN;
 			setChanged();
-			notifyObservers(Event.RESUME);
+			notifyObservers(new Event(Event.RESUME));
 		}
 	}
 
