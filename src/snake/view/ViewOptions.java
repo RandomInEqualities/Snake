@@ -22,6 +22,7 @@ public class ViewOptions extends JPanel implements FocusListener {
 	private JButton buttonIntermediate;
 	private JButton buttonHard;
 	private JButton buttonBack;
+	private JLabel errorMessage;
 	private JFormattedTextField inputFieldWidth;
 	private JFormattedTextField inputFieldHeight;
 	
@@ -30,7 +31,8 @@ public class ViewOptions extends JPanel implements FocusListener {
 		this.valid = true;
 		this.filled = true;
 		panelOptions = new JPanel(); //Game options panel
-
+		this.errorMessage = new JLabel();
+		errorMessage.setForeground(Color.RED);
 		// Formatter (limit input to three digits)
 		MaskFormatter formatter = null;
 		try {
@@ -51,9 +53,9 @@ public class ViewOptions extends JPanel implements FocusListener {
 		setTextFieldFormat(inputFieldHeight, gameHeight);
 		
 		createButtons();
-		
 		panelOptions.add(inputFieldWidth);
 		panelOptions.add(inputFieldHeight);
+		panelOptions.add(errorMessage);
 		panelOptions.add(buttonKindergarten);
 		panelOptions.add(buttonEasy);
 		panelOptions.add(buttonIntermediate);
@@ -193,23 +195,22 @@ public class ViewOptions extends JPanel implements FocusListener {
 		buttonEasy.setActionCommand("easy");
 		buttonIntermediate.setActionCommand("intermediate");
 		buttonHard.setActionCommand("hard");
-		
-		// Default difficulty = kindergarten
-		buttonKindergarten.setBorderPainted(true);
-		buttonKindergarten.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
+
 	}
 	
 	private void printErrorMessage(Graphics2D context){
-		int y = 110;
-		context.setColor(Color.RED);
-		context.setFont(new Font("Sans_Serif", Font.BOLD, 12));
+		int y = 90;
 		if (!valid){
-			int x = getWidth()/2-40;
-			context.drawString("Invalid input", x, y);
+			int x = panelOptions.getWidth()/2-40;
+			errorMessage.setLocation(x,  y);
+			errorMessage.setText("Invalid input");
 		} 
 		else if (!filled){
-			int x = getWidth()/2-80;
-			context.drawString("Choose a width and a height", x, y);
+			int x = panelOptions.getWidth()/2-80;
+			errorMessage.setLocation(x, y);
+			errorMessage.setText("Choose a width and a height");
+		} else {
+			errorMessage.setText("");
 		}
 	}
 	
@@ -268,5 +269,4 @@ public class ViewOptions extends JPanel implements FocusListener {
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		button.setBorderPainted(false);
 	}
-	
 }

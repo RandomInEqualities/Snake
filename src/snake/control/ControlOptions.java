@@ -30,7 +30,6 @@ public abstract class ControlOptions extends KeyAdapter implements ActionListene
 		play = this.viewMenuOptions.getPlayButton();
 		back = this.viewMenuOptions.getBackButton();
 		kindergarten = this.viewMenuOptions.getKindergartenButton();
-		kindergarten.setBorder(thickBorder);
 		easy = this.viewMenuOptions.getEasyButton();
 		intermediate = this.viewMenuOptions.getIntermediateButton();
 		hard = this.viewMenuOptions.getHardButton();
@@ -43,6 +42,8 @@ public abstract class ControlOptions extends KeyAdapter implements ActionListene
 		hard.addActionListener(this);
 
 		thickBorder = new LineBorder(Colors.PANEL_COLOUR, 3);
+		kindergarten.setBorderPainted(true);
+		kindergarten.setBorder(thickBorder);
 	}
 
 	@Override

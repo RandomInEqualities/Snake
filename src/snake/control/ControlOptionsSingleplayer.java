@@ -17,6 +17,7 @@ public class ControlOptionsSingleplayer extends ControlOptions {
 	private ViewBoardSingleplayer boardView;
 	private GameSingleplayer game;
 	private ViewHeaderSingleplayer headerView;
+	private LineBorder thickBorder;
 	
 	public ControlOptionsSingleplayer(GameSingleplayer game, View view, ViewOptionsSingleplayer menuView, ViewBoardSingleplayer boardView, ViewHeaderSingleplayer headerView) {
 		super(view, menuView);
@@ -41,7 +42,12 @@ public class ControlOptionsSingleplayer extends ControlOptions {
 		blue.setActionCommand("blue");
 		red.setActionCommand("red");
 		yellow.setActionCommand("yellow");
+		
+		//Default difficulty
 		game.disableTimedMovement();
+		thickBorder = new LineBorder(Colors.PANEL_COLOUR, 3);
+		green.setBorderPainted(true);
+		green.setBorder(thickBorder);
 	}
 
 	@Override
