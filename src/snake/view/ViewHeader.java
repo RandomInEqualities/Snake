@@ -29,7 +29,7 @@ public class ViewHeader extends JPanel {
 		buttonSound.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		buttonSound.setBorderPainted(false);
 		buttonSound.setContentAreaFilled(false);
-		setBackground(Colors.PANEL_COLOUR);
+		setBackground(Colors.PANEL_COLOR);
 		this.add(buttonSound);
 		
 		imageSoundOn = new ImageIcon(Images.SOUND_ON);

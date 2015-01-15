@@ -42,7 +42,6 @@ public class ControlMenu implements ActionListener {
 		boardViewMulti = new ViewBoardMultiplayer(headerMulti, gameMulti);
 		boardControlMulti = new ControlBoardMultiplayer(gameMulti, view, boardViewMulti, headerMulti);
 		menuControlMulti = new ControlOptionsMultiplayer(gameMulti, view, menuViewMulti, boardViewMulti, headerMulti);
-		
 	}
 
 	@Override

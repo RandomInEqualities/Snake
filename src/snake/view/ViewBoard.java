@@ -25,7 +25,7 @@ public class ViewBoard extends JPanel {
 	private JButton buttonMenu;
 	private boolean showingButtons;
 
-	// Arrays with coloured snake images.
+	// Arrays with coloued snake images.
 	private ArrayList<Color> snakeColors;
 	private ArrayList<BufferedImage> snakeBodyBL;
 	private ArrayList<BufferedImage> snakeBodyBR;
@@ -52,7 +52,7 @@ public class ViewBoard extends JPanel {
 		ViewMenu.setMenuButtonParameters(buttonPlayAgain);
 		ViewMenu.setMenuButtonParameters(buttonMenu);
 
-		setBackground(Colors.PANEL_COLOUR);
+		setBackground(Colors.PANEL_COLOR);
 		
 		this.snakeColors = new ArrayList<Color>();
 		this.snakeBodyBL = new ArrayList<BufferedImage>();
@@ -81,7 +81,7 @@ public class ViewBoard extends JPanel {
 
 	protected void drawBoard(Graphics2D context, Board board) {
 		drawBackground(context);
-		context.setColor(Colors.BOARD_COLOUR);
+		context.setColor(Colors.BOARD_COLOR);
 		context.fill(getRectangleForBoard(board));
 	}
 	
@@ -273,7 +273,7 @@ public class ViewBoard extends JPanel {
 		int x3 = boardRectangle.x + boardRectangle.width/2 - pauseMessage.length()*10/2;
 		int y3 = boardRectangle.y + boardRectangle.height/2 + 25;
 		context.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		context.setColor(Colors.PANEL_COLOUR);
+		context.setColor(Colors.PANEL_COLOR);
 		context.setFont(new Font("Sans_Serif", Font.BOLD, 20));
 		context.drawString(pauseMessage, x3, y3);
 	}
@@ -289,7 +289,7 @@ public class ViewBoard extends JPanel {
 	protected void drawPopup(Graphics2D context, Rectangle popupRectangle) {
 		context.setColor(Colors.TRANSPARENT_BLACK);
 		context.fillRect(0, 0, getWidth(), getHeight());
-		context.setColor(Colors.POPUP_COLOUR);
+		context.setColor(Colors.POPUP_COLOR);
 		context.fill(popupRectangle);
 	}
 	
@@ -368,23 +368,23 @@ public class ViewBoard extends JPanel {
 		}
 		// Generate images with the color
 		snakeColors.add(color);
-		snakeBodyBL.add(colourSnakeImage(Images.SNAKE_CORNER_BL, color));
-		snakeBodyBR.add(colourSnakeImage(Images.SNAKE_CORNER_BR, color));
-		snakeBodyTL.add(colourSnakeImage(Images.SNAKE_CORNER_TL, color));
-		snakeBodyTR.add(colourSnakeImage(Images.SNAKE_CORNER_TR, color));
-		snakeBodyVertical.add(colourSnakeImage(Images.SNAKE_VERTICAL, color));
-		snakeBodyHorizontal.add(colourSnakeImage(Images.SNAKE_HORIZONTAL, color));
-		snakeHeadUp.add(colourSnakeImage(Images.SNAKE_HEAD_UP, color));
-		snakeHeadDown.add(colourSnakeImage(Images.SNAKE_HEAD_DOWN, color));
-		snakeHeadLeft.add(colourSnakeImage(Images.SNAKE_HEAD_LEFT, color));
-		snakeHeadRight.add(colourSnakeImage(Images.SNAKE_HEAD_RIGHT, color));
-		snakeTailUp.add(colourSnakeImage(Images.SNAKE_TAIL_UP, color));
-		snakeTailDown.add(colourSnakeImage(Images.SNAKE_TAIL_DOWN, color));
-		snakeTailLeft.add(colourSnakeImage(Images.SNAKE_TAIL_LEFT, color));
-		snakeTailRight.add(colourSnakeImage(Images.SNAKE_TAIL_RIGHT, color));
+		snakeBodyBL.add(colorSnakeImage(Images.SNAKE_CORNER_BL, color));
+		snakeBodyBR.add(colorSnakeImage(Images.SNAKE_CORNER_BR, color));
+		snakeBodyTL.add(colorSnakeImage(Images.SNAKE_CORNER_TL, color));
+		snakeBodyTR.add(colorSnakeImage(Images.SNAKE_CORNER_TR, color));
+		snakeBodyVertical.add(colorSnakeImage(Images.SNAKE_VERTICAL, color));
+		snakeBodyHorizontal.add(colorSnakeImage(Images.SNAKE_HORIZONTAL, color));
+		snakeHeadUp.add(colorSnakeImage(Images.SNAKE_HEAD_UP, color));
+		snakeHeadDown.add(colorSnakeImage(Images.SNAKE_HEAD_DOWN, color));
+		snakeHeadLeft.add(colorSnakeImage(Images.SNAKE_HEAD_LEFT, color));
+		snakeHeadRight.add(colorSnakeImage(Images.SNAKE_HEAD_RIGHT, color));
+		snakeTailUp.add(colorSnakeImage(Images.SNAKE_TAIL_UP, color));
+		snakeTailDown.add(colorSnakeImage(Images.SNAKE_TAIL_DOWN, color));
+		snakeTailLeft.add(colorSnakeImage(Images.SNAKE_TAIL_LEFT, color));
+		snakeTailRight.add(colorSnakeImage(Images.SNAKE_TAIL_RIGHT, color));
 	}
 	
-	private BufferedImage colourSnakeImage(BufferedImage image, Color color) {
+	private BufferedImage colorSnakeImage(BufferedImage image, Color color) {
 		int red = color.getRed();
 		int green = color.getGreen();
 		int blue = color.getBlue();

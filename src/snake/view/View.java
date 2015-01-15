@@ -138,6 +138,7 @@ public class View extends JFrame {
 		
 		// Request focus for JFrame to make it possible to receive keyboard events
 		requestFocus();
+		
 	}
 }
 

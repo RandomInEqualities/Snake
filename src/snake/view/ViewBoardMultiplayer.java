@@ -98,7 +98,7 @@ public class ViewBoardMultiplayer extends ViewBoard  implements Observer {
 		}
 		int x2 = boardRect.x + boardRect.width/2 - scoreTxt.length()*10/2;
 		int y2 = boardRect.y + boardRect.height/2 + 5;
-		context.setColor(Colors.PANEL_COLOUR);
+		context.setColor(Colors.PANEL_COLOR);
 		context.setFont(new Font("Sans_Serif", Font.BOLD, 20));
 		context.drawString(scoreTxt, x2, y2);
 		

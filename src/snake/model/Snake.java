@@ -95,7 +95,7 @@ public class Snake {
 				return true;
 			}
 		}
-		// Move tail if snake does not eat anything.
+		// Remove tail if snake does not eat anything.
 		if (!eatFood) {
 			positions.remove(positions.size() - 1);
 		}
@@ -111,7 +111,7 @@ public class Snake {
 		int newHeadRow = currentHead.getRow() + direction.getRow();
 		int newHeadColumn = currentHead.getColumn() + direction.getColumn();
 		
-		// Make sure that the row and column is within the board, if not we
+		// Make sure that the row and column is within the board, if not
 		// wrap them around it.
 		return board.wrap(newHeadRow, newHeadColumn);
 	}
@@ -121,7 +121,7 @@ public class Snake {
 		headDirection = findHeadDirection(snake);
 	}
 	
-	// Find the head direction from an array of fields.
+	// Find head direction from an array of fields.
 	private Direction findHeadDirection(ArrayList<Field> snake) {
 		Field head = snake.get(0);
 		Field neck = snake.get(1);

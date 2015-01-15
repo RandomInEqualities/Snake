@@ -41,7 +41,7 @@ public abstract class ControlOptions extends KeyAdapter implements ActionListene
 		intermediate.addActionListener(this);
 		hard.addActionListener(this);
 
-		thickBorder = new LineBorder(Colors.PANEL_COLOUR, 3);
+		thickBorder = new LineBorder(Colors.PANEL_COLOR, 3);
 		kindergarten.setBorderPainted(true);
 		kindergarten.setBorder(thickBorder);
 	}

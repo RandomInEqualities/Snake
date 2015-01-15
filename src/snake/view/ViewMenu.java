@@ -81,7 +81,7 @@ public class ViewMenu extends JPanel {
 	}
 	
 	public static void drawMenuBackground(Graphics2D context, Rectangle rectangle) {
-		context.setColor(Colors.POPUP_COLOUR);
+		context.setColor(Colors.POPUP_COLOR);
 		context.fill(rectangle);
 	}
 

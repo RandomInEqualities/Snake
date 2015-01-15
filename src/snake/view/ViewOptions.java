@@ -239,9 +239,9 @@ public class ViewOptions extends JPanel implements FocusListener {
 	private void drawText(Graphics2D context2D){
 		context2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		context2D.setFont(new Font("Sans_Serif", Font.BOLD, 20));
-		context2D.setColor(Colors.PANEL_COLOUR);
+		context2D.setColor(Colors.PANEL_COLOR);
 		context2D.drawString("GAME DIMENSIONS", panelOptions.getX()+20, panelOptions.getY()+30);
-		context2D.drawString("SNAKE COLOUR", panelOptions.getX()+20, panelOptions.getY()+150);
+		context2D.drawString("SNAKE COLOR", panelOptions.getX()+20, panelOptions.getY()+150);
 		context2D.drawString("DIFFICULTY", panelOptions.getX()+20, panelOptions.getY()+270);
 		
 		context2D.setFont(new Font("Sans_Serif", Font.PLAIN, 11));
@@ -263,9 +263,9 @@ public class ViewOptions extends JPanel implements FocusListener {
 		button.setBorderPainted(false);
 	}
 	
-	protected static void setColourButtonParameters(JButton button){
-		int sizeColour = 30;
-		button.setPreferredSize(new Dimension(sizeColour, sizeColour));
+	protected static void setColorButtonParameters(JButton button){
+		int sizeColor = 30;
+		button.setPreferredSize(new Dimension(sizeColor, sizeColor));
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		button.setBorderPainted(false);
 	}

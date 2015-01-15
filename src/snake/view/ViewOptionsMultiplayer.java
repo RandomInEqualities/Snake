@@ -15,25 +15,25 @@ public class ViewOptionsMultiplayer extends ViewOptions {
 	public ViewOptionsMultiplayer(View view, GameMultiplayer game){
 		super(view, game.getBoard());
 		
-		//Colour buttons
+		//Color buttons
 		green = new JButton(new ImageIcon (Images.BUTTON_GREEN));
-		setColourButtonParameters(green);
-		green.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
+		setColorButtonParameters(green);
+		green.setBorder(new LineBorder(Colors.PANEL_COLOR, 3));
 		blue = new JButton(new ImageIcon (Images.BUTTON_BLUE));
-		setColourButtonParameters(blue);
+		setColorButtonParameters(blue);
 		red = new JButton(new ImageIcon (Images.BUTTON_RED));
-		setColourButtonParameters(red);
+		setColorButtonParameters(red);
 		yellow = new JButton(new ImageIcon(Images.BUTTON_YELLOW));
-		setColourButtonParameters(yellow);
+		setColorButtonParameters(yellow);
 		green2 = new JButton(new ImageIcon(Images.BUTTON_GREEN));
-		setColourButtonParameters(green2);
-		green2.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
+		setColorButtonParameters(green2);
+		green2.setBorder(new LineBorder(Colors.PANEL_COLOR, 3));
 		blue2 = new JButton(new ImageIcon(Images.BUTTON_BLUE));
-		setColourButtonParameters(blue2);
+		setColorButtonParameters(blue2);
 		red2 = new JButton(new ImageIcon(Images.BUTTON_RED));
-		setColourButtonParameters(red2);
+		setColorButtonParameters(red2);
 		yellow2 = new JButton(new ImageIcon(Images.BUTTON_YELLOW));
-		setColourButtonParameters(yellow2);
+		setColorButtonParameters(yellow2);
 		
 		// Add new buttons
 		super.panelOptions.add(green);
@@ -49,28 +49,28 @@ public class ViewOptionsMultiplayer extends ViewOptions {
 	protected void paintComponent(Graphics context) {
 		super.paintComponent(context);
 		Graphics2D context2D = (Graphics2D) context;
-		drawColourButtons(context2D);
+		drawColorButtons(context2D);
 	}
 	
-	public void drawColourButtons(Graphics2D context){
-		context.setColor(Colors.PANEL_COLOUR);
+	public void drawColorButtons(Graphics2D context){
+		context.setColor(Colors.PANEL_COLOR);
 		context.setFont(new Font("Sans_Serif", Font.BOLD, 12));
 		context.drawString("Player 1", getWidth()/2-175, super.getPanel().getY()+180);
 		context.drawString("Player 2", getWidth()/2+25, super.getPanel().getY()+180);
 		
 		int gap = 10;
 		int shift = 100;
-		int sizeColour = 30;
-		int xBlue = super.getPanel().getWidth()/2-sizeColour-gap/2;
-		int yColour = 190;
-		green.setBounds(xBlue-gap-sizeColour-shift, yColour, sizeColour, sizeColour);
-		blue.setBounds(xBlue-shift, yColour, sizeColour, sizeColour);
-		red.setBounds(xBlue+gap+sizeColour-shift, yColour, sizeColour, sizeColour);
-		yellow.setBounds(xBlue+2*gap+2*sizeColour-shift, yColour, sizeColour, sizeColour);
-		green2.setBounds(xBlue-gap-sizeColour+shift, yColour, sizeColour, sizeColour);
-		blue2.setBounds(xBlue+shift, yColour, sizeColour, sizeColour);
-		red2.setBounds(xBlue+gap+sizeColour+shift, yColour, sizeColour, sizeColour);
-		yellow2.setBounds(xBlue+2*gap+2*sizeColour+shift, yColour, sizeColour, sizeColour);
+		int sizeColor = 30;
+		int xBlue = super.getPanel().getWidth()/2-sizeColor-gap/2;
+		int yColor = 190;
+		green.setBounds(xBlue-gap-sizeColor-shift, yColor, sizeColor, sizeColor);
+		blue.setBounds(xBlue-shift, yColor, sizeColor, sizeColor);
+		red.setBounds(xBlue+gap+sizeColor-shift, yColor, sizeColor, sizeColor);
+		yellow.setBounds(xBlue+2*gap+2*sizeColor-shift, yColor, sizeColor, sizeColor);
+		green2.setBounds(xBlue-gap-sizeColor+shift, yColor, sizeColor, sizeColor);
+		blue2.setBounds(xBlue+shift, yColor, sizeColor, sizeColor);
+		red2.setBounds(xBlue+gap+sizeColor+shift, yColor, sizeColor, sizeColor);
+		yellow2.setBounds(xBlue+2*gap+2*sizeColor+shift, yColor, sizeColor, sizeColor);
 	}
 	
 	public JButton getGreenButton() {

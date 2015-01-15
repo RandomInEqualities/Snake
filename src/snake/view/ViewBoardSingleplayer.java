@@ -79,7 +79,7 @@ public class ViewBoardSingleplayer extends ViewBoard  implements Observer {
 		String scoreTxt = "Final Score: " + game.getScore();
 		int x = boardRect.x + boardRect.width/2 - scoreTxt.length()*10/2;
 		int y = boardRect.y + boardRect.height/2 + 5;
-		context.setColor(Colors.PANEL_COLOUR);
+		context.setColor(Colors.PANEL_COLOR);
 		context.setFont(new Font("Sans_Serif", Font.BOLD, 20));
 		context.drawString(scoreTxt, x, y);
 	}

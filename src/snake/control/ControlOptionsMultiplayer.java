@@ -57,7 +57,7 @@ public class ControlOptionsMultiplayer extends ControlOptions {
 		
 		//Default difficulty
 		game.disableTimedMovement();
-		thickBorder = new LineBorder(Colors.PANEL_COLOUR, 3);
+		thickBorder = new LineBorder(Colors.PANEL_COLOR, 3);
 		green.setBorderPainted(true);
 		green.setBorder(thickBorder);
 		green2.setBorderPainted(true);
@@ -136,7 +136,6 @@ public class ControlOptionsMultiplayer extends ControlOptions {
 				view.showGame(headerView, boardView);
 				game.setBoardSize(inputWidth, inputHeight);
 				setSpeed();
-				
 				game.reset();
 				game.start();
 				viewMenuMultiplayer.setValid(true);

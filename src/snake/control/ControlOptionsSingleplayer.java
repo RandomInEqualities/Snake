@@ -45,7 +45,7 @@ public class ControlOptionsSingleplayer extends ControlOptions {
 		
 		//Default difficulty
 		game.disableTimedMovement();
-		thickBorder = new LineBorder(Colors.PANEL_COLOUR, 3);
+		thickBorder = new LineBorder(Colors.PANEL_COLOR, 3);
 		green.setBorderPainted(true);
 		green.setBorder(thickBorder);
 	}
