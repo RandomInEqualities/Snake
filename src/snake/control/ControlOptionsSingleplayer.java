@@ -106,8 +106,6 @@ public class ControlOptionsSingleplayer extends ControlOptions {
 				game.setBoardSize(inputWidth, inputHeight);
 				setSpeed();
 				headerView.showScore();
-				headerView.revalidate();
-
 				game.reset();
 				game.start();
 				viewMenuSingleplayer.setValid(true);
