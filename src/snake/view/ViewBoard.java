@@ -382,7 +382,6 @@ public class ViewBoard extends JPanel {
 		snakeTailDown.add(colourSnakeImage(Images.SNAKE_TAIL_DOWN, color));
 		snakeTailLeft.add(colourSnakeImage(Images.SNAKE_TAIL_LEFT, color));
 		snakeTailRight.add(colourSnakeImage(Images.SNAKE_TAIL_RIGHT, color));
-		System.out.println(color);
 	}
 	
 	private BufferedImage colourSnakeImage(BufferedImage image, Color color) {
