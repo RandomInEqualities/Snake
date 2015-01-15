@@ -15,19 +15,19 @@ public class ViewOptionsSingleplayer extends ViewOptions{
 		// Formatter (limit input to three digits)
 		
 		green = new JButton(new ImageIcon (Images.BUTTON_GREEN));
-		view.getViewMenu().setCommonButtonParameters(green);
+		setColourButtonParameters(green);
 		green.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
 		blue = new JButton(new ImageIcon (Images.BUTTON_BLUE));
-		view.getViewMenu().setOptionButton(blue);
+		setColourButtonParameters(blue);
 		red = new JButton(new ImageIcon (Images.BUTTON_RED));
-		view.getViewMenu().setOptionButton(red);
+		setColourButtonParameters(red);
 		yellow = new JButton(new ImageIcon(Images.BUTTON_YELLOW));
-		view.getViewMenu().setOptionButton(yellow);
+		setColourButtonParameters(yellow);
 		
-		super.panel.add(green);
-		super.panel.add(blue);
-		super.panel.add(red);
-		super.panel.add(yellow);
+		super.panelOptions.add(green);
+		super.panelOptions.add(blue);
+		super.panelOptions.add(red);
+		super.panelOptions.add(yellow);
 	}
 	
 	public JButton getGreenButton() {
@@ -54,8 +54,8 @@ public class ViewOptionsSingleplayer extends ViewOptions{
 	public void drawColourButtons(Graphics2D context){
 		int gap = 10;
 		int sizeColour = 30;
-		int xBlue = super.panel.getWidth()/2-sizeColour-gap/2;
-		int yColour = super.panel.getY()+180;
+		int xBlue = super.panelOptions.getWidth()/2-sizeColour-gap/2;
+		int yColour = super.panelOptions.getY()+180;
 		green.setBounds(xBlue-gap-sizeColour, yColour, sizeColour, sizeColour);
 		blue.setBounds(xBlue, yColour, sizeColour, sizeColour);
 		red.setBounds(xBlue+gap+sizeColour, yColour, sizeColour, sizeColour);

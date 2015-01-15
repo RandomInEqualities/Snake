@@ -12,8 +12,6 @@ public class Control extends KeyAdapter implements ActionListener{
 	
 	private View view;
 	@SuppressWarnings("unused")
-	private ControlMenu menuControl;
-	@SuppressWarnings("unused")
 	private ControlControls menuControlsControl;
 	private JButton soundButton;
 	
@@ -23,8 +21,7 @@ public class Control extends KeyAdapter implements ActionListener{
 		}
 		this.view = view;
 		view.addKeyListener(this);
-		
-		menuControl = new ControlMenu(view);
+
 		menuControlsControl = new ControlControls(view);
 		
 		this.soundButton = view.getHeader().getSoundButton();

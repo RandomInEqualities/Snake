@@ -8,12 +8,14 @@ import javax.swing.border.*;
 import snake.view.*;
 
 public abstract class ControlOptions extends KeyAdapter implements ActionListener {
+	
 	public enum Difficulty {
 		KINDERGARTEN,
 		EASY,
 		INTERMEDIATE,
 		HARD
 	}
+	
 	private View view;
 	private ViewOptions viewMenuOptions;
 	private JButton play, back, kindergarten, easy, intermediate, hard;
@@ -38,13 +40,6 @@ public abstract class ControlOptions extends KeyAdapter implements ActionListene
 		easy.addActionListener(this);
 		intermediate.addActionListener(this);
 		hard.addActionListener(this);
-
-		play.setActionCommand("play");
-		back.setActionCommand("back");
-		kindergarten.setActionCommand("kindergarten");
-		easy.setActionCommand("easy");
-		intermediate.setActionCommand("intermediate");
-		hard.setActionCommand("hard");
 
 		thickBorder = new LineBorder(Colors.PANEL_COLOUR, 3);
 	}
