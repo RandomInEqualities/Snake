@@ -87,13 +87,11 @@ public class ViewBoard extends JPanel {
 	}
 	
 	protected void drawSnake(Graphics2D context, Snake snake, Board board, Color color) {
-		
 		int colorIndex = snakeColors.indexOf(color);
 		if (colorIndex == -1) {
 			addSnakeColor(color);
 			colorIndex = snakeColors.size() - 1;
 		}
-
 		drawSnakeBody(context, snake, board, colorIndex);
 		drawSnakeTail(context, snake, board, colorIndex);
 		drawSnakeHead(context, snake, board, colorIndex);
@@ -121,7 +119,6 @@ public class ViewBoard extends JPanel {
 	}
 	
 	protected void drawSnakeTail(Graphics2D context, Snake snake, Board board, int colorIndex) {
-		
 		int lastRow = board.getHeight() - 1;
 		int lastCol = board.getWidth() - 1;
 		
@@ -370,7 +367,7 @@ public class ViewBoard extends JPanel {
 		if (snakeColors.contains(color)) {
 			return;
 		}
-		// Generate images with the colour.
+		// Generate images with the color
 		snakeColors.add(color);
 		snakeBodyBL.add(colourSnakeImage(Images.SNAKE_CORNER_BL, color));
 		snakeBodyBR.add(colourSnakeImage(Images.SNAKE_CORNER_BR, color));
@@ -395,7 +392,7 @@ public class ViewBoard extends JPanel {
 		WritableRaster raster = image.getRaster();
 		for (int x = 0; x < image.getWidth(); x++) {
 			for (int y = 0; y < image.getHeight(); y++) {
-				// Do not colour the eye pixels.
+				// Do not color the eye pixels.
 				if (image.getRGB(x, y) != -13547430){ 
 					int[] pixel = raster.getPixel(x, y, (int[]) null);
 					pixel[0] = red;

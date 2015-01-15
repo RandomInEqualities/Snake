@@ -49,7 +49,10 @@ public class ViewBoardSingleplayer extends ViewBoard  implements Observer {
 		Board board = game.getBoard();
 		
 		drawBoard(context2D, board);
-		drawFood(context2D, game.getFood(), board);
+		if (!game.isWon()){
+			drawFood(context2D, game.getFood(), board);
+		}
+		
 		drawSnake(context2D, game.getSnake(), board, snakeColor);
 		
 		if (game.isLost()) {
