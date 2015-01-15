@@ -52,16 +52,15 @@ public class ViewOptions extends JPanel implements FocusListener {
 		
 		createButtons();
 		
-		this.add(panelOptions);
 		panelOptions.add(inputFieldWidth);
 		panelOptions.add(inputFieldHeight);
 		panelOptions.add(buttonKindergarten);
 		panelOptions.add(buttonEasy);
 		panelOptions.add(buttonIntermediate);
 		panelOptions.add(buttonHard);
-		this.add(buttonBack);
-		this.add(buttonPlay);
-		
+		panelOptions.add(buttonBack);
+		panelOptions.add(buttonPlay);
+		this.add(panelOptions);
 	}
 	
 	public JButton getPlayButton() {
@@ -100,7 +99,6 @@ public class ViewOptions extends JPanel implements FocusListener {
 		ViewMenu.drawMenuBackground(context2D, menuRect);
 		
 		// Set transparent panel in the board area
-		menuRect.height = 400;
 		panelOptions.setBounds(menuRect);
 		panelOptions.setOpaque(false);
 		
@@ -108,6 +106,13 @@ public class ViewOptions extends JPanel implements FocusListener {
 		setDifficultyButtons();
 		setPlayAndBackButtons();
 		printErrorMessage(context2D);
+		
+		//Text fields
+		int xWidth = panelOptions.getWidth()/2-inputFieldWidth.getWidth()-50;
+		int xHeight = panelOptions.getWidth()/2+50;
+		int y = 50;
+		inputFieldWidth.setLocation(xWidth, y);
+		inputFieldHeight.setLocation(xHeight, y);
 	}
 	
 	private void setTextFieldFormat(JFormattedTextField text, String value) {
@@ -190,6 +195,7 @@ public class ViewOptions extends JPanel implements FocusListener {
 		buttonHard.setActionCommand("hard");
 		
 		// Default difficulty = kindergarten
+		buttonKindergarten.setBorderPainted(true);
 		buttonKindergarten.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
 	}
 	
@@ -209,10 +215,10 @@ public class ViewOptions extends JPanel implements FocusListener {
 	
 	private void setPlayAndBackButtons(){
 		// Play button and back button
-		int width = getWidth();
-		int height = getHeight();
-		int xBack = width - buttonBack.getWidth() - 10;
-		int xPlay = width + 10;
+		int width = panelOptions.getWidth();
+		int height = panelOptions.getHeight();
+		int xBack = width/2 - buttonBack.getWidth() - 10;
+		int xPlay = width/2 + 10;
 		int y = height - buttonPlay.getHeight() - 20;
 		buttonBack.setLocation(xBack, y);
 		buttonPlay.setLocation(xPlay, y);
@@ -220,13 +226,13 @@ public class ViewOptions extends JPanel implements FocusListener {
 	
 	private void setDifficultyButtons(){
 		// Difficulty buttons
-		//space between buttons
 		int buttonWidth = buttonEasy.getWidth();
-		int space = (panelOptions.getWidth()-4*buttonWidth)/5; 
-		buttonKindergarten.setLocation(space, panelOptions.getY()+280);
-		buttonEasy.setLocation(2*space+buttonWidth, panelOptions.getY()+280);
-		buttonIntermediate.setLocation(3*space+2*buttonWidth, panelOptions.getY()+280);
-		buttonHard.setLocation(4*space+3*buttonWidth, panelOptions.getY()+280);
+		int space = (panelOptions.getWidth()-4*buttonWidth)/5; //space between buttons 
+		int y = 300;
+		buttonKindergarten.setLocation(space, y);
+		buttonEasy.setLocation(2*space+buttonWidth, y);
+		buttonIntermediate.setLocation(3*space+2*buttonWidth, y);
+		buttonHard.setLocation(4*space+3*buttonWidth, y);
 	}
 	
 	private void drawText(Graphics2D context2D){

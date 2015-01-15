@@ -62,7 +62,7 @@ public class ViewOptionsMultiplayer extends ViewOptions {
 		int shift = 100;
 		int sizeColour = 30;
 		int xBlue = super.getPanel().getWidth()/2-sizeColour-gap/2;
-		int yColour = super.getPanel().getY()+180;
+		int yColour = 190;
 		green.setBounds(xBlue-gap-sizeColour-shift, yColour, sizeColour, sizeColour);
 		blue.setBounds(xBlue-shift, yColour, sizeColour, sizeColour);
 		red.setBounds(xBlue+gap+sizeColour-shift, yColour, sizeColour, sizeColour);

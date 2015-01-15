@@ -55,7 +55,7 @@ public class ViewOptionsSingleplayer extends ViewOptions{
 		int gap = 10;
 		int sizeColour = 30;
 		int xBlue = super.panelOptions.getWidth()/2-sizeColour-gap/2;
-		int yColour = super.panelOptions.getY()+180;
+		int yColour = 180;
 		green.setBounds(xBlue-gap-sizeColour, yColour, sizeColour, sizeColour);
 		blue.setBounds(xBlue, yColour, sizeColour, sizeColour);
 		red.setBounds(xBlue+gap+sizeColour, yColour, sizeColour, sizeColour);

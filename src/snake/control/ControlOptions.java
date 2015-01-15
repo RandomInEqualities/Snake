@@ -30,6 +30,7 @@ public abstract class ControlOptions extends KeyAdapter implements ActionListene
 		play = this.viewMenuOptions.getPlayButton();
 		back = this.viewMenuOptions.getBackButton();
 		kindergarten = this.viewMenuOptions.getKindergartenButton();
+		kindergarten.setBorder(thickBorder);
 		easy = this.viewMenuOptions.getEasyButton();
 		intermediate = this.viewMenuOptions.getIntermediateButton();
 		hard = this.viewMenuOptions.getHardButton();
