@@ -157,6 +157,21 @@ public class GameMultiplayer extends Observable implements Game, ActionListener 
 		timer.stop();
 	}
 	
+	public void enableTimedMovement() {
+		timerEnabled = true;
+	}
+	
+	public void disableTimedMovement() {
+		timerEnabled = false;
+	}
+	
+	public void setTimedMovementSpeed(int speed) {
+		if (speed <= 0) {
+			throw new IllegalArgumentException("speed " + speed + " is not allowed");
+		}
+		this.timerUpdateInterval = speed;
+	}
+	
 	public void move(Player player, Direction moveDirection) {
 		if (state != State.RUN) {
 			return;
