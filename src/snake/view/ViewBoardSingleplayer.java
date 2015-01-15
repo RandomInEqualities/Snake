@@ -53,12 +53,16 @@ public class ViewBoardSingleplayer extends ViewBoard  implements Observer {
 		drawSnake(context2D, game.getSnake(), board, snakeColor);
 		
 		if (game.isLost()) {
+			headerView.hideScore();
+			headerView.repaint();
 			drawGameLost(context2D, board);
 		} 
 		else if (game.isPaused()) {
 			drawPaused(context2D, board);
 		} 
 		else if (game.isWon()){
+			headerView.hideScore();
+			headerView.repaint();
 			drawGameWon(context2D, board);
 		}
 	}
@@ -66,7 +70,7 @@ public class ViewBoardSingleplayer extends ViewBoard  implements Observer {
 	@Override
 	protected void drawGameOver(Graphics2D context, Board board) {
 		super.drawGameOver(context, board);
-		headerView.hideScore();
+		
 		// Add score text.
 		Rectangle boardRect = getRectangleForBoard(board);
 		String scoreTxt = "Final Score: " + game.getScore();
