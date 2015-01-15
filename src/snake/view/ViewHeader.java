@@ -7,13 +7,14 @@ import javax.swing.*;
 import snake.control.Control;
 
 public class ViewHeader extends JPanel {
+	
 	private static final int DEFAULT_LOGO_WIDTH = 300;
 	private static final int DEFAULT_LOGO_HEIGHT = 80;
 	
 	private ViewAudio audio;
 	private Image logo;
-	private JButton sound;
-	private ImageIcon soundOn, soundOff;
+	private JButton buttonSound;
+	private ImageIcon imageSoundOn, imageSoundOff;
 
 	public ViewHeader(View view, ViewAudio audio) {
 		if (audio == null) {
@@ -21,23 +22,23 @@ public class ViewHeader extends JPanel {
 		}
 		this.audio = audio;
 		this.logo = Images.LOGO.getScaledInstance(DEFAULT_LOGO_WIDTH, DEFAULT_LOGO_HEIGHT, Image.SCALE_SMOOTH);
-		this.sound = new JButton();
+		this.buttonSound = new JButton();
 		int width = Images.SOUND_ON.getWidth();
 		int height = Images.SOUND_ON.getHeight();
-		sound.setPreferredSize(new Dimension(width, height));
-		sound.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		sound.setBorderPainted(false);
-		sound.setContentAreaFilled(false);
+		buttonSound.setPreferredSize(new Dimension(width, height));
+		buttonSound.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		buttonSound.setBorderPainted(false);
+		buttonSound.setContentAreaFilled(false);
 		setBackground(Colors.PANEL_COLOUR);
-		this.add(sound);
+		this.add(buttonSound);
+		
+		imageSoundOn = new ImageIcon(Images.SOUND_ON);
+		imageSoundOff = new ImageIcon(Images.SOUND_OFF);
 		
 		Control control = new Control(view);
-		sound.setActionCommand("mute");
-		sound.addActionListener(control);
+		buttonSound.setActionCommand("mute");
+		buttonSound.addActionListener(control);
 		view.addKeyListener(control);
-		
-		soundOn = new ImageIcon (Images.SOUND_ON);
-		soundOff = new ImageIcon (Images.SOUND_OFF);
 	}
 
 	@Override
@@ -54,27 +55,24 @@ public class ViewHeader extends JPanel {
 		Dimension size = getSize();
 		int logoWidth = logo.getWidth(null);
 		if (size.width > logoWidth + 230) {
-			context2D.drawImage(logo, size.width/2 - logo.getWidth(null)/2, 0, null);
+			context2D.drawImage(logo, size.width/2 - logoWidth/2, 0, null);
 		}
+		
 		// Sound icon
 		ImageIcon soundIcon;
 		if (audio.isMuted()){
-			soundIcon = soundOff;
+			soundIcon = imageSoundOff;
 		} else {
-			soundIcon = soundOn;
+			soundIcon = imageSoundOn;
 		}
 		int xSound = size.width-Images.SOUND_OFF.getWidth()-10;
 		int ySound = 8;
 		int width = Images.SOUND_ON.getWidth();
 		int height = Images.SOUND_ON.getHeight();
-		sound.setIcon(soundIcon);
-		sound.setBounds(xSound, ySound, width, height);
+		buttonSound.setIcon(soundIcon);
+		buttonSound.setBounds(xSound, ySound, width, height);
 		
 		// Key info
 		context2D.drawImage(Images.INFO_KEYS, size.width-Images.INFO_KEYS.getWidth()-10, 35, null);
-	}
-	
-	public JButton getSoundButton(){
-		return sound;
 	}
 }

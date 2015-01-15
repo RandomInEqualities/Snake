@@ -6,7 +6,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
-import snake.control.ControlOptions.Difficulty;
 import snake.model.*;
 import snake.view.*;
 

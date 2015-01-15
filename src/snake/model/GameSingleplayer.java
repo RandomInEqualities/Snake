@@ -181,6 +181,7 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 		else if (snake.fills(board)) {
 			state = State.END;
 			isWon = true;
+
 		} else if (snakeEatsFood) {
 			score++;
 			if(score % 5 == 0) {
