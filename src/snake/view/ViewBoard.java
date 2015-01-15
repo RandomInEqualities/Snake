@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import java.util.List;
@@ -386,6 +385,7 @@ public class ViewBoard extends JPanel {
 		snakeTailDown.add(colourSnakeImage(Images.SNAKE_TAIL_DOWN, color));
 		snakeTailLeft.add(colourSnakeImage(Images.SNAKE_TAIL_LEFT, color));
 		snakeTailRight.add(colourSnakeImage(Images.SNAKE_TAIL_RIGHT, color));
+		System.out.println(color);
 	}
 	
 	private BufferedImage colourSnakeImage(BufferedImage image, Color color) {
@@ -407,4 +407,5 @@ public class ViewBoard extends JPanel {
 		}
 		return image;
 	}
+
 }
