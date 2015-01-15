@@ -2,34 +2,33 @@ package snake.view;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import snake.control.ControlControls;
+
 
 public class ViewControls extends JPanel {
 
-
 	private static final long serialVersionUID = 6121636944519601998L;
 
-	private View view;
-	private JButton backButton;
+	private JButton buttonBack;
 	
 	public ViewControls(View view) {
 		if (view == null) {
 			throw new NullPointerException();
 		}
 		
-		this.view = view;
-		backButton = new JButton(new ImageIcon(Images.BUTTON_BACK));
-		view.getViewMenu().setCommonButtonParameters(backButton);
+		buttonBack = new JButton(new ImageIcon(Images.BUTTON_BACK));
+		ViewMenu.setMenuButtonParameters(buttonBack);
+		this.add(buttonBack);
 		
-		this.add(backButton);
-	}
-	
-	public JButton getBackButton() {
-		return backButton;
+		// Create the control object.
+		ControlControls control = new ControlControls(view);
+		buttonBack.addActionListener(control);
 	}
 	
 	@Override
@@ -37,24 +36,25 @@ public class ViewControls extends JPanel {
 		super.paintComponent(context);
 		Graphics2D context2D = (Graphics2D) context;
 		
-		// Background
-		view.getViewMenu().drawBackground(context2D, getWidth(), getHeight());
-		view.getViewMenu().drawBoard(context2D, getWidth());
+		// Background.
+		Rectangle menuRect = ViewMenu.computeMenuRectangle(getSize());
+		ViewMenu.drawTileBackground(context2D, getVisibleRect());
+		ViewMenu.drawMenuBackground(context2D, menuRect);
 		
-		// Title
-		int xTitle = getSize().width/2-Images.TITLE_CONTROLS.getWidth()/2;
-		int yTitle = 20;
-		int xImage = getSize().width/2-Images.CONTROLS.getWidth()/2;
-		int yImage = yTitle+60;
+		// Title image.
+		int xTitle = menuRect.x + menuRect.width/2 - Images.TITLE_CONTROLS.getWidth()/2;
+		int yTitle = menuRect.y + ViewMenu.MENU_MARGIN;
 		context.drawImage(Images.TITLE_CONTROLS, xTitle, yTitle, null);
+		
+		// Control image.
+		int xImage = menuRect.x + menuRect.width/2 - Images.CONTROLS.getWidth()/2;
+		int yImage = yTitle + Images.TITLE_CONTROLS.getHeight()/2 + 50;
 		context.drawImage(Images.CONTROLS, xImage, yImage, null);
 		
-		// Button
-		int buttonWidth = Images.BUTTON_BACK.getWidth();
-		int buttonHeight = Images.BUTTON_BACK.getHeight();
-		int xBack = getSize().width/2-buttonWidth/2;
-		int yBack = view.getViewMenu().getRectangleForMenu(getSize().width).height - buttonHeight - 20;
-		backButton.setBounds(xBack, yBack, buttonWidth, buttonHeight);
+		// Back button.
+		int xBack = menuRect.x + menuRect.width/2 - ViewMenu.BUTTON_WIDTH/2;
+		int yBack = menuRect.y + menuRect.height - ViewMenu.BUTTON_HEIGHT - 10;
+		buttonBack.setLocation(xBack, yBack);
 	}
 	
 }

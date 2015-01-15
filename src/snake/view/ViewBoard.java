@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import java.util.List;
@@ -49,8 +50,8 @@ public class ViewBoard extends JPanel {
 		this.buttonMenu = new JButton(new ImageIcon(Images.BUTTON_MENU));
 		this.showingButtons = false;
 		
-		ViewMenu.setCommonButtonParameters(buttonPlayAgain);
-		ViewMenu.setCommonButtonParameters(buttonMenu);
+		ViewMenu.setMenuButtonParameters(buttonPlayAgain);
+		ViewMenu.setMenuButtonParameters(buttonMenu);
 
 		setBackground(Colors.PANEL_COLOUR);
 		

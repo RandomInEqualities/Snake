@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.*;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 import snake.control.ControlOptions.Difficulty;
 import snake.model.*;
@@ -17,6 +18,7 @@ public class ControlOptionsMultiplayer extends ControlOptions {
 	private JButton green, blue, red, yellow, green2, blue2, red2, yellow2;
 	private ViewBoardMultiplayer boardView;
 	private ViewHeaderMultiplayer headerView;
+	private LineBorder thickBorder;
 	
 	public ControlOptionsMultiplayer(GameMultiplayer game, View view, ViewOptionsMultiplayer menuView, ViewBoardMultiplayer boardView, ViewHeaderMultiplayer headerView) {
 		super(view, menuView);
@@ -53,7 +55,14 @@ public class ControlOptionsMultiplayer extends ControlOptions {
 		blue2.setActionCommand("blue2");
 		red2.setActionCommand("red2");
 		yellow2.setActionCommand("yellow2");
+		
+		//Default difficulty
 		game.disableTimedMovement();
+		thickBorder = new LineBorder(Colors.PANEL_COLOUR, 3);
+		green.setBorderPainted(true);
+		green.setBorder(thickBorder);
+		green2.setBorderPainted(true);
+		green2.setBorder(thickBorder);
 	}
 	
 	@Override

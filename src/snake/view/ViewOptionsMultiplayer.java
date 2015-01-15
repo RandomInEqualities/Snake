@@ -17,33 +17,33 @@ public class ViewOptionsMultiplayer extends ViewOptions {
 		
 		//Colour buttons
 		green = new JButton(new ImageIcon (Images.BUTTON_GREEN));
-		ViewMenu.setCommonButtonParameters(green);
+		setColourButtonParameters(green);
 		green.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
 		blue = new JButton(new ImageIcon (Images.BUTTON_BLUE));
-		ViewMenu.setOptionButton(blue);
+		setColourButtonParameters(blue);
 		red = new JButton(new ImageIcon (Images.BUTTON_RED));
-		ViewMenu.setOptionButton(red);
+		setColourButtonParameters(red);
 		yellow = new JButton(new ImageIcon(Images.BUTTON_YELLOW));
-		ViewMenu.setOptionButton(yellow);
+		setColourButtonParameters(yellow);
 		green2 = new JButton(new ImageIcon(Images.BUTTON_GREEN));
-		ViewMenu.setCommonButtonParameters(green2);
+		setColourButtonParameters(green2);
 		green2.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3));
 		blue2 = new JButton(new ImageIcon(Images.BUTTON_BLUE));
-		ViewMenu.setOptionButton(blue2);
+		setColourButtonParameters(blue2);
 		red2 = new JButton(new ImageIcon(Images.BUTTON_RED));
-		ViewMenu.setOptionButton(red2);
+		setColourButtonParameters(red2);
 		yellow2 = new JButton(new ImageIcon(Images.BUTTON_YELLOW));
-		ViewMenu.setOptionButton(yellow2);
+		setColourButtonParameters(yellow2);
 		
 		// Add new buttons
-		super.panel.add(green);
-		super.panel.add(blue);
-		super.panel.add(red);
-		super.panel.add(yellow);
-		super.panel.add(green2);
-		super.panel.add(blue2);
-		super.panel.add(red2);
-		super.panel.add(yellow2);
+		super.panelOptions.add(green);
+		super.panelOptions.add(blue);
+		super.panelOptions.add(red);
+		super.panelOptions.add(yellow);
+		super.panelOptions.add(green2);
+		super.panelOptions.add(blue2);
+		super.panelOptions.add(red2);
+		super.panelOptions.add(yellow2);
 	}
 	
 	protected void paintComponent(Graphics context) {
@@ -62,7 +62,7 @@ public class ViewOptionsMultiplayer extends ViewOptions {
 		int shift = 100;
 		int sizeColour = 30;
 		int xBlue = super.getPanel().getWidth()/2-sizeColour-gap/2;
-		int yColour = super.getPanel().getY()+180;
+		int yColour = 190;
 		green.setBounds(xBlue-gap-sizeColour-shift, yColour, sizeColour, sizeColour);
 		blue.setBounds(xBlue-shift, yColour, sizeColour, sizeColour);
 		red.setBounds(xBlue+gap+sizeColour-shift, yColour, sizeColour, sizeColour);

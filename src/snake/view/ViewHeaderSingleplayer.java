@@ -13,7 +13,7 @@ public class ViewHeaderSingleplayer extends ViewHeader implements Observer {
 	private Font font;
 	
 	public ViewHeaderSingleplayer(View view, GameSingleplayer game, Boolean showScore) {
-		super(view.getAudio());
+		super(view, view.getAudio());
 		this.game = game;
 		this.showScore = showScore;
 		if (game == null) {
@@ -37,7 +37,8 @@ public class ViewHeaderSingleplayer extends ViewHeader implements Observer {
 		super.paintComponent(context);
 		Dimension size = getSize();
 		Graphics2D context2D = (Graphics2D) context;
-		// Update the score (if we need to show scores).
+		System.out.println("paint");
+		// Update the score
 		if (showScore) {
 			context2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 			context2D.setFont(font);

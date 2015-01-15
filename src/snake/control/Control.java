@@ -2,18 +2,12 @@
 package snake.control;
 
 import java.awt.event.*;
-
 import javax.swing.JButton;
-
 import snake.view.*;
-
 
 public class Control extends KeyAdapter implements ActionListener{
 	
 	private View view;
-	@SuppressWarnings("unused")
-	private ControlMenu menuControl;
-	@SuppressWarnings("unused")
 	private ControlControls menuControlsControl;
 	private JButton soundButton;
 	
@@ -22,14 +16,8 @@ public class Control extends KeyAdapter implements ActionListener{
 			throw new NullPointerException();
 		}
 		this.view = view;
-		view.addKeyListener(this);
-		
-		menuControl = new ControlMenu(view);
+
 		menuControlsControl = new ControlControls(view);
-		
-		this.soundButton = view.getHeader().getSoundButton();
-		soundButton.addActionListener(this);
-		soundButton.setActionCommand("mute");
 	}
 
 	@Override
@@ -53,15 +41,16 @@ public class Control extends KeyAdapter implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		System.out.println("pressed");
 		if (e.getActionCommand() == "mute"){
 			toggleSound();
 		}
+		view.requestFocus();
 	}
 	
 	private void toggleSound(){
 		ViewAudio audio = view.getAudio();
 		audio.setMuted(!audio.isMuted());
 		view.getHeader().repaint();
-		view.requestFocus();
 	}
 }

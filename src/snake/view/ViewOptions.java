@@ -9,29 +9,30 @@ import javax.swing.border.LineBorder;
 import javax.swing.text.*;
 
 import snake.model.Board;
-import snake.model.GameSingleplayer;
 
 
 public class ViewOptions extends JPanel implements FocusListener {
+	
 	private View view;
-	private JFormattedTextField inputWidth, inputHeight;
 	private boolean valid, filled;
-	protected JPanel panel;
-	private JButton play, kindergarten, easy, intermediate, hard, back;
-	private int buttonWidth, buttonHeight, difficultyWidth, difficultyHeight;
+	protected JPanel panelOptions;
+	private JButton buttonPlay;
+	private JButton buttonKindergarten;
+	private JButton buttonEasy;
+	private JButton buttonIntermediate;
+	private JButton buttonHard;
+	private JButton buttonBack;
+	private JLabel errorMessage;
+	private JFormattedTextField inputFieldWidth;
+	private JFormattedTextField inputFieldHeight;
 	
 	public ViewOptions(View view, Board board){
 		this.view = view;
 		this.valid = true;
 		this.filled = true;
-		panel = new JPanel(); //Game options panel
-		
-		// Button size
-		buttonWidth = Images.BUTTON_PLAY.getWidth();
-		buttonHeight = Images.BUTTON_PLAY.getHeight();
-		difficultyWidth = Images.DIFFICULTY_EASY.getWidth();
-		difficultyHeight = Images.DIFFICULTY_EASY.getHeight();
-
+		panelOptions = new JPanel(); //Game options panel
+		this.errorMessage = new JLabel();
+		errorMessage.setForeground(Color.RED);
 		// Formatter (limit input to three digits)
 		MaskFormatter formatter = null;
 		try {
@@ -41,52 +42,51 @@ public class ViewOptions extends JPanel implements FocusListener {
 		}
 
 		// Text input fields
-		inputWidth = new JFormattedTextField(formatter);
-		inputHeight = new JFormattedTextField(formatter);
+		inputFieldWidth = new JFormattedTextField(formatter);
+		inputFieldHeight = new JFormattedTextField(formatter);
 		
-		inputWidth.addFocusListener(this);
-		inputHeight.addFocusListener(this);
+		inputFieldWidth.addFocusListener(this);
+		inputFieldHeight.addFocusListener(this);
 		String gameWidth = Integer.toString(board.getWidth());
 		String gameHeight = Integer.toString(board.getHeight());
-		setTextFieldFormat(inputWidth, gameWidth);
-		setTextFieldFormat(inputHeight, gameHeight);
+		setTextFieldFormat(inputFieldWidth, gameWidth);
+		setTextFieldFormat(inputFieldHeight, gameHeight);
 		
 		createButtons();
-		
-		this.add(panel);
-		panel.add(inputWidth);
-		panel.add(inputHeight);
-		panel.add(kindergarten);
-		panel.add(easy);
-		panel.add(intermediate);
-		panel.add(hard);
-		this.add(back);
-		this.add(play);
-		
+		panelOptions.add(inputFieldWidth);
+		panelOptions.add(inputFieldHeight);
+		panelOptions.add(errorMessage);
+		panelOptions.add(buttonKindergarten);
+		panelOptions.add(buttonEasy);
+		panelOptions.add(buttonIntermediate);
+		panelOptions.add(buttonHard);
+		panelOptions.add(buttonBack);
+		panelOptions.add(buttonPlay);
+		this.add(panelOptions);
 	}
 	
 	public JButton getPlayButton() {
-		return play;
+		return buttonPlay;
 	}
 	
 	public JButton getBackButton() {
-		return back;
+		return buttonBack;
 	}
 	
 	public JButton getKindergartenButton() {
-		return kindergarten;
+		return buttonKindergarten;
 	}
 	
 	public JButton getEasyButton() {
-		return easy;
+		return buttonEasy;
 	}
 	
 	public JButton getIntermediateButton() {
-		return intermediate;
+		return buttonIntermediate;
 	}
 	
 	public JButton getHardButton() {
-		return hard;
+		return buttonHard;
 	}
 	
 	@Override
@@ -94,20 +94,27 @@ public class ViewOptions extends JPanel implements FocusListener {
 		super.paintComponent(context);
 		Graphics2D context2D = (Graphics2D) context;
 		
+		Rectangle menuRect = ViewMenu.computeMenuRectangle(getSize());
+		
 		// Background
-		view.getViewMenu().drawBackground(context2D, getWidth(), getHeight());
-		view.getViewMenu().drawBoard(context2D, getWidth());
+		ViewMenu.drawTileBackground(context2D, getVisibleRect());
+		ViewMenu.drawMenuBackground(context2D, menuRect);
 		
 		// Set transparent panel in the board area
-		Rectangle board = view.getViewMenu().getRectangleForMenu(getWidth());
-		board.height = 400;
-		panel.setBounds(board);
-		panel.setOpaque(false);
+		panelOptions.setBounds(menuRect);
+		panelOptions.setOpaque(false);
 		
 		drawText(context2D);
 		setDifficultyButtons();
-		setPlayBackButtons();
+		setPlayAndBackButtons();
 		printErrorMessage(context2D);
+		
+		//Text fields
+		int xWidth = panelOptions.getWidth()/2-inputFieldWidth.getWidth()-50;
+		int xHeight = panelOptions.getWidth()/2+50;
+		int y = 50;
+		inputFieldWidth.setLocation(xWidth, y);
+		inputFieldHeight.setLocation(xHeight, y);
 	}
 	
 	private void setTextFieldFormat(JFormattedTextField text, String value) {
@@ -118,11 +125,11 @@ public class ViewOptions extends JPanel implements FocusListener {
 	}
 	 
     public JFormattedTextField getWidthInput() {
-    	return inputWidth;
+    	return inputFieldWidth;
     }
 	
     public JFormattedTextField getHeightInput() {
-    	return inputHeight;
+    	return inputFieldHeight;
     }
     
     public void setValid(boolean b) {
@@ -152,83 +159,114 @@ public class ViewOptions extends JPanel implements FocusListener {
 	}
 	
 	public JButton getEasy(){
-		return easy;
+		return buttonEasy;
 	}
 	
 	public JButton getIntermediate(){
-		return intermediate;
+		return buttonIntermediate;
 	}
 	
 	public JButton getHard(){
-		return hard;
+		return buttonHard;
 	}
 	
 	public JPanel getPanel(){
-		return panel;
+		return panelOptions;
 	}
 	
 	public void createButtons(){
-		back = new JButton(new ImageIcon(Images.BUTTON_BACK));
-		ViewMenu.setCommonButtonParameters(back);
-		play = new JButton(new ImageIcon(Images.BUTTON_PLAY));
-		ViewMenu.setCommonButtonParameters(play);
+		buttonPlay = new JButton(new ImageIcon(Images.BUTTON_PLAY));
+		buttonBack = new JButton(new ImageIcon(Images.BUTTON_BACK));
+		ViewMenu.setMenuButtonParameters(buttonBack);
+		ViewMenu.setMenuButtonParameters(buttonPlay);
 		
-		kindergarten = new JButton(new ImageIcon(Images.DIFFICULTY_KINDERGARTEN));
-		ViewMenu.setCommonButtonParameters(kindergarten);
-		kindergarten.setBorder(new LineBorder(Colors.PANEL_COLOUR, 3)); //default difficulty = kindergarten
-		easy = new JButton(new ImageIcon(Images.DIFFICULTY_EASY));
-		ViewMenu.setOptionButton(easy);
-		intermediate = new JButton(new ImageIcon(Images.DIFFICULTY_INTERMEDIATE));
-		ViewMenu.setOptionButton(intermediate);
-		hard = new JButton(new ImageIcon(Images.DIFFICULTY_HARD));
-		ViewMenu.setOptionButton(hard);
+		buttonKindergarten = new JButton(new ImageIcon(Images.DIFFICULTY_KINDERGARTEN));
+		buttonEasy = new JButton(new ImageIcon(Images.DIFFICULTY_EASY));
+		buttonIntermediate = new JButton(new ImageIcon(Images.DIFFICULTY_INTERMEDIATE));
+		buttonHard = new JButton(new ImageIcon(Images.DIFFICULTY_HARD));
+		setDifficultyButtonParameters(buttonKindergarten);
+		setDifficultyButtonParameters(buttonEasy);
+		setDifficultyButtonParameters(buttonIntermediate);
+		setDifficultyButtonParameters(buttonHard);
+		
+		buttonPlay.setActionCommand("play");
+		buttonBack.setActionCommand("back");
+		buttonKindergarten.setActionCommand("kindergarten");
+		buttonEasy.setActionCommand("easy");
+		buttonIntermediate.setActionCommand("intermediate");
+		buttonHard.setActionCommand("hard");
+
 	}
+	
 	private void printErrorMessage(Graphics2D context){
-		int y = 110;
-		context.setColor(Color.RED);
-		context.setFont(new Font("Sans_Serif", Font.BOLD, 12));
+		int y = 90;
 		if (!valid){
-			int x = getWidth()/2-40;
-			context.drawString("Invalid input", x, y);
-		} else if (!filled){
-			int x = getWidth()/2-80;
-			context.drawString("Choose a width and a height", x, y);
+			int x = panelOptions.getWidth()/2-40;
+			errorMessage.setLocation(x,  y);
+			errorMessage.setText("Invalid input");
+		} 
+		else if (!filled){
+			int x = panelOptions.getWidth()/2-80;
+			errorMessage.setLocation(x, y);
+			errorMessage.setText("Choose a width and a height");
+		} else {
+			errorMessage.setText("");
 		}
 	}
-	private void setPlayBackButtons(){
+	
+	private void setPlayAndBackButtons(){
 		// Play button and back button
-		int xBack = getSize().width/2-buttonWidth-10;
-		int xPlay = getSize().width/2+10;
-		int yPlay = view.getViewMenu().getRectangleForMenu(getSize().width).height - buttonHeight - 20;
-		back.setBounds(xBack, yPlay, buttonWidth, buttonHeight);
-		play.setBounds(xPlay, yPlay, buttonWidth, buttonHeight);
+		int width = panelOptions.getWidth();
+		int height = panelOptions.getHeight();
+		int xBack = width/2 - buttonBack.getWidth() - 10;
+		int xPlay = width/2 + 10;
+		int y = height - buttonPlay.getHeight() - 20;
+		buttonBack.setLocation(xBack, y);
+		buttonPlay.setLocation(xPlay, y);
 	}
 	
 	private void setDifficultyButtons(){
 		// Difficulty buttons
-		int space = (panel.getWidth()-4*difficultyWidth)/5; //space between buttons
-		kindergarten.setBounds(space, panel.getY()+280, difficultyWidth, difficultyHeight);
-		easy.setBounds(2*space+difficultyWidth, panel.getY()+280, difficultyWidth, difficultyHeight);
-		intermediate.setBounds(3*space+2*difficultyWidth, panel.getY()+280, difficultyWidth, difficultyHeight);
-		hard.setBounds(4*space+3*difficultyWidth, panel.getY()+280, difficultyWidth, difficultyHeight);
+		int buttonWidth = buttonEasy.getWidth();
+		int space = (panelOptions.getWidth()-4*buttonWidth)/5; //space between buttons 
+		int y = 300;
+		buttonKindergarten.setLocation(space, y);
+		buttonEasy.setLocation(2*space+buttonWidth, y);
+		buttonIntermediate.setLocation(3*space+2*buttonWidth, y);
+		buttonHard.setLocation(4*space+3*buttonWidth, y);
 	}
 	
 	private void drawText(Graphics2D context2D){
 		context2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		context2D.setFont(new Font("Sans_Serif", Font.BOLD, 20));
 		context2D.setColor(Colors.PANEL_COLOUR);
-		context2D.drawString("GAME DIMENSIONS", panel.getX()+20, panel.getY()+30);
-		context2D.drawString("SNAKE COLOUR", panel.getX()+20, panel.getY()+150);
-		context2D.drawString("DIFFICULTY", panel.getX()+20, panel.getY()+270);
+		context2D.drawString("GAME DIMENSIONS", panelOptions.getX()+20, panelOptions.getY()+30);
+		context2D.drawString("SNAKE COLOUR", panelOptions.getX()+20, panelOptions.getY()+150);
+		context2D.drawString("DIFFICULTY", panelOptions.getX()+20, panelOptions.getY()+270);
 		
 		context2D.setFont(new Font("Sans_Serif", Font.PLAIN, 11));
 		String message = "(Type in dimensions between " + Board.MIN_WIDTH + " and " + Board.MAX_WIDTH + ")";
-		context2D.drawString(message, panel.getX()+230, panel.getY()+26);
+		context2D.drawString(message, panelOptions.getX()+230, panelOptions.getY()+26);
 		
 		context2D.setFont(new Font("Sans_Serif", Font.BOLD, 15));
-		context2D.drawString("width", getWidth()/2-150, panel.getY()+70);
-		context2D.drawString("height", getWidth()/2-8, panel.getY()+70);
-		inputWidth.setBounds(150, panel.getY()+40, 50, 30);
-		inputHeight.setBounds(panel.getWidth()-200, panel.getY()+40, 50, 30);
+		context2D.drawString("width", getWidth()/2-150, panelOptions.getY()+70);
+		context2D.drawString("height", getWidth()/2-8, panelOptions.getY()+70);
+		inputFieldWidth.setBounds(150, panelOptions.getY()+40, 50, 30);
+		inputFieldHeight.setBounds(panelOptions.getWidth()-200, panelOptions.getY()+40, 50, 30);
+	}
+	
+	private static void setDifficultyButtonParameters(JButton button){
+		int width = Images.DIFFICULTY_EASY.getWidth();
+		int height = Images.DIFFICULTY_EASY.getHeight();
+		button.setPreferredSize(new Dimension(width, height));
+		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		button.setBorderPainted(false);
+	}
+	
+	protected static void setColourButtonParameters(JButton button){
+		int sizeColour = 30;
+		button.setPreferredSize(new Dimension(sizeColour, sizeColour));
+		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		button.setBorderPainted(false);
 	}
 }
