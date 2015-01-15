@@ -35,7 +35,6 @@ public class Control extends KeyAdapter implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("pressed");
 		if (e.getActionCommand() == "mute"){
 			toggleSound();
 		}
