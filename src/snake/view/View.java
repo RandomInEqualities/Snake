@@ -58,30 +58,30 @@ public class View extends JFrame {
 		}
 	}
 	
-	public void showGame(ViewBoardSingleplayer boardView) {
+	public void showGame(ViewHeaderSingleplayer headerSingle, ViewBoardSingleplayer boardView) {
 		if (state != State.IN_GAME) {
-			setFrameComponents(headerPanel, boardView);
+			setFrameComponents(headerSingle, boardView);
 			state = State.IN_GAME;
 		}
 	}
 	
-	public void showGame(ViewBoardMultiplayer boardView) {
+	public void showGame(ViewHeaderMultiplayer headerMulti, ViewBoardMultiplayer boardView) {
 		if (state != State.IN_GAME) {
-			setFrameComponents(headerPanel, boardView);
+			setFrameComponents(headerMulti, boardView);
 			state = State.IN_GAME;
 		}
 	}
 	
-	public void showMenu(ViewHeaderSingleplayer header, ViewOptionsSingleplayer menu) {
+	public void showMenu(ViewOptionsSingleplayer menu) {
 		if (state != State.IN_MENU_SINGLEPLAYER) {
-			setFrameComponents(header, menu);
+			setFrameComponents(headerPanel, menu);
 			state = State.IN_MENU_SINGLEPLAYER;
 		}
 	}
 	
-	public void showMenu(ViewHeaderMultiplayer header, ViewOptionsMultiplayer menu){
+	public void showMenu(ViewOptionsMultiplayer menu){
 		if (state != State.IN_MENU_MULTIPLAYER) {
-			setFrameComponents(header, menu);
+			setFrameComponents(headerPanel, menu);
 			state = State.IN_MENU_MULTIPLAYER;
 		}
 	}

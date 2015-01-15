@@ -17,9 +17,11 @@ public class ViewBoardSingleplayer extends ViewBoard  implements Observer {
 	private GameSingleplayer game;
 	private Color snakeColor;
 	private static Color DEFAULT_SNAKE_COLOR = new Color(84, 216, 81);
+	private ViewHeaderSingleplayer headerView;
 	
-	public ViewBoardSingleplayer(GameSingleplayer game) {
+	public ViewBoardSingleplayer(ViewHeaderSingleplayer headerView, GameSingleplayer game) {
 		super();
+		this.headerView = headerView;
 		this.game = game;
 		this.snakeColor = DEFAULT_SNAKE_COLOR;
 		game.addObserver(this);
@@ -31,7 +33,6 @@ public class ViewBoardSingleplayer extends ViewBoard  implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.print("enter");
 		if (game.isEnded()) {
 			showButtons();
 		}
@@ -52,12 +53,16 @@ public class ViewBoardSingleplayer extends ViewBoard  implements Observer {
 		drawSnake(context2D, game.getSnake(), board, snakeColor);
 		
 		if (game.isLost()) {
+			headerView.hideScore();
+			headerView.repaint();
 			drawGameLost(context2D, board);
 		} 
 		else if (game.isPaused()) {
 			drawPaused(context2D, board);
 		} 
 		else if (game.isWon()){
+			headerView.hideScore();
+			headerView.repaint();
 			drawGameWon(context2D, board);
 		}
 	}

@@ -95,7 +95,6 @@ public class Snake {
 				return true;
 			}
 		}
-		
 		// Move tail if snake does not eat anything.
 		if (!eatFood) {
 			positions.remove(positions.size() - 1);

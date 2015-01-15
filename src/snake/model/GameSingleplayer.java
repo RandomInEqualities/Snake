@@ -38,11 +38,11 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 	private long timerLastUpdateTime = 0;
 	
 	public GameSingleplayer() {
-		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		this(DEFAULT_WIDTH, DEFAULT_HEIGHT, null);
 	}
 	
-	public GameSingleplayer(int width, int height) {
-		this.board = new Board(width, height);
+	public GameSingleplayer(int width, int height, ArrayList<Field> walls) {
+		this.board = new Board(width, height, walls);
 		this.snake = new Snake();
 		
 		// Create a timer object that send an ActionEvent to this class, in a periodic interval.
@@ -53,7 +53,7 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 	}
 	
 	public void setBoardSize(int width, int height){
-		board = new Board(width, height);
+		board = new Board(width, height, null);
 	}
 	
 	public Board getBoard() {

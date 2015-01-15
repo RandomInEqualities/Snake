@@ -44,29 +44,29 @@ public class ControlMenu implements ActionListener {
 		quit.addActionListener(this);
 		quit.setActionCommand("quit");
 		gameSingle = new GameSingleplayer();
-		boardViewSingle = new ViewBoardSingleplayer(gameSingle);
 		menuViewSingle = new ViewOptionsSingleplayer(view, gameSingle);
-		headerSingle = new ViewHeaderSingleplayer(view, gameSingle, false);
-		boardControlSingle = new ControlBoardSingleplayer(gameSingle, view, boardViewSingle);
-		menuControlSingle = new ControlOptionsSingleplayer(gameSingle, view, menuViewSingle, boardViewSingle);
+		headerSingle = new ViewHeaderSingleplayer(view, gameSingle, true);
+		boardViewSingle = new ViewBoardSingleplayer(headerSingle, gameSingle);
+		boardControlSingle = new ControlBoardSingleplayer(gameSingle, view, boardViewSingle, headerSingle);
+		menuControlSingle = new ControlOptionsSingleplayer(gameSingle, view, menuViewSingle, boardViewSingle, headerSingle);
 		
 		gameMulti = new GameMultiplayer();
-		boardViewMulti = new ViewBoardMultiplayer(gameMulti);
 		menuViewMulti = new ViewOptionsMultiplayer(view, gameMulti);
-		headerMulti = new ViewHeaderMultiplayer(view, gameMulti, false);
-		boardControlMulti = new ControlBoardMultiplayer(gameMulti, view, boardViewMulti);
-		menuControlMulti = new ControlOptionsMultiplayer(gameMulti, view, menuViewMulti, boardViewMulti);
+		headerMulti = new ViewHeaderMultiplayer(view, gameMulti, true);
+		boardViewMulti = new ViewBoardMultiplayer(headerMulti, gameMulti);
+		boardControlMulti = new ControlBoardMultiplayer(gameMulti, view, boardViewMulti, headerMulti);
+		menuControlMulti = new ControlOptionsMultiplayer(gameMulti, view, menuViewMulti, boardViewMulti, headerMulti);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "singleplayer") {
 			view.getAudio().registerGame(gameSingle);
-			view.showMenu(headerSingle, menuViewSingle);
+			view.showMenu(menuViewSingle);
 		} 
 		else if (e.getActionCommand() == "multiplayer"){
 			view.getAudio().registerGame(gameMulti);
-			view.showMenu(headerMulti, menuViewMulti);
+			view.showMenu(menuViewMulti);
 		}
 		else if (e.getActionCommand() == "controls"){
 			view.showControlsMenu();
