@@ -44,84 +44,77 @@ I rapporten vil designet af begge spillets versioner blive forklaret, samt imple
 
 \chapter{Simpel Snake}
 \section{Afgrænsning}
-I Simpel Snake består slangen af to felter (et hoved og en hale), der er placeret banens centrum med retning mod venstre. Det er muligt gennem input fra tastaturet at bevæge sig frit på banen i de fire retninger i et almindeligt koordinatsytem: op og ned ad y-aksen og hen ad x-aksen i begge retninger - dog ikke modsatrettet slangens bevægelsesretning. Bevæger man sig ud over banens kanter, skal man kunne fortsætte på den modsatte side. Det skal derudover være muligt at øge slangens længde ved at bevæge sig over et felt med et "æble". Spillet slutter, når spilleren har fyldt hele banen ud med slangens krop og dermed har vundet spillet, eller ved at spilleren bevæger sig ind i et felt udfyldt af slangen, der ikke er halestykket, som ved slangens bevægelse også rykker videre til et nyt felt. I så fald, har spilleren tabt spillet.
-\linebreak
+I Simpel Snake består slangen af to felter (et hoved og en hale), der er placeret i banens centrum, rettet mod venstre. Det er muligt gennem input fra tastaturet at bevæge sig frit på banen i de fire retninger i et almindeligt koordinatsytem: op og ned ad y-aksen og hen ad x-aksen i begge retninger - dog ikke modsatrettet slangens bevægelsesretning. Bevæger man sig ud over banens kanter, skal man kunne fortsætte på den modsatte side. Det skal derudover være muligt at øge slangens længde ved at bevæge sig over et felt med et "æble". Spillet slutter, når spilleren har fyldt hele banen ud med slangens krop og dermed har vundet spillet, eller ved at spilleren bevæger sig ind i et felt udfyldt af slangen, der ikke er halestykket, som ved slangens bevægelse også rykker videre til et nyt felt. I så fald, har spilleren tabt spillet.
 
 \section{Design}
-Simpel Snake er designet, så selve spillets funktioner ligger i klassen \textit{Game} i model-pakken. \textit{Game} får da spillets objekter fra andre klasser i \textit{model}-pakken, f.eks. Board (spillebrættet) og Snake (slangen). Spillets tilstand ændres, når der modtages input fra \textit{control}-klasserne, som bestemmer hvornår og hvordan slangen bevæger sig. I \textit{??}-klassen er en observer, som notificeres hver gang banens tilstand ændres. Når dette sker, eller når spillet startes, tegnes banen vha. klasserne \textit{View} og {BoardPanel}. Disse klasser modtager information fra \textit{model}-klasserne, f.eks. \textit{Snake}, til at bestemme hvordan spillet gentegnes. \textit{BoardPanel} gentegner hele spillet hver gang spillet opdateres. Først tegnes selve banen, derefter slangen og til sidst æblet. 
-For at starte spillet bruges klassen \textit{Driver}, som opretter et nyt \textit{Game}-, \textit{View} og \textit{Control}-objekt.
-\linebreak
-
 Snake-spillet er lavet efter et \textit{Model-View-Controller}-design (MVC), hvorved selve spillet, styringen af spillet og den visuelle repræsentation af spillet holdes adskilt i tre dele. På denne måde interagerer brugeren kun med den del af programmet, der er dedikeret til styring. Styringen manipulerer programmets tilstand i \textit{model}-koden, som visualiseres i \textit{view}-koden. Dette betyder derfor også, at alle funktioner, der påvirker programmets tilstand, skal holdes i \textit{model}-koden. \textit{Control} modtager kun input fra brugeren, og sender dette videre til \textit{View} og/eller \textit{Model}. \textit{View} modtager input fra \textit{Control} og sender ændringerne i \textit{View} videre til \textit{Model}. Det er derefter muligt gennem en observer at "observere" ændringerne i \textit{Game}, som bliver opdateret i \textit{View}.
+
+Simpel Snake er designet, så selve spillets funktioner ligger i klassen \textit{Game} i model-pakken. \textit{Game} får da spillets objekter fra andre klasser i \textit{model}-pakken, f.eks. Board (spillebrættet) og Snake (slangen). Spillets tilstand ændres, når der modtages input fra \textit{control}-klasserne, som bestemmer hvornår og hvordan slangen bevæger sig. I \textit{ViewBoardSingleplayer}-klassen er en observer, som notificeres hver gang banens tilstand ændres. Når dette sker, eller når spillet startes, tegnes banen vha. klasserne \textit{View} og \textit{BoardPanel}. Disse klasser modtager information fra \textit{model}-klasserne, f.eks. \textit{Snake}, til at bestemme hvordan spillet gentegnes. \textit{BoardPanel} gentegner hele spillet hver gang spillet opdateres. Først tegnes selve banen, derefter slangen og til sidst æblet. 
+For at starte spillet bruges klassen \textit{Driver}, som opretter et nyt \textit{Game}-, \textit{View} og \textit{Control}-objekt.
+
+
 
 \section{Implementering}
 
+\subsection{Control (Styring)}
+I Simpel Snake bruges kun fire taster til input, nemlig de fire piletaster, som derfor er defineret i \textit{Control}.\textit{Control}-klassen har metoden \textit{keyPressed}, som kommer af at \textit{Control}-klassen implementerer \textit{KeyListener}, som kaldes hver gang der tastes på tastaturet. Hvis tasten er en af de fire piletaster, kaldes funktionen \textit{move} i \textit{Snake}-klassen, der flytter hovedet i samme retning som piletasten.
+Enum-klassen \textit{Direction} indholder \textit{RIGHT, LEFT, UP} og \textit{DOWN}. Dette bruges i \textit{Control}-klassen, da det ikke skal være muligt at bevæge sig i modsatte retning af slangens nuværende retning.
+I \textit{Control}-klassens constructor er Direction som udgangspunkt sat til \textit{LEFT}, da slangen starter mod venstre. Hver gang der tastes på piletasterne, sikrer \textit{keyPressed}-metoden, at retningen ikke er modsat af den nuværende retning. Herefter flyttes slangen, uanset om den er midt på spillepladen eller om den bevæger sig rundt om torussen. Til sidst sættes \textit{Direction} til den nuværende retning, så det ved næste tasteanslag igen kan undersøges, at retningen ikke er modsat.
+
 \subsection{Model}
 Spillets model består af en række klasser, der tilsammen udgør selve spillets funktioner og objekter.
-Klassen \textit{Field} bruges til at definere et objekt, som opdeler banen og repræsenterer et felt i banen. Den fungerer på samme måde som \textit{Point}-objekt-klassen, hvor koordinatsystemet starter oppe i venstre hjørne. Den eneste forskel mellem \textit{Point}- og \textit{Field}-klassen, er hvordan man kommer frem til et punkt. \textit{Point}-klassen går først ud ad x-aksen og derefter ned ad y-aksen, hvorimod \textit{Field}-klassen gør det i omvendt rækkefølge. Da hele vores spilleplade er delt op i rows og column frem for x og y, er \textit{Field} lettere at bruge for at undgå forvirring, når man er vant til, hvordan dobbeltarrays opdeler deres rows og colums.
+Klassen \textit{Field} bruges til at definere et objekt, som opdeler banen og repræsenterer et felt i banen. Den fungerer på samme måde som \textit{Point}-objekt-klassen, hvor koordinatsystemet starter oppe i venstre hjørne. Forskellenl mellem \textit{Point}- og \textit{Field}-klassen, er hvordan man kommer frem til et punkt. \textit{Point}-klassen går først ud ad x-aksen og derefter ned ad y-aksen, hvorimod \textit{Field}-klassen gør det i omvendt rækkefølge. Da hele spillepladen er delt op i rækker og kolonner, frem for en x- og y-akse, er \textit{Field} lettere at bruge for at undgå forvirring med, hvordan to-dimensionelle arrays opdeler rækkerne og kolonnerne.
 
-Funktionenen \textit{equals} er defineret i denne klasse, og bruges til at undersøge om to objekter ligger på samme felt, f.eks. slangens hoved og æblet. Æblet bliver oprettet i klassen \textit{Game}, hvor datafeltet \textit{position} afgør dets nuværende position gennem Fields. 
-\linebreak
+Funktionenen \textit{equals} er defineret i denne klasse, og bruges til at undersøge om to objekter ligger på samme felt, f.eks. slangens hoved og æblet. Æblet bliver oprettet i klassen \textit{Game}, hvor datafeltet \textit{position} afgør dets nuværende position.
 
-Slangen selv er defineret i klassen \textit{Snake}. Slangens krop består af en række felter, hvoraf det første er hovedet, og de resterende er kroppen (inklusiv halen til sidst). Koordinaterne for disse felter er gemt som elementer i en ArrayList kaldet \textit{positions}. Det første element er slangens første led, hovedet, andet element er slangens andet led osv. Når et nyt led tilføjes, tilføjes et nyt element til listen. Dette bruges, når slangen spiser et æble. Her ligger slangen stille, mens et nyt hoved tilføjes i æblets felt i den retning, der er trykket. 
+Slangen selv er defineret i klassen \textit{Snake}. Slangens krop består af en række felter, hvoraf det første er hovedet, og de resterende er kroppen (inklusiv halen til sidst). Koordinaterne for disse felter er gemt som elementer i en ArrayList kaldet \textit{positions}. Det første element er slangens første led, hovedet, andet element er slangens andet led osv. Når et nyt led tilføjes, tilføjes et nyt element til listen. Dette sker, når slangen spiser et æble, hvor den ikke bevæger sig som ellers. I stedet tilføjes et nyt hoved på æblets felt. Hovedets retning er den samme, som slangens sidste bevægelse. 
 
-I \textit{Snake}-constructoren bliver slangens hovede og hale oprettet, hvor hovedet bliver placeret i banens centrum, og halen bliver placeret ved siden af til højre.
+I \textit{Snake}-constructoren bliver slangens hovede og hale oprettet, hvor hovedet bliver placeret i banens centrum. Halen placeres i næste kolonne på samme række.
 
-I \textit{move}-metoden bruger vi Action-klassen, der er oprettet som en enum, og betegner om slangen spiser, er død eller bevæger sig (hhv. \textit{EAT, KILL, MOVE}). I \textit{move}-metoden tjekker den for, hvis der er mad på hovedets placering, for så skal Action-statementet være \textit{EAT}, ellers skal hele slangens positioner tjekkes for om den rammer sig selv, og så vil Action-statementet være \textit{KILL}. Til sidst hvis spillet ikke er slut, så skal hele slangens krop rykke en plads frem, og hovedet rykkes hen på den position man har trykket på keyboardet.
-\linebreak
+I \textit{move}-metoden benyttesi Action-klassen, der er oprettet som en enum, og betegner om slangen spiser et æble, er død eller bevæger sig (hhv. \textit{EAT, KILL, MOVE}). I \textit{move}-metoden undersøger den, om der er mad på samme felt som hovedets nye placering. Er dette tilfældet, bliver Action-statementet til \textit{EAT}. Hvis ikke, undersøges det om den nye placering for hovedet allerede indeholder slangens krop. Dette gøres ved at bruge en contains-metode på \textit{positions}, med den nye placering som argument. Returnerer funktionen "true", bliver Action-statementet til \textit{KILL}. Hvis ikke, flyttes slangens hoved til den nye position. Resten af slangens krop følger med ved at ændre koordinaterne i \textit{positions} fra halen og op til hovedet, dvs. at halens koordinater bliver næstsidste led, næstsidste bliver tredjesidste osv. Slangens krop flyttes først, hvorefter hovedet flyttes, for at undgå at andet led indtager samme plads som hovedet.
 
-I \textit{Game}-klassen er der en \textit{checkAction}-metode, der tjekker om slangen spiser eller dør. Hvis Action-statementet er \textit{EAT}, så tilføjer den madens position som det nye hoved, incrementer scoren, genererer ny mad og sætter Action-statement til \textit{MOVE}.
-Ellers hvis Action-statementet er \textit{KILL}, så bliver scores reset'et og spillet stopper.
-Derudover er der en \textit{generateFood}-metode, som sikre, at maden altid placeres på et gyldigt felt. Så længe slangen er under en hvis størrelse, placeres maden på et tilfældigt felt, hvorefter det sikres at feltet ikke er optaget af slangen. Er den det, placeres maden et nyt sted.
+I \textit{Game}-klassen findes \textit{checkAction}-metoden, der undersøger om slangen spiser eller dør. Hvis Action-statementet er \textit{EAT}, øges slangens længde ved at tilføje et nyt element på æblets felt, som fungere som nyt hoved. Scoren inkrementeres, der laves et nyt æble, og Action-statementet sættes til \textit{MOVE}.
+Hvis Action-statementet er \textit{KILL}, nulstilles scoren, og spillet slutter.
+Herudover findes \textit{generateFood}-metoden, som sikrer, at maden altid placeres på et gyldigt felt, dvs. et felt der ikke er udfyldt af slangen. For at sikre dette, placeres æblet på et tilfældigt felt, hvorefter det sammenlignes om et af slangens led har samme koordinater som feltet. Er dette tilfældet, gives æblet et nyt felt, indtil det lander på et felt uden slangen. Er slangen tilpas stor, er dette dog ikke effektivt. Af denne årsag undersøger metoden først, om slangen fylder mere end halvdelen af banen. Er dette tilfældet, laves der i stedet en liste med alle tomme felter vha. en løkke og en indlejret løkke, der løber gennem alle række og kolonner, hvorefter et tilfældigt element i listen .
 
-Er slangen større end end en tredjedel af spillets størrelse, laves et dobbelt for-loop for højde og bredde af spillet, der tjekker om området er frit. Den tilføjer de felter, maden kan placeres på i en ArrayListe, hvorefter maden placeres tilfældigt på et af disse felter.
-
-De fire klasser \textit{Food, Score, Game} og \textit{Snake} extender Observable, så det er muligt at for View at modtage ændringerne i Model, uden at Model afhænger af view.
+De fire klasser \textit{Food, Score, Game} og \textit{Snake} forlænger Observable, så det er muligt for View at modtage ændringerne i Model, uden at Model afhænger af View.
 
 \subsection{View (Brugergrænseflade)}
-Brugerfladen er samlet i klassen \textit{GameView} der extender \textit{JFrame}. I \textit{GameView} findes kun en construstor, hvor der oprettes et score-panel, der placeres øverst i vinduet, og et board-panel, der placeres lige under det. Board-panelet viser selve spillepladen med slangen og æblet, der begge er vist ved farvede firkanter. 
-\linebreak
+Brugerfladen er samlet i klassen \textit{GameView} der forlænger \textit{JFrame}. I \textit{GameView} findes kun en constructor, hvor der oprettes et score-panel, der placeres øverst i vinduet, og et board-panel, der placeres direkte under det. Board-panelet viser selve banen med slangen og æblet, der begge er vist ved farvede firkanter. 
 
-\textit{ScorePanel}-klassen extender \textit{JPanel} og implementer \textit{Observer}, derved har klassen en \textit{update}-metode, der repainter, hver gang noget ændrer sig i de klasser i Model, der extender \textit{Observable}.
-Ellers er der en \textit{paintComponent}-metode, der laver score-teksen, og ellers bliver selve panelen oprettet i constructoren.
-\linebreak
+\textit{ScorePanel}-klassen forlænger \textit{JPanel} og implementer \textit{Observer}. Klassen har en \textit{update}-metode, der gentegner, hver gang noget ændrer sig i de klasser i Model, der forlænger \textit{Observable}. 
+\textit{paintComponent}-metoden benyttes til at lave selve score-teksten. Selve panelet oprettes i constructoren.
 
-\textit{BoardPanel} extender også \textit{JPanel} og implementerer også \textit{Observer}, så klassen derved også haren \textit{update}-metode. \textit{BoardPanel} består af en masse draw-metoder og en \textit{paintComponent}, der tegner det hele på panelet.
-I \textit{drawSnake}-metoden bliver hver Field-position i snake-arraylisten farvet. Der bruger vi størrelsen for et felt, som bliver udregnet i \textit{getWindowRectangle}-metoden. Et felt er selve vinduets højde og bredde divideret med spillets højde og bredde. 
-
-\subsection{Control (Styring)}
-I Simpel Snake bruges kun fire taster til input, nemlig de fire piletaster, som derfor er defineret i \textit{Control}.\textit{Control}-klassen har metoden \textit{keyPressed}, som kommer af at \textit{Control}-klassen implementerer \textit{KeyListener}, som kaldes hver gang der tastes på tastaturet. Hvis tasten er en af de fire piletaster, kaldes funktionen \textit{move} i \textit{Snake}-klassen, der opretter hovedet det sted piletasten pegede.
-Der er også oprettet en enum-klasse \textit{Direction}, der giver \textit{RIGHT, LEFT, UP} og \textit{DOWN}. Dette bruges i \textit{Control}-klassen, det ikke skal være muligt at gå i den modsatte retning, af hvad slangen vender. 
-I \textit{Control}-klassens constructor er Direction sat til \textit{LEFT} af default, da slangen skal starte mod venstre. Hver gang man taster på piletasterne, tjekker \textit{KeyPressed}-metoden, at retningen ikke er modsat af den nuværende retning, derefter rykker den slangen både hvis den er midt på spillepladen eller hvis den går igennem torussen. Til sidst sætter den så \textit{Direction} til den nuværende retning, så når næste tast trykkes, kan det tjekkes at den ikke er den modsatte.
+\textit{BoardPanel} forlænger også \textit{JPanel} og implementerer \textit{Observer}, ligesom klassen også har en \textit{update}-metode. \textit{BoardPanel} består af en række draw-metoder, samt en \textit{paintComponent}-metode, der tegner alt på selve banen.
+I \textit{drawSnake}-metoden bruges positionerne for slangens felter til at tegne slangen. Størrelsen for et felt udregnes i \textit{getWindowRectangle}-metoden, og afhænger af vinduets og banens størrelse. Når feltets størrelse er udregnet, tegnes en rektangel med feltets størrelse på alle felterne i slangens positions-ArrayList.
 
 \section{Udviklingsproces}
 \subsection{Arbejdsproces}
-Formålet med projektet var at starte med at lave en simpel udgave af snake, og derefter tilføje flere funktioner til at lave en mere avanceret version. Dette gør det ideelt at tilføje en funktion af gangen, hvormed programmet starter ud simpelt, men fungerende, hvorefter yderligere funktioner kan tilføjes. Programmet er altså udviklet iterativt, hvorved der opstår flere fungerende versioner af spillet, men med forskellige funktioner. Dette gør det muligt at tilpasse programmet, hvis der opstår nye idéer undervejs. 
+Formålet med projektet var at starte med at lave en simpel udgave af snake, og derefter tilføje flere funktioner til at lave en mere avanceret version. Dette gør det ideelt at tilføje en funktion af gangen, frem for at planlægge alle funktioner på en gang, og tilføje dem samtidig. Resultatet bliver et, til at starte med, simpelt men fungerende program, hvorefter yderligere funktioner kan tilføjes. Programmet er altså udviklet iterativt, hvormed der opstår flere fungerende versioner af spillet, men med forskellige funktioner. Dette gør det muligt at tilpasse programmet, hvis der opstår nye idéer eller krav undervejs. 
 
-Den iterative tilgang gør det muligt at have en "cyklus" for udviklingen af programmet. Først bestemmes det, der skal tilføjes til programmet. Derefter fordeles opgaverne blandt gruppens medlemmer. Gruppemedlemmet afgør selv, hvordan en funktion skal designes og implementeres. Når en ny tilføjelse til programmet er færdig, testes den. Eventuelle justeringer til programmet laves for at undgå fejl med den nye funktion, hvorefter "cyklussen" starter forfra ved
+Den iterative tilgang gør det muligt at have en "cyklus" for udviklingen af programmet. Først bestemmes det, hvad der skal tilføjes til programmet. Derefter fordeles opgaverne blandt gruppens medlemmer. Gruppemedlemmet afgør selv, hvordan en funktion skal designes og implementeres, men sikrer at implementation er kompatibel med alle nuværende funktioner, og ikke vil hindre fremtidige tilføjelser i at blive tilføjet. Eventuelle justeringer til programmet laves for at undgå fejl med nye funktioner, hvorefter "cyklussen" starter forfra ved idéfasen.
 
-\subsection{Controller}
-	
+\subsection{Control}
+Idet der ikke er brug for nogen menu eller lign. i simpel-snake, var det muligt at holde styringen af spillet meget simpel. Ved at definere de fire retningstaster i Control-klassen, samt en funktion til at sikre at der ikke bevæges i modsat retning, er alle styringkrav til simpel-snake opfyldt. Resten af spillet håndteres da i model-koden.
+
 \subsection{Model}
-
 \subsubsection{Opbygning af banen}
 Til designet af selve banen, som slangen bevæger sig på, forelås to muligheder. Den ene er at lave et to-dimensionelt array af datatypen enum, hvis størrelse afgør banens endelige størrelse. Et array [10][5] vil f.eks. give en bane med længden 10 og bredden 5. Hvert element i arrayet bestemmer da, hvad der befiner sig på netop denne plads på banen. Elementerne i arrayet kan f.eks. være et blankt felt, et æble, et led af slangen osv. Dette gør det nemt at introducere nye spilelementer i fremtiden, f.eks. bonus-point, vægge og miner, idet der blot skal tilføjes nye værdityper. Visualisering af spillet foregår ved at definere et billede for hvert spilelement, og få programmet til at tegne objektet på arrayets plads.
-ULEMPER - observer?
 
-En anden metode er, at lade de forskellige spilelementer være defineret i deres egne klasser, så f.eks. er \textit{SnakeFood} en klasse for sig selv, \textit{SnakePlayer} er en klasse for sig selv osv. Hver klasse har de funktioner, der er relevante for dem, f.eks. \textit{getPosition} for at give deres nuværende position. Programmet tegner da spillet hver gang en tur afsluttes, dvs. når alle elementer som skal ændres, er ændret. Programmet har fået defineret billedet for de forskellige elementer, og modtager deres position vha. en \textit{getPosition} metode.
- Ulempen ved denne metode er, at tegning af programmet gøres mere kompliceret. I den første metode er alle felter allerede defineret, og for at ændre dem behøves der blot at ændre værdien. Ønskes et spilelement ændret eller introduceret med den anden metode, skal der laves et nyt objekt.
+En anden metode er, at lade de forskellige spilelementer være defineret i deres egne klasser, så f.eks. \textit{SnakeFood} er en klasse for sig selv, \textit{SnakePlayer} er en klasse for sig selv osv. Hver klasse har de funktioner, der er relevante for dem, f.eks. \textit{getPosition} for at give deres nuværende position. Programmet tegner da spillet hver gang en tur afsluttes, dvs. når alle elementer som skal ændres, er ændret. Programmet har fået defineret billedet for de forskellige elementer, og modtager deres position vha. en \textit{getPosition} metode.
+Ulempen ved denne metode er, at det skal laves flere metode og klasser, hvormed programmets kompleksitet stiger. I den første metode er alle felter allerede defineret, og for at ændre dem behøves værdien for hvert felt blot at blive ændret, så f.eks. et blankt felt ændres til æble. Ønskes et spilelement ændret eller introduceret med den anden metode, skal der laves et nyt objekt. Ønsker man at introducere nye elementer, kan man med første metode blot tilføje en ny værdi-type til det todimensionelle array. Med anden metode skal der laves nye klasser, metoder osv. for at introducere nye elementer til spillet.
  
-Den anden metode blev valgt til spillet, idet det blev bestemt at den passede bedre til MVC-modellen, idet view-koden kun bruger de forskellige klassers \textit{get}-metoder til at få information. %bum bum
+I sidste ende blev metode 2 valgt, idet den gjorde det nemmere at holde Model-koden adskilt fra View- og Control-koden. Herudover har første metode den ulempe, at den skal sende et todimensionelt array på banens størrelse, hver gang banen skal tegnes. Ved en bane på f.eks. 100x100 betyder dette, at at sendes i alt 10000 elementer til View-koden, hver gang banen skal tegnes. Den anden metode sender derimod kun de relevante elementer, dvs. æblets og slangens position, til View-koden.
 
 \subsubsection{Snake}
-Da slangen i snake-spillet består af en række felter, som alle har netop et koordinat i forbindelse med de resterende, er en effektiv måde at bestemme slangens position på en LinkedList, idet denne datastrukturer er fleksibel i størrelse og passer til formålet. Når slangen vokser i størrelse, bliver dette dog mindre effektivt, idet slangens hoved altid er element 0. Når slangen vokser, tilføjes et nyt element på plads 0, hvormed hele listen skal flyttes. En anden mulighed ville være at bruge en anden datastruktur, f.eks. LinkedList, eller lade hovedet være defineret som element positions.size()-1, hvormed nye hovedet tilføjes sidst i listen.
+Da slangen i snake-spillet består af en række felter, som alle har netop en koordinat i forbindelse med andre led, er en effektiv måde at bestemme slangens position på en ArrayList, idet denne datastrukturer er fleksibel i størrelse og passer til formålet. Når slangen vokser i størrelse, bliver dette dog mindre effektivt, idet slangens hoved altid sættes som element 0. Når slangen vokser, tilføjes et nyt element på plads 0, hvormed hele listen skal flyttes. En anden mulighed ville være at bruge en anden datastruktur, f.eks. LinkedList, eller lade hovedet være defineret som element positions.size()-1, hvormed nye hovedet tilføjes sidst i listen. Et problem ved at bruge LinkedList er dog, at denne datastruktur ikke tillader vilkårlig adgang af værdier, men derimod altid bevæger sig fra første eller sidste element. Dette problem kan løses ved at bruge en iterator, men blev fravalgt, idet det skabte problemer, når listen skulle bruges på tværs af klasserne.
 
-For at implementere scoren blev der fremlagt to løsninger. Enten at lade scoren være et datafelt i game-klassen, eller at lade det være en klasse for sig selv. Ved at lade scoren være et datafelt, bliver implementationen simplere. At lade scoren være en klasse for sig selv har derimod fordelen, at der kan 
-tilføjes en observer til Score-klassen, som dermed kun opdateres, når scoren ændrer sig. Scorepanelet tegnes ikke i samme klasse som banen, og kan derfor holdes seperat, så scorepanelet kun gentegnes, når scoren ændrer sig. Hvis scoren derimod er et datafelt, tegnes scoren efter hver tur, også selvom scoren er uændret. I sidste ende blev det bestemt at holde scoren som datafelt, hvormed det også bliver simplere at implementere nye score-relaterede funktioner i fremtidige udgaver.
+Til implementationen af scoren blev to løsninger foreslået. Enten at lade scoren være et datafelt i game-klassen, eller at lade det være en klasse for sig selv. Ved at lade scoren være et datafelt, bliver implementationen simplere. At lade scoren være en klasse for sig selv har derimod fordelen, at der kan 
+tilføjes en observer til Score-klassen, som dermed kun opdateres, når scoren ændrer sig. Scorepanelet tegnes ikke i samme klasse som banen, og kan derfor holdes seperat, så scorepanelet kun gentegnes, når scoren ændrer sig. Hvis scoren derimod er et datafelt, tegnes scoren efter hver tur, også selvom scoren er uændret. I sidste ende blev det bestemt at holde scoren som datafelt, hvormed fremtidige score-relaterede funktioner bliver simplere at implementere.
 
-\subsection{Brugergrænseflade og visualisering af programmet}
-\subsubsection{Tegning af banen}
-
+\subsection{Brugerflade og visualisering af programmet}
+\subsubsection{Tegning af spillet}
+For at visualisere spillet er det nødvendigt at kunne optegne banen, slangen og æblet. Dette gøres i klassen ViewBoard, som har metoderne drawBackground, drawBoard, drawSnake og drawFood, som hver især tegner deres tilsvarende element. Metoden paintComponent kalder de førnævnte metoder, således at baggrunden tegnes først, så banen, så æblet og sidst slangen. Alting gentegnes hver gang spillet opdateres, hvormed der "tegnes over" det gamle billede. Det kan her argumenteres for, at f.eks. baggrunden ikke bør gentegnes, når slangen bevæger sig, lige som store dele af banen forebliver uændret, og derfor ikke behøver gentegnes. Alternativt kunne man lave et system, som undersøger hvilke områder der skal gentegnes, og hvilke der er uændret, og derfor ikke skal gentegnes. Dette kan dog i sidste ende betyde, at de kræfter der spares på tegning i stedet blot bruges på at afgøre, hvad der skal tegnes.
 
 \subsubsection{Vinduesstørrelse}
 Området, som spillet foregår på, skal kunne bestemmes til at være mellem 5x5 og 100x100. Dette kan dog skabe problemer, hvis størrelsen bliver for stor, idet banen både skal være synlig, men også passe på en gennemsnitlig computerskærm. En bane på 10x10 kan sagtens passe på en opløsning af f.eks. 400x400, men øges banens størrelse til 50x50, bliver banen svær at se. Herudover varierer skærmstørrelser, og det er derfor nødvendigt at gøre spillets vinduestørrelse fleksibel. En løsning på dette problem ville være at bestemme en fast størrelse for felterne, og lade vinduet justere sin størrelse efter dette. Ønskes det f.eks. at felterne altid har størrelsen 20x20, og at banen skal være 15x25, vil vinduets størrelse blive 300x500. Fordelen ved denne metode er at det sikres, at banen altid er synlig, og at der ikke opstår problemer, fordi forholdet mellem vinduets størrelse og banen størrelse ikke passer sammen. Ulempen ved metoden er, at store baner kan blive for store til at være på en normal skærm. F.eks. vil en bane med felter af størrelsen 20x20 og banestørrelsen 75x75 fylde 1500x1500. Herudover er løsningen ikke brugervenlig, idet en bruger kan blive forvirret over hvorfor vinduets størrelse ændrer sig fra bane til bane, og måske ligefrem ikke passer på skærmen.
@@ -146,35 +139,33 @@ En anden metode er at gøre vinduet justerbart. Denne løsning er mere brugerven
 -brug af observer - får model-view-controller til at gå op
 -Flere opgaver er givet til “game”-klassen frem for de andre klasser
 
-(??) Vi bruger linkedlist i stedet for arraylist, som vi startede med, fordi når man hver gang tilføjer et nyt hovede, så får hovedet den første plads, og alle andre elementer flyttes en gang tilbage. Når slangen er stor nok, kan dette godt komme til at lacke spillet lidt. Derfor er linkedlist helt klart mest optimalt at bruge, da den bare tilføjer et nyt element forrest uden at rykke alle de andre elementer.
-
 \chapter{Avanceret Snake}
+I dette afsnit vil den endelige version af snake blive forklaret. De dele af spillet, som også er brugt i simpel-snake, og som ikke er blevet ændret, f.eks. justering af vinduesstørrelse, vil ikke blive forklaret i dette afsnit.
+
 \section{Afgrænsning}
-I den avancerede del af spillet skal slangen bevæge sig ved hjælp af en timer og altså ikke vente på input fra tastaturet. Input fra tastaturet ændrer derimod kun retning eller sætter farten op. Derudover skal slangen accelerere - dvs. slangens hastighed øges efter et vis antal samlede æbler, hvilket gør spillet mere udfordrende og mindre ensartet. Vi har derudover også valgt at lave spillet, som skulle det udgives helt færdiggjort. Derfor er det holdt simpelt med kun få funktioner. Der er derimod lagt fokus på høj kvalitet af spillets grafik og brugervenlighed med hensyn til navigering. Brugergrænsefladen skal tilpasses brugerens skærmstørrelse, ønskede vinduesstørelse og brugerens operativsystem. Det skal også være muligt at navigere både igennem tastatur-input og mussekliks-input. Brugeren skal derudover også have frihed til at vælge slangens hastighed og farve og banens størrelse - stadig uden at dette kommer til at hæmme spillets udseende eller kvalitet. Simpel Snakes bevægelsesfunktion, der ikke er afhængig af en timer, er beholdt som en "kindergarten"-sværhedsgrad, som brugeren kan vælge i menuen.
-
------Skriv om multiplayer + evt. netværk---------
-
+I den avancerede del af spillet skal slangen bevæge sig automatisk ved hjælp af en timer, og venter derfor ikke på input fra tastaturet. Input fra tastaturen bruges derimod til at skifte retning eller til at fremskynde den automatiske bevægelse. Derudover skal slangen accelerere, dvs. at tiden mellem hver automatisk bevægelse sænkes, efterhånden som spillerens score stiger, hvilket øger spillets sværhedsgrad. Brugergrænsefladen skal kunne tilpasses brugerens skærmstørrelse, ønskede vinduesstørelse og brugerens operativsystem. Det skal også være muligt at navigere både igennem input fra et tastatur eller en mus. Før spillets start skal det være muligt at vælge mellem flere starthastigheder, slangens farve og banens størrelse.
+Det skal være muligt at kunne spille to spillere på samme bane.
 
 \section{Design}
-I \textit{Driver}-klassen, der får spillet til at køre, oprettes tre objekter fra de tre hovedklasser \textit{Game}, \textit{View} og \textit{Control}, der hver især står for henholdsvis \textit{Model}, \textit{View} og \textit{Control} i \textit{Model-View-Controller}-designet.
+I \textit{Driver}-klassen, hvori main-metoden for programmet ligger, oprettes tre objekter fra de tre hovedklasser \textit{Game}, \textit{View} og \textit{Control}, der hver især står for henholdsvis \textit{Model}, \textit{View} og \textit{Control} i \textit{Model-View-Controller}-designet.
 
-I JFrame'n \textit{View} oprettes spillets scener repræsenteret af andre view-klasser i samme pakke. Disse view-klasser er alle JPanels som tilføjes til vinduet og skiftes ud alt efter hvor i spillet spilleren befinder sig, i hovedmenuen, i singleplayer-menuen, i selve spil-scenen, osv. På denne måde har hver scene i spillet en tilhørende klasse der [extends] JPaneler. Klasserne oprettes alle med View som parameter, og kan derfor give og bruge hinandens funktioner, idet View-klassen har getter-metoder til alle de andre view-klasser. View-klasserne kan derfor genbruge nødvendige metoder, f.eks. metoden til at tegne baggrunden op, der f.eks. skal være ens i alle paneler. Spilleren navigerer vha. JButtons eller tastatur-input der modtages i Control-klasserne.
+I JFrame'n \textit{View} er spillets forskellige komponenter opdelt i hver deres klasse. Disse View-klasser er alle JPanels som tilføjes til vinduet og skiftes ud alt efter spillets tilstand. Er spilleren f.eks. i hovedmenuen, bruges ViewMenu klassen til at tegne denne. Er spilleren i et multiplayer-spil, bruges ViewBoard, ViewBoardMultiplayer, ViewHeader og ViewHeaderMultiplayer. På denne måde har hver scene i spillet en tilhørende klasse der forlænger JPaneler. Klasserne oprettes alle med View som parameter, og kan derfor give og bruge hinandens funktioner, idet View-klassen har getter-metoder til alle de andre View-klasser. View-klasserne kan derfor genbruge nødvendige metoder, f.eks. metoden til at tegne baggrunden op, der f.eks. skal være ens i alle paneler. Spilleren navigerer vha. JButtons eller tastatur-input der modtages i Control-klasserne.
 
-Control-klassen er tilknyttet View, og virker derfor alle steder i spillet. Denne har funktioner såsom "mute" og "return to menu", som skal være fungerende uanset hvor i spillet spilleren er - altså hvilke paneler der er vist. I samme pakke ligger andre control-klasser, som alle hører til en bestemt scene. Dette sørger for at kontrolfunktionerne er unikke og kun fungerer på deres bestemte måder, hvis man er inde i deres bestemte scene.
+Control-klassen er tilknyttet View, og virker derfor alle steder i spillet. Control-klassen har funktioner som \textit{mute} og \textit{return to menu}, som skal være fungerende uanset hvor i spillet spilleren er, og dermed hvilke paneler der er vist. I samme pakke ligger andre control-klasser, som alle hører til en bestemt spiltilstand. Dette sikrer, at der kun bliver givet de styringfunktioner, som er nødvendige i den nuværende spiltilstand.
 
 I \textit{Model}-pakken findes den abstrakte klasse \textit{Game}, som klasserne \textit{GameSingleplayer} og \textit{GameMultiplayer} implementerer. [............]
 
-
 \section{Implementering}
-
 \subsection{Model}
-Selve banen er defineret i \textit{Board}-klassen, som har datafelterne \textit{height} og \textit{width}. Funktionen \textit{wrap} undersøger om slangen er ved at bevæge sig ud over banens grænser. Er dette tilfældet, fortsætter slangen i stedet på den modsatte side af banen.
+Ændret siden simpel: Multiplayer, Menu
+\subsubsection{Multiplayer}
 
-Når \textit{move}-funktionen kaldes, undersøges der først, om den nye retning er modsatrettet slangens nuværende retning. Er dette tilfældet, sker intet. Er retningen gyldig, undersøges der om der ligger et æble på den nye plads. Hvis der gør, tilføjes et nyt element i ArrayListen \textit{positions}.
-Der undersøges næst, om slangen rammer sig selv, ved at sammenligne om det ønskede felt har samme koordinater som et af slangens led, udover halen. Er dette tilfældet, sættes spillets tilstand til \textit{LOST}, hvorved spillet slutter. Hvis ikke, flytter slangen sin position, således at hovedet indtager et nyt felt, andet led tager hovedets tidligere plads, tredje led tager andet leds plads osv. Dette gøres ved, at ArrayListen opdateres bagfra, således at halen tager næstsidste leds koordinater, næstsidste led tager tredjesidste led osv. Når dette er gjort, tager hovedet den nye position, som afhænger af hvilket input der gives.
+\subsubsection{Menu}
 
 
 \subsection{View (Brugergrænseflade)}
+Ændret siden simpel: Brug af billeder. Optegning af slange.
+
 Al grafik, som ikke er fra \textit{Swing}-biblioteket, er importeret i en fælles klasse \textit{Image}, der gør det muligt for enhver view-klasse at få fat i alle billeder. På samme måde er selv-definerede farver oprettet i klassen Colors.
 Når \textit{View}-klassen konstrueres opretter den i forvejen alle andre paneler, men tilføjer først \textit{ViewHeader}-panelet og \textit{ViewMenu}-panelet. Disse skiftes kun ud med andre paneler gennem input fra spilleren, når spilleren bevæger sig rundt i spillet. Denne frame bruger \textit{BorderLayout}, der gør det simpelt at placere \textit{ViewHeader}-panelet øverst, og det ønskede scene-panel nedenunder. Alle andre view-klasser er efterladt med standard-layoutet \textit{FlowLayout}, da deres komponenter skal placeres i specifikke koordinater. Dette gøres med \textit{setBounds} der definerer komponentets størrelse og placering. For at komponenterne følger med, når spilleren ændrer vinduets størrelse, er deres koordinater dog ikke altid bevaret hvis komponenterne f.eks. altid skal ligge i midten af vinduet. Disse kald på \textit{setBounds}-metoden er placeret i panelernes \textit{paintComponent}-metode da, denne køres hver gang vinduet skaleres. Koordinaterne beregnes derved påny hver gang vinduet skaleres, og komponenterne kan derfor altid få de rigtige koordinater. Denne metode er brugt til alle billeder, komponenter og tekst der oprettes eller tegnes.
 
@@ -185,6 +176,8 @@ Når spilleren færdiggør spillet enten ved at tabe eller vinde, tegnes \textit
 Udover bane-størrelse er det også muligt at vælge slangens farve. Dette gøres lige før spillets start, når spilleren har valgt farve. Biillederne for slangen farves og kan derefter bruges til at tegne slangen. Slangen farves ved at køre hver enkel af et billedes pixel igennem og derefter give det en anden farve defineret ved tre heltal givet som parametre til \textit{colourSnake}-metoden, der farver den givne pixel, hvis dens farve ikke er svarende til slangens øjenfarve.
 
 \subsection{Control (Styring)}
+Ændret siden simpel: Mute, pause, escape.
+
 For at give spilleren valgfrihed er der til mange funktioner både implementeret en JButton og en tilhørende genvej gennem tastaturet. Fra tastaturet er der blevet implementeret følgende genveje: Mute-button (M), pause-button (P), menu-button (Esc), tilbage-button (Backspace), (re)start-button (enter/space), som (gen)starter spillet. \textit{Control}-klasserne [extends] \textit{KeyAdapter}, der registerer tastatur-input, og implementerer \textit{ActionListener}, der registrerer tryk på knapper. Disse klasser tilføjer \textit{KeyListeners} til \textit{View}-klassen, og \textit{ActionListener} til panelet, der indeholder den bestemme \textit{Control}-klasses knapper. Individuel kontrol over de forskellige knapper fås ved at sætte en unik \textit{ActionCommand} til hver enkel knap, der derefter kan tjekkes for i \textit{ActionListener}ens abstrakte metode \textit{actionPerformed}. Det er her også nødvendigt efter knappetryk at bruge \textit{requestFocus}-metoden på \textit{View}-klassen, da spillet efter knappetryk, får et nyt fokus, hvilket betyder, at tastatur-inputtet ikke opfattes af spillet.
 Især når \textit{View} oprettes, bruges \textit{setFocusable}- og \textit{requestFocus}-metoden, eftersom tastatur-input allerede skal være brugbart her på grund af \textit{mute}-funktionen.
 Før spillets start kan spilleren som tidligere nævnt - udover at vælge farve og sværhedsgrad - vælge banestørrelsen. Denne funktion er indbygget vha. to \textit{JFormattedTextFields} der har fået en \textit{Formatter}, som begrænser inputtet til højst et tre-cifret tal. Dette begrænser spillerens mulighed for at indtaste en ugyldig størrelse. Giver spilleren alligevel en ugyldig værdi (under 5 eller over 100) eller efterlader et felt tomt, printes en fejlmelding og spilleren kan ikke starte spillet før der er indtastet gyldige værdier. For alligevel ikke at gøre det svært for spilleren at indtaste rigtige værdier, ses der bort fra eventuelle mellemrum før, efter eller i midten af tallene, da disse fjernes før inputtet regnes om til et heltal, som derefter sammen med den valgte sværhedsgrad gives videre som informationer til \textit{model}-pakkens \textit{Game}-klasse. Farvevalget gives til \textit{view}-pakkens \textit{ViewBoard}-klasse, der farver billederne til slangen.
@@ -192,8 +185,24 @@ Før spillets start kan spilleren som tidligere nævnt - udover at vælge farve 
 (((((((Da tekstfelterenes \textit{Formatter} får deres caret til at sætte sig i starten af tekstfeltet selvom spilleren trykker et andet sted i feltet, implementerer klassen en \textit{FocusListener}, der har de abstrakte metoder \textit{focusGained} og \textit{focusLost(...)}. I \textit{focusGained} oprettes )))))).
 
 \section{Udviklingsproces}
+\subsection{Control}
+Diskussion: Opdeling af controlklasser
 
-\subsection{Tegning af slangen}
+\subsection{Model}
+\subsubsection{Menu}
+Forklaring af
+
+\subsubsection{Multiplayer}
+Singleplayer og multiplayer
+
+\subsubsection{Automatisk bevægelse}
+Timer og acceleration
+
+
+\subsection{View}
+\subsubsection{Tegning af slangen}
+Ændret siden simpel: Undersøgelse af slangens led
+
 I Simpel Snake kan spilleren ud fra slangens krop se hvor han har været, men ikke hvilken vej han har bevæget sig, idet de udfyldte felter er fyldt helt ud til kanten[FIG HENVISNING]. Slangens udseende kan derfor forbedres ved at vise slangens bevægelsesretning og retningsskift i hver enkel del af dens krop og generelt erstatte alle firkanterne, med mere beskrivende billeder [FIG HENVISNING]. Dette giver seks mulige udseender for hver enkel del af slangen udover hovedet og enden af halen, der hver findes i fire versioner afhængig af retningen, som spilleren vælger for hovedet, eller retningen af kropsdelen lige før halen. Kropsstykkerne imellem er dog ikke kun afhængig af retningen af stykket lige før eller lige efter, men begge dele. Den vandrette del og den lodrette del af slangen bestemmes let ved at undersøge om stykket, der skal tegnes ligger i samme række eller kolonne som stykkerne før og efter. Slangens hjørnestykker bestemmes på en mere indviklet måde, da stykket og dens tilgrænsende stykker aldrig ligger i samme række eller kolonne, men derimod kan ligge i fire forskellige forhold til hinanden (Se figur 3.1). I figur \ref{fig:corner1} ligger de tilgrænsende felter lige under og til højre for hjørnet, men dette gælder f.eks. ikke for figur \ref{fig:corner3} hvor det ene stykke ligger lige under, mens det andet stykke ligger til venstre for hjørnet uden at grænse op til dens venstre side, der ellers ville give hjørnestykket spejlvendt i y-aksen. Da felterne ligger i en XXXXX-liste sorteret efter slangens opnåede dele, sammenlignes et felt med feltet før og efter det i listen. Da stykket foran og bagved uden påvirkning på hjørnestykket kan bytte plads, findes der altså otte situationer for et enkelt hjørnestykke. I alt tjekkes der derfor - for kroppen alene - 34 mulige forhold mellem et stykke og dens to tilgrænsende stykker.
 \linebreak
 
@@ -216,17 +225,9 @@ Man kan se et mere detaljeret billede af snake-kroppen i Appendix (Bilag A).
 	\subfloat[Corner 4]{\label{fig:corner4}\includegraphics[width=0.15\textwidth]{Corner4.png}}
 \end{figure}
 
-\subsection{Lyd}
+\subsubsection{Lyd}
 
 Som en mindre tilføjelse til spillet er lyd tilføjet i form af Audio-klassen. Funktionerne i Audio-klassen bruges til individuelt at spille 	
-
-
-\subsection{Menu}
-
-\subsection{Automatisk bevægelse}
------Husk at skriv noget om incrementet timer-------
-
-\subsection{Multiplayer}
 
 \section{Evaluering}
 For at sikre stabilitet af brugergrænsefladen er spillet afprøvet i forskellige størrelser og på forskellige operativsystemer. Placeringen af komponenterne er ens i Micrsoft Windows 8.1 og dens ældre versioner, [INSERT---------]. Derimod har JButtons et lidt andet udseende på [INSEEEEERT], idet deres baggrundsfarve i dette operativsystem ikke er synlig medmindre deres kant skjules. Derudover virker de her heller ikke, hvis de tilføjes til et panel i \textit{paintComponent}-metoden. Det første problem løses ved at skjule kanten eller i stedet at bruge et ImageIcon til knappen i stedet for at give den en baggrundsfarve. Knappens funktionalitet opnås ved at tilføje knapperne i konstuktøren, men stadig med \textit{setBounds}-metoden i \textit{paintComponent}-metoden. 
