@@ -199,6 +199,11 @@ public class GameMultiplayer extends Observable implements Game, ActionListener 
 		}
 	
 		boolean snakeEatsFood = newHeadPosition.equals(food.getPosition());
+		boolean snakeEatsItSelf = snake.move(moveDirection, snakeEatsFood, board);
+		if (snakeEatsItSelf) {
+			state = State.END;
+		}
+		
 		if (snakeEatsFood) {
 			if (player == Player.ONE) {
 				score1++;
@@ -207,11 +212,6 @@ public class GameMultiplayer extends Observable implements Game, ActionListener 
 				score2++;
 			}
 			food = Food.generateRandomFood(snake1, snake2, board);
-		}
-		
-		boolean snakeEatsItSelf = snake.move(moveDirection, snakeEatsFood, board);
-		if (snakeEatsItSelf) {
-			state = State.END;
 		}
 		
 		// Notify the observing classes that the game changed. Send an argument with 
