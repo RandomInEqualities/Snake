@@ -1,12 +1,16 @@
 package snake.model;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import javax.swing.Timer;
+
 import snake.model.Game;
+import snake.model.GameSingleplayer;
 
 
-public class GameMultiplayer extends Observable implements Game {
+public class GameMultiplayer extends Observable implements Game, ActionListener {
 	
 	private enum State {
 		START,
@@ -17,14 +21,22 @@ public class GameMultiplayer extends Observable implements Game {
 	
 	private static final int DEFAULT_WIDTH = 20;
 	private static final int DEFAULT_HEIGHT = 20;
+	private static final int TIMER_UPDATE_INTERVAL = 16;
+	private static final int TIMER_INITIAL_DELAY = 500;
 	
 	private State state;
 	private Board board;
 	private Snake snake1;
 	private Snake snake2;
-	private int score1;
-	private int score2;
+	private int score1, score2, speedIncrease;
 	private Food food;
+	private Direction direction;
+
+	// Variables for implementing continuous snake movement.
+	private Timer timer;
+	boolean timerEnabled = true;
+	private int timerUpdateInterval = 200;
+	private long timerLastUpdateTime = 0;
 	
 	public GameMultiplayer() {
 		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -34,6 +46,11 @@ public class GameMultiplayer extends Observable implements Game {
 		this.board = new Board(width, height);
 		this.snake1 = new Snake();
 		this.snake2 = new Snake();
+		
+		// Create a timer object that send an ActionEvent to this class, in a periodic interval.
+		this.timer = new Timer(TIMER_UPDATE_INTERVAL, this);
+		this.timer.setInitialDelay(TIMER_INITIAL_DELAY);
+		this.speedIncrease = 0;
 		reset();
 	}
 	
@@ -47,6 +64,10 @@ public class GameMultiplayer extends Observable implements Game {
 	
 	public Food getFood() {
 		return food;
+	}
+	
+	public boolean isTimedMovementEnabled() {
+		return timerEnabled;
 	}
 	
 	public Snake getSnake(Player player) {
@@ -98,7 +119,7 @@ public class GameMultiplayer extends Observable implements Game {
 		if (state == State.START) {
 			state = State.RUN;
 			setChanged();
-			notifyObservers(Event.START);
+			notifyObservers(new Event(Event.START));
 		}
 	}
 
@@ -106,8 +127,9 @@ public class GameMultiplayer extends Observable implements Game {
 	public void pause() {
 		if (state == State.RUN) {
 			state = State.PAUSE;
+			timer.start();
 			setChanged();
-			notifyObservers(Event.PAUSE);
+			notifyObservers(new Event(Event.PAUSE));
 		}
 	}
 
@@ -115,8 +137,9 @@ public class GameMultiplayer extends Observable implements Game {
 	public void resume() {
 		if (state == State.PAUSE) {
 			state = State.RUN;
+			timer.stop();
 			setChanged();
-			notifyObservers(Event.RESUME);
+			notifyObservers(new Event(Event.RESUME));
 		}
 	}
 
@@ -126,9 +149,12 @@ public class GameMultiplayer extends Observable implements Game {
 		snake1.setup(getInitialSnake(Player.ONE));
 		snake2.setup(getInitialSnake(Player.TWO));
 		state = State.START;
+		timer.start();
 		score1 = 0;
 		score2 = 0;
 		food = Food.generateRandomFood(snake1, snake2, board);
+		timerUpdateInterval -= speedIncrease;
+		timer.stop();
 	}
 	
 	public void move(Player player, Direction moveDirection) {
@@ -143,7 +169,7 @@ public class GameMultiplayer extends Observable implements Game {
 		
 		Field newHeadPosition = snake.getNewHeadPosition(moveDirection, board);
 		if (getSnake(player == Player.ONE ? Player.TWO : Player.ONE).contains(newHeadPosition)) {
-			return;
+			state = State.END;
 		}
 	
 		boolean snakeEatsFood = newHeadPosition.equals(food.getPosition());
@@ -174,6 +200,7 @@ public class GameMultiplayer extends Observable implements Game {
 		else {
 			event = new Event(Event.MOVE, player);
 		}
+		timerLastUpdateTime = System.currentTimeMillis();
 		setChanged();
 		notifyObservers(event);
 	}
@@ -193,6 +220,17 @@ public class GameMultiplayer extends Observable implements Game {
 			snakePositions.add(centerUPLEFT);
 		}
 		return snakePositions;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		long currentTime = System.currentTimeMillis();
+		long elapsedTime = currentTime - timerLastUpdateTime;
+		if (state == State.RUN && timerEnabled && elapsedTime > timerUpdateInterval) {
+			move(Player.ONE, snake1.getHeadDirection());
+			move(Player.TWO, snake2.getHeadDirection());
+			timerLastUpdateTime = currentTime;
+		}
 	}
 
 }
