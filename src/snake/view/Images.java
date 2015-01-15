@@ -33,6 +33,8 @@ public class Images {
 	public static final BufferedImage TITLE_PAUSED;
 	public static final BufferedImage TITLE_MENU;
 	public static final BufferedImage TITLE_CONTROLS;
+	public static final BufferedImage TITLE_PLAYER_ONE;
+	public static final BufferedImage TITLE_PLAYER_TWO;
 	public static final BufferedImage BUTTON_SINGLEPLAYER;
 	public static final BufferedImage BUTTON_MULTIPLAYER;
 	public static final BufferedImage BUTTON_CONTROLS;
@@ -82,6 +84,8 @@ public class Images {
 		TITLE_PAUSED = loadImage("TitlePaused.png");
 		TITLE_MENU = loadImage("TitleMenu.png");
 		TITLE_CONTROLS = loadImage("TitleControls.png");
+		TITLE_PLAYER_ONE = loadImage("TitleWinnerOne.png");
+		TITLE_PLAYER_TWO = loadImage("TitleWinnerTwo.png");
 
 		BUTTON_SINGLEPLAYER = loadImage("ButtonSingleplayer.png");
 		BUTTON_MULTIPLAYER = loadImage("ButtonMultiplayer.png");

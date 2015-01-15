@@ -69,7 +69,7 @@ public class ViewBoardMultiplayer extends ViewBoard  implements Observer {
 		else if (game.isEnded()){
 			headerView.hideScore();
 			headerView.repaint();
-			drawGameLost(context2D, board);
+			drawGameOver(context2D, board);
 		}
 	}
 	
@@ -78,21 +78,29 @@ public class ViewBoardMultiplayer extends ViewBoard  implements Observer {
 	protected void drawGameOver(Graphics2D context, Board board) {
 		super.drawGameOver(context, board);
 		
-		// Add score text.
+		// Add score text
 		Rectangle boardRect = getRectangleForBoard(board);
+		Rectangle popupRectangle = getRectangleForPopUp(board);
+		
 		String scoreTxt = null;
-		if (game.getWinner() == player.ONE) {
+		int x = boardRect.x + boardRect.width/2 - Images.TITLE_PLAYER_ONE.getWidth()/2;
+		int y = popupRectangle.y;
+		
+		if (game.getWinner() == Player.ONE) {
+			context.drawImage(Images.TITLE_PLAYER_ONE, x, y, null);
 			scoreTxt = "Congratulations! Player 1 - YOU WIN!    Final Score: " + game.getScore(Player.ONE);
-		} else if (game.getWinner() == player.TWO) {
+		} else if (game.getWinner() == Player.TWO) {
+			context.drawImage(Images.TITLE_PLAYER_TWO, x, y, null);
 			scoreTxt = "Congratulations! Player 2 - YOU WIN!    Final Score: " + game.getScore(Player.TWO);
 		} else {
+			context.drawImage(Images.TITLE_GAME_OVER, x, y, null);
 			scoreTxt = "It's a tie. Try Again.";
 		}
-		int x = boardRect.x + boardRect.width/2 - scoreTxt.length()*10/2;
-		int y = boardRect.y + boardRect.height/2 + 5;
+		int x2 = boardRect.x + boardRect.width/2 - scoreTxt.length()*10/2;
+		int y2 = boardRect.y + boardRect.height/2 + 5;
 		context.setColor(Colors.PANEL_COLOUR);
 		context.setFont(new Font("Sans_Serif", Font.BOLD, 20));
-		context.drawString(scoreTxt, x, y);
+		context.drawString(scoreTxt, x2, y2);
 		
 	}
 }
