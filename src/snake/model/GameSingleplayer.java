@@ -178,7 +178,6 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 				speedIncrease +=5;
 				this.timerUpdateInterval -=5;
 			}
-			food = Food.generateRandomFood(snake, board);
 		}
 		
 		boolean snakeEatsItSelf = snake.move(moveDirection, snakeEatsFood, board);
@@ -189,6 +188,14 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 		else if (snake.fills(board)) {
 			state = State.END;
 			isWon = true;
+		}
+		else if (snakeEatsFood) {
+			score++;
+			if(score % 5 == 0) {
+				speedIncrease +=5;
+				this.timerUpdateInterval -=5;
+			}
+			food = Food.generateRandomFood(snake, board);
 		}
 		
 		// Notify the observing classes that the game changed. Send an argument with 

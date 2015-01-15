@@ -7,6 +7,7 @@ import snake.model.GameMultiplayer;
 import snake.model.GameSingleplayer;
 import snake.view.*;
 
+@SuppressWarnings("unused")
 public class ControlMenu implements ActionListener {
 
 	private View view;
@@ -41,15 +42,18 @@ public class ControlMenu implements ActionListener {
 		boardViewMulti = new ViewBoardMultiplayer(headerMulti, gameMulti);
 		boardControlMulti = new ControlBoardMultiplayer(gameMulti, view, boardViewMulti, headerMulti);
 		menuControlMulti = new ControlOptionsMultiplayer(gameMulti, view, menuViewMulti, boardViewMulti, headerMulti);
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "singleplayer") {
+			gameSingle.reset();
 			view.getAudio().registerGame(gameSingle);
 			view.showMenu(menuViewSingle);
 		} 
 		else if (e.getActionCommand() == "multiplayer"){
+			gameMulti.reset();
 			view.getAudio().registerGame(gameMulti);
 			view.showMenu(menuViewMulti);
 		}

@@ -1,23 +1,17 @@
-
 package snake.control;
 
 import java.awt.event.*;
-import javax.swing.JButton;
 import snake.view.*;
 
 public class Control extends KeyAdapter implements ActionListener{
 	
 	private View view;
-	private ControlControls menuControlsControl;
-	private JButton soundButton;
 	
 	public Control(View view) {
 		if (view == null) {
 			throw new NullPointerException();
 		}
 		this.view = view;
-
-		menuControlsControl = new ControlControls(view);
 	}
 
 	@Override
