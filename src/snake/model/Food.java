@@ -60,6 +60,8 @@ public class Food {
 				int column = random.nextInt(width);
 				int row = random.nextInt(height);
 				foodPosition = new Field(row, column);
+				System.out.println(snakeFields);
+				System.out.println(foodPosition);
 			} while (snakeFields.contains(foodPosition));
 		}
 		else {
@@ -78,7 +80,6 @@ public class Food {
 			int selection = random.nextInt(foodPositions.size());
 			foodPosition = foodPositions.get(selection);
 		}
-
 		return new Food(foodPosition);
 	}
 	

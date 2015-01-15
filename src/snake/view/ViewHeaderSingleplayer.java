@@ -37,7 +37,7 @@ public class ViewHeaderSingleplayer extends ViewHeader implements Observer {
 		super.paintComponent(context);
 		Dimension size = getSize();
 		Graphics2D context2D = (Graphics2D) context;
-		System.out.println("paint");
+		
 		// Update the score
 		if (showScore) {
 			context2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);

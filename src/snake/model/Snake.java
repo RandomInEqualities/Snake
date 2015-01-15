@@ -15,7 +15,7 @@ public class Snake {
 	
 	public Snake() {
 		this.positions = new ArrayList<Field>();
-		this.headDirection = Direction.RIGHT;
+		this.headDirection = Direction.LEFT;
 	}
 
 	public Snake(ArrayList<Field> snake) {
@@ -61,8 +61,8 @@ public class Snake {
 	}
 	
 	/**
-	 * Test if the snake is allow to move in a given direction. The snake can for example
-	 * not move in its necks direction.
+	 * Test if the snake is allowed to move in a given direction. The snake can for example
+	 * not move in its neck's direction.
 	 * @param direction the direction to test for
 	 * @return true if it can move in direction, otherwise false.
 	 */
@@ -74,7 +74,7 @@ public class Snake {
 	}
 	
 	/**
-	 * Move the snake. If the snake eat any food its tail will not move. Will return
+	 * Move the snake. If the snake eats food its tail will not move. Will return
 	 * true if it tries to move into itself.
 	 * 
 	 * @param direction direction of the move.
@@ -86,7 +86,7 @@ public class Snake {
 			return false;
 		}
 		
-		// Test if the snake eat its body.
+		// Test if the snake eats its body.
 		Field newHeadPosition = getNewHeadPosition(direction, board);
 		if (positions.contains(newHeadPosition)) {
 			int headIndex = positions.indexOf(newHeadPosition);
