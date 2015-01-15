@@ -77,6 +77,9 @@ public class Food {
 			}
 			
 			// Select a random food location.
+			if (foodPositions.size() == 0) {
+				return null;
+			}
 			int selection = random.nextInt(foodPositions.size());
 			foodPosition = foodPositions.get(selection);
 		}

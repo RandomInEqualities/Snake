@@ -189,8 +189,7 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 			state = State.END;
 			isWon = true;
 		}
-		
-		if (snakeEatsFood) {
+		else if (snakeEatsFood) {
 			score++;
 			if(score % 5 == 0) {
 				speedIncrease +=5;

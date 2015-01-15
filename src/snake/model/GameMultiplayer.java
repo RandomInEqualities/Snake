@@ -217,6 +217,9 @@ public class GameMultiplayer extends Observable implements Game, ActionListener 
 				score2++;
 			}
 			food = Food.generateRandomFood(snake1, snake2, board);
+			if (food == null) {
+				state = State.END;
+			}
 		}
 		
 		// Notify the observing classes that the game changed. Send an argument with 
