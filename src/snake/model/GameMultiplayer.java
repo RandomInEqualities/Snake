@@ -192,7 +192,12 @@ public class GameMultiplayer extends Observable implements Game, ActionListener 
 			state = State.END;
 		}
 		
-		if(getSnake(player.ONE).contains(snake2.getNewHeadPosition(moveDirection, board))) {
+		boolean headHit1 = snake1.getPositions().get(0).equals(snake2.getNewHeadPosition(moveDirection, board));
+		boolean headHit2 = snake2.getPositions().get(0).equals(snake1.getNewHeadPosition(moveDirection, board));
+		
+		if (headHit1 || headHit2) {
+			winner = player.TIE;
+		} else if (getSnake(player.ONE).contains(snake2.getNewHeadPosition(moveDirection, board))) {
 			winner = player.ONE;
 		} else {
 			winner = player.TWO;

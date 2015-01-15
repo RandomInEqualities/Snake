@@ -85,6 +85,8 @@ public class ViewBoardMultiplayer extends ViewBoard  implements Observer {
 			scoreTxt = "Congratulations! Player 1 - YOU WIN!    Final Score: " + game.getScore(Player.ONE);
 		} else if (game.getWinner() == player.TWO) {
 			scoreTxt = "Congratulations! Player 2 - YOU WIN!    Final Score: " + game.getScore(Player.TWO);
+		} else {
+			scoreTxt = "It's a tie. Try Again.";
 		}
 		int x = boardRect.x + boardRect.width/2 - scoreTxt.length()*10/2;
 		int y = boardRect.y + boardRect.height/2 + 5;
