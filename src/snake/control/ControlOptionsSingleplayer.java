@@ -82,11 +82,6 @@ public class ControlOptionsSingleplayer extends ControlOptions {
 		}
 
 		switch (event.getKeyCode()) {
-			case KeyEvent.VK_BACK_SPACE:
-				view.showMenu();
-				viewMenuSingleplayer.setValid(true);
-				viewMenuSingleplayer.setFilled(true);
-				break;
 			case KeyEvent.VK_ENTER:
 				playGame();
 				break;

@@ -93,7 +93,7 @@ public class ViewBoard extends JPanel {
 			addSnakeColor(color);
 			colorIndex = snakeColors.size() - 1;
 		}
-		
+
 		drawSnakeBody(context, snake, board, colorIndex);
 		drawSnakeTail(context, snake, board, colorIndex);
 		drawSnakeHead(context, snake, board, colorIndex);

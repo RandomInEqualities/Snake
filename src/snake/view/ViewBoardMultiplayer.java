@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -18,6 +19,7 @@ public class ViewBoardMultiplayer extends ViewBoard  implements Observer {
 	private ViewHeaderMultiplayer headerView;
 	private Color snakeColorPlayerOne;
 	private Color snakeColorPlayerTwo;
+	private Player player;
 	private static Color DEFAULT_SNAKE_COLOR_PLAYER_ONE = new Color(84, 216, 81);
 	private static Color DEFAULT_SNAKE_COLOR_PLAYER_TWO = new Color(84, 216, 81);
 	
@@ -67,22 +69,28 @@ public class ViewBoardMultiplayer extends ViewBoard  implements Observer {
 		else if (game.isEnded()){
 			headerView.hideScore();
 			headerView.repaint();
-			drawGameOver(context2D, board);
+			drawGameLost(context2D, board);
 		}
 	}
 	
-	//GAME OVER
-	/*@Override
+	//Game Over
+	@Override
 	protected void drawGameOver(Graphics2D context, Board board) {
 		super.drawGameOver(context, board);
 		
 		// Add score text.
 		Rectangle boardRect = getRectangleForBoard(board);
-		String scoreTxt = "Final Score: " + game.getScore(Player.ONE);
+		String scoreTxt = null;
+		if (game.getWinner() == player.ONE) {
+			scoreTxt = "Congratulations! Player 1 - YOU WIN!    Final Score: " + game.getScore(Player.ONE);
+		} else if (game.getWinner() == player.TWO) {
+			scoreTxt = "Congratulations! Player 2 - YOU WIN!    Final Score: " + game.getScore(Player.TWO);
+		}
 		int x = boardRect.x + boardRect.width/2 - scoreTxt.length()*10/2;
 		int y = boardRect.y + boardRect.height/2 + 5;
 		context.setColor(Colors.PANEL_COLOUR);
 		context.setFont(new Font("Sans_Serif", Font.BOLD, 20));
 		context.drawString(scoreTxt, x, y);
-	}*/
+		
+	}
 }

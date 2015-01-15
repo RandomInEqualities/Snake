@@ -83,8 +83,8 @@ public class ControlOptionsMultiplayer extends ControlOptions {
 		else if (event.getActionCommand() == "yellow"){
 			setActiveButton(yellow, green, blue, red);
 			boardView.setSnakeColor(Player.ONE, new Color(243, 196, 67));
-		}
-		else if (event.getActionCommand() == "green2") {
+		} 
+		if (event.getActionCommand() == "green2") {
 			setActiveButton(green2, blue2, red2, yellow2);
 			boardView.setSnakeColor(Player.TWO, new Color(84, 216, 81));
 		} 
@@ -99,6 +99,25 @@ public class ControlOptionsMultiplayer extends ControlOptions {
 		else if (event.getActionCommand() == "yellow2"){
 			setActiveButton(yellow2, green2, blue2, red2);
 			boardView.setSnakeColor(Player.TWO, new Color(243, 196, 67));
+		}
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent event) {
+		if (event == null) {
+			throw new NullPointerException();
+		}
+		
+		if (view.getViewState() != View.State.IN_MENU_MULTIPLAYER) {
+			return;
+		}
+
+		switch (event.getKeyCode()) {
+			case KeyEvent.VK_ENTER:
+				playGame();
+				break;
+			default:
+				break;
 		}
 	}
 	
@@ -132,6 +151,7 @@ public class ControlOptionsMultiplayer extends ControlOptions {
 		}
 		
 	}	
+	
 	
 	public void setSpeed(){
 		if (getDifficulty() == Difficulty.KINDERGARTEN){
