@@ -27,18 +27,18 @@ public class GameMultiplayer extends Observable implements Game {
 	private Food food;
 	
 	public GameMultiplayer() {
-		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		this(DEFAULT_WIDTH, DEFAULT_HEIGHT, null);
 	}
 	
-	public GameMultiplayer(int width, int height) {
-		this.board = new Board(width, height);
+	public GameMultiplayer(int width, int height, ArrayList<Field> walls) {
+		this.board = new Board(width, height, walls);
 		this.snake1 = new Snake();
 		this.snake2 = new Snake();
 		reset();
 	}
 	
 	public void setBoardSize(int width, int height){
-		board = new Board(width, height);
+		board = new Board(width, height, null);
 	}
 	
 	public Board getBoard() {
