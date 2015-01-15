@@ -144,6 +144,7 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 		score = 0;
 		food = Food.generateRandomFood(snake, board);
 		timerUpdateInterval -= speedIncrease;
+		speedIncrease = 0;
 		timer.stop();
 	}
 	
@@ -171,15 +172,7 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 		}
 	
 		Field newHeadPosition = snake.getNewHeadPosition(moveDirection, board);
-		boolean snakeEatsFood = newHeadPosition.equals(food.getPosition());
-		if (snakeEatsFood) {
-			score++;
-			if(score % 5 == 0){ //acceleration
-				speedIncrease +=5;
-				this.timerUpdateInterval -=5;
-			}
-		}
-		
+		boolean snakeEatsFood = newHeadPosition.equals(food.getPosition());		
 		boolean snakeEatsItSelf = snake.move(moveDirection, snakeEatsFood, board);
 		if (snakeEatsItSelf) {
 			state = State.END;
@@ -188,9 +181,7 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 		else if (snake.fills(board)) {
 			state = State.END;
 			isWon = true;
-		}
-		
-		if (snakeEatsFood) {
+		} else if (snakeEatsFood) {
 			score++;
 			if(score % 5 == 0) {
 				speedIncrease +=5;

@@ -28,7 +28,7 @@ public class GameMultiplayer extends Observable implements Game, ActionListener 
 	private Board board;
 	private Snake snake1;
 	private Snake snake2;
-	private int score1, score2, speedIncrease;
+	private int score1, score2;
 	private Food food;
 	private Player winner = null;
 
@@ -50,7 +50,6 @@ public class GameMultiplayer extends Observable implements Game, ActionListener 
 		// Create a timer object that send an ActionEvent to this class, in a periodic interval.
 		this.timer = new Timer(TIMER_UPDATE_INTERVAL, this);
 		this.timer.setInitialDelay(TIMER_INITIAL_DELAY);
-		this.speedIncrease = 0;
 		reset();
 	}
 	
@@ -158,7 +157,6 @@ public class GameMultiplayer extends Observable implements Game, ActionListener 
 		score1 = 0;
 		score2 = 0;
 		food = Food.generateRandomFood(snake1, snake2, board);
-		timerUpdateInterval -= speedIncrease;
 		timer.stop();
 	}
 	
