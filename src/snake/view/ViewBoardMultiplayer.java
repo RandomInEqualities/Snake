@@ -13,14 +13,16 @@ import snake.model.Player;
 public class ViewBoardMultiplayer extends ViewBoard  implements Observer {
 	
 	private GameMultiplayer game;
+	private ViewHeaderMultiplayer headerView;
 	private Color snakeColorPlayerOne;
 	private Color snakeColorPlayerTwo;
 	private static Color DEFAULT_SNAKE_COLOR_PLAYER_ONE = new Color(84, 216, 81);
 	private static Color DEFAULT_SNAKE_COLOR_PLAYER_TWO = new Color(84, 216, 81);
 	
-	public ViewBoardMultiplayer(GameMultiplayer game) {
+	public ViewBoardMultiplayer(ViewHeaderMultiplayer headerView, GameMultiplayer game) {
 		super();
 		this.game = game;
+		this.headerView = headerView;
 		this.snakeColorPlayerOne = DEFAULT_SNAKE_COLOR_PLAYER_ONE;
 		this.snakeColorPlayerTwo = DEFAULT_SNAKE_COLOR_PLAYER_TWO;
 		game.addObserver(this);
@@ -61,6 +63,7 @@ public class ViewBoardMultiplayer extends ViewBoard  implements Observer {
 			drawPaused(context2D, board);
 		} 
 		else if (game.isEnded()){
+			headerView.hideScore();
 			drawGameOver(context2D, board);
 		}
 	}

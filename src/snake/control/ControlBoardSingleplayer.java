@@ -11,19 +11,21 @@ import snake.model.Direction;
 import snake.model.GameSingleplayer;
 import snake.view.View;
 import snake.view.ViewBoardSingleplayer;
+import snake.view.ViewHeaderSingleplayer;
 
 public class ControlBoardSingleplayer extends KeyAdapter implements ActionListener {
 
 	private GameSingleplayer game;
 	private View view;
-
-	public ControlBoardSingleplayer(GameSingleplayer game, View view, ViewBoardSingleplayer viewBoard) {
+	private ViewHeaderSingleplayer headerView;
+	
+	public ControlBoardSingleplayer(GameSingleplayer game, View view, ViewBoardSingleplayer viewBoard, ViewHeaderSingleplayer headerView) {
 		if (game == null || view == null) {
 			throw new NullPointerException();
 		}
 		this.game = game;
 		this.view = view;
-		
+		this.headerView = headerView;
 		view.addKeyListener(this);
 		
 		JButton buttonPlayAgain = viewBoard.getButtonPlayAgain();
@@ -64,8 +66,7 @@ public class ControlBoardSingleplayer extends KeyAdapter implements ActionListen
 			case KeyEvent.VK_ENTER: 
 			case KeyEvent.VK_SPACE:
 				if (game.isEnded()){
-					game.reset();
-					game.start();
+					replay();
 				}
 				break;
 			default:
@@ -76,14 +77,17 @@ public class ControlBoardSingleplayer extends KeyAdapter implements ActionListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand()=="restart") {
-			game.reset();
-			game.start();
-			view.requestFocus();
+			replay();
 		} 
 		else if (e.getActionCommand()=="menu") {
 			view.showMenu();
 			view.requestFocus();
 		}
 	}
-	
+	public void replay(){
+		game.reset();
+		game.start();
+		headerView.showScore();
+		view.requestFocus();
+	}
 }

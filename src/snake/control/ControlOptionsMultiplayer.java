@@ -14,14 +14,16 @@ public class ControlOptionsMultiplayer extends ControlOptions {
 	private View view;
 	private ViewOptionsMultiplayer viewMenuMultiplayer;
 	private JButton green, blue, red, yellow, green2, blue2, red2, yellow2;
-	ViewBoardMultiplayer boardView;
+	private ViewBoardMultiplayer boardView;
+	private ViewHeaderMultiplayer headerView;
 	
-	public ControlOptionsMultiplayer(GameMultiplayer game, View view, ViewOptionsMultiplayer menuView, ViewBoardMultiplayer boardView) {
+	public ControlOptionsMultiplayer(GameMultiplayer game, View view, ViewOptionsMultiplayer menuView, ViewBoardMultiplayer boardView, ViewHeaderMultiplayer headerView) {
 		super(view, menuView);
 		this.game = game;
 		this.view = view;
 		this.viewMenuMultiplayer = menuView;
 		this.boardView = boardView;
+		this.headerView = headerView;
 		
 		green = this.viewMenuMultiplayer.getGreenButton();
 		blue = this.viewMenuMultiplayer.getBlueButton();
@@ -101,7 +103,7 @@ public class ControlOptionsMultiplayer extends ControlOptions {
 			int inputWidth = Integer.parseInt(inputW);
 			int inputHeight = Integer.parseInt(inputH);
 			if (inputWidth >= Board.MIN_WIDTH && inputWidth <= Board.MAX_WIDTH && inputHeight >= Board.MIN_HEIGHT && inputHeight <= Board.MAX_HEIGHT) {
-				view.showGame(boardView);
+				view.showGame(headerView, boardView);
 				game.setBoardSize(inputWidth, inputHeight);
 				game.reset();
 				game.start();

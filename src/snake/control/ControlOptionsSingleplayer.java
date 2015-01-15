@@ -14,15 +14,17 @@ public class ControlOptionsSingleplayer extends ControlOptions {
 	private View view;
 	private ViewOptionsSingleplayer viewMenuSingleplayer;
 	private JButton green, blue, red, yellow;
-	ViewBoardSingleplayer boardView;
+	private ViewBoardSingleplayer boardView;
 	private GameSingleplayer game;
+	private ViewHeaderSingleplayer headerView;
 	
-	public ControlOptionsSingleplayer(GameSingleplayer game, View view, ViewOptionsSingleplayer menuView, ViewBoardSingleplayer boardView) {
+	public ControlOptionsSingleplayer(GameSingleplayer game, View view, ViewOptionsSingleplayer menuView, ViewBoardSingleplayer boardView, ViewHeaderSingleplayer headerView) {
 		super(view, menuView);
 		this.view = view;
 		this.game = game;
 		this.boardView = boardView;
 		this.viewMenuSingleplayer = menuView;
+		this.headerView = headerView;
 		this.view.addKeyListener(this);
 		
 		green = this.viewMenuSingleplayer.getGreenButton();
@@ -100,9 +102,12 @@ public class ControlOptionsSingleplayer extends ControlOptions {
 			int inputWidth = Integer.parseInt(inputW);
 			int inputHeight = Integer.parseInt(inputH);
 			if (inputWidth >= Board.MIN_WIDTH && inputWidth <= Board.MAX_WIDTH && inputHeight >= Board.MIN_HEIGHT && inputHeight <= Board.MAX_HEIGHT) {
-				view.showGame(boardView);
+				view.showGame(headerView, boardView);
 				game.setBoardSize(inputWidth, inputHeight);
 				setSpeed();
+				headerView.showScore();
+				headerView.revalidate();
+
 				game.reset();
 				game.start();
 				viewMenuSingleplayer.setValid(true);

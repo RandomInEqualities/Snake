@@ -1,31 +1,28 @@
 package snake.control;
 
 import java.awt.event.ActionEvent;
+
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
 import javax.swing.JButton;
-
-import snake.model.Direction;
-import snake.model.GameMultiplayer;
-import snake.model.Player;
-import snake.view.View;
-import snake.view.ViewBoardMultiplayer;
-
+import snake.model.*;
+import snake.view.*;
 public class ControlBoardMultiplayer extends KeyAdapter implements ActionListener {
 
 	private GameMultiplayer game;
 	private View view;
 	private ViewBoardMultiplayer viewBoard;
-
-	public ControlBoardMultiplayer(GameMultiplayer game, View view, ViewBoardMultiplayer viewBoard) {
+	private ViewHeaderMultiplayer headerView;
+	
+	public ControlBoardMultiplayer(GameMultiplayer game, View view, ViewBoardMultiplayer viewBoard, ViewHeaderMultiplayer headerView) {
 		if (game == null || view == null) {
 			throw new NullPointerException();
 		}
 		this.game = game;
 		this.view = view;
 		this.viewBoard = viewBoard;
+		this.headerView = headerView;
 		
 		view.addKeyListener(this);
 		
@@ -79,8 +76,7 @@ public class ControlBoardMultiplayer extends KeyAdapter implements ActionListene
 			case KeyEvent.VK_ENTER: 
 			case KeyEvent.VK_SPACE:
 				if (game.isEnded()){
-					game.reset();
-					game.start();
+					replay();
 				}
 				break;
 			default:
@@ -91,14 +87,17 @@ public class ControlBoardMultiplayer extends KeyAdapter implements ActionListene
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand()=="restart") {
-			game.reset();
-			game.start();
-			view.requestFocus();
+			replay();
 		} 
 		else if (e.getActionCommand()=="menu") {
 			view.showMenu();
 			view.requestFocus();
 		}
 	}
-	
+	public void replay(){
+		game.reset();
+		game.start();
+		headerView.showScore();
+		view.requestFocus();
+	}
 }

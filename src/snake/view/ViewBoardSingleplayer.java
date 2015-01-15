@@ -17,9 +17,11 @@ public class ViewBoardSingleplayer extends ViewBoard  implements Observer {
 	private GameSingleplayer game;
 	private Color snakeColor;
 	private static Color DEFAULT_SNAKE_COLOR = new Color(84, 216, 81);
+	private ViewHeaderSingleplayer headerView;
 	
-	public ViewBoardSingleplayer(GameSingleplayer game) {
+	public ViewBoardSingleplayer(ViewHeaderSingleplayer headerView, GameSingleplayer game) {
 		super();
+		this.headerView = headerView;
 		this.game = game;
 		this.snakeColor = DEFAULT_SNAKE_COLOR;
 		game.addObserver(this);
@@ -64,7 +66,7 @@ public class ViewBoardSingleplayer extends ViewBoard  implements Observer {
 	@Override
 	protected void drawGameOver(Graphics2D context, Board board) {
 		super.drawGameOver(context, board);
-		
+		headerView.hideScore();
 		// Add score text.
 		Rectangle boardRect = getRectangleForBoard(board);
 		String scoreTxt = "Final Score: " + game.getScore();
