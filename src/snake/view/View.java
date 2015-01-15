@@ -1,15 +1,11 @@
 
 package snake.view;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.*;
-
 
 public class View extends JFrame {
 	
@@ -22,13 +18,12 @@ public class View extends JFrame {
 		IN_MENU_CONTROLS
 	}
 	
-	private static final long serialVersionUID = 6240347347855679335L;
-	
 	private State state;
 	private ViewHeader headerPanel;
 	private ViewMenu menuPanel;
 	private ViewControls menuControlsPanel;
 	private ViewAudio audio;
+	private ViewHeader currentHeader;
 	
 	public View() {
 		super();
@@ -38,6 +33,7 @@ public class View extends JFrame {
 		this.menuPanel = new ViewMenu(this);
 		this.headerPanel = new ViewHeader(this.audio);
 		this.menuControlsPanel = new ViewControls(this);
+		this.currentHeader = headerPanel;
 		showMenu();
 		
 		setTitle("Snake");
@@ -123,7 +119,7 @@ public class View extends JFrame {
 	}
 	
 	public ViewHeader getHeader(){
-		return headerPanel;
+		return currentHeader;
 	}
 	
 	@Override
@@ -132,15 +128,15 @@ public class View extends JFrame {
 	}
 	
 	private void setFrameComponents(Component northPanel, Component centerPanel) {
-		// Remove the current content pane components and add the new ones.
+		// Remove current content pane components and add new ones
+		currentHeader = (ViewHeader) northPanel;
 		getContentPane().removeAll();
 		getContentPane().add(northPanel, BorderLayout.NORTH);
 		getContentPane().add(centerPanel, BorderLayout.CENTER);
 		getContentPane().revalidate();
 		getContentPane().repaint();
 		
-		// It is very important that this JFrame gets the focus. Otherwise the control
-		// objects won't receive keyboard events!
+		// Request focus for JFrame to make it possible to receive keyboard events
 		requestFocus();
 	}
 }

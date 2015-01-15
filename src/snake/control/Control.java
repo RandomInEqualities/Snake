@@ -50,15 +50,16 @@ public class Control extends KeyAdapter implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		System.out.println("pressed");
 		if (e.getActionCommand() == "mute"){
 			toggleSound();
 		}
+		view.requestFocus();
 	}
 	
 	private void toggleSound(){
 		ViewAudio audio = view.getAudio();
 		audio.setMuted(!audio.isMuted());
 		view.getHeader().repaint();
-		view.requestFocus();
 	}
 }

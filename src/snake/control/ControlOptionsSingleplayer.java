@@ -31,7 +31,6 @@ public class ControlOptionsSingleplayer extends ControlOptions {
 		blue = this.viewMenuSingleplayer.getBlueButton();
 		red = this.viewMenuSingleplayer.getRedButton();
 		yellow = this.viewMenuSingleplayer.getYellowButton();
-		game.disableTimedMovement(); //default difficulty = kindergarten
 		
 		green.addActionListener(this);
 		blue.addActionListener(this);
@@ -42,6 +41,7 @@ public class ControlOptionsSingleplayer extends ControlOptions {
 		blue.setActionCommand("blue");
 		red.setActionCommand("red");
 		yellow.setActionCommand("yellow");
+		game.disableTimedMovement();
 	}
 
 	@Override
@@ -106,8 +106,6 @@ public class ControlOptionsSingleplayer extends ControlOptions {
 				game.setBoardSize(inputWidth, inputHeight);
 				setSpeed();
 				headerView.showScore();
-				headerView.revalidate();
-
 				game.reset();
 				game.start();
 				viewMenuSingleplayer.setValid(true);

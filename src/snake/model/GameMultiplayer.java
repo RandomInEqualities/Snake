@@ -30,7 +30,6 @@ public class GameMultiplayer extends Observable implements Game, ActionListener 
 	private Snake snake2;
 	private int score1, score2, speedIncrease;
 	private Food food;
-	private Direction direction;
 
 	// Variables for implementing continuous snake movement.
 	private Timer timer;
@@ -118,6 +117,7 @@ public class GameMultiplayer extends Observable implements Game, ActionListener 
 	public void start() {
 		if (state == State.START) {
 			state = State.RUN;
+			timer.start();
 			setChanged();
 			notifyObservers(new Event(Event.START));
 		}
@@ -127,7 +127,7 @@ public class GameMultiplayer extends Observable implements Game, ActionListener 
 	public void pause() {
 		if (state == State.RUN) {
 			state = State.PAUSE;
-			timer.start();
+			timer.stop();
 			setChanged();
 			notifyObservers(new Event(Event.PAUSE));
 		}
@@ -137,7 +137,7 @@ public class GameMultiplayer extends Observable implements Game, ActionListener 
 	public void resume() {
 		if (state == State.PAUSE) {
 			state = State.RUN;
-			timer.stop();
+			timer.start();
 			setChanged();
 			notifyObservers(new Event(Event.RESUME));
 		}
@@ -155,6 +155,21 @@ public class GameMultiplayer extends Observable implements Game, ActionListener 
 		food = Food.generateRandomFood(snake1, snake2, board);
 		timerUpdateInterval -= speedIncrease;
 		timer.stop();
+	}
+	
+	public void enableTimedMovement() {
+		timerEnabled = true;
+	}
+	
+	public void disableTimedMovement() {
+		timerEnabled = false;
+	}
+	
+	public void setTimedMovementSpeed(int speed) {
+		if (speed <= 0) {
+			throw new IllegalArgumentException("speed " + speed + " is not allowed");
+		}
+		this.timerUpdateInterval = speed;
 	}
 	
 	public void move(Player player, Direction moveDirection) {

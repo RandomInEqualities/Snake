@@ -5,6 +5,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import snake.control.ControlOptions.Difficulty;
 import snake.model.*;
 import snake.view.*;
 
@@ -24,6 +25,7 @@ public class ControlOptionsMultiplayer extends ControlOptions {
 		this.viewMenuMultiplayer = menuView;
 		this.boardView = boardView;
 		this.headerView = headerView;
+		this.view.addKeyListener(this);
 		
 		green = this.viewMenuMultiplayer.getGreenButton();
 		blue = this.viewMenuMultiplayer.getBlueButton();
@@ -51,6 +53,7 @@ public class ControlOptionsMultiplayer extends ControlOptions {
 		blue2.setActionCommand("blue2");
 		red2.setActionCommand("red2");
 		yellow2.setActionCommand("yellow2");
+		game.disableTimedMovement();
 	}
 	
 	@Override
@@ -105,6 +108,8 @@ public class ControlOptionsMultiplayer extends ControlOptions {
 			if (inputWidth >= Board.MIN_WIDTH && inputWidth <= Board.MAX_WIDTH && inputHeight >= Board.MIN_HEIGHT && inputHeight <= Board.MAX_HEIGHT) {
 				view.showGame(headerView, boardView);
 				game.setBoardSize(inputWidth, inputHeight);
+				setSpeed();
+				
 				game.reset();
 				game.start();
 				viewMenuMultiplayer.setValid(true);
@@ -116,5 +121,21 @@ public class ControlOptionsMultiplayer extends ControlOptions {
 				viewMenuMultiplayer.repaint();
 			}
 		}
+		
 	}	
+	
+	public void setSpeed(){
+		if (getDifficulty() == Difficulty.KINDERGARTEN){
+			game.disableTimedMovement(); 
+		} else if (getDifficulty() == Difficulty.EASY){
+			game.enableTimedMovement();
+			game.setTimedMovementSpeed(300);
+		} else if (getDifficulty() == Difficulty.INTERMEDIATE){
+			game.enableTimedMovement();
+			game.setTimedMovementSpeed(150);
+		} else if (getDifficulty() == Difficulty.HARD){
+			game.enableTimedMovement();
+			game.setTimedMovementSpeed(70);
+		}
+	}
 }
