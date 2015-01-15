@@ -13,7 +13,7 @@ public class ViewHeaderSingleplayer extends ViewHeader implements Observer {
 	private Font font;
 	
 	public ViewHeaderSingleplayer(View view, GameSingleplayer game, Boolean showScore) {
-		super(view.getAudio());
+		super(view, view.getAudio());
 		this.game = game;
 		this.showScore = showScore;
 		if (game == null) {

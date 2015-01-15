@@ -31,7 +31,7 @@ public class View extends JFrame {
 		this.state = State.STARTUP;
 		this.audio = new ViewAudio();
 		this.menuPanel = new ViewMenu(this);
-		this.headerPanel = new ViewHeader(this.audio);
+		this.headerPanel = new ViewHeader(this, this.audio);
 		this.menuControlsPanel = new ViewControls(this);
 		this.currentHeader = headerPanel;
 		showMenu();

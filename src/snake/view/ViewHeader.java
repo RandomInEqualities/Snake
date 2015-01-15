@@ -1,7 +1,10 @@
 package snake.view;
 
 import java.awt.*;
+
 import javax.swing.*;
+
+import snake.control.Control;
 
 public class ViewHeader extends JPanel {
 	private static final int DEFAULT_LOGO_WIDTH = 300;
@@ -12,7 +15,7 @@ public class ViewHeader extends JPanel {
 	private JButton sound;
 	private ImageIcon soundOn, soundOff;
 
-	public ViewHeader(ViewAudio audio) {
+	public ViewHeader(View view, ViewAudio audio) {
 		if (audio == null) {
 			throw new NullPointerException();
 		}
@@ -27,6 +30,11 @@ public class ViewHeader extends JPanel {
 		sound.setContentAreaFilled(false);
 		setBackground(Colors.PANEL_COLOUR);
 		this.add(sound);
+		
+		Control control = new Control(view);
+		sound.setActionCommand("mute");
+		sound.addActionListener(control);
+		view.addKeyListener(control);
 		
 		soundOn = new ImageIcon (Images.SOUND_ON);
 		soundOff = new ImageIcon (Images.SOUND_OFF);

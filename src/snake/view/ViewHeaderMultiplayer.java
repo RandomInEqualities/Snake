@@ -15,7 +15,7 @@ public class ViewHeaderMultiplayer extends ViewHeader implements Observer {
 	private Font font;
 	
 	public ViewHeaderMultiplayer(View view, GameMultiplayer game, Boolean showScore) {
-		super(view.getAudio());
+		super(view, view.getAudio());
 		this.game = game;
 		if (game == null) {
 			throw new NullPointerException();
