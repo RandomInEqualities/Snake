@@ -30,6 +30,7 @@ public class GameMultiplayer extends Observable implements Game, ActionListener 
 	private Snake snake2;
 	private int score1, score2, speedIncrease;
 	private Food food;
+	private Player winner = null;
 
 	// Variables for implementing continuous snake movement.
 	private Timer timer;
@@ -91,6 +92,10 @@ public class GameMultiplayer extends Observable implements Game, ActionListener 
 		else {
 			throw new IllegalArgumentException("unknown player");
 		}
+	}
+	
+	public Player getWinner() {
+		return winner;
 	}
 
 	@Override
@@ -185,6 +190,17 @@ public class GameMultiplayer extends Observable implements Game, ActionListener 
 		Field newHeadPosition = snake.getNewHeadPosition(moveDirection, board);
 		if (getSnake(player == Player.ONE ? Player.TWO : Player.ONE).contains(newHeadPosition)) {
 			state = State.END;
+		}
+		
+		boolean headHit1 = snake1.getPositions().get(0).equals(snake2.getNewHeadPosition(moveDirection, board));
+		boolean headHit2 = snake2.getPositions().get(0).equals(snake1.getNewHeadPosition(moveDirection, board));
+		
+		if (headHit1 || headHit2) {
+			winner = player.TIE;
+		} else if (getSnake(player.ONE).contains(snake2.getNewHeadPosition(moveDirection, board))) {
+			winner = player.ONE;
+		} else {
+			winner = player.TWO;
 		}
 	
 		boolean snakeEatsFood = newHeadPosition.equals(food.getPosition());

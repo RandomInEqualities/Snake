@@ -1,11 +1,13 @@
 package snake.control;
 
 import java.awt.event.ActionEvent;
-
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.TimerTask;
+
 import javax.swing.JButton;
+
 import snake.model.*;
 import snake.view.*;
 public class ControlBoardMultiplayer extends KeyAdapter implements ActionListener {
