@@ -89,9 +89,6 @@ public abstract class ControlOptions extends KeyAdapter implements ActionListene
 				viewMenuOptions.setValid(true);
 				viewMenuOptions.setFilled(true);
 				break;
-			case KeyEvent.VK_ENTER:
-				playGame();
-				break;
 			default:
 				break;
 		}
