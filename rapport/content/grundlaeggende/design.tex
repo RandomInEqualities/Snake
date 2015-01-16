@@ -6,3 +6,6 @@ I \textit{BoardPanel}-klassen er en observer, som notificeres hver gang banens t
 Scoren holdes opdateret i en \textit{Score}-klasse i \textit{model}-pakken, der observeres af \textit{ScorePanel}. \textit{ScorePanel} ligger som et panel øverst over selve spilletpladen, og har kun til formål at holde styr på scoren.
 
 For at starte spillet bruges klassen \textit{Driver}, som opretter et nyt \textit{Game}-, \textit{View} og \textit{Control}-objekt.
+
+\subsection*{Immutable klasser - Food, Field og Board}
+Klasserne Food, Field og Board er meget små. De har alle samme kun to værdier i sig (enten en coloum og row eller en dimension). Vi har derfor designet klasserne sådan at de ikke kan ændres efter at de er blevet oprettet. Dette sikre os at vi kan returnere vores game board i en getter og være 100\% sikre på at undefra kommende klasse ikke ændre det. Java har ikke et constant begreb. Hvis du har en reference til et object og objected exposer sine interne variable,  kan man ændre på klassen. Nogengange kan det godt være svært at resonere omkring koden, hvis alle objecter vilkårligt kan ændre hinanden. Immutable klasser sikre at man ikke kan ændre klassers start værdier.
