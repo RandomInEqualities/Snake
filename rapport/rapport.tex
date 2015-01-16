@@ -2,6 +2,7 @@
 \documentclass[10pt,a4paper,oneside]{report}
 \usepackage[utf8]{inputenc} 	%UTF-8 encoding
 \usepackage{graphicx} 			%Include images with \includegraphics
+\usepackage{subfig}
 \usepackage{pdfpages} 			%Including pdf pages
 \usepackage{amsmath} 			%Math formulas
 \usepackage{amsfonts} 			%Math formulas
@@ -22,8 +23,6 @@
 		hidelinks, 		%Hide blue boxes around links.
 		pdfpagelabels 	%Have PDF page navigation use both roman and arabic notation.
 	]{hyperref}
-	\usepackage{tocloft} 
-	\renewcommand\cftloftitlefont{\Large\bfseries} %Correct lof title font and size
 % toc, lof, lot
 
 % code
@@ -39,16 +38,6 @@
 	\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
 % Page Setup
 
-% Page Headers
-	% www.texblog.org/2007/11/07/headerfooter-in-latex-with-fancyhdr/
-	\usepackage{fancyhdr} %Use \pagestyle{fancy} to show headers.
-	\fancyhead[L]{\slshape ProjectName}  
-	\fancyhead[C]{3rd October 2013}
-	\fancyhead[R]{Name \\ email@gmail.com}
-	\fancyfoot[C]{\thepage}
-	\setlength{\headheight}{23pt} %To supress stupid warning
-% Page Headers
-
 %User defined commands in texdef.tex
 \input{texdefs.tex}
 
@@ -56,6 +45,25 @@
 
 \include{content/frontpage}\newpage
 \include{content/introduktion}\newpage
+
+\chapter{Grundlæggende}
+\include{content/grundlaeggende/afgraensning}\newpage
+\include{content/grundlaeggende/design}\newpage
+\include{content/grundlaeggende/implementering}\newpage
+\include{content/grundlaeggende/evaluering}\newpage
+
+\chapter{Advanced}
+\include{content/advanceret/afgraensning}\newpage
+\include{content/advanceret/design}\newpage
+\include{content/advanceret/implementering}\newpage
+\include{content/advanceret/evaluering}\newpage
+
+\include{content/konklusion}\newpage
+
+\appendix
+
+\include{content/appendix}\newpage
+
 \title{References}
 \bibliographystyle{plainnat}
 \bibliography{referencer}
