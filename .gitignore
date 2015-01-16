@@ -1,5 +1,6 @@
 % Eclipse files
 /bin/
+/doc/
 
 %Latex files
 *.aux
@@ -9,5 +10,4 @@
 *.toc
 *.gz
 *.out
-
-/doc/
+/rapport/rapport.pdf
