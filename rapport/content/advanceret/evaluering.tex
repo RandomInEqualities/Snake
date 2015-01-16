@@ -1,8 +1,21 @@
 
 \section{Evaluering}
-For at sikre stabilitet af brugergrænsefladen er spillet afprøvet i forskellige størrelser og på forskellige operativsystemer. Placeringen af komponenterne er ens i Micrsoft Windows 8.1 og dens ældre versioner, [INSERT---------]. Derimod har JButtons et lidt andet udseende på [INSEEEEERT], idet deres baggrundsfarve i dette operativsystem ikke er synlig medmindre deres kant skjules. Derudover virker de her heller ikke, hvis de tilføjes til et panel i \textit{paintComponent}-metoden. Det første problem løses ved at skjule kanten eller i stedet at bruge et ImageIcon til knappen i stedet for at give den en baggrundsfarve. Knappens funktionalitet opnås ved at tilføje knapperne i konstuktøren, men stadig med \textit{setBounds}-metoden i \textit{paintComponent}-metoden. 
 
-Med de nye funktioner og visuelle forbedringer kørte spillet en smulle langsommere end før, mens det dog kun er synligt på svage [<-ERSTAT M SOMETHING NICER] computere. [INSERT: LØSNING HVIS VI NOGENSINDE FINDER EN : D]
+\subsection{Forskellige Operativsystemer}
+For at sikre stabilitet af brugergrænsefladen er spillet afprøvet i forskellige størrelser og på forskellige operativsystemer. Placeringen af komponenterne er ens i Micrsoft Windows 8.1 og dens ældre versioner, [INSERT---------]. Derimod har JButtons et lidt andet udseende på [INSEEEEERT], idet deres baggrundsfarve i dette operativsystem ikke er synlig medmindre deres kant skjules. Derudover virker de her heller ikke, hvis de tilføjes til et panel i \textit{paintComponent}-metoden. Det første problem løses ved at skjule kanten eller i stedet at bruge et ImageIcon til knappen i stedet for at give den en baggrundsfarve. Knappens funktionalitet opnås ved at tilføje knapperne i konstuktøren, men stadig med \textit{setBounds}-metoden i \textit{paintComponent}-metoden. 
+En anden forskel i spillet, når det kører på forskellige operativ-systemer, er at på Mac reagere tasterne anderledes i multiplayer. Player1 (den der styrer med piletasterne) kan godt holde en af piletasterne nede og kører hurtigere, dog hver gang dette gøre, kommer player2 til at stå stille. Hvis player2 holder en af dens control-taster nede, så fortsætter begge slanger bare i samme tempo som før. Dette er dog ikke tilfældet på Windows eller Linux.
+Vi havde også nogle problemer med lyden på Linux, da spillet ikke ville spile hele sekvensen fra lydfilerne, når spillet blev startet.
+Dette er dog kun småfejl, som er et hardware-problem.
+
+\subsection{Køretid}
+Efter der blev tilføjet en masse grafik og udvidede funktioner til Simpel Snake, kunne man på nogle computere se at spillet ikke reagerede så hurtigt, og køretiden var for stor.
+Dette sås også på vores endelige Avanceret Snake, hvis man satte størrelsen på banen til 100x100. Man kunne ikke holde piletasterne ned, og få slangen til at køre hurtigere. Det løste vi, ved først at lave vores slange om fra billeder til filledRectangles. Så kørte spillet normalt hurtigt igen. 
+For at få billederne til også at fungere ved normal hastighed, ændrede vi i stedet strukturen i hvordan billeder kaldte \textit{getScaledInstance}-metoden. Normalt kaldte hvert billede denne metode, og derefter blev sendt gennem if-statements og for-loops. Nu kalder billederne kun denne metode, når de faktisk bliver brugt, og ikke fra starten af. Dette løste problemet så køretiden var normal igen.
+
+\subsection{Slangens farver}
+Nederst i \textit{BoardBasePanel}-klassen ligger metoden \textit{colorSnakeImage}. Denne metoder farver hver pixel i slange-billederne, så de passer med valgene fra menuen. 
+Inden denne metode blev lavet, overvejede vi at uploade 3 gange så mange flere snake-billeder, der havde de tre sidste farver til hele slangen. Da det i forvejen er mange billeder, der bruges til slange-kroppen, ville dette være for mange billeder at uploade igen, hvis man nu kunne finde en metode til farvningen.
+På denne måde er farve-valg i menu'en blevet optimeret en del.
 
 -ingen brug af jbutton -> jbutton
 -Se alle slangens led - gør den lidt forsinket, når den er lang
@@ -11,6 +24,4 @@ Med de nye funktioner og visuelle forbedringer kørte spillet en smulle langsomm
 - git til prototype 
 	hindre 4 personer i at lave noget hele tiden
 	dropbox bedre?
-Mac-problems
 Jbutton
-controls lack
