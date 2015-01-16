@@ -110,7 +110,7 @@ public class ResourceImages {
 
 	private static BufferedImage loadImage(String filename) {
 		try {
-			// We load external resources by an URL. With this we use JAR files.
+			// We load external resources by an URL. With this we can use JAR files.
 			URL location = ResourceImages.class.getResource(IMAGE_PATH + filename);
 			return ImageIO.read(location);
 		}

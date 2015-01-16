@@ -143,6 +143,7 @@ public class Audio extends Observable implements Observer {
 	
 	private Clip loadSound(String filename) {
 		try {
+			// We load external resources by an URL. With this we can use JAR files.
 			URL location = getClass().getResource(SOUND_PATH + filename);
 			Clip clip = AudioSystem.getClip();
 			clip.open(AudioSystem.getAudioInputStream(location));
