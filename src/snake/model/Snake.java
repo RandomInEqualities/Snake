@@ -69,7 +69,7 @@ public class Snake {
 				return true;
 			}
 		}
-		
+
 		// Remove tail if snake does not eat anything.
 		if (!eatFood) {
 			positions.remove(positions.size() - 1);
@@ -96,7 +96,7 @@ public class Snake {
 		headDirection = findHeadDirection(snake);
 	}
 	
-	// Find the head direction from an array of fields.
+	// Find head direction from an array of fields.
 	private Direction findHeadDirection(ArrayList<Field> snake) {
 		Field head = snake.get(0);
 		Field neck = snake.get(1);
