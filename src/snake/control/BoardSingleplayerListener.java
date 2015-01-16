@@ -49,6 +49,18 @@ public class BoardSingleplayerListener extends KeyAdapter implements ActionListe
 			case KeyEvent.VK_RIGHT:
 				game.move(Direction.RIGHT);
 				break;
+			case KeyEvent.VK_W:
+				game.move(Direction.UP);
+				break;
+			case KeyEvent.VK_S:
+				game.move(Direction.DOWN);
+				break;
+			case KeyEvent.VK_A:
+				game.move(Direction.LEFT);
+				break;
+			case KeyEvent.VK_D:
+				game.move(Direction.RIGHT);
+				break;
 			case KeyEvent.VK_P:
 				if (game.isPaused()) {
 					game.resume();

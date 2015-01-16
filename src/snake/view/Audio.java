@@ -1,6 +1,6 @@
 package snake.view;
 
-import java.io.IOException;
+import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -11,11 +11,16 @@ import snake.model.*;
 
 public class Audio extends Observable implements Observer {
 	
+	private static final String SOUND_PATH = "/sounds/";
+	
 	private Clip soundEat;
-	private Clip soundEnd;
+	private Clip soundPause;
+	private Clip soundResume;
+	private Clip soundLose;
 	private Clip soundWin;
+	private Clip soundTie;
 	private Clip soundStart;
-	private Clip soundtrack;
+	private Clip soundTrack;
 	private boolean isMuted;
 	private Game registeredGame = null;
 	
@@ -23,8 +28,24 @@ public class Audio extends Observable implements Observer {
 		super();
 		this.isMuted = false;
 		this.registeredGame = null;
-		loadSounds();
-		soundtrack.start();
+		
+		// Sounds
+		this.soundEat = loadSound("Blop.wav");
+		this.soundPause = loadSound("BananaSlap.wav");
+		this.soundResume = loadSound("BananaSlap.wav");
+		this.soundLose = loadSound("DunDunDun.wav");
+		this.soundWin = loadSound("TaDa.wav");
+		this.soundTie = loadSound("FakeApplause.wav");
+		this.soundStart = loadSound("BananaSlap.wav");
+		this.soundTrack = loadSound("WaterLily.wav");
+		
+		// Lower the win and lose sounds.
+		FloatControl gainWin = (FloatControl) soundWin.getControl(FloatControl.Type.MASTER_GAIN);
+		gainWin.setValue(-15.0f);
+		FloatControl gainLose = (FloatControl) soundLose.getControl(FloatControl.Type.MASTER_GAIN);
+		gainLose.setValue(-5.0f);
+		
+		soundTrack.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 	
 	public boolean isMuted() {
@@ -34,10 +55,10 @@ public class Audio extends Observable implements Observer {
 	public void toggleMute() {
 		isMuted = !isMuted;
 		if (isMuted) {
-			soundtrack.stop();
+			soundTrack.stop();
 		}
 		else {
-			soundtrack.start();
+			soundTrack.start();
 		}
 		setChanged();
 		notifyObservers();
@@ -65,13 +86,22 @@ public class Audio extends Observable implements Observer {
 			playEatSound();
 		}
 		else if (event.getType() == Event.Type.LOSE) {
-			playEndSound();
+			playLoseSound();
 		}
 		else if (event.getType() == Event.Type.WIN) {
 			playWinSound();
 		}
+		else if (event.getType() == Event.Type.TIE) {
+			playTieSound();
+		}
 		else if (event.getType() == Event.Type.START) {
 			playStartSound();
+		}
+		else if (event.getType() == Event.Type.PAUSE) {
+			playPauseSound();
+		}
+		else if (event.getType() == Event.Type.RESUME) {
+			playResumeSound();
 		}
 
 	}
@@ -81,9 +111,9 @@ public class Audio extends Observable implements Observer {
 		soundEat.start();
 	}
 
-	private void playEndSound() {
-		soundEnd.setFramePosition(0);
-		soundEnd.start();
+	private void playLoseSound() {
+		soundLose.setFramePosition(0);
+		soundLose.start();
 	}
 	
 	private void playWinSound() {
@@ -91,26 +121,35 @@ public class Audio extends Observable implements Observer {
 		soundWin.start();
 	}
 	
+	private void playTieSound() {
+		soundTie.setFramePosition(0);
+		soundTie.start();
+	}
+	
+	private void playPauseSound() {
+		soundPause.setFramePosition(0);
+		soundPause.start();
+	}
+	
+	private void playResumeSound() {
+		soundResume.setFramePosition(0);
+		soundResume.start();
+	}
+	
 	private void playStartSound() {
 		soundStart.setFramePosition(0);
 		soundStart.start();
 	}
 	
-	private void loadSounds() {
+	private Clip loadSound(String filename) {
 		try {
-			soundEat = AudioSystem.getClip();
-			soundEnd = AudioSystem.getClip();
-			soundWin = AudioSystem.getClip();
-			soundStart = AudioSystem.getClip();
-			soundtrack = AudioSystem.getClip();
-			soundEat.open(ResourceSounds.EAT_STREAM);
-			soundEnd.open(ResourceSounds.END_STREAM);
-			soundWin.open(ResourceSounds.WIN_STREAM);
-			soundStart.open(ResourceSounds.START_STREAM);
-			soundtrack.open(ResourceSounds.SOUNDTRACK_STREAM);
-		} 
-		catch (LineUnavailableException | IOException error) {
-			throw new RuntimeException("unable to load clip: " + error.getMessage());
+			URL location = getClass().getResource(SOUND_PATH + filename);
+			Clip clip = AudioSystem.getClip();
+			clip.open(AudioSystem.getAudioInputStream(location));
+			return clip;
+		}
+		catch (Exception error) {
+			throw new RuntimeException("unable to load sound clip " + filename + ": " + error.getMessage());
 		}
 	}
 	

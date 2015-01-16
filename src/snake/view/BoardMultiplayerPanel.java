@@ -118,11 +118,11 @@ public class BoardMultiplayerPanel extends BoardBasePanel  implements Observer {
 		}
 		else if (game.getWinner() == Player.ONE) {
 			titleImage = ResourceImages.TITLE_PLAYER_ONE;
-			scoreText = "Congratulations! Player 1 - YOU WIN!    Final Score: " + game.getScore(Player.ONE);
+			scoreText = "Final Score: " + game.getScore(Player.ONE);
 		} 
 		else if (game.getWinner() == Player.TWO) {
 			titleImage = ResourceImages.TITLE_PLAYER_TWO;
-			scoreText = "Congratulations! Player 2 - YOU WIN!    Final Score: " + game.getScore(Player.TWO);
+			scoreText = "Final Score: " + game.getScore(Player.TWO);
 		}
 		
 		int titleX = boardRect.x + boardRect.width/2 - ResourceImages.TITLE_PLAYER_ONE.getWidth()/2;
