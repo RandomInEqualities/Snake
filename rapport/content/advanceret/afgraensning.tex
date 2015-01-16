@@ -1,4 +1,22 @@
 \section{Afgrænsning}
-I den avancerede del af spillet bevæger slangen sig automatisk ved hjælp af en timer, og venter derfor ikke på input fra tastaturet. Input fra tastaturet bruges derimod til at skifte retning eller til at fremskynde den automatiske bevægelse. Derudover accelereres slangens hastighed, dvs. at tiden mellem hver automatisk bevægelse formindskes, efterhånden som spillerens score stiger, hvilket øger spillets sværhedsgrad. Der tilføjes også lydeffekter og dertil en mute-funktion. 
-Vi har valgt at fokusere på et rent og fleksibelt design, der gør det let for spilleren at forstå og bevæge sig rundt mellem spillets scener. Derfor skal det være muligt både at kunne navigere igennem input fra tastaturet og musen. Udover spil-scenen tilføjes der en hovedmenu, der giver spilleren overblik over alle spillets scener, en hjælpe-scene, der forklarer hvordan man navigerer rundt i spillet og indstillingsscener, der indstiller spillet før det starter. Brugergrænsefladen skal også tilpasses brugerens ønskede vinduesstørelse og brugerens operativsystem. Før spillets start skal det i indstillingsscenen være muligt at vælge mellem forskellige starthastigheder, slangens farve og banens størrelse.
-Med en multiplayer-implementation, bliver det også muligt at kunne spille to spillere på samme bane, hvor spilleren ikke længere alene skal undgå at bide sig selv, men også undgå at støde ind i sin modspiller.
+Den advancerede del er en udvidelse af det grundlæggende spil. Vi skal selv vælge hvad vi vil arbejde på. I dette afsnit redegør vi for det som vi har valgt. 
+
+\subsubsection*{Gameplay}
+For at kunne kalde spillet snake, så skal slangen næsten kunne bevæge sig af sig selv. Den skal kunne bevæge sig i periodiske intervaller. Ved input fra keyboardet skal slange kunne skifte retning. Til at implementere sværheds graden kan slangens hurtighed ændres.  Det skal ligne snake spillet som på Nokia's 3310. Her begynder spillet at gå hurtigere jo mere slangen har spist.
+
+\subsubsection*{Menuer}
+Vi vil implementere menuer. Det skal være en main menu som popper op når vi starter spillet. I den skal der mindst være  en single player knap og en forlad spillet knap. Inden at man gå ind i spillet skal der være en menu hvor at man kan vælge størrelse på spillet. Eventuelt også sværheds grad og slange farve. En menu som viser keyboard tasterne til at styre spillet med vil være godt at have.
+
+\subsubsection*{Grafik}
+Vi laver custom grafik til spillet. I menuerne kan vi implementere nogle gode overskrifter. Vi vil gerne have en header i vinduet med et custom snake logo. Slanges krop skal forbedres, sådan at den ikke bare er nogle firkanter.  Den skal ligne en aflang slange krop. 
+
+Når vi resizer vinduet med spillet skal brugergrænsefladen tilpasse sig den nye størrelse. Skærmens stærrelse skal udnyttes optimalt.
+
+\subsubsection*{Lyd}
+Vi vil gerne integrere lyd! Når slangen spiser et eller andet så kan der måske være en nomnom lyd. Eller et skrig når man taber. Det er vigtig at audio er en del af view delen i model-view-controller konceptet. Det vil ikke give mening at integere det i modellen. Dette vil måske også kræve et event system, men det er en implementering detalje.
+
+\subsubsection*{Multiplayer}
+Vi vil lave lokal multiplayer. To personer skal kunne spille mod hianden ved at bruge forskellige taster på samme keyboard.  Multiplayer gameplayet er ikke så vigtigt, men der skal være en måde hvor at spillerne kan vinde på. Man kunne for eksempel lade den ene spiller vinde hvis han spiser den andens slange krop.
+
+\subsubsection*{Kode}
+Koden til den advancerede del skal være af høj kvalitet. Vi vil prøve at skrive den så godt vi kan, med fokus på at koden skal være let læselig.
