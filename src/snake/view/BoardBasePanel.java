@@ -86,12 +86,6 @@ public class BoardBasePanel extends JPanel {
 			colorIndex = snakeColors.size() - 1;
 		}
 		
-		// Simple drawing
-		/*for (Field field : snake.getPositions()) {
-			context.fill(getRectangleForField(field, board));
-		}
-		drawSnakeHead(context, snake, board, colorIndex);
-		*/
 		drawSnakeBody(context, snake, board, colorIndex);
 		drawSnakeTail(context, snake, board, colorIndex);
 		drawSnakeHead(context, snake, board, colorIndex);
