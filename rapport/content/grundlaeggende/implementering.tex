@@ -1,6 +1,6 @@
 \section{Implementering}
 \subsection{Control (Styring)}
-I Simpel Snake er der ikke brug for nogen menu, og det er derfor muligt at holde styringen af spillet meget simpelt. Ved at definere de fire piletaster i \textit{Control}-klassen, en funktion til at sikre at der ikke bevæges i modsat retning, samt en funktion der gør det muligt at bevæge sig som en torrus og "gå igennem vægge", er alle styringkrav til Simpel Snake opfyldt. Resten af spillet håndteres da i model-koden.
+I Simpel Snake er der ikke brug for nogen menu, og det er derfor muligt at holde styringen af spillet meget simpelt. Ved at definere de fire piletaster i \textit{Control}-klassen, en funktion til at sikre at der ikke bevæges i modsat retning, samt en funktion der gør det muligt at bevæge sig som en torus og "gå igennem vægge", er alle styringkrav til Simpel Snake opfyldt. Resten af spillet håndteres da i model-koden.
 
 \textit{Control}-klassen har metoden \textit{keyPressed}, som kommer af at \textit{Control}-klassen implementerer \textit{KeyListener}, som kaldes hver gang der tastes på tastaturet. Hvis tasten er en af de fire piletaster, kaldes funktionen \textit{move} i \textit{Snake}-klassen, der flytter hovedet i samme retning som piletasten.
 Enum-klassen \textit{Direction} indholder \textit{RIGHT, LEFT, UP} og \textit{DOWN}. Dette bruges i \textit{Control}-klassen, da det ikke skal være muligt at bevæge sig i modsatte retning af slangens nuværende retning.

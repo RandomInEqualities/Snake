@@ -1,9 +1,4 @@
 \section{Evaluering}
--Int -> Enum (direction)
--Optimering af runtime i “food”-klassen (dobbelt for-loop eller random placering)
--brug af observer - får model-view-controller til at gå op
--Flere opgaver er givet til “game”-klassen frem for de andre klasser
--Virker den i 100x100?
  
 \subsubsection{Arbejdsproces}
 Formålet med projektet var at starte med at lave en simpel udgave af snake, og derefter tilføje flere funktioner for at lave en mere avanceret version. Dette gør det ideelt at tilføje én funktion ad gangen, frem for at planlægge alle funktioner på en gang, og tilføje dem samtidig. Resultatet bliver et, til at starte med, simpelt men fungerende program, hvorefter yderligere funktioner kan tilføjes. Programmet er altså udviklet iterativt, hvorved der opstår flere fungerende versioner af spillet, men med forskellige funktioner. Dette gør det muligt at tilpasse programmet, hvis der opstår nye idéer eller krav undervejs. 
@@ -28,3 +23,8 @@ For at visualisere spillet er det nødvendigt at kunne optegne banen, slangen og
 En alternativ metode til at gøre vinduet justerbart, er at give hvert felt en absolut størrelse. 
 Så ser spillepladen altid pæn ud, og kommer ikke til at afhænge af alle mulige vinduesforhold. Ulempen er så bare, at alt efter hvor stor banen er, så kan vinduet blive for stort til computerskærmen, og hvis den er for lille, kan man ikke forstørre banen op. På denne måde er det en "for let" løsning bare at sætte absolute værdier ind, for ikke at få en "grim" bane.
 Problemet bliver løst i avanceret snake ved at lave en baggrund og låse banens forhold, hvormed banen altid fylder mest muligt af vinduet ud, mens den beholder sin form, og den resterende plads bliver udfyldt af baggrunden. 
+
+\subsubsection{Brug af \textit{Game}-klassen}
+Efter vi havde delt de fleste funktioner ud i klasserne, besluttede vi os for at samle nogle metoder i \textit{Game}-klassen frem for deres oprindelige klasse, f.eks. \textit{GenereateFood}-metoden og hvordan banen skulle opstilles. Vi satte ikke \textit{move}-metoden ind i \textit{Game}-klassen frem for \textit{Snake}-klassen, da den ikke som sådan skal bruge nogle informationer fra andre klasser. Den skal bare bevæge sig.
+Grunden til vi valgte, at lægge andre klassers metoder ind i \textit{Game}, er både fordi, det er smart at have det meste samlet et sted, og ikke behøve at hente alt for mange get-metoder fra de andre klasser. 
+I den avancerede del af snake, ender vi med at gøre det modsatte. Vi simplificerer vores \textit{Game} klasse fuldstændigt, og gør den i stedet til en super-klasse med abstrakte metoder. Derfra nedarver to andre klasser fra den, og på den måde er metoderne bare uddeligeret til de to klasser. Man kan også sige, at \textit{Game} stadig består af mange funktioner, siden det er en superklasse til to store under-klasser. 
