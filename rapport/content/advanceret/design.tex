@@ -1,11 +1,23 @@
 
 \section{Design}
-I \textit{Driver}-klassen, hvori main-metoden for programmet ligger, oprettes to objekter fra de to hovedklasser \textit{View} og \textit{Control}, der hver især står for henholdsvis \textit{View} og \textit{Control} i \textit{Model-View-Controller}-designet. Klassen \textit{Game}, der står for \textit{Model}-delen oprettes først i hovedmenuens control-klasse \textit{ControlMenu}, da denne derved får lettere adgang til spillet, når spilleren trykker på menuens knapper. 
 
-I JFrame'n \textit{View} er spillets forskellige komponenter opdelt i hver deres klasse. Disse view-klasser er alle JPanels som tilføjes til vinduet og skiftes ud alt efter spillets tilstand. Er spilleren f.eks. i hovedmenuen, bruges \textit{ViewMenu}-klassen til at tegne denne. Er spilleren i et multiplayer-spil, bruges \textit{ViewBoardMultiplayer} og \textit{ViewHeaderMultiplayer}. På denne måde har hver scene i spillet en tilhørende klasse der forlænger et JPanel. De fleste af view-klasserne oprettes alle med \textit{View} som parameter, og kan derfor give og bruge hinandens funktioner, idet \textit{View}-klassen har getter-metoder til de view-klasser, som oprettes i \textit{View}. View-klasserne kan derfor genbruge nødvendige metoder, f.eks. metoden til at tegne baggrunden op, som er defineret i \textit{ViewMenu}-.klassen. Spilleren navigerer vha. JButtons eller tastatur-input der modtages i control-klasserne.
-View-klasserne består af \textit{Colors}, \textit{Images}, \textit{ViewAudio}, \textit{ViewBoard}, \textit{ViewBoardMultiplayer}, \textit{ViewBoardSingleplayer}, \textit{ViewControls}, \textit{ViewHeader}, \textit{ViewHeaderSingleplayer}, \textit{ViewHeaderMultiplayer}, \textit{ViewMenu}, \textit{ViewOptions}, \textit{ViewOptionsSingleplayer} og \textit{ViewOptionsMultiplayer}. [SE KLASSEDIAGRAM FOR RELATIONER....]
-Al grafik, som ikke er fra \textit{Swing}-biblioteket, er importeret i klassen \textit{Images}, der gør det muligt for enhver view-klasse at få fat i alle billeder. På samme måde er selv-definerede farver oprettet i klassen \textit{Colors}.
 
-\textit{Control}-klassen er konstrueret med \textit{View} som parameter, og virker derfor alle steder i spillet. \textit{Control}-klassen har funktioner som \textit{mute} og \textit{return to menu}, som skal være fungerende uanset hvor i spillet spilleren er, og dermed uanset hvilke paneler der er vist. I samme pakke ligger andre control-klasser, som alle hører til en bestemt scene. Dette sikrer, at der kun bliver givet de styringfunktioner, som er nødvendige i den nuværende scene.
+\subsection{Multiplayer}
+Vi har tænkt vores multiplayer design meget igennem. Multiplayer ligner singleplayer rigtig meget. De forgår begge med slanger på samme board.  Problemet med at integrere multiplayer ind i vores singleplayer kodebase er at de steder hvor at multiplayer ikke ligner singleplayer er spredt ud over hele kode basen. 
 
-I \textit{Model}-pakken findes den abstrakte klasse \textit{Game}, som klasserne \textit{GameSingleplayer} og \textit{GameMultiplayer} implementerer. Klasserne har handlinger (MOVE, EAT, LOSE, WIN, START, PAUSE, RESUME) og spiltilstande (isStarted, isRunning, isPaused, isEnded) tilfælles, men har forskellige mål, der derfor er defineret i hver deres klasse, mens de fælles funktioner ligger i superklassen.
+Man kunne sige at singleplayer og multiplayer kunne dele 90\% af koden, men de resterende 10\% er flettet ind i de 90\%. For eksemple har multiplayer et lidt anderledes score system, så single og multiplayer headeren som viser score kræver lidt anderledes tekst. Det samme gælder for slange farve valg, hvor at der nu er to slanger. Multiplayer delen skal nok også have lidt anderledes gameplay. Det kan også betyde at den måske har noget ekstra slange mad eller en lidt anderledes slange. 
+
+Vores mål for multiplayer designet var forståelighed og at genbruge mest muligt kode mellem single og multiplayer. Vi overvejede meget at bruge en kombineret single og multiplayer klasse som kunne holde et array af slanger. Så hvis der var to slange ville vi bruge multiplayer gameplay og singleplayer gameplay når der var en. Fordelen ved dette ville være at view delen i MVC, bare kunne loope over nogle array lige meget om det var single eller multiplayer. Vi ville også nemt kunne tjekke om vi var single eller multiplayer. Det ville bare være en if statement om der er en eller to slanger. Det vil også være nemt at tilføje for eksemple 10 slanger/spillere. Ulemperne ved dette er at forskellen på single og multiplayer er meget lille. Vi kan genbruge en hel masse kode mellem dem, men er det det bedste hvis det resultere i en masse if singleplayer then ... else statements.  Et forståeligt design vil have en klar adskillelse af single og multiplayer.
+
+Dette ledte til designet i \figref{game-design} . Vi har lavet to seperate single og multiplayer game klasser som arver fra en abstract game klasse. Fordelen ved dette er at vi har en klar seperation mellem multi og singleplayer. Det som forgår i singleplayer klasse har ingen indflydelse på multiplayer klassen. Med dette design løber vi ind i problemer når vi skal implementere view og controls i MVC. Det vi har valgt at gøre er at lave en base udgave af hvert komponent. Basen har alt det som er fælles for single og multiplayer. Vi laver så to nye klasser BaseSingleplayer og BaseMultiplayer som nedarver fra base klassen.  De to klasse kan så frit override/udvide implementationerne i base klasserne.  Se FIG VISIO!
+
+
+\begin{figure}
+	\centering
+	\graphicspath{ {pics/} }
+   \includegraphics[width=1.0\textwidth]{advanceret/game-design.png}
+	\hspace{0.1\textwidth}
+	\figlab{game-design}
+	\caption{Overview of our multiplayer design.}
+\end{figure}
+
