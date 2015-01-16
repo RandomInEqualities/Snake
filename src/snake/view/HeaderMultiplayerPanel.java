@@ -57,7 +57,7 @@ public class HeaderMultiplayerPanel extends HeaderBasePanel implements Observer 
 	public void update(Observable o, Object arg) {
 		// For performance we only update the header when the game does something
 		// other than moving the snake.
-		if (o instanceof GameSingleplayer) {
+		if (o instanceof GameSingleplayer || o instanceof GameMultiplayer) {
 			Event event = (Event)arg;
 			if (event.getType() != Event.Type.MOVE) {
 				repaint();

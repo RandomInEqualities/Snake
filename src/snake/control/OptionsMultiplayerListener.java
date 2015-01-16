@@ -24,7 +24,7 @@ public class OptionsMultiplayerListener extends OptionsListener {
 		boardPanel.setSnakeColor(Player.ONE, ResourceColors.GREEN);
 		boardPanel.setSnakeColor(Player.TWO, ResourceColors.BLUE);
 		optionsPanel.buttonPress("green");
-		optionsPanel.buttonPress("yellow2");
+		optionsPanel.buttonPress("blue2");
 	}
 	
 	public void registerGame(GameMultiplayer newGame) {
