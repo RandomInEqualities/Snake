@@ -193,9 +193,9 @@ public class GameMultiplayer extends Game implements ActionListener {
 		if (opponenetSnake.contains(newHeadPosition)) {
 			state = State.END;
 			
-			// The player only wins if he has not hit the opponents head.
+			// The opponent wins if the opponent's head is not equal to the the
 			if (!opponenetSnake.getHead().equals(newHeadPosition)) {
-				winner = player;
+				winner = opponent;
 			}
 			else {
 				winner = Player.NONE;
