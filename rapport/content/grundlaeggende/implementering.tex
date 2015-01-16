@@ -1,6 +1,6 @@
 \section{Implementering}
 \subsection{Control (Styring)}
-I Simpel Snake er der ikke brug for nogen menu, og det er derfor muligt at holde styringen af spillet meget simpelt. Ved at definere de fire piletaster i \textit{Control}-klassen, en funktion til at sikre at der ikke bevæges i modsat retning, samt en funktion der gør det muligt at bevæge sig som en torus og "gå igennem vægge", er alle styringkrav til Simpel Snake opfyldt. Resten af spillet håndteres da i model-koden.
+I Simpel Snake er der ikke brug for nogen menu, og det er derfor muligt at holde styringen af spillet meget simpelt. Ved at definere de fire piletaster i \textit{Control}-klassen, en funktion til at sikre at der ikke bevæges i modsat retning, samt en funktion der gør det muligt at bevæge sig som en torrus og "gå igennem vægge og om på den anden side af verden", er alle styringkrav til Simpel Snake opfyldt. Resten af spillet håndteres da i model-koden.
 
 \textit{Control}-klassen har metoden \textit{keyPressed}, som kommer af at \textit{Control}-klassen implementerer \textit{KeyListener}, som kaldes hver gang der tastes på tastaturet. Hvis tasten er en af de fire piletaster, kaldes funktionen \textit{move} i \textit{Snake}-klassen, der flytter hovedet i samme retning som piletasten.
 Enum-klassen \textit{Direction} indholder \textit{RIGHT, LEFT, UP} og \textit{DOWN}. Dette bruges i \textit{Control}-klassen, da det ikke skal være muligt at bevæge sig i modsatte retning af slangens nuværende retning.
@@ -25,7 +25,7 @@ I \textit{Game}-klassen findes \textit{checkAction}-metoden, der undersøger om 
 Hvis Action-statementet er \textit{KILL}, nulstilles scoren, og spillet slutter ved at slangen ikke længere kan bevæge sig.
 Herudover findes \textit{generateFood}-metoden, som sikrer, at maden altid placeres på et gyldigt felt, dvs. et felt der ikke er udfyldt af slangen. For at sikre dette, placeres æblet på et tilfældigt felt inden for banens rammer, hvorefter der undersøges om et af slangens led har samme koordinater som æblets felt. Er dette tilfældet, gives æblet et nyt felt, indtil det lander på et felt uden slangen. Er slangen tilpas stor, er dette dog ikke effektivt, da der er stor sandsynlighed for at ramme et felt, der er optaget af slangen. Af denne årsag undersøger metoden først, om slangen fylder mere end halvdelen af banen. Er dette tilfældet, laves der i stedet en liste med alle tomme felter vha. en indlejret for-løkke, der løber gennem alle række og kolonner, hvorefter et tilfældigt element i listen vælges som æblets position.
 
-De fire klasser \textit{Food, Score, Game} og \textit{Snake} forlænger klassen \textit{Observable}, så det er muligt for View at modtage ændringerne i \textit{Model}, uden at \textit{Model} afhænger af View.
+De fire klasser \textit{Food, Score, Game} og \textit{Snake} nedarver fra klassen \textit{Observable}, så det er muligt for View at modtage ændringerne i \textit{Model}, uden at \textit{Model} afhænger af View.
 
 
 \subsection{View (Brugergrænseflade)}
@@ -43,7 +43,7 @@ I figur \ref{fig:windowsize} kan man se, at hvis vinduet skal være justerbart, 
 \begin{figure}[h]
 	\centering
 	\graphicspath{ {pics/} }
-	\includegraphics[width=0.5\textwidth]{WindowSize.png}
+	\includegraphics[width=0.8\textwidth]{WindowSize.png}
 	\label{fig:windowsize}
-	\caption{windowsize}
+	\caption{Exemple på udstræktede felter.}
 \end{figure}
