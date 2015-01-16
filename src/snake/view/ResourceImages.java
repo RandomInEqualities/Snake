@@ -1,8 +1,9 @@
 package snake.view;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+
 import javax.imageio.ImageIO;
 
 public class ResourceImages {
@@ -53,7 +54,7 @@ public class ResourceImages {
 	public static final BufferedImage BUTTON_RED;
 	public static final BufferedImage BUTTON_YELLOW;
 	
-	private static final String IMAGE_PATH = "resources/images/";
+	private static final String IMAGE_PATH = "/images/";
 
 	static {
 		LOGO = loadImage("SnakeLogo.png");
@@ -109,7 +110,9 @@ public class ResourceImages {
 
 	private static BufferedImage loadImage(String filename) {
 		try {
-			return ImageIO.read(new File(IMAGE_PATH + filename));
+			// We load external resources by an URL. With this we use JAR files.
+			URL location = ResourceImages.class.getResource(IMAGE_PATH + filename);
+			return ImageIO.read(location);
 		}
 		catch (IOException error) {
 			throw new RuntimeException("Unable to load image " + filename + ": " + error.getMessage());
