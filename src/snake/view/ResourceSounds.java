@@ -1,7 +1,7 @@
 package snake.view;
 
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -16,7 +16,7 @@ public class ResourceSounds {
 	public static final AudioInputStream START_STREAM;
 	public static final AudioInputStream SOUNDTRACK_STREAM;
 	
-	private static final String SOUND_PATH = "resources/sounds/";
+	private static final String SOUND_PATH = "/sounds/";
 	
 	static {
 		EAT_STREAM = loadSound("nom.wav");
@@ -28,7 +28,9 @@ public class ResourceSounds {
 	
 	private static AudioInputStream loadSound(String filename) {
 		try {
-			return AudioSystem.getAudioInputStream(new File(SOUND_PATH + filename));
+			// We load external resources by an URL. With this we use JAR files.
+			URL location = ResourceSounds.class.getResource(SOUND_PATH + filename);
+			return AudioSystem.getAudioInputStream(location);
 		} 
 		catch (UnsupportedAudioFileException | IOException error) {
 			throw new RuntimeException("unable to load sound " + filename + ": " + error.getMessage());
