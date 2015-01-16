@@ -14,7 +14,7 @@ public class GameSingleplayer extends Game implements ActionListener {
 	
 	private static final int DEFAULT_WIDTH = 20;
 	private static final int DEFAULT_HEIGHT = 20;
-	private static final int TIMER_UPDATE_INTERVAL = 16;
+	private static final int TIMER_UPDATE_INTERVAL = 15;
 	private static final int TIMER_INITIAL_DELAY = 500;
 	
 	private State state;
