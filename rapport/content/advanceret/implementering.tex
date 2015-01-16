@@ -1,7 +1,22 @@
 
 \section{Implementering}
 \subsection{Model}
-Modellen er nu lavet så det er muligt at vælge mere end én spiller. I både \textit{GameSingleplayer} og \textit{GameMultiplayer} findes en timer hvor det dog kun er i Singleplayer-spillet at timerens opdateringsinterval formindskes efter hvert femte samlet æble. Slangen er stadig defineret som en ArrayList i klassen \textit{Snake}, hvor også dens [.......................]
+Modellen er nu lavet så det er muligt at vælge mere end én spiller. I både \textit{GameSingleplayer} og \textit{GameMultiplayer} findes en timer hvor det dog kun er i Singleplayer-spillet at timerens opdateringsinterval formindskes efter hvert femte samlet æble. Slangen er stadig defineret som en ArrayList i klassen \textit{Snake}, hvor bl.a. dens retning defineret ved en 'Direction'-enum er og en 'move'-metode. 
+\linebreak
+
+I spil-klasserne oprettes en eller to \textit{Snake}-objekter og et \textit{Board}-objekt med en given højde og bredde. Der oprettes også et \textit{Timer}-objekt, der opdaterer slangens bevægelse med et vis tidsinterval imellem hver opdatering.  
+\linebreak
+
+Game-klasserne har også en 'move'-metode hver, som kaldes med en 'Direction' som parameter af klassernes tilhørende control-klasser, \textit{BoardSingleplayerListener} eller \textit{BoardMultiplayerListener} - når en a piletasterne (player 1) eller (A, S, W, D) (player 2) trykkes ned. I denne metode tjekkes der, om slangen spiser sig selv igennem dens metode 'isNeckDirection'. Denne metode tjekker om den givne retning 'direction' er lig med 'getOppositeOf' den nuværende retning, 'headDirection'. 'getOppositeOf' er \textit{Direction}-klassens metode, der tager en Direction som parameter, og returnerer den modsatte Direction. Returnerer 'isNeckDirection' true, gås der ud af 'move'-metoden igen, og spillet venter på det næste input. Returnerer den false fortsætter 'move'-metoden med metoden 'isBoardFull', der tjekker om det er det er den sidste frie plads i banen ved at sammenligne banens størrelse og slange-ArrayListens størrelse. I dette tilfælde har spilleren vundet.
+\linebreak
+
+Der oprettes også et felt, 'newHeadPosition', der oprettes ved at kalde på 'Snake'-klassens metode 'getNextHeadPosition', som tager 'direction' og 'board' som parametre. Her beregnes den nye række og kolonne for hovedet, hvis den bevæger sig i den givne retning. 'board' kalder på sin 'wrap'-metode, der tager den nye positions række og kolonne som parametre. \textit{Board}-objektet repræsenterer banen ved at have en længde og en højde målt ved rækker og kolonner. Denne har metoden 'wrap', der tjekker om den givne række og kolonne ligger inden for banens størrelse. Hvis ikke, returnerer den et nyt Field med en række eller kolonne, der ligger i den modsatte del af banen. Ligger feltet inde på banen, returnerer den blot et nyt felt med de samme koordinater.
+\linebreak
+
+Der undersøges nu med det nye felt om det har samme koordinater som et oprettet 'Food'-objekt, der oprettes på samme måde som i den simple version af spillet. Denne boolean bruges i \textit{Snake}-klassens egen 'move'-metode. I denne metode tjekkes først om den ny-beregnede hovedposition har samme koordinater som en del af kroppen. I dette tilfælde returnerer metoden true, spillet stopper og spilleren har tabt. Ellers fjernes det sidste element i slangens ArrayListe (halen), hvis slangen \textit{ikke} spiser \textit{Food}-objektet, mens den tilføjer et nyt hoved på index 0 uanset om den spiser \textit{Food}-objektet eller ej.
+\linebreak 
+   
+Specielt for multiplayer-spillet tjekkes der også om den en slange 
 
 \subsubsection{Multiplayer}
 
