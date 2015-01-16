@@ -1,7 +1,5 @@
 package snake.model;
 
-import java.util.ArrayList;
-
 
 /**
  * Class representing a game board.
@@ -15,10 +13,8 @@ public class Board {
 	
 	private final int width;
 	private final int height;
-	final ArrayList<Field> walls;
 	
-	public Board(int width, int height, ArrayList<Field> walls) {
-		this.walls = walls;
+	public Board(int width, int height) {
 		if (width < MIN_WIDTH || width > MAX_WIDTH) {
 			throw new IllegalArgumentException("invalid width " + width);
 		}
@@ -47,9 +43,6 @@ public class Board {
 		return new Field(row, column);
 	}
 	
-	public ArrayList<Field> getWalls(){
-		return this.walls;
-	}
 	public Field wrap(int row, int column) {
 		
 		if (row < 0) {

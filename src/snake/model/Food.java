@@ -12,7 +12,6 @@ import java.util.Random;
 public class Food {
 	
 	private static final Random random = new Random();
-	
 	private final Field position;
 
 	public Food(Field position){
@@ -26,25 +25,33 @@ public class Food {
 		return position;
 	}
 	
-	@Override
-	public String toString() {
-		return "Food at " + position.toString();
-	}
-	
+	/**
+	 * Generate a single food in a random unoccupied position.
+	 * @param snake snake on the game board
+	 * @param board the game board
+	 * @return food in an unoccupied position.
+	 */
 	public static Food generateRandomFood(Snake snake, Board board) {
 		List<Field> snakeFields = new ArrayList<Field>();
 		snakeFields.addAll(snake.getPositions());
-		return generateFood(snakeFields, board);
+		return generateRandomFood(snakeFields, board);
 	}
 	
+	/**
+	 * Generate a single food in a random unoccupied position.
+	 * @param snake1 snake on the game board
+	 * @param snake2 snake on the game board
+	 * @param board the game board
+	 * @return food in an unoccupied position.
+	 */
 	public static Food generateRandomFood(Snake snake1, Snake snake2, Board board) {
 		List<Field> snakeFields = new ArrayList<Field>();
 		snakeFields.addAll(snake1.getPositions());
 		snakeFields.addAll(snake2.getPositions());
-		return generateFood(snakeFields, board);
+		return generateRandomFood(snakeFields, board);
 	}
 	
-	private static Food generateFood(List<Field> snakeFields, Board board) {
+	private static Food generateRandomFood(List<Field> snakeFields, Board board) {
 		if (snakeFields == null || board == null) {
 			throw new NullPointerException();
 		}
@@ -76,7 +83,7 @@ public class Food {
 			
 			// Select a random food location.
 			if (foodPositions.size() == 0) {
-				return null;
+				throw new RuntimeException("board can not contain any food.");
 			}
 			int selection = random.nextInt(foodPositions.size());
 			foodPosition = foodPositions.get(selection);

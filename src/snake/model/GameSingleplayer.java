@@ -1,22 +1,15 @@
 package snake.model;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Observable;
-
 import javax.swing.Timer;
 
-import snake.model.Game;
 
-
-public class GameSingleplayer extends Observable implements Game , ActionListener {
-	
-	private enum State {
-		START,
-		RUN,
-		PAUSE,
-		END
-	}
+/**
+ * The model/class for playing singleplayer snake.
+ */
+public class GameSingleplayer extends Game implements ActionListener {
 	
 	private static final int DEFAULT_WIDTH = 20;
 	private static final int DEFAULT_HEIGHT = 20;
@@ -26,7 +19,7 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 	private State state;
 	private Board board;
 	private Snake snake;
-	private int score, speedIncrease;
+	private int score;
 	private Food food;
 	private boolean isWon = false;
 	private boolean isLost = false;
@@ -34,26 +27,23 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 	// Variables for implementing continuous snake movement.
 	private Timer timer;
 	boolean timerEnabled = true;
+	private int timerSpeedIncrease = 0;
 	private int timerUpdateInterval = 200;
 	private long timerLastUpdateTime = 0;
 	
 	public GameSingleplayer() {
-		this(DEFAULT_WIDTH, DEFAULT_HEIGHT, null);
+		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
 	
-	public GameSingleplayer(int width, int height, ArrayList<Field> walls) {
-		this.board = new Board(width, height, walls);
+	public GameSingleplayer(int width, int height) {
+		super();
+		this.board = new Board(width, height);
 		this.snake = new Snake();
 		
 		// Create a timer object that send an ActionEvent to this class, in a periodic interval.
 		this.timer = new Timer(TIMER_UPDATE_INTERVAL, this);
 		this.timer.setInitialDelay(TIMER_INITIAL_DELAY);
-		this.speedIncrease = 0;
 		reset();
-	}
-	
-	public void setBoardSize(int width, int height){
-		board = new Board(width, height, null);
 	}
 	
 	public Board getBoard() {
@@ -110,7 +100,7 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 			state = State.RUN;
 			timer.start();
 			setChanged();
-			notifyObservers(new Event(Event.START));
+			notifyObservers(new Event(Event.Type.START));
 		}
 	}
 
@@ -120,7 +110,7 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 			state = State.PAUSE;
 			timer.stop();
 			setChanged();
-			notifyObservers(new Event(Event.PAUSE));
+			notifyObservers(new Event(Event.Type.PAUSE));
 		}
 	}
 
@@ -130,7 +120,7 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 			state = State.RUN;
 			timer.start();
 			setChanged();
-			notifyObservers(new Event(Event.RESUME));
+			notifyObservers(new Event(Event.Type.RESUME));
 		}
 	}
 
@@ -143,8 +133,7 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 		state = State.START;
 		score = 0;
 		food = Food.generateRandomFood(snake, board);
-		timerUpdateInterval -= speedIncrease;
-		speedIncrease = 0;
+		timerSpeedIncrease = 0;
 		timer.stop();
 	}
 	
@@ -161,69 +150,78 @@ public class GameSingleplayer extends Observable implements Game , ActionListene
 			throw new IllegalArgumentException("speed " + speed + " is not allowed");
 		}
 		this.timerUpdateInterval = speed;
+		this.timerSpeedIncrease = 0;
+	}
+	
+	public void setBoardSize(int width, int height){
+		board = new Board(width, height);
+		reset();
 	}
 	
 	public void move(Direction moveDirection) {
 		if (state != State.RUN) {
 			return;
 		}
-		if (!snake.validMoveDirection(moveDirection)) {
+		
+		if (snake.isNeckDirection(moveDirection)) {
 			return;
 		}
 	
-		Field newHeadPosition = snake.getNewHeadPosition(moveDirection, board);
+		Field newHeadPosition = snake.getNextHeadPosition(moveDirection, board);
 		boolean snakeEatsFood = newHeadPosition.equals(food.getPosition());		
 		boolean snakeEatsItSelf = snake.move(moveDirection, snakeEatsFood, board);
-		if (snakeEatsItSelf) {
+		if (isBoardFull()) {
+			state = State.END;
+			isWon = true;
+		} 
+		else if (snakeEatsItSelf) {
 			state = State.END;
 			isLost = true;
 		}
-		else if (snake.fills(board)) {
-			state = State.END;
-			isWon = true;
-
-		} else if (snakeEatsFood) {
-			score++;
-			if(score % 5 == 0) {
-				speedIncrease +=5;
-				this.timerUpdateInterval -=5;
-			}
+		else if (snakeEatsFood) {
 			food = Food.generateRandomFood(snake, board);
+		}
+		
+		// Increment score.
+		if (snakeEatsFood) {
+			score++;
+			if (score % 5 == 0) {
+				timerSpeedIncrease += 5;
+			}
 		}
 		
 		// Notify the observing classes that the game changed. Send an argument with 
 		// the type of event that happened.
 		Event event;
-		if (snake.fills(board)) {
-			event = new Event(Event.WIN);
+		if (isWon) {
+			event = new Event(Event.Type.WIN);
 		}
-		else if (snakeEatsItSelf) {
-			event = new Event(Event.LOSE);
+		else if (isLost) {
+			event = new Event(Event.Type.LOSE);
 		}
 		else if (snakeEatsFood) {
-			event = new Event(Event.EAT);
+			event = new Event(Event.Type.EAT);
 		}
 		else {
-			event = new Event(Event.MOVE);
+			event = new Event(Event.Type.MOVE);
 		}
-		timerLastUpdateTime = System.currentTimeMillis();
 		setChanged();
 		notifyObservers(event);
-	}
-	
-	public void setBoard(Board board) {
-		this.board = board;
-		reset();
+		timerLastUpdateTime = System.currentTimeMillis();
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		long currentTime = System.currentTimeMillis();
 		long elapsedTime = currentTime - timerLastUpdateTime;
-		if (state == State.RUN && timerEnabled && elapsedTime > timerUpdateInterval) {
+		if (state == State.RUN && timerEnabled && elapsedTime > timerUpdateInterval - timerSpeedIncrease) {
 			move(snake.getHeadDirection());
 			timerLastUpdateTime = currentTime;
 		}
+	}
+	
+	private boolean isBoardFull() {
+		return snake.getSize() == board.getSize();
 	}
 	
 	private ArrayList<Field> getInitialSnake() {

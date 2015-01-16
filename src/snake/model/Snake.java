@@ -15,12 +15,7 @@ public class Snake {
 	
 	public Snake() {
 		this.positions = new ArrayList<Field>();
-		this.headDirection = Direction.LEFT;
-	}
-
-	public Snake(ArrayList<Field> snake) {
-		this.positions = snake;
-		this.headDirection = findHeadDirection(snake);
+		this.headDirection = null;
 	}
 	
 	public Field getHead() {
@@ -36,9 +31,6 @@ public class Snake {
 	}
 	
 	public Direction getHeadDirection() {
-		if (positions.size() < 2) {
-			throw new IndexOutOfBoundsException("snake is too small");
-		}
 		return headDirection;
 	}
 	
@@ -56,63 +48,46 @@ public class Snake {
 		return positions.contains(position);
 	}
 	
-	public boolean fills(Board board) {
-		return getSize() == board.getSize();
-	}
-	
-	/**
-	 * Test if the snake is allowed to move in a given direction. The snake can for example
-	 * not move in its neck's direction.
-	 * @param direction the direction to test for
-	 * @return true if it can move in direction, otherwise false.
-	 */
-	boolean validMoveDirection(Direction direction) {
+	boolean isNeckDirection(Direction direction) {
 		if (direction == Direction.getOppositeOf(headDirection)) {
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
-	/**
-	 * Move the snake. If the snake eats food its tail will not move. Will return
-	 * true if it tries to move into itself.
-	 * 
-	 * @param direction direction of the move.
-	 * @param eatFood set to true if the snakes eats something, false otherwise.
-	 * @return true if the snake tries to eat its own body, false otherwise.
-	 */
 	boolean move(Direction direction, boolean eatFood, Board board) {
-		if (!validMoveDirection(direction)) {
+		if (isNeckDirection(direction)) {
 			return false;
 		}
 		
 		// Test if the snake eats its body.
-		Field newHeadPosition = getNewHeadPosition(direction, board);
+		Field newHeadPosition = getNextHeadPosition(direction, board);
 		if (positions.contains(newHeadPosition)) {
 			int headIndex = positions.indexOf(newHeadPosition);
 			int tailIndex = positions.size() - 1;
-			if (headIndex != tailIndex || eatFood) {
+			if (eatFood || headIndex != tailIndex) {
 				return true;
 			}
 		}
-		// Move tail if snake does not eat anything.
+		
+		// Remove tail if snake does not eat anything.
 		if (!eatFood) {
 			positions.remove(positions.size() - 1);
 		}
+		
 		positions.add(0, newHeadPosition);
 		headDirection = direction;
 		return false;
 	}
 	
-	Field getNewHeadPosition(Direction moveDirection, Board board) {
+	Field getNextHeadPosition(Direction moveDirection, Board board) {
 		// Find the row and column of the new head position.
 		Field currentHead = getHead();
 		Field direction = directionToField(moveDirection);
 		int newHeadRow = currentHead.getRow() + direction.getRow();
 		int newHeadColumn = currentHead.getColumn() + direction.getColumn();
 		
-		// Make sure that the row and column is within the board, if not we
-		// wrap them around it.
+		// Make sure that the row and column is within the board.
 		return board.wrap(newHeadRow, newHeadColumn);
 	}
 	
