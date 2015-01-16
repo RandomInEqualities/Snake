@@ -85,6 +85,13 @@ public class BoardBasePanel extends JPanel {
 			addSnakeColor(color);
 			colorIndex = snakeColors.size() - 1;
 		}
+		
+		// Simple drawing
+		/*for (Field field : snake.getPositions()) {
+			context.fill(getRectangleForField(field, board));
+		}
+		drawSnakeHead(context, snake, board, colorIndex);
+		*/
 		drawSnakeBody(context, snake, board, colorIndex);
 		drawSnakeTail(context, snake, board, colorIndex);
 		drawSnakeHead(context, snake, board, colorIndex);
@@ -140,6 +147,24 @@ public class BoardBasePanel extends JPanel {
 	
 	protected void drawSnakeBody(Graphics2D context, Snake snake, Board board, int colorIndex) {
 		List<Field> snakeArray = snake.getPositions();
+		
+		// Find the scaled instances of the 6 possible snake body types.
+		Image bodyHorizontal = snakeBodyHorizontal.get(colorIndex);
+		Image bodyVertical = snakeBodyVertical.get(colorIndex);
+		Image bodyTR = snakeBodyTR.get(colorIndex);
+		Image bodyTL = snakeBodyTL.get(colorIndex);
+		Image bodyBL = snakeBodyBL.get(colorIndex);
+		Image bodyBR = snakeBodyBR.get(colorIndex);
+		
+		int fieldSize = getFieldSideLength(board);
+		Image scaledBodyHorizontal = bodyHorizontal.getScaledInstance(fieldSize, fieldSize, Image.SCALE_SMOOTH);
+		Image scaledBodyVertical = bodyVertical.getScaledInstance(fieldSize, fieldSize, Image.SCALE_SMOOTH);
+		Image scaledBodyTR = bodyTR.getScaledInstance(fieldSize, fieldSize, Image.SCALE_SMOOTH);
+		Image scaledBodyTL = bodyTL.getScaledInstance(fieldSize, fieldSize, Image.SCALE_SMOOTH);
+		Image scaledBodyBL = bodyBL.getScaledInstance(fieldSize, fieldSize, Image.SCALE_SMOOTH);
+		Image scaledBodyBR = bodyBR.getScaledInstance(fieldSize, fieldSize, Image.SCALE_SMOOTH);
+		
+		// Loop through the snake body and draw the scaled body images.
 		for (int index = 1; index < snakeArray.size() - 1; index++){ 
 
 			Field current = snakeArray.get(index);
@@ -148,26 +173,25 @@ public class BoardBasePanel extends JPanel {
 
 			Image body = null;
 			if (current.getRow() == front.getRow() && current.getRow() == behind.getRow()){ 
-				body = snakeBodyHorizontal.get(colorIndex);
+				body = scaledBodyHorizontal;
 			} 
 			else if (current.getColumn() == front.getColumn() && current.getColumn() == behind.getColumn()) {
-				body = snakeBodyVertical.get(colorIndex);
+				body = scaledBodyVertical;
 			} 
 			else if (isSnakeCorner("TopRight", current, front, behind, board)) {
-				body = snakeBodyTR.get(colorIndex);
+				body = scaledBodyTR;
 			} 
 			else if (isSnakeCorner("TopLeft", current, front, behind, board)) {
-				body = snakeBodyTL.get(colorIndex);;
+				body = scaledBodyTL;
 			} 
 			else if (isSnakeCorner("BottomLeft", current, front, behind, board)) {
-				body = snakeBodyBL.get(colorIndex);;
+				body = scaledBodyBL;
 			} 
 			else if (isSnakeCorner("BottomRight", current, front, behind, board)) {
-				body = snakeBodyBR.get(colorIndex);;
+				body = scaledBodyBR;
 			}
 			Rectangle bodyRect = getRectangleForField(snakeArray.get(index), board);
-			Image bodyScaled = body.getScaledInstance(bodyRect.width, bodyRect.height, Image.SCALE_SMOOTH);
-			context.drawImage(bodyScaled, bodyRect.x, bodyRect.y, null);
+			context.drawImage(body, bodyRect.x, bodyRect.y, null);
 		}
 	}
 	
