@@ -25,7 +25,7 @@ Vores mål for multiplayer designet var forståelighed og at genbruge mest mulig
 Dette ledte til designet i \figref{game-design} . Vi har lavet to seperate single og multiplayer game klasser som arver fra en abstract game klasse. Fordelen ved dette er at vi har en klar seperation mellem multi og singleplayer. Det som forgår i singleplayer klasse har ingen indflydelse på multiplayer klassen. Med dette design løber vi ind i problemer når vi skal implementere view og controls i MVC. Det vi har valgt at gøre er at lave en base udgave af hvert komponent. Basen har alt det som er fælles for single og multiplayer. Vi laver så to nye klasser BaseSingleplayer og BaseMultiplayer som nedarver fra base klassen.  De to klasse kan så frit override/udvide implementationerne i base klasserne.  Se FIG VISIO!
 
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\graphicspath{ {pics/} }
    \includegraphics[width=1.0\textwidth]{advanceret/game-design.png}
