@@ -48,11 +48,13 @@ public class HeaderSingleplayerPanel extends HeaderBasePanel implements Observer
 		Graphics2D context2D = (Graphics2D) context;
 		
 		// Update the score
-		context2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		context2D.setFont(scoreFont);
-		int fontSize = scoreFont.getSize();
-		context2D.setColor(Color.WHITE);
-		context2D.drawString("Score: " + game.getScore(), fontSize, size.height / 2 - fontSize / 2);
+		if(!game.isEnded()){
+			context2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+			context2D.setFont(scoreFont);
+			int fontSize = scoreFont.getSize();
+			context2D.setColor(Color.WHITE);
+			context2D.drawString("Score: " + game.getScore(), fontSize, size.height / 2 - fontSize / 2);
+		}
 	}
 
 	@Override

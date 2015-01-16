@@ -145,7 +145,7 @@ public class ViewFrame extends JFrame {
 		headerSingleplayerPanel.registerGame(game);
 		optionsSingleplayerPanel.registerGame(game);
 		audio.registerGame(game);
-		setFrameComponents(headerSingleplayerPanel, optionsSingleplayerPanel);
+		setFrameComponents(headerPanel, optionsSingleplayerPanel);
 		state = State.IN_MENU_OPTIONS_SINGLEPLAYER;
 	}
 	
@@ -153,7 +153,7 @@ public class ViewFrame extends JFrame {
 		headerMultiplayerPanel.registerGame(game);
 		optionsMultiplayerPanel.registerGame(game);
 		audio.registerGame(game);
-		setFrameComponents(headerMultiplayerPanel, optionsMultiplayerPanel);
+		setFrameComponents(headerPanel, optionsMultiplayerPanel);
 		state = State.IN_MENU_OPTIONS_MULTIPLAYER;
 	}
 	
