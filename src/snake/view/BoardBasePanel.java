@@ -22,7 +22,7 @@ import snake.model.*;
  * Base JPanel for displaying the game board. We derive a single and multiplayer panel from
  * this class.
  */
-public class BoardBasePanel extends JPanel {
+public abstract class BoardBasePanel extends JPanel {
 	
 	private static final Font PAUSE_FONT = new Font("Sans_Serif", Font.BOLD, 20);
 	
@@ -91,7 +91,7 @@ public class BoardBasePanel extends JPanel {
 		drawSnakeHead(context, snake, board, colorIndex);
 	}
 	
-	protected void drawSnakeHead(Graphics2D context, Snake snake, Board board, int colorIndex) {
+	private void drawSnakeHead(Graphics2D context, Snake snake, Board board, int colorIndex) {
 		Rectangle headRect = getRectangleForField(snake.getHead(), board);
 		BufferedImage headImage = null;
 		switch (snake.getHeadDirection()) {
@@ -112,7 +112,7 @@ public class BoardBasePanel extends JPanel {
 		context.drawImage(headScaledImage, headRect.x, headRect.y, null);
 	}
 	
-	protected void drawSnakeTail(Graphics2D context, Snake snake, Board board, int colorIndex) {
+	private void drawSnakeTail(Graphics2D context, Snake snake, Board board, int colorIndex) {
 		int lastRow = board.getHeight() - 1;
 		int lastCol = board.getWidth() - 1;
 		
@@ -139,7 +139,7 @@ public class BoardBasePanel extends JPanel {
 		context.drawImage(tailScaledImage, tailRect.x, tailRect.y, null);
 	}
 	
-	protected void drawSnakeBody(Graphics2D context, Snake snake, Board board, int colorIndex) {
+	private void drawSnakeBody(Graphics2D context, Snake snake, Board board, int colorIndex) {
 		List<Field> snakeArray = snake.getPositions();
 		
 		// Find the scaled instances of the 6 possible snake body types.
@@ -332,7 +332,7 @@ public class BoardBasePanel extends JPanel {
 	}
 	
 	/**
-	 * Get the window rectangle for a field on the board. This rectangle is where we render
+	 * Get the window rectangle for a field on the board. This rectangle is where we display
 	 * the field.
 	 */
 	protected Rectangle getRectangleForField(Field position, Board board) {
@@ -348,7 +348,7 @@ public class BoardBasePanel extends JPanel {
 	}
 
 	/**
-	 * Get the window rectangle for the board. This rectangle is where we render the board.
+	 * Get the window rectangle for the board. This rectangle is where we display the board.
 	 */
 	protected Rectangle getRectangleForBoard(Board board) {
 		Dimension windowSize = getSize();
@@ -368,7 +368,7 @@ public class BoardBasePanel extends JPanel {
 	}
 	
 	/**
-	 * Get the window rectangle for the popup area. This is where we draw pause screen, etc..
+	 * Get the window rectangle for the popup area. This is where we display pause screen, etc..
 	 */
 	protected Rectangle getRectangleForPopUp(Board board) {
 		Rectangle boardRectangle = getRectangleForBoard(board);

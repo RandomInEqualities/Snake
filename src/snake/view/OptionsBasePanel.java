@@ -22,10 +22,9 @@ public abstract class OptionsBasePanel extends JPanel implements FocusListener {
 	private static final Font TEXT_FONT_LARGE = new Font("Sans_Serif", Font.PLAIN, 20);
 	private static final Font TEXT_FONT_MEDIUM = new Font("Sans_Serif", Font.PLAIN, 15);
 	private static final Font TEXT_FONT_SMALL = new Font("Sans_Serif", Font.PLAIN, 11);
-	private static final Border THICK_BORDER = new LineBorder(ResourceColors.PANEL_COLOR, 3);
+	private static final Border THICK_BUTTON_BORDER = new LineBorder(ResourceColors.PANEL_COLOR, 3);
 	
 	protected JPanel gameOptionsPanel;
-	
 	protected JButton buttonPlay;
 	protected JButton buttonKindergarten;
 	protected JButton buttonEasy;
@@ -36,12 +35,12 @@ public abstract class OptionsBasePanel extends JPanel implements FocusListener {
 	private JFormattedTextField inputFieldWidth;
 	private JFormattedTextField inputFieldHeight;
 	private JLabel errorField;
-	private boolean inValidInput;
-	private boolean emptyInput;
+	private boolean inputFieldInValid;
+	private boolean inputFieldEmpty;
 	
 	public OptionsBasePanel() {
-		this.inValidInput = false;
-		this.emptyInput = false;
+		this.inputFieldInValid = false;
+		this.inputFieldEmpty = false;
 		this.gameOptionsPanel = new JPanel();
 		this.errorField = new JLabel();
 		
@@ -76,7 +75,6 @@ public abstract class OptionsBasePanel extends JPanel implements FocusListener {
 		buttonIntermediate.setActionCommand("intermediate");
 		buttonHard.setActionCommand("hard");
 		
-		gameOptionsPanel.setOpaque(false);
 		gameOptionsPanel.add(inputFieldWidth);
 		gameOptionsPanel.add(inputFieldHeight);
 		gameOptionsPanel.add(errorField);
@@ -86,11 +84,13 @@ public abstract class OptionsBasePanel extends JPanel implements FocusListener {
 		gameOptionsPanel.add(buttonHard);
 		gameOptionsPanel.add(buttonBack);
 		gameOptionsPanel.add(buttonPlay);
+		gameOptionsPanel.setOpaque(false);
 		
 		add(gameOptionsPanel);
 	}
 	
-	// Used to implement group toggling behaviour.
+	// Used to implement group toggling behaviour. The control object should call this method
+	// when a button is pressed.
 	public void buttonPress(String button) {
 		if (button == "kindergarten") {
 			setActiveButton(buttonKindergarten, buttonEasy, buttonIntermediate, buttonHard);
@@ -106,18 +106,20 @@ public abstract class OptionsBasePanel extends JPanel implements FocusListener {
 		}
 	}
 	
+	// Set the default values in the game size fields.
 	public void setDefaultGameSizeInput(int width, int height) {
 		setTextField(inputFieldWidth, Integer.toString(width));
 		setTextField(inputFieldHeight, Integer.toString(height));
 	}
 	
-	// Returns null if the input fields has invalid data.
+	// Get the value in the game size fields. Returns null and displays an error message in the 
+	// window if the input fields have invalid data.
 	public Dimension getChosenGameSize() {
 		String widthRaw = inputFieldWidth.getText().replace(" ", "");
 		String heightRaw = inputFieldHeight.getText().replace(" ", "");
 		if (widthRaw.isEmpty() || heightRaw.isEmpty()) {
-			emptyInput = true;
-			inValidInput = false;
+			inputFieldEmpty = true;
+			inputFieldInValid = false;
 			repaint();
 			return null;
 		}
@@ -129,25 +131,25 @@ public abstract class OptionsBasePanel extends JPanel implements FocusListener {
 			height = Integer.parseInt(heightRaw);
 		}
 		catch (NumberFormatException error) {
-			emptyInput = false;
-			inValidInput = true;
+			inputFieldEmpty = false;
+			inputFieldInValid = true;
 			repaint();
 			return null;
 		}
 		
 		if (width < Board.MIN_WIDTH || width > Board.MAX_WIDTH || height < Board.MIN_HEIGHT || height > Board.MAX_HEIGHT) {
-			emptyInput = false;
-			inValidInput = true;
+			inputFieldEmpty = false;
+			inputFieldInValid = true;
 			repaint();
 			return null;
 		}
 		
-		emptyInput = false;
-		inValidInput = false;
+		inputFieldEmpty = false;
+		inputFieldInValid = false;
 		return new Dimension(width, height);
 	}
 	
-	// Place caret after the number when focus in the text field is gained.
+	// Place caret after the number when focus in the input fields is gained.
 	@Override
 	public void focusGained(FocusEvent event) {
 		SwingUtilities.invokeLater(new Runnable(){
@@ -184,7 +186,7 @@ public abstract class OptionsBasePanel extends JPanel implements FocusListener {
 		drawText(context2D);
 		drawDifficultyButtons();
 		drawPlayAndBackButtons();
-		drawErrorMessage(inValidInput, emptyInput);
+		drawErrorMessage(inputFieldInValid, inputFieldEmpty);
 		
 		// Text fields.
 		int xWidth = gameOptionsPanel.getWidth()/2 - inputFieldWidth.getWidth() - 50;
@@ -220,16 +222,16 @@ public abstract class OptionsBasePanel extends JPanel implements FocusListener {
 	
 	private void drawErrorMessage(boolean inValidInput, boolean emptyInput) {
 		if (inValidInput){
-			int x = gameOptionsPanel.getWidth()/2 - 40;
+			int x = gameOptionsPanel.getWidth()/2 - 80;
 			int y = 90;
 			errorField.setLocation(x,  y);
-			errorField.setText("Invalid input");
+			errorField.setText("Invalid width and height");
 		} 
 		else if (emptyInput){
 			int x = gameOptionsPanel.getWidth()/2 - 80;
 			int y = 90;
 			errorField.setLocation(x, y);
-			errorField.setText("Choose a width and a height");
+			errorField.setText("Choose width and height");
 		} 
 		else {
 			errorField.setText("");
@@ -255,16 +257,9 @@ public abstract class OptionsBasePanel extends JPanel implements FocusListener {
 		buttonHard.setLocation(4*spaceBetweenButtons + 3*buttonHard.getWidth(), y);
 	}
 	
-	private void setTextField(JFormattedTextField textField, String value) {
-		textField.setFont(TEXT_FONT_LARGE); 
-		textField.setHorizontalAlignment(JTextField.CENTER);
-		textField.setValue(value);
-		textField.setFocusLostBehavior(JFormattedTextField.COMMIT);
-	}
-	
 	protected void setActiveButton(JButton buttonPressed, JButton button1, JButton button2, JButton button3){
 		buttonPressed.setBorderPainted(true);
-		buttonPressed.setBorder(THICK_BORDER);
+		buttonPressed.setBorder(THICK_BUTTON_BORDER);
 		button1.setBorderPainted(false);
 		button2.setBorderPainted(false);
 		button3.setBorderPainted(false);
@@ -274,7 +269,7 @@ public abstract class OptionsBasePanel extends JPanel implements FocusListener {
 		JButton button = new JButton(new ImageIcon(image));
 		button.setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		button.setBorder(THICK_BORDER);
+		button.setBorder(THICK_BUTTON_BORDER);
 		button.setBorderPainted(false);
 		button.setFocusable(false);
 		return button;
@@ -284,10 +279,17 @@ public abstract class OptionsBasePanel extends JPanel implements FocusListener {
 		JButton button = new JButton(new ImageIcon(image));
 		button.setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		button.setBorder(THICK_BORDER);
+		button.setBorder(THICK_BUTTON_BORDER);
 		button.setBorderPainted(false);
 		button.setFocusable(false);
 		return button;
+	}
+	
+	private void setTextField(JFormattedTextField textField, String value) {
+		textField.setFont(TEXT_FONT_LARGE); 
+		textField.setHorizontalAlignment(JTextField.CENTER);
+		textField.setValue(value);
+		textField.setFocusLostBehavior(JFormattedTextField.COMMIT);
 	}
 	
 }

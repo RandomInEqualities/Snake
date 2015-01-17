@@ -93,34 +93,6 @@ public class ViewFrame extends JFrame {
 		optionsMultiplayerPanel.addKeyListener(control);
 	}
 	
-	public boolean inMenu() {
-		return state == State.IN_MENU;
-	}
-	
-	public boolean inOptionsSingleplayer() {
-		return state == State.IN_MENU_OPTIONS_SINGLEPLAYER;
-	}
-	
-	public boolean inOptionsMultiplayer() {
-		return state == State.IN_MENU_OPTIONS_MULTIPLAYER;
-	}
-	
-	public boolean inControls() {
-		return state == State.IN_MENU_CONTROLS;
-	}
-	
-	public boolean inGame() {
-		return state == State.IN_GAME_SINGLEPLAYER || state == State.IN_GAME_MULTIPLAYER;
-	}
-	
-	public boolean inGameSingleplayer() {
-		return state == State.IN_GAME_SINGLEPLAYER;
-	}
-	
-	public boolean inGameMultiplayer() {
-		return state == State.IN_GAME_MULTIPLAYER;
-	}
-	
 	public Audio getAudio() {
 		return audio;
 	}
@@ -131,6 +103,11 @@ public class ViewFrame extends JFrame {
 	
 	public BoardMultiplayerPanel getBoardMultiplayerPanel() {
 		return boardMultiplayerPanel;
+	}
+	
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(800, 800);
 	}
 	
 	public void showMenu() {
@@ -145,7 +122,7 @@ public class ViewFrame extends JFrame {
 		headerSingleplayerPanel.registerGame(game);
 		optionsSingleplayerPanel.registerGame(game);
 		audio.registerGame(game);
-		setFrameComponents(headerPanel, optionsSingleplayerPanel);
+		setFrameComponents(headerSingleplayerPanel, optionsSingleplayerPanel);
 		state = State.IN_MENU_OPTIONS_SINGLEPLAYER;
 	}
 	
@@ -153,7 +130,7 @@ public class ViewFrame extends JFrame {
 		headerMultiplayerPanel.registerGame(game);
 		optionsMultiplayerPanel.registerGame(game);
 		audio.registerGame(game);
-		setFrameComponents(headerPanel, optionsMultiplayerPanel);
+		setFrameComponents(headerMultiplayerPanel, optionsMultiplayerPanel);
 		state = State.IN_MENU_OPTIONS_MULTIPLAYER;
 	}
 	
@@ -168,6 +145,7 @@ public class ViewFrame extends JFrame {
 	public void showGame(GameSingleplayer game) {
 		headerSingleplayerPanel.registerGame(game);
 		boardSingleplayerPanel.registerGame(game);
+		audio.registerGame(game);
 		setFrameComponents(headerSingleplayerPanel, boardSingleplayerPanel);
 		state = State.IN_GAME_SINGLEPLAYER;
 	}
@@ -175,6 +153,7 @@ public class ViewFrame extends JFrame {
 	public void showGame(GameMultiplayer game) {
 		headerMultiplayerPanel.registerGame(game);
 		boardMultiplayerPanel.registerGame(game);
+		audio.registerGame(game);
 		setFrameComponents(headerMultiplayerPanel, boardMultiplayerPanel);
 		state = State.IN_GAME_MULTIPLAYER;
 	}
@@ -196,11 +175,6 @@ public class ViewFrame extends JFrame {
 		// Let the center panel be the target of keyboard events.
 		centerPanel.requestFocus();
 		
-	}
-	
-	@Override
-	public Dimension getPreferredSize() {
-		return new Dimension(800, 800);
 	}
 	
 }

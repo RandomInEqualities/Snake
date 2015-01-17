@@ -38,5 +38,6 @@ public class Event {
 	public Player getPlayer() {
 		return player;
 	}		
+	
 }
 

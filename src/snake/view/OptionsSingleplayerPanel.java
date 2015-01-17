@@ -14,7 +14,11 @@ import snake.model.GameSingleplayer;
  */
 public class OptionsSingleplayerPanel extends OptionsBasePanel {	
 	
-	private JButton buttonGreen, buttonBlue, buttonRed, buttonYellow;
+	private JButton buttonGreen;
+	private JButton buttonBlue;
+	private JButton buttonRed;
+	private JButton buttonYellow;
+	
 	private OptionsSingleplayerListener control;
 	
 	public OptionsSingleplayerPanel(ViewFrame view){

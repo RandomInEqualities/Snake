@@ -19,7 +19,7 @@ public class OptionsMultiplayerListener extends OptionsListener {
 		this.view = view;
 		this.optionsPanel = optionsPanel;
 		
-		// By default the snakes are green and yellow.
+		// By default the snakes are green and blue.
 		BoardMultiplayerPanel boardPanel = view.getBoardMultiplayerPanel();
 		boardPanel.setSnakeColor(Player.ONE, ResourceColors.GREEN);
 		boardPanel.setSnakeColor(Player.TWO, ResourceColors.BLUE);
@@ -75,8 +75,7 @@ public class OptionsMultiplayerListener extends OptionsListener {
 		
 		Dimension newSize = optionsPanel.getChosenGameSize();
 		if (newSize == null) {
-			// unable to retrieve size, lets wait for proper input
-			// before showing the game.
+			// Unable to retrieve size, lets wait for proper input before showing the game.
 			return;
 		}
 		game.setBoardSize(newSize.width, newSize.height);

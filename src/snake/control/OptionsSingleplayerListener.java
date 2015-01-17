@@ -19,7 +19,7 @@ public class OptionsSingleplayerListener extends OptionsListener {
 		this.view = view;
 		this.optionsPanel = optionsPanel;
 		
-		// By the snake is green.
+		// By default the snake is green.
 		BoardSingleplayerPanel boardPanel = view.getBoardSingleplayerPanel();
 		boardPanel.setSnakeColor(ResourceColors.GREEN);
 		optionsPanel.buttonPress("green");
@@ -60,8 +60,7 @@ public class OptionsSingleplayerListener extends OptionsListener {
 		
 		Dimension newSize = optionsPanel.getChosenGameSize();
 		if (newSize == null) {
-			// unable to retrieve size, lets wait for proper input
-			// before showing the game.
+			// Unable to retrieve size, lets wait for proper input before showing the game.
 			return;
 		}
 		game.setBoardSize(newSize.width, newSize.height);

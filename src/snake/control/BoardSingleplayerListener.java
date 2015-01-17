@@ -36,6 +36,8 @@ public class BoardSingleplayerListener extends KeyAdapter implements ActionListe
 		if (game == null) {
 			return;
 		}
+		
+		// The singleplayer can use up, down, left and right arrows or the WASD keys.
 		switch (event.getKeyCode()) {
 			case KeyEvent.VK_UP:
 				game.move(Direction.UP);

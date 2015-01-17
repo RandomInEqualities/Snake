@@ -105,7 +105,7 @@ public class BoardMultiplayerPanel extends BoardBasePanel  implements Observer {
 		}
 		super.drawGameOver(context, board);
 		
-		// Add score text.
+		// Add score text and a nice image.
 		Rectangle boardRect = getRectangleForBoard(board);
 		Rectangle popupRectangle = getRectangleForPopUp(board);
 		
