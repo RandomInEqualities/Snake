@@ -10,4 +10,6 @@
 *.toc
 *.gz
 *.out
-/rapport/rapport.pdf
+
+% MAC
+*.DS_Store
