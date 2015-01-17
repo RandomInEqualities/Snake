@@ -25,14 +25,17 @@ public class BoardPanel extends JPanel implements Observer {
 		this.game = game;
 	}
 
+	@Override
 	public void update(Observable o, Object arg) {
 		repaint();
 	}
 
+	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(800, 800);
 	}
 
+	@Override
 	protected void paintComponent(Graphics context) {
 		super.paintComponent(context);
 		Graphics2D context2D = (Graphics2D) context;
@@ -67,10 +70,11 @@ public class BoardPanel extends JPanel implements Observer {
 	}
 
 	public Rectangle getWindowRectangle(Field position) {
+		Dimension patchSize = getPatchSize();
 		Rectangle rectangle = new Rectangle(
-				position.getColumn() * getOptimalPatchSize() + getWindowBoard().x, 
-				position.getRow() * getOptimalPatchSize() + getWindowBoard().y,
-				getOptimalPatchSize(), getOptimalPatchSize()
+				position.getColumn() * patchSize.width + getWindowBoard().x, 
+				position.getRow() * patchSize.height + getWindowBoard().y,
+				patchSize.width, patchSize.height
 		);
 		return rectangle;
 	}
@@ -78,32 +82,24 @@ public class BoardPanel extends JPanel implements Observer {
 	public Rectangle getWindowBoard() {
 		Dimension windowSize = getSize();
 		Dimension gameSize = game.getBoardSize();
-
-		int offsetHeight = 10;
-		int offsetWidth = (windowSize.width - getOptimalPatchSize()
-				* gameSize.width) / 2;
-
+		Dimension patchSize = getPatchSize();
+		int offsetWidth = (windowSize.width - patchSize.width * gameSize.width)/2;
+		int offsetHeight = (windowSize.height - patchSize.height * gameSize.height)/2;
 		Rectangle rectangle = new Rectangle(
 				offsetWidth, 
 				offsetHeight, 
-				getOptimalPatchSize() * gameSize.width, 
-				getOptimalPatchSize() * gameSize.height
+				windowSize.width - 2*offsetWidth, 
+				windowSize.height - 2*offsetHeight
 		);
 		return rectangle;
 	}
-
-	public int getOptimalPatchSize() {
+	
+	public Dimension getPatchSize() {
 		Dimension windowSize = getSize();
 		Dimension gameSize = game.getBoardSize();
 		int patchWidth = windowSize.width / gameSize.width;
 		int patchHeight = windowSize.height / gameSize.height;
-
-		if (patchWidth >= patchHeight) {
-			patchWidth = patchHeight;
-		} else {
-			patchHeight = patchWidth;
-		}
-		return patchWidth-4; //bottom gap
+		return new Dimension(patchWidth, patchHeight);
 	}
 	
 }

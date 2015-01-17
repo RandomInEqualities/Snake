@@ -1,4 +1,4 @@
-
+﻿
 
 ============== Start af spillet ============== 
 For at starte spillet kan man enten åbne jar-filen, snake.jar, eller kompilere driveren, snake.control.Driver.java.
