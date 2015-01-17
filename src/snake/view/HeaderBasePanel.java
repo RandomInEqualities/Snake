@@ -79,7 +79,7 @@ public class HeaderBasePanel extends JPanel implements Observer {
 		if (size.width > logoWidth + 230) {
 			context2D.drawImage(logo, size.width/2 - logoWidth/2, 0, null);
 		}
-
+		
 		// Mute button.
 		updateMuteButtonIcon();
 		int xSound = size.width - DEFAULT_BUTTON_WIDTH - 10;

@@ -387,12 +387,20 @@ public abstract class BoardBasePanel extends JPanel {
 		Dimension gameSize = new Dimension(board.getWidth(), board.getHeight());
 		int fieldWidth = windowSize.width / gameSize.width;
 		int fieldHeight = (windowSize.height - 20) / gameSize.height;
+		
+		// Choose the smallest of the two dimensions. This gives square fields that
+		// fits in the window.
+		int fieldSideLength = 0;
 		if (fieldWidth >= fieldHeight) {
-			fieldWidth = fieldHeight;
+			fieldSideLength = fieldHeight;
 		} else {
-			fieldHeight = fieldWidth;
+			fieldSideLength = fieldWidth;
 		}
-		return fieldWidth;
+		
+		if (fieldSideLength == 0) {
+			fieldSideLength = 1;
+		}
+		return fieldSideLength;
 	}
 	
 	/**

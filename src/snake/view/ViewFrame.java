@@ -74,9 +74,9 @@ public class ViewFrame extends JFrame {
 		setFocusable(true);
 		requestFocus();
 		
-		// Minimum size ensures that the window can't completely collapse. This prevents errors 
-		// where width and height can't be zero.
-		setMinimumSize(new Dimension(125, 125));
+		// Minimum size ensures that the window can't completely collapse. This prevents weird
+		// overlaps when the window gets too small.
+		setMinimumSize(new Dimension(230, 300));
 		
 		// Create a control that listen for relevant key events. It listens to all sub panels, this
 		// emulates a kind of global key listener.
