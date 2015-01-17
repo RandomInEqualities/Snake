@@ -1,4 +1,5 @@
-﻿================ Snake Forfattere ================
+﻿
+================ Forfattere ================
 Anna Mølgaard Nielsen (s144437)
 Christian Søholm Andersen (s103080)
 Mathias Enggrob Boon (s144484)
@@ -6,7 +7,7 @@ Van Anh Tri Trinh (s144449)
 
 
 ================ Start af spillet ================
-For at starte spillet kan man enten åbne jar-filen, snake.jar, eller åbne driveren, driver.java, inde i snake.control-pakken. 
+For at starte spillet kan man enten åbne jar-filen, snake.jar, eller kompilere driveren, snake.control.Driver.java.
 Når spillet startes bliver man sendt direkte ind i menuen, hvor man kan vælge at spille one-player, two-player, se controls-menuen, eller lukke spillet.
 
 

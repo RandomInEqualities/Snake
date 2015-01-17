@@ -1,14 +1,14 @@
 \section{Afgrænsning}
-Simpel Snake er opbygget af en torrus, som er selve banen, en slange, der styres af piletasterne, og noget mad, der kan gøre slangen længere. Selve afgrænsning af denne del er defineret af projektoplægget, så det vil være bedst at læse dette for en uddybbende afgrænsning. Vi laver et resume over oplægget.
+Afgrænsning af Simpel Snake er defineret af projektoplægget. Det vil være bedst at læse dette for en uddybende afgrænsning. Vi laver et resume over oplæggets relevante punkter. Simpel Snake er opbygget af en bane, en slange og noget mad. Slangen kan bevæge sig med for eksempel piletasterne. Når slangen spiser mad bliver den længere.
 
 \paragraph{Banen}
-Banen er opbygget som en todimensionel $n\times m$ torus. Hvis man bevæger sig ud over banens kanter, fortsætter man på den modsatte side. Banen er opdelt i felter $(x,y)$ som angiver positionerne på banen. 
+Banen er opbygget som en todimensional $n\times m$ torus. Hvis man bevæger sig ud over banens kanter, fortsætter man på den modsatte side. Banen er opdelt i todimensionale felter $(x,y)$. 
 
 \paragraph{Slangen}
-Slangen består af et antal sammenbundne punkter. Den har et hoved og en hale. Slangens hoved har en bevægelsesretning $op$, $ned$, $højre$ eller $venstre$. Gennem input fra tastetured skal det være muligt at bevæge slangen. På skærmen skal slangen visualiseres via nogle firkanter som representere slangens punkter.
+Slangen består af et antal sammenbundne felter. Den har et hoved og en hale. Slangens hoved har en bevægelsesretning \textit{op}, \textit{ned}, \textit{højre} eller \textit{venstre}. Gennem input fra tastaturet skal det være muligt at bevæge slangen. På skærmen skal slangen visualiseres via nogle firkanter som repræsentere slangens felter.
 
 \paragraph{Mad}
-På banen skal der være et felt med mad, som slangen kan spise. Når dette sker bliver slangen et punkt større. Efter at slangen har spist maden, skal der sættes et nyt mad punkt på banen. Dette punkt skal blive fordelt uniformt tilfældigt på banen.
+På banen skal der være et felt med mad, som slangen kan spise. Når slangen rammer dette felt skal den blive et felt større og der skal sættes et nyt mad felt på banen. Det nye felt skal være uniformt tilfældigt fordelt.
 
 \paragraph{Kollision}
-Spillet slutter når, slangen bevæger sig ind i et felt udfyldt af slangen selv. I så fald, har spilleren tabt. Man har vundet spillet, når spilleren har fyldt hele banen ud med slangens krop. Bemærk at slangen godt kan bevæge sig ind i sit hale felt, da halen også flytter sig i det samme træk.
+Spillet slutter når slangen bevæger sig ind i et felt som er udfyldt af slangen selv. I så fald, har spilleren tabt. Spilleren har vundet slangen fylder hele banen. Bemærk at slangen godt kan bevæge sig ind i sit hale felt, da halen også flytter sig i det samme træk.
