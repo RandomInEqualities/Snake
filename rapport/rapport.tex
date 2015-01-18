@@ -40,12 +40,13 @@
 
 %User defined commands in texdef.tex
 \input{texdefs.tex}
-
+\setcounter{tocdepth}{2}
 \begin{document}
 
 \graphicspath{{pics/}}
 
 \include{content/frontpage}\newpage
+\tableofcontents
 \include{content/introduktion}\newpage
 
 \chapter{Simple Snake}
@@ -54,7 +55,7 @@
 \include{content/grundlaeggende/implementering}\newpage
 \include{content/grundlaeggende/evaluering}\newpage
 
-\chapter{Avanceret Snake}
+\chapter{Advanced Snake}
 \include{content/advanceret/afgraensning}\newpage
 \include{content/advanceret/design}\newpage
 \include{content/advanceret/implementering}\newpage
@@ -63,7 +64,6 @@
 \include{content/konklusion}\newpage
 
 \appendix
-
 \include{content/appendix}\newpage
 
 \title{References}
