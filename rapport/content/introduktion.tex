@@ -1,18 +1,20 @@
-\chapter{Introduktion}
-I denne rapport dokumentere vi designet, implementation og evaluering af et snake spil. Snake spillet er det velkendte spil fra for exemple Nokia 3310 \cite{wiki_snake}. 
+\section{Introduktion}
 
-Formålet med projektopgaven er at genskabe det klassiske spil Snake, samt at dokumentere hvordan vi opbygger spillet. Spillet laves i to versioner: Simpel Snake og Avanceret Snake. Det skrives i Java.
+Det kendte spil \textbf{Snake}, er et arkadespil, hvor spilleren bevæger en slange rundt på en bane og samler point for at forlænge slangen. Spillet er simpelt, men kan af denne grund have mange forskellige funktioner udover de sædvanlige, hvilket gør hver version ny og unik.
+\newline
 
-Simpel Snake er en primitiv version af spillet, se \figref{simplesnake}. Styring og bevægelse foregår kun vha. input fra spilleren. Det bruges som udgangspunkt for den avancerede udgave.
+I denne rapport dokumenterer vi designet, implementationen og evalueringen af vores egen version af Snake. Formålet med projektopgaven er at genskabe Snake som et Java-program, samt at dokumentere hvordan spillet er struktureret og udviklet, og hvorfor vi har valgt visse metoder og algoritmer.
+Spillet er gengivet i to versioner: \textbf{Simple Snake} og \textbf{Advanced Snake}.
+\newline
 
-I Avanceret Snake er der tilføjet forskellige funktioner, som enten forbedrer brugerfladen eller ændre på hvordan spillet spilles. For eksempel tilføjelse af hovedmenu og automatisk bevægelse af slangen, se \figref{advancedsnake}. Vi har udvidet det så to personer kan spille mod hinanden.
+Simple Snake er en primitiv version af spillet, hvor styring og bevægelse kun foregår vha. input fra spilleren. Spillet opbygges efter \textit{Model-View-Controller}-designet, der gør det let at lave justeringer i spillet, når det senere skal udvides til Advanced Snake. Spillet er som navnet angiver simpelt og skal kun indeholde det mest essentielle for et snake-spil. Advanced Snake bygger videre på Simple Snake og bevarer derfor \textit{Model-View-Controller}-designet, men med tilføjede funktioner, der gør spillet mere udfordrende. Slangen skal kunne bevæge sig af sig selv, brugergrænsefladen skal udvides til at vise andet en blot spil-scenen og control-delen skal udvides til ikke blot at tage tastatur-input, men også mussekliks-input. Klasserne er holdt så separate som muligt for at undgå for meget sammenblanding og indbyrdes afhængighed, hvor der ikke skal være det.
+\newline
 
-I rapporten vil designet og implementeringen af begge spillets versioner blive forklaret. I evaluerings kapitlerne redegør vi for tanker, valg og komplikationen som vi stødte på under projektet. 
-
-\begin{figure}
+I rapporten vil designet samt implementationen af begge spillets versioner blive forklaret. Først gennemgås den simple version, Simple Snake, hvor projektet først afgrænses til de funktioner og egenskaber, som vi har valgt at fokusere på. Derefter bestemmes i design-delen de metoder, som vi synes er bedst til at løse vores problemer, hvilket letter implementeringen. I implementerings-delen af rapporten, vil vi gå igennem implementeringen af Model- View- og Controller-delene hver for sig, og kort redegøre for deres sammenhæng. På samme måde gennemgås derefter Advanced Snake. I evaluerings-kapitlerne redegør vi for de tanker, valg og komplikationer som vi støder på undervejs. 
+\begin{figure}[h]
 	\centering
-	\subfloat[Simpel Snake]{\figlab{simplesnake}\includegraphics[width=0.43\textwidth]{SimpelSnake.png}}
+	\subfloat[Simpel Snake]{\figlab{simplesnake}\includegraphics[width=0.30\textwidth]{SimpelSnake.png}}
 	\hspace{0.1\textwidth}
-	\subfloat[Avanceret Snake]{\figlab{advancedsnake}\includegraphics[width=0.46\textwidth]{AdvancedSnake.png}}
-	\caption{Billede af Simpel og Avanceret Snake.}
+	\subfloat[Avanceret Snake]{\figlab{advancedsnake}\includegraphics[width=0.33\textwidth]{AdvancedSnake.png}}
+	\caption{\textit{Billede af Simpel og Avanceret Snake.}}
 \end{figure}

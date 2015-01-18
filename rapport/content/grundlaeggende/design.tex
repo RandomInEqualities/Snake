@@ -1,42 +1,21 @@
 \section{Design}
-Snake-spillet er lavet efter et Model-View-Control design (MVC). Styringen, spil logikken og den visuelle repræsentation holdes adskilt i tre dele. Med dette bygges et meget modulært program. Spil logikken er Model, styringen er Control og den visuelle repræsentation er View. Disse tre dele skal kode mæssigt holdes adskilt. Spil logikken må ikke kende til styringen eller repræsentationen. Repræsentation må ikke kende til styringen. Styringen må godt kende til spil logikken og repræsentationen, se \figref{mvc} for en illustration.
+Snake-spillet er lavet efter et \textit{Model-View-Controller}-design (MVC). Styringen, spil-logikken og den visuelle repræsentation holdes adskilt i tre dele. Med dette bygges et meget modulært program. Spil-logikken er \textit{Model}, styringen er \textit{Control} og den visuelle repræsentation er \textit{View}. Disse tre dele skal kode-mæssigt holdes adskilt. Spil-logikken må ikke kende til styringen eller den visuelle repræsentation, mens den visuelle repræsentation godt må kende til spil-logikken, men ikke til styringen. Styringen må kende til både spil-logikken og den visuelle repræsentation (se \figref{mvc}).
+\newline
 
 \begin{figure}[h]
 	\centering
    	\includegraphics[width=0.7\textwidth]{grundlaeggende/mvc.png}
-	\hspace{0.1\textwidth}
-	\caption{\figlab{mvc}Oversigt over Model-View-Control design.}
+
+	\caption{\figlab{mvc}\textit{Oversigt over Model-View-Controller-designet.}}
 \end{figure}
 
-Brugeren interagere med den del der er dedikeret til styring (Control). Control manipulerer spil logikken (Model) og spillet visualiseres i View-koden. Funktioner, der påvirker programmets tilstand, holdes i Model-koden. Control modtager input fra brugeren og kalder relevante metode i View og Model. View må ikke ændre på spillets tilstand, det skal kun vise hvad der er i Model. 
+På denne måde interagerer brugeren kun med den del af programmet, der er dedikeret til styring. Styringen manipulerer programmets tilstand i \textit{model}-koden, som visualiseres i \textit{view}-koden. Dette betyder derfor også, at alle funktioner, der påvirker programmets tilstand, skal holdes i \textit{model}-koden. \textit{Control} modtager kun input fra brugeren, og sender dette videre til \textit{View} og \textit{Model}. Det er muligt gennem en Observer at "observere" ændringerne i spillet, som derefter opdateres i \textit{View} (se Appendix A.1, \textit{Simple Snake - synlighedsklasser}).
+\newline
 
-Man kan tænke på det sådan at View observere Model og viser hvad den ser til brugeren. Control kommunikere med brugeren og sender relevant kommunikation videre til View eller Model.
+Simple Snake er designet, så spillets logik ligger i klassen \textit{Game} i model-pakken. \textit{Game} får da spillets objekter fra andre klasser i \textit{model}-pakken, f.eks. \textit{Food} og \textit{Snake}. Enumerations-klassen, \textit{Direction}, forsimpler kommunikation med \textit{Game}-klassen, idet det er nemmere at tilkoble en masse kommandoer og statements til hver retning, hvis der eksplicit er en \textit{Direction}-klasse, som begrænser retningsmulighederne. Vi har valgt at gøre \textit{Game} til en Observable klasse, da view-klasserne derved kan observere model-delen og opdatere brugergrænsefladen, så snart spillets tilstand ændrer sig. \textit{Snake}-klassen afhænger af \textit{Game}-klassen, da 'move'-metoden i \textit{Snake} er nødt til at signalere til \textit{Game}, at slangen har bevæget sig. Dette gør den ved at kalde på den 'snakeHasMoved'-metode.
 
-Simpel Snake er designet, så spillets logik ligger i \textit{Game} klassen i Model-pakken. \textit{Game} indeholder relevante klasser, som for eksempel \textit{Food} og \textit{Snake}. Se \figref{modelsimple}. Vi har valgt at lave en enumerations klasse \textit{Direction}. Den forsimpler kommunikationen til \textit{Game}. Det er nemmere at tilkoble kommandoer og statements til hver retning, hvis der eksplicit er en \textit{Direction} klasse som begrænser retnings mulighederne. Vi har valgt at gøre \textit{Game} til en \textit{Observable}. Med dette kan vores View klasser observere spil logikken og opdatere det som brugeren ser, så snart spillets tilstand ændrer sig. \textit{Snake} klassen afhænger af \textit{Game} klassen fordi at \textit{move} metoden i \textit{Snake} er nød til at signalere til \textit{Game} at slangen har bevæget sig. Dette gør den ved at kalde \textit{snakeHasMoved}.
+I view-pakken ligger \textit{View}, der er vinduet, som spilleren ser spillet igennem. Det er her \textit{BoardPanel}-klassen, der viser den nuværende spil-tilstand. Denne er en Observer, som notificeres hver gang banens tilstand ændres i modellen. Når dette sker, eller når spillet startes, tegnes banen, slangen og maden fra \textit{Game}-klassen, vha. klasserne \textit{View} og \textit{BoardPanel}. Scoren holdes i \textit{Game}-klassen og vises i view-klassen \textit{ScorePanel}. Dette panel er placeret over \textit{BoardPanel} i \textit{View}-vinduet. Den observerer \textit{Game}, og opdaterer sig selv, når scoren ændrer sig.
 
-\begin{figure}
-	\centering
-   	\includegraphics[width=1.0\textwidth]{grundlaeggende/model.png}
-	\hspace{0.1\textwidth}
-	\caption{\figlab{modelsimple}Oversigt over vores Model design.}
-\end{figure}
+\textit{Control}-klassen kalder relevante \textit{Game}- og \textit{Snake}-metoder når spilleren trykker på tastaturet. Klassen nedarver fra KeyListener og bestemmer hvornår og hvorhen slangen skal bevæge sig.
 
-I \textit{View} klassen har vi vores vindue som brugeren ser spillet igennem. Det har en \textit{BoardPanel} klasse som viser den nuværende spil tilstand. \textit{BoardPanel} nedarver fra \textit{Observer} og opdatere panelet hver gang spillets tilstand ændres. Når dette sker tegnes den nuværende bane, slange og mad som er i \textit{Game} objektet. For eksempel bruges \textit{getSnake()}, til at bestemme slangens position. Scoren holdes i \textit{Game} objektet. \textit{ScorePanel} ligger som et panel over \textit{BoardPanel} i vinduet. Den observere \textit{Game} og opdatere sig selv når scoren ændre sig. Se \figref{viewsimple}.
-
-\begin{figure}
-	\centering
-   	\includegraphics[width=1.0\textwidth]{grundlaeggende/view.png}
-	\hspace{0.1\textwidth}
-	\caption{\figlab{viewsimple}Oversigt over vores View design.}
-\end{figure}
-
-\textit{Control} klassen kalder relevante \textit{Game} og \textit{Snake} metoder når brugeren trykker på dens keyboard. Den bestemmer hvornår og hvorhen slangen skal bevæge sig. \textit{Control}-klassen nedarver fra en KeyListener. Se \figref{controlsimple}.
-
-\begin{figure}
-	\centering
-   	\includegraphics[width=1.0\textwidth]{grundlaeggende/control.png}
-	\hspace{0.1\textwidth}
-	\caption{\figlab{controlsimple}Oversigt over vores Control design.}
-\end{figure}
-
-For at starte spillet bruges klassen \textit{Driver}, som opretter et \textit{Game}-, \textit{View} og \textit{Control}-objekt.
+For at starte spillet bruges klassen \textit{Driver}, som opretter et nyt \textit{Game}-, \textit{View} og \textit{Control}-objekt.
