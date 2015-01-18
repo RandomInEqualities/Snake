@@ -93,29 +93,20 @@ public class ViewFrame extends JFrame {
 		optionsMultiplayerPanel.addKeyListener(control);
 	}
 	
-	public Audio getAudio() {
-		return audio;
-	}
-	
-	public BoardSingleplayerPanel getBoardSingleplayerPanel() {
-		return boardSingleplayerPanel;
-	}
-	
-	public BoardMultiplayerPanel getBoardMultiplayerPanel() {
-		return boardMultiplayerPanel;
-	}
-	
-	@Override
-	public Dimension getPreferredSize() {
-		return new Dimension(800, 800);
-	}
-	
 	public void showMenu() {
 		if (state == State.IN_MENU) {
 			return;
 		}
 		setFrameComponents(headerPanel, menuPanel);
 		state = State.IN_MENU;
+	}
+	
+	public void showControlsMenu() {
+		if (state == State.IN_MENU_CONTROLS) {
+			return;
+		}
+		setFrameComponents(headerPanel, controlsPanel);
+		state = State.IN_MENU_CONTROLS;
 	}
 	
 	public void showOptionsMenu(GameSingleplayer game) {
@@ -134,14 +125,6 @@ public class ViewFrame extends JFrame {
 		state = State.IN_MENU_OPTIONS_MULTIPLAYER;
 	}
 	
-	public void showControlsMenu() {
-		if (state == State.IN_MENU_CONTROLS) {
-			return;
-		}
-		setFrameComponents(headerPanel, controlsPanel);
-		state = State.IN_MENU_CONTROLS;
-	}
-	
 	public void showGame(GameSingleplayer game) {
 		headerSingleplayerPanel.registerGame(game);
 		boardSingleplayerPanel.registerGame(game);
@@ -156,6 +139,23 @@ public class ViewFrame extends JFrame {
 		audio.registerGame(game);
 		setFrameComponents(headerMultiplayerPanel, boardMultiplayerPanel);
 		state = State.IN_GAME_MULTIPLAYER;
+	}
+	
+	public Audio getAudio() {
+		return audio;
+	}
+	
+	public BoardSingleplayerPanel getBoardSingleplayerPanel() {
+		return boardSingleplayerPanel;
+	}
+	
+	public BoardMultiplayerPanel getBoardMultiplayerPanel() {
+		return boardMultiplayerPanel;
+	}
+	
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(800, 800);
 	}
 	
 	public void closeWindow() {
