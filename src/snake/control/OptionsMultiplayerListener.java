@@ -51,7 +51,7 @@ public class OptionsMultiplayerListener extends OptionsListener {
 		else if (event.getActionCommand() == "yellow"){
 			boardPanel.setSnakeColor(Player.ONE, ResourceColors.YELLOW);
 		} 
-		if (event.getActionCommand() == "green2") {
+		else if (event.getActionCommand() == "green2") {
 			boardPanel.setSnakeColor(Player.TWO, ResourceColors.GREEN);
 		} 
 		else if (event.getActionCommand() == "blue2") {

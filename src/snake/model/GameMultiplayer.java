@@ -53,6 +53,12 @@ public class GameMultiplayer extends Game implements ActionListener {
 		reset();
 	}
 	
+	public void setFood(Food food) {
+		this.food = food;
+		setChanged();
+		notifyObservers(new Event(Event.Type.INTERNET_SYNC));
+	}
+	
 	public Board getBoard() {
 		return board;
 	}

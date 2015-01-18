@@ -37,6 +37,10 @@ public class MenuListener implements ActionListener {
 			gameMultiplayer.reset();
 			view.showOptionsMenu(gameMultiplayer);
 		}
+		else if (event.getActionCommand() == "internet") {
+			gameMultiplayer.reset();
+			view.showInternetGame(gameMultiplayer);
+		}
 		else if (event.getActionCommand() == "controls") {
 			view.showControlsMenu();
 		} 
