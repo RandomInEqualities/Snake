@@ -38,6 +38,7 @@ public class ResourceImages {
 	public static final BufferedImage TITLE_PLAYER_TWO;
 	public static final BufferedImage BUTTON_SINGLEPLAYER;
 	public static final BufferedImage BUTTON_MULTIPLAYER;
+	public static final BufferedImage BUTTON_INTERNET;
 	public static final BufferedImage BUTTON_CONTROLS;
 	public static final BufferedImage BUTTON_HIGHSCORE;
 	public static final BufferedImage BUTTON_QUIT;
@@ -90,6 +91,7 @@ public class ResourceImages {
 
 		BUTTON_SINGLEPLAYER = loadImage("ButtonSingleplayer.png");
 		BUTTON_MULTIPLAYER = loadImage("ButtonMultiplayer.png");
+		BUTTON_INTERNET = loadImage("ButtonMultiplayerInternet.png");
 		BUTTON_CONTROLS = loadImage("ButtonControls.png");
 		BUTTON_HIGHSCORE = loadImage("ButtonHighScores.png");
 		BUTTON_QUIT = loadImage("ButtonQuit.png");
@@ -110,7 +112,7 @@ public class ResourceImages {
 
 	private static BufferedImage loadImage(String filename) {
 		try {
-			// We load external resources by an URL. With this we use JAR files.
+			// We load external resources by an URL. With this we can use JAR files.
 			URL location = ResourceImages.class.getResource(IMAGE_PATH + filename);
 			return ImageIO.read(location);
 		}

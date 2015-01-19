@@ -26,10 +26,12 @@ public class GameMultiplayer extends Game implements ActionListener {
 	private Food food;
 
 	// Variables for implementing continuous snake movement.
-	private Timer timer;
+	private Timer timerPlayerOne;
+	private Timer timerPlayerTwo;
 	boolean timerEnabled = true;
 	private int timerUpdateInterval = 200;
-	private long timerLastUpdateTime = 0;
+	private long timerLastUpdatePlayerOne = 0;
+	private long timerLastUpdatePlayerTwo = 0;
 	
 	public GameMultiplayer() {
 		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -42,9 +44,19 @@ public class GameMultiplayer extends Game implements ActionListener {
 		this.snakePlayerTwo = new Snake();
 		
 		// Create a timer object that send an ActionEvent to this class, in a periodic interval.
-		this.timer = new Timer(TIMER_UPDATE_INTERVAL, this);
-		this.timer.setInitialDelay(TIMER_INITIAL_DELAY);
+		this.timerPlayerOne = new Timer(TIMER_UPDATE_INTERVAL, this);
+		this.timerPlayerTwo = new Timer(TIMER_UPDATE_INTERVAL, this);
+		this.timerPlayerOne.setActionCommand("player1");
+		this.timerPlayerTwo.setActionCommand("player2");
+		this.timerPlayerTwo.setInitialDelay(TIMER_INITIAL_DELAY);
+		this.timerPlayerOne.setInitialDelay(TIMER_INITIAL_DELAY);
 		reset();
+	}
+	
+	public void setFood(Food food) {
+		this.food = food;
+		setChanged();
+		notifyObservers(new Event(Event.Type.INTERNET_SYNC));
 	}
 	
 	public Board getBoard() {
@@ -118,7 +130,8 @@ public class GameMultiplayer extends Game implements ActionListener {
 	public void start() {
 		if (state == State.START) {
 			state = State.RUN;
-			timer.start();
+			timerPlayerOne.start();
+			timerPlayerTwo.start();
 			setChanged();
 			notifyObservers(new Event(Event.Type.START));
 		}
@@ -128,7 +141,8 @@ public class GameMultiplayer extends Game implements ActionListener {
 	public void pause() {
 		if (state == State.RUN) {
 			state = State.PAUSE;
-			timer.stop();
+			timerPlayerOne.stop();
+			timerPlayerTwo.stop();
 			setChanged();
 			notifyObservers(new Event(Event.Type.PAUSE));
 		}
@@ -138,7 +152,8 @@ public class GameMultiplayer extends Game implements ActionListener {
 	public void resume() {
 		if (state == State.PAUSE) {
 			state = State.RUN;
-			timer.start();
+			timerPlayerOne.start();
+			timerPlayerTwo.start();
 			setChanged();
 			notifyObservers(new Event(Event.Type.RESUME));
 		}
@@ -154,7 +169,8 @@ public class GameMultiplayer extends Game implements ActionListener {
 		scorePlayerOne = 0;
 		scorePlayerTwo = 0;
 		food = Food.generateRandomFood(snakePlayerOne, snakePlayerTwo, board);
-		timer.stop();
+		timerPlayerOne.stop();
+		timerPlayerTwo.stop();
 	}
 	
 	public void enableTimedMovement() {
@@ -193,7 +209,8 @@ public class GameMultiplayer extends Game implements ActionListener {
 		if (opponenetSnake.contains(newHeadPosition)) {
 			state = State.END;
 			
-			// The opponent wins if the opponent's head is not equal to the the
+			// The opponent wins if this snake moves into the opponents body. If
+			// their heads collide we call it a tie.
 			if (!opponenetSnake.getHead().equals(newHeadPosition)) {
 				winner = opponent;
 			}
@@ -245,7 +262,13 @@ public class GameMultiplayer extends Game implements ActionListener {
 		}
 		setChanged();
 		notifyObservers(event);
-		timerLastUpdateTime = System.currentTimeMillis();
+		
+		if (player == Player.ONE) {
+			timerLastUpdatePlayerOne = System.currentTimeMillis();
+		}
+		else {
+			timerLastUpdatePlayerTwo = System.currentTimeMillis();
+		}
 	}
 	
 	private boolean isBoardFull() {
@@ -270,14 +293,25 @@ public class GameMultiplayer extends Game implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		long currentTime = System.currentTimeMillis();
-		long elapsedTime = currentTime - timerLastUpdateTime;
-		if (state == State.RUN && timerEnabled && elapsedTime > timerUpdateInterval) {
-			move(Player.ONE, snakePlayerOne.getHeadDirection());
-			move(Player.TWO, snakePlayerTwo.getHeadDirection());
-			timerLastUpdateTime = currentTime;
+	public void actionPerformed(ActionEvent event) {
+		if (!timerEnabled || state != State.RUN) {
+			return;
 		}
+		
+		long currentTime = System.currentTimeMillis();
+		long elapsedTimePlayerOne = currentTime - timerLastUpdatePlayerOne;
+		long elapsedTimePlayerTwo = currentTime - timerLastUpdatePlayerTwo;
+		
+		String actionCommand = event.getActionCommand();
+		if (actionCommand == "player1" && elapsedTimePlayerOne > timerUpdateInterval) {
+			move(Player.ONE, snakePlayerOne.getHeadDirection());
+			timerLastUpdatePlayerOne = currentTime;
+		}
+		else if (actionCommand == "player2" && elapsedTimePlayerTwo > timerUpdateInterval) {
+			move(Player.TWO, snakePlayerTwo.getHeadDirection());
+			timerLastUpdatePlayerTwo = currentTime;
+		}
+		
 	}
 
 }

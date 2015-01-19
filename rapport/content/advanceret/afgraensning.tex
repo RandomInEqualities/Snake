@@ -1,22 +1,15 @@
 \section{Afgrænsning}
-Den advancerede del er en udvidelse af det grundlæggende spil. Vi skal selv vælge hvad vi vil arbejde på. I dette afsnit redegør vi for det som vi har valgt. 
-
-\subsubsection*{Gameplay}
-For at kunne kalde spillet snake, så skal slangen næsten kunne bevæge sig af sig selv. Den skal kunne bevæge sig i periodiske intervaller. Ved input fra keyboardet skal slange kunne skifte retning. Til at implementere sværheds graden kan slangens hurtighed ændres.  Det skal ligne snake spillet som på Nokia's 3310. Her begynder spillet at gå hurtigere jo mere slangen har spist.
-
-\subsubsection*{Menuer}
-Vi vil implementere menuer. Det skal være en main menu som popper op når vi starter spillet. I den skal der mindst være  en single player knap og en forlad spillet knap. Inden at man gå ind i spillet skal der være en menu hvor at man kan vælge størrelse på spillet. Eventuelt også sværheds grad og slange farve. En menu som viser keyboard tasterne til at styre spillet med vil være godt at have.
-
-\subsubsection*{Grafik}
-Vi laver custom grafik til spillet. I menuerne kan vi implementere nogle gode overskrifter. Vi vil gerne have en header i vinduet med et custom snake logo. Slanges krop skal forbedres, sådan at den ikke bare er nogle firkanter.  Den skal ligne en aflang slange krop. 
-
-Når vi resizer vinduet med spillet skal brugergrænsefladen tilpasse sig den nye størrelse. Skærmens stærrelse skal udnyttes optimalt.
-
-\subsubsection*{Lyd}
-Vi vil gerne integrere lyd! Når slangen spiser et eller andet så kan der måske være en nomnom lyd. Eller et skrig når man taber. Det er vigtig at audio er en del af view delen i model-view-controller konceptet. Det vil ikke give mening at integere det i modellen. Dette vil måske også kræve et event system, men det er en implementering detalje.
+Den avancerede del af spillet er en udvidelse af det grundlæggende spil Simple Snake, hvor vi her har lagt fokus på brugervenlighed, valgfrihed og bedre struktur i programmets opbygning.
 
 \subsubsection*{Multiplayer}
-Vi vil lave lokal multiplayer. To personer skal kunne spille mod hianden ved at bruge forskellige taster på samme keyboard.  Multiplayer gameplayet er ikke så vigtigt, men der skal være en måde hvor at spillerne kan vinde på. Man kunne for eksempel lade den ene spiller vinde hvis han spiser den andens slange krop.
+To personer skal kunne spille mod hinanden i et lokalt multiplayer-spil. Den ene spiller bruger de samme tastatur-inputs som den oprindelige spiller bruger i singleplayer-spillet, mens den anden bruger tasterne W, A, S og D. Spillerne skal ikke blot bevæge sig på samme bane, men også kunne påvirke hinanden ved kollision.
 
-\subsubsection*{Kode}
-Koden til den advancerede del skal være af høj kvalitet. Vi vil prøve at skrive den så godt vi kan, med fokus på at koden skal være let læselig.
+\subsubsection*{Gameplay}
+Som typiske Snake-spil, skal slangen kunne bevæge sig af sig selv. Den skal kunne bevæge sig i periodiske intervaller, mens den med input fra tastaturet skal skifte retning eller sætte farten op i det moment der trykkes. Ved at implementere sværhedsgrader kan slangens hastighed ændres og tilpasses efter spillerens ønske. Desuden skal slangen accelerere ved at hastigheden forhøjes, når spilleren har samlet et vis antal æbler. Spilleren skal også have mulighed for at afbryde spillet og vende tilbage til hovedmenuen eller sætte spillet på pause vha. tastatur-inputs.
+
+\subsubsection*{Menuer}
+Implementation af menuer, skal give spilleren adgang til forskellige scener i spillet. Når spillet startes, vises først hovedmenuen, som giver adgang til alle andre scener. I denne findes en 'singleplayer'-knap, en 'multiplayer'-knap, en 'controls'-knap og en 'quit'-knap. Trykkes på 'singleplayer'-knappen eller 'multiplayer'-knappen, tages spilleren til indstillingsmenuen, der giver spilleren mulighed for at indstille spillet efter personlig preference med hensyn til banens størrelse, slangens farve og sværhedsgraden. 'Controls'-knappen tager spilleren til en scene med vejledning til hvordan spillet spilles, mens 'quit'-knappen lukker vinduet.
+
+\subsubsection*{Grafik og lyd}
+I stedet for 'paintComponent's tegnede rektangler, opgraderes grafikken ved at erstatte mad-rektanglet med et æble og lade slangen blive tegnet op af importerede billeder, der udover at vise hvilken ende der er hale og hvilken ende der er hoved, skal beskrive slangens form og retning, når den drejer. Derudover tilføjes en pause- og en game-over-skærm, der gør spil-tilstanden tydelig for spilleren og giver spilleren hurtig adgang til at spille igen eller vende tilbage til menuen.
+Når vinduet skaleres skal brugergrænsefladen også tilpasse sig den nye størrelse uden at miste sin form, sideforhold og placering af elementer i vinduet - samtidig med, at vinduets størrelse udnyttes optimalt. Udover grafik importeres baggrundsmusik og lydeffekter, som afspilles, når spillet starter, slutter og når slangen spiser et æble.

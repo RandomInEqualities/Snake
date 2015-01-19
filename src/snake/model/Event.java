@@ -15,7 +15,8 @@ public class Event {
 		TIE,
 		START,
 		PAUSE,
-		RESUME
+		RESUME,
+		INTERNET_SYNC
 	}
 	
 	private final Type type;
@@ -38,5 +39,6 @@ public class Event {
 	public Player getPlayer() {
 		return player;
 	}		
+	
 }
 

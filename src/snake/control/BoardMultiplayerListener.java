@@ -31,6 +31,21 @@ public class BoardMultiplayerListener extends KeyAdapter implements ActionListen
 	}
 	
 	@Override
+	public void actionPerformed(ActionEvent event) {
+		if (game == null) {
+			return;
+		}
+		if (event.getActionCommand() == "restart") {
+			game.reset();
+			game.start();
+		} 
+		else if (event.getActionCommand() == "menu") {
+			view.showMenu();
+		}
+	}
+	
+	
+	@Override
 	public void keyPressed(KeyEvent event) {
 		if (game == null) {
 			return;
@@ -79,19 +94,6 @@ public class BoardMultiplayerListener extends KeyAdapter implements ActionListen
 				break;
 		}
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent event) {
-		if (game == null) {
-			return;
-		}
-		if (event.getActionCommand() == "restart") {
-			game.reset();
-			game.start();
-		} 
-		else if (event.getActionCommand() == "menu") {
-			view.showMenu();
-		}
-	}
+	
 
 }

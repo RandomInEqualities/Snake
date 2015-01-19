@@ -22,6 +22,7 @@ public class MenuPanel extends JPanel {
 	
 	private JButton buttonSingleplayer;
 	private JButton buttonMultiplayer;
+	private JButton buttonInternet;
 	private JButton buttonControls;
 	private JButton buttonQuit;
 	
@@ -31,11 +32,13 @@ public class MenuPanel extends JPanel {
 		// Menu Buttons
 		buttonSingleplayer = createMenuButton(ResourceImages.BUTTON_SINGLEPLAYER);
 		buttonMultiplayer = createMenuButton(ResourceImages.BUTTON_MULTIPLAYER);
+		buttonInternet = createMenuButton(ResourceImages.BUTTON_INTERNET);
 		buttonControls = createMenuButton(ResourceImages.BUTTON_CONTROLS);
 		buttonQuit = createMenuButton(ResourceImages.BUTTON_QUIT);
 
 		add(buttonSingleplayer);
 		add(buttonMultiplayer);
+		add(buttonInternet);
 		add(buttonControls);
 		add(buttonQuit);
 		
@@ -43,10 +46,12 @@ public class MenuPanel extends JPanel {
 		MenuListener control = new MenuListener(view);
 		buttonSingleplayer.addActionListener(control);
 		buttonMultiplayer.addActionListener(control);
+		buttonInternet.addActionListener(control);
 		buttonControls.addActionListener(control);
 		buttonQuit.addActionListener(control);
 		buttonSingleplayer.setActionCommand("singleplayer");
 		buttonMultiplayer.setActionCommand("multiplayer");
+		buttonInternet.setActionCommand("internet");
 		buttonControls.setActionCommand("controls");
 		buttonQuit.setActionCommand("quit");
 	}
@@ -76,8 +81,9 @@ public class MenuPanel extends JPanel {
 		int initialY = titleY + titleHeight + 50;
 		buttonSingleplayer.setLocation(initialX, initialY);
 		buttonMultiplayer.setLocation(initialX, initialY + (BUTTON_HEIGHT + BUTTON_GAP));
-		buttonControls.setLocation(initialX, initialY + 2 * (BUTTON_HEIGHT + BUTTON_GAP));
-		buttonQuit.setLocation(initialX, initialY + 3 * (BUTTON_HEIGHT + BUTTON_GAP) + MENU_MARGIN);
+		buttonInternet.setLocation(initialX, initialY + 2 * (BUTTON_HEIGHT + BUTTON_GAP));
+		buttonControls.setLocation(initialX, initialY + 3 * (BUTTON_HEIGHT + BUTTON_GAP));
+		buttonQuit.setLocation(initialX, initialY + 4 * (BUTTON_HEIGHT + BUTTON_GAP) + MENU_MARGIN);
 	}
 	
 	public static void drawMenuBackground(Graphics2D context, Rectangle rectangle) {

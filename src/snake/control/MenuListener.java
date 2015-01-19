@@ -9,7 +9,7 @@ import snake.view.ViewFrame;
 
 
 /**
- * The menu listener which holds the game object (which is the models in the MVC pattern).
+ * The menu listener holds the game objects (which is the models in the MVC pattern).
  * We have a single and multiplayer game and uses the ViewFrame class to display them.
  */
 public class MenuListener implements ActionListener {
@@ -33,14 +33,18 @@ public class MenuListener implements ActionListener {
 			gameSingleplayer.reset();
 			view.showOptionsMenu(gameSingleplayer);
 		} 
-		else if (event.getActionCommand() == "multiplayer"){
+		else if (event.getActionCommand() == "multiplayer") {
 			gameMultiplayer.reset();
 			view.showOptionsMenu(gameMultiplayer);
 		}
-		else if (event.getActionCommand() == "controls"){
+		else if (event.getActionCommand() == "internet") {
+			gameMultiplayer.reset();
+			view.showInternetGame(gameMultiplayer);
+		}
+		else if (event.getActionCommand() == "controls") {
 			view.showControlsMenu();
 		} 
-		else if (event.getActionCommand() == "quit"){
+		else if (event.getActionCommand() == "quit") {
 			view.closeWindow();
 		}
 	}
