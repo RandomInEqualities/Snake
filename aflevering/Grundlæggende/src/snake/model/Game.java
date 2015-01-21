@@ -147,7 +147,7 @@ public class Game extends Observable {
 				if (snake.contains(position)) {
 					continue;
 				}
-				foodPositions.add(position);
+				foodPositions.Observable(position);
 			}
 		}
 		
