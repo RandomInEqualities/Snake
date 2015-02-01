@@ -1,15 +1,7 @@
 % Eclipse files
 /bin/
 /doc/
-
-%Latex files
-*.aux
-*.bbl
-*.blg
-*.log
-*.toc
-*.gz
-*.out
+*.class
 
 % MAC
 *.DS_Store
