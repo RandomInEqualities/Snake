@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 
-/**
- * A snake located on board positions.
- */
 public class Snake {
 	
 	private ArrayList<Field> positions;

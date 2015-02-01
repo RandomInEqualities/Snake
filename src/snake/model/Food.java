@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 
-/**
- * Class representing a food object that a snake can eat.
- */
 public class Food {
 	
 	private static final Random random = new Random();

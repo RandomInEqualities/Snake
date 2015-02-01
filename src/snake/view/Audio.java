@@ -22,7 +22,7 @@ public class Audio extends Observable implements Observer {
 	private Clip soundStart;
 	private Clip soundTrack;
 	private boolean isMuted;
-	private Game registeredGame = null;
+	private Game registeredGame;
 	
 	public Audio() {
 		super();

@@ -6,7 +6,7 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-public class ResourceImages {
+public class CustomImages {
 	
 	public static final BufferedImage LOGO;
 	public static final BufferedImage BACKGROUND;
@@ -113,7 +113,7 @@ public class ResourceImages {
 	private static BufferedImage loadImage(String filename) {
 		try {
 			// We load external resources by an URL. With this we can use JAR files.
-			URL location = ResourceImages.class.getResource(IMAGE_PATH + filename);
+			URL location = CustomImages.class.getResource(IMAGE_PATH + filename);
 			return ImageIO.read(location);
 		}
 		catch (IOException error) {

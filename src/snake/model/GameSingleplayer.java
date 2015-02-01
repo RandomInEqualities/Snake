@@ -1,5 +1,6 @@
 package snake.model;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -7,9 +8,6 @@ import java.util.ArrayList;
 import javax.swing.Timer;
 
 
-/**
- * The model/class for playing singleplayer snake.
- */
 public class GameSingleplayer extends Game implements ActionListener {
 	
 	private static final int DEFAULT_WIDTH = 20;
@@ -65,22 +63,22 @@ public class GameSingleplayer extends Game implements ActionListener {
 
 	@Override
 	public boolean isStarted() {
-		return state != State.START;
+		return state != State.STARTUP;
 	}
 
 	@Override
 	public boolean isRunning() {
-		return state == State.RUN;
+		return state == State.RUNNING;
 	}
 
 	@Override
 	public boolean isPaused() {
-		return state == State.PAUSE;
+		return state == State.PAUSED;
 	}
 
 	@Override
 	public boolean isEnded() {
-		return state == State.END;
+		return state == State.ENDED;
 	}
 	
 	public boolean isWon() {
@@ -97,8 +95,8 @@ public class GameSingleplayer extends Game implements ActionListener {
 
 	@Override
 	public void start() {
-		if (state == State.START) {
-			state = State.RUN;
+		if (state == State.STARTUP) {
+			state = State.RUNNING;
 			timer.start();
 			setChanged();
 			notifyObservers(new Event(Event.Type.START));
@@ -107,8 +105,8 @@ public class GameSingleplayer extends Game implements ActionListener {
 
 	@Override
 	public void pause() {
-		if (state == State.RUN) {
-			state = State.PAUSE;
+		if (state == State.RUNNING) {
+			state = State.PAUSED;
 			timer.stop();
 			setChanged();
 			notifyObservers(new Event(Event.Type.PAUSE));
@@ -117,11 +115,21 @@ public class GameSingleplayer extends Game implements ActionListener {
 
 	@Override
 	public void resume() {
-		if (state == State.PAUSE) {
-			state = State.RUN;
+		if (state == State.PAUSED) {
+			state = State.RUNNING;
 			timer.start();
 			setChanged();
 			notifyObservers(new Event(Event.Type.RESUME));
+		}
+	}
+	
+	@Override
+	public void togglePause() {
+		if (isPaused()) {
+			resume();
+		}
+		else {
+			pause();
 		}
 	}
 
@@ -131,7 +139,7 @@ public class GameSingleplayer extends Game implements ActionListener {
 		isLost = false;
 		isWon = false;
 		snake.setup(getInitialSnake());
-		state = State.START;
+		state = State.STARTUP;
 		score = 0;
 		food = Food.generateRandomFood(snake, board);
 		timerSpeedIncrease = 0;
@@ -154,13 +162,13 @@ public class GameSingleplayer extends Game implements ActionListener {
 		this.timerSpeedIncrease = 0;
 	}
 	
-	public void setBoardSize(int width, int height){
-		board = new Board(width, height);
+	public void setBoardSize(Dimension size){
+		board = new Board(size.width, size.height);
 		reset();
 	}
 	
 	public void move(Direction moveDirection) {
-		if (state != State.RUN) {
+		if (state != State.RUNNING) {
 			return;
 		}
 		
@@ -172,11 +180,11 @@ public class GameSingleplayer extends Game implements ActionListener {
 		boolean snakeEatsFood = newHeadPosition.equals(food.getPosition());		
 		boolean snakeEatsItSelf = snake.move(moveDirection, snakeEatsFood, board);
 		if (isBoardFull()) {
-			state = State.END;
+			state = State.ENDED;
 			isWon = true;
 		} 
 		else if (snakeEatsItSelf) {
-			state = State.END;
+			state = State.ENDED;
 			isLost = true;
 		}
 		else if (snakeEatsFood) {
@@ -215,7 +223,7 @@ public class GameSingleplayer extends Game implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		long currentTime = System.currentTimeMillis();
 		long elapsedTime = currentTime - timerLastUpdateTime;
-		if (state == State.RUN && timerEnabled && elapsedTime > timerUpdateInterval - timerSpeedIncrease) {
+		if (state == State.RUNNING && timerEnabled && elapsedTime > timerUpdateInterval - timerSpeedIncrease) {
 			move(snake.getHeadDirection());
 			timerLastUpdateTime = currentTime;
 		}

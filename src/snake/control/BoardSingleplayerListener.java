@@ -7,37 +7,37 @@ import java.awt.event.KeyEvent;
 
 import snake.model.Direction;
 import snake.model.GameSingleplayer;
-import snake.view.ViewFrame;
+import snake.view.Audio;
 
 
-/**
- * Control for the singleplayer board view (BoardSingleplayerPanel). This class interacts
- * with the game from keyboard input.
- */
 public class BoardSingleplayerListener extends KeyAdapter implements ActionListener {
 
 	private GameSingleplayer game;
-	private ViewFrame view;
+	private WindowControl control;
+	private Audio audio;
 	
-	public BoardSingleplayerListener(ViewFrame view) {
-		if (view == null) {
+	public BoardSingleplayerListener(WindowControl control, Audio audio, GameSingleplayer game) {
+		if (control == null || audio == null || game == null) {
 			throw new NullPointerException();
 		}
-		this.game = null;
-		this.view = view;
+		this.game = game;
+		this.control = control;
+		this.audio = audio;
 	}
 	
-	public void registerGame(GameSingleplayer newGame) {
-		game = newGame;
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		if (event.getActionCommand() == "restart") {
+			game.reset();
+			game.start();
+		} 
+		else if (event.getActionCommand() == "menu") {
+			control.showMenu();
+		}
 	}
 	
 	@Override
 	public void keyPressed(KeyEvent event) {
-		if (game == null) {
-			return;
-		}
-		
-		// The singleplayer can use up, down, left and right arrows or the WASD keys.
 		switch (event.getKeyCode()) {
 			case KeyEvent.VK_UP:
 				game.move(Direction.UP);
@@ -64,12 +64,7 @@ public class BoardSingleplayerListener extends KeyAdapter implements ActionListe
 				game.move(Direction.RIGHT);
 				break;
 			case KeyEvent.VK_P:
-				if (game.isPaused()) {
-					game.resume();
-				}
-				else {
-					game.pause();
-				}
+				game.togglePause();
 				break;
 			case KeyEvent.VK_ENTER: 
 			case KeyEvent.VK_SPACE:
@@ -78,22 +73,15 @@ public class BoardSingleplayerListener extends KeyAdapter implements ActionListe
 					game.start();
 				}
 				break;
+			case KeyEvent.VK_M:
+				audio.toggleMute();
+				break;
+			case KeyEvent.VK_ESCAPE:
+				game.pause();
+				control.showMenu();
+				break;
 			default:
 				break;
-		}
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent event) {
-		if (game == null) {
-			return;
-		}
-		if (event.getActionCommand() == "restart") {
-			game.reset();
-			game.start();
-		} 
-		else if (event.getActionCommand() == "menu") {
-			view.showMenu();
 		}
 	}
 

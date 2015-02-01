@@ -2,50 +2,52 @@ package snake.control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-import snake.model.GameMultiplayer;
-import snake.model.GameSingleplayer;
-import snake.view.ViewFrame;
+import snake.view.Audio;
 
 
-/**
- * The menu listener holds the game objects (which is the models in the MVC pattern).
- * We have a single and multiplayer game and uses the ViewFrame class to display them.
- */
-public class MenuListener implements ActionListener {
+public class MenuListener extends KeyAdapter implements ActionListener {
 
-	private ViewFrame view;
-	private GameSingleplayer gameSingleplayer;
-	private GameMultiplayer gameMultiplayer;
+	private WindowControl control;
+	private Audio audio;
 	
-	public MenuListener(ViewFrame view) {
-		if (view == null) {
+	public MenuListener(WindowControl control, Audio audio) {
+		if (control == null || audio == null) {
 			throw new NullPointerException();
 		}
-		this.view = view;
-		this.gameSingleplayer = new GameSingleplayer();
-		this.gameMultiplayer = new GameMultiplayer();
+		this.control = control;
+		this.audio = audio;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if (event.getActionCommand() == "singleplayer") {
-			gameSingleplayer.reset();
-			view.showOptionsMenu(gameSingleplayer);
+			control.startSingleplayerGame();
 		} 
 		else if (event.getActionCommand() == "multiplayer") {
-			gameMultiplayer.reset();
-			view.showOptionsMenu(gameMultiplayer);
+			control.startMultiplayerGame();
 		}
 		else if (event.getActionCommand() == "internet") {
-			gameMultiplayer.reset();
-			view.showInternetGame(gameMultiplayer);
+			control.startInternetGame();
 		}
 		else if (event.getActionCommand() == "controls") {
-			view.showControlsMenu();
+			control.showControls();
 		} 
 		else if (event.getActionCommand() == "quit") {
-			view.closeWindow();
+			control.close();
+		}
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent event) {
+		int keyCode = event.getKeyCode();
+		if (keyCode == KeyEvent.VK_M) {
+			audio.toggleMute();
+		}
+		else if (keyCode == KeyEvent.VK_ESCAPE) {
+			control.switchBackToGame();
 		}
 	}
 

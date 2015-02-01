@@ -1,86 +1,116 @@
 package snake.control;
 
-import java.awt.Dimension;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import snake.model.*;
 import snake.view.*;
 
 
-public class OptionsMultiplayerListener extends OptionsListener {
+public class OptionsMultiplayerListener extends KeyAdapter implements ActionListener {
 
 	private GameMultiplayer game;
-	private ViewFrame view;
-	private OptionsMultiplayerPanel optionsPanel;
+	private WindowControl control;
+	private Audio audio;
+	private BoardMultiplayer board;
+	private OptionsMultiplayer options;
+	private Difficulty difficulty;
 	
-	public OptionsMultiplayerListener(ViewFrame view, OptionsMultiplayerPanel optionsPanel) {
-		super(view, optionsPanel);
-		this.game = null;
-		this.view = view;
-		this.optionsPanel = optionsPanel;
-		
-		// By default the snakes are green and blue.
-		BoardMultiplayerPanel boardPanel = view.getBoardMultiplayerPanel();
-		boardPanel.setSnakeColor(Player.ONE, ResourceColors.GREEN);
-		boardPanel.setSnakeColor(Player.TWO, ResourceColors.BLUE);
-		optionsPanel.buttonPress("green");
-		optionsPanel.buttonPress("blue2");
-	}
-	
-	public void registerGame(GameMultiplayer newGame) {
-		game = newGame;
+	public OptionsMultiplayerListener(WindowControl control, Audio audio, BoardMultiplayer board, 
+			OptionsMultiplayer options, GameMultiplayer game) {
+		if (control == null || audio == null || board == null || options == null || game == null) {
+			throw new NullPointerException();
+		}
+		this.game = game;
+		this.control = control;
+		this.audio = audio;
+		this.board = board;
+		this.options = options;
+		this.difficulty = Difficulty.EASY;
+		board.setSnakeColor(Player.ONE, CustomColors.GREEN);
+		board.setSnakeColor(Player.TWO, CustomColors.BLUE);
+		options.actionPerformed(new ActionEvent(this, 0, "easy"));
+		options.actionPerformed(new ActionEvent(this, 0, "green1"));
+		options.actionPerformed(new ActionEvent(this, 0, "blue2"));
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		if (game == null) {
-			return;
+		String command = event.getActionCommand();
+		switch (command) {
+			case "play":
+				attemptGameStart();
+				break;
+			case "back":
+				control.showMenu();
+				break;
+			case "kindergarten":
+				difficulty = Difficulty.KINDERGARTEN;
+				break;
+			case "easy":
+				difficulty = Difficulty.EASY;
+				break;
+			case "intermediate":
+				difficulty = Difficulty.INTERMEDIATE;
+				break;
+			case "hard":
+				difficulty = Difficulty.HARD;
+				break;
+			case "green1":
+				board.setSnakeColor(Player.ONE, CustomColors.GREEN);
+				break;
+			case "blue1":
+				board.setSnakeColor(Player.ONE, CustomColors.BLUE);
+				break;
+			case "red1":
+				board.setSnakeColor(Player.ONE, CustomColors.RED);
+				break;
+			case "yellow1":
+				board.setSnakeColor(Player.ONE, CustomColors.YELLOW);
+				break;
+			case "green2":
+				board.setSnakeColor(Player.TWO, CustomColors.GREEN);
+				break;
+			case "blue2":
+				board.setSnakeColor(Player.TWO, CustomColors.BLUE);
+				break;
+			case "red2":
+				board.setSnakeColor(Player.TWO, CustomColors.RED);
+				break;
+			case "yellow2":
+				board.setSnakeColor(Player.TWO, CustomColors.YELLOW);
+				break;
+			default:
+				break;
 		}
-		super.actionPerformed(event);
-		
-		BoardMultiplayerPanel boardPanel = view.getBoardMultiplayerPanel();
-		if (event.getActionCommand() == "green") {
-			boardPanel.setSnakeColor(Player.ONE, ResourceColors.GREEN);
-		} 
-		else if (event.getActionCommand() == "blue") {
-			boardPanel.setSnakeColor(Player.ONE, ResourceColors.BLUE);
-		} 
-		else if (event.getActionCommand() == "red"){
-			boardPanel.setSnakeColor(Player.ONE, ResourceColors.RED);
-		} 
-		else if (event.getActionCommand() == "yellow"){
-			boardPanel.setSnakeColor(Player.ONE, ResourceColors.YELLOW);
-		} 
-		else if (event.getActionCommand() == "green2") {
-			boardPanel.setSnakeColor(Player.TWO, ResourceColors.GREEN);
-		} 
-		else if (event.getActionCommand() == "blue2") {
-			boardPanel.setSnakeColor(Player.TWO, ResourceColors.BLUE);
-		} 
-		else if (event.getActionCommand() == "red2"){
-			boardPanel.setSnakeColor(Player.TWO, ResourceColors.RED);
-		} 
-		else if (event.getActionCommand() == "yellow2"){
-			boardPanel.setSnakeColor(Player.TWO, ResourceColors.YELLOW);
-		}
-		
-		optionsPanel.buttonPress(event.getActionCommand());
-		
 	}
 	
-	public void startGame() {
-		if (game == null)  {
+	@Override
+	public void keyPressed(KeyEvent event) {
+		switch (event.getKeyCode()) {
+			case KeyEvent.VK_ENTER:
+				attemptGameStart();
+				break;
+			case KeyEvent.VK_M:
+				audio.toggleMute();
+				break;
+			case KeyEvent.VK_ESCAPE:
+			case KeyEvent.VK_BACK_SPACE:
+				control.showMenu();
+				break;
+			default:
+				break;
+		}
+	}
+	
+	public void attemptGameStart() {
+		if (!options.hasBoardSizeInput()) {
 			return;
 		}
+		game.setBoardSize(options.getBoardSizeInput());
 		
-		Dimension newSize = optionsPanel.getChosenGameSize();
-		if (newSize == null) {
-			// Unable to retrieve size, lets wait for proper input before showing the game.
-			return;
-		}
-		game.setBoardSize(newSize.width, newSize.height);
-		
-		// Set difficulty.
 		if (difficulty == Difficulty.KINDERGARTEN){
 			game.disableTimedMovement(); 
 		} 
@@ -97,9 +127,8 @@ public class OptionsMultiplayerListener extends OptionsListener {
 			game.setTimedMovementSpeed(70);
 		}
 		
-		// Start the game and show it.
+		control.showGameMultiplayer();
 		game.start();
-		view.showGame(game);
 	}	
 	
 }

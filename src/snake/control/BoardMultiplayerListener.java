@@ -9,47 +9,34 @@ import snake.model.*;
 import snake.view.*;
 
 
-/**
- * Control for the multiplayer board view (BoardMultiplayerPanel). This class interacts
- * with the game from keyboard input.
- */
 public class BoardMultiplayerListener extends KeyAdapter implements ActionListener {
 
 	private GameMultiplayer game;
-	private ViewFrame view;
+	private WindowControl control;
+	private Audio audio;
 	
-	public BoardMultiplayerListener(ViewFrame view) {
-		if (view == null) {
+	public BoardMultiplayerListener(WindowControl control, Audio audio, GameMultiplayer game) {
+		if (control == null || audio == null || game == null) {
 			throw new NullPointerException();
 		}
-		this.game = null;
-		this.view = view;
+		this.game = game;
+		this.control = control;
+		this.audio = audio;
 	}
-	
-	public void registerGame(GameMultiplayer newGame) {
-		game = newGame;
-	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		if (game == null) {
-			return;
-		}
 		if (event.getActionCommand() == "restart") {
 			game.reset();
 			game.start();
 		} 
 		else if (event.getActionCommand() == "menu") {
-			view.showMenu();
+			control.showMenu();
 		}
 	}
 	
-	
 	@Override
 	public void keyPressed(KeyEvent event) {
-		if (game == null) {
-			return;
-		}
 		switch (event.getKeyCode()) {
 			case KeyEvent.VK_UP:
 				game.move(Player.ONE, Direction.UP);
@@ -76,12 +63,7 @@ public class BoardMultiplayerListener extends KeyAdapter implements ActionListen
 				game.move(Player.TWO, Direction.RIGHT);
 				break;
 			case KeyEvent.VK_P:
-				if (game.isPaused()) {
-					game.resume();
-				}
-				else {
-					game.pause();
-				}
+				game.togglePause();
 				break;
 			case KeyEvent.VK_ENTER: 
 			case KeyEvent.VK_SPACE:
@@ -89,6 +71,13 @@ public class BoardMultiplayerListener extends KeyAdapter implements ActionListen
 					game.reset();
 					game.start();
 				}
+				break;
+			case KeyEvent.VK_M:
+				audio.toggleMute();
+				break;
+			case KeyEvent.VK_ESCAPE:
+				game.pause();
+				control.showMenu();
 				break;
 			default:
 				break;

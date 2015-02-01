@@ -1,10 +1,6 @@
 package snake.model;
 
 
-/**
- * An event class representing possible game events. Is general enough to handle
- * both singleplayer and multiplayer events.
- */
 public class Event {
 	
 	public enum Type {
@@ -16,7 +12,7 @@ public class Event {
 		START,
 		PAUSE,
 		RESUME,
-		INTERNET_SYNC
+		SYNC
 	}
 	
 	private final Type type;

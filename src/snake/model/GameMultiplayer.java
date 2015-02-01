@@ -1,14 +1,13 @@
 package snake.model;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
 import javax.swing.Timer;
 
 
-/**
- * The model/class for playing multiplayer snake.
- */
 public class GameMultiplayer extends Game implements ActionListener {
 	
 	private static final int DEFAULT_WIDTH = 20;
@@ -56,7 +55,7 @@ public class GameMultiplayer extends Game implements ActionListener {
 	public void setFood(Food food) {
 		this.food = food;
 		setChanged();
-		notifyObservers(new Event(Event.Type.INTERNET_SYNC));
+		notifyObservers(new Event(Event.Type.SYNC));
 	}
 	
 	public Board getBoard() {
@@ -97,22 +96,22 @@ public class GameMultiplayer extends Game implements ActionListener {
 
 	@Override
 	public boolean isStarted() {
-		return state != State.START;
+		return state != State.STARTUP;
 	}
 
 	@Override
 	public boolean isRunning() {
-		return state == State.RUN;
+		return state == State.RUNNING;
 	}
 
 	@Override
 	public boolean isPaused() {
-		return state == State.PAUSE;
+		return state == State.PAUSED;
 	}
 
 	@Override
 	public boolean isEnded() {
-		return state == State.END;
+		return state == State.ENDED;
 	}
 	
 	public boolean isTie() {
@@ -128,8 +127,8 @@ public class GameMultiplayer extends Game implements ActionListener {
 
 	@Override
 	public void start() {
-		if (state == State.START) {
-			state = State.RUN;
+		if (state == State.STARTUP) {
+			state = State.RUNNING;
 			timerPlayerOne.start();
 			timerPlayerTwo.start();
 			setChanged();
@@ -139,8 +138,8 @@ public class GameMultiplayer extends Game implements ActionListener {
 
 	@Override
 	public void pause() {
-		if (state == State.RUN) {
-			state = State.PAUSE;
+		if (state == State.RUNNING) {
+			state = State.PAUSED;
 			timerPlayerOne.stop();
 			timerPlayerTwo.stop();
 			setChanged();
@@ -150,12 +149,22 @@ public class GameMultiplayer extends Game implements ActionListener {
 
 	@Override
 	public void resume() {
-		if (state == State.PAUSE) {
-			state = State.RUN;
+		if (state == State.PAUSED) {
+			state = State.RUNNING;
 			timerPlayerOne.start();
 			timerPlayerTwo.start();
 			setChanged();
 			notifyObservers(new Event(Event.Type.RESUME));
+		}
+	}
+	
+	@Override
+	public void togglePause() {
+		if (isPaused()) {
+			resume();
+		}
+		else {
+			pause();
 		}
 	}
 
@@ -164,7 +173,7 @@ public class GameMultiplayer extends Game implements ActionListener {
 		// Set the game variables.
 		snakePlayerOne.setup(getInitialSnake(Player.ONE));
 		snakePlayerTwo.setup(getInitialSnake(Player.TWO));
-		state = State.START;
+		state = State.STARTUP;
 		winner = Player.NONE;
 		scorePlayerOne = 0;
 		scorePlayerTwo = 0;
@@ -188,13 +197,13 @@ public class GameMultiplayer extends Game implements ActionListener {
 		this.timerUpdateInterval = speed;
 	}
 	
-	public void setBoardSize(int width, int height){
-		board = new Board(width, height);
+	public void setBoardSize(Dimension size){
+		board = new Board(size.width, size.height);
 		reset();
 	}
 	
 	public void move(Player player, Direction moveDirection) {
-		if (state != State.RUN) {
+		if (state != State.RUNNING) {
 			return;
 		}
 		
@@ -207,26 +216,17 @@ public class GameMultiplayer extends Game implements ActionListener {
 		Snake opponenetSnake = getSnake(opponent);
 		Field newHeadPosition = snake.getNextHeadPosition(moveDirection, board);
 		if (opponenetSnake.contains(newHeadPosition)) {
-			state = State.END;
-			
-			// The opponent wins if this snake moves into the opponents body. If
-			// their heads collide we call it a tie.
-			if (!opponenetSnake.getHead().equals(newHeadPosition)) {
-				winner = opponent;
-			}
-			else {
-				winner = Player.NONE;
-			}
+			return;
 		}
 	
 		boolean snakeEatsFood = newHeadPosition.equals(food.getPosition());
 		boolean snakeEatsItSelf = snake.move(moveDirection, snakeEatsFood, board);
 		if (isBoardFull()) {
-			state = State.END;
+			state = State.ENDED;
 			winner = Player.NONE;
 		}
 		else if (snakeEatsItSelf) {
-			state = State.END;
+			state = State.ENDED;
 			winner = opponent;
 		}
 		else if (snakeEatsFood) {
@@ -246,7 +246,7 @@ public class GameMultiplayer extends Game implements ActionListener {
 		// Notify the observing classes that the game changed. Send an argument with 
 		// the type of event that happened.
 		Event event;
-		if (state == State.END) {
+		if (state == State.ENDED) {
 			if (winner == Player.NONE) {
 				event = new Event(Event.Type.TIE);
 			}
@@ -294,7 +294,7 @@ public class GameMultiplayer extends Game implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		if (!timerEnabled || state != State.RUN) {
+		if (!timerEnabled || state != State.RUNNING) {
 			return;
 		}
 		

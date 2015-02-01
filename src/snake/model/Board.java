@@ -1,9 +1,6 @@
 package snake.model;
 
 
-/**
- * Class representing a game board.
- */
 public class Board {
 	
 	public static final int MIN_WIDTH = 5;

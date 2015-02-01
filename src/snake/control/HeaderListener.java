@@ -3,27 +3,25 @@ package snake.control;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import snake.view.ViewFrame;
+import snake.view.Audio;
 
 
-/**
- * Listener for the mute button in the header panels.
- */
 public class HeaderListener implements ActionListener {
 
-	private ViewFrame view;
+	private Audio audio;
 	
-	public HeaderListener(ViewFrame view) {
-		if (view == null) {
+	public HeaderListener(Audio audio) {
+		if (audio == null) {
 			throw new NullPointerException();
 		}
-		this.view = view;
+		this.audio = audio;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		if (event.getActionCommand() == "mute"){
-			view.getAudio().toggleMute();
+		String command = event.getActionCommand();
+		if (command == "mute"){
+			audio.toggleMute();
 		}
 	}
 	
