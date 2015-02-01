@@ -65,10 +65,7 @@ public class BoardNetworkListener extends KeyAdapter implements ActionListener ,
 		}
 		else {
 			String hostname = OptionsNetwork.showServerLocationInputDialog(window); 
-			if (hostname.isEmpty()) {
-				establishSucces = false;
-			}
-			else {
+			if (!hostname.isEmpty()) {
 				establishSucces = establishClient(hostname);
 			}
 		}
@@ -135,7 +132,6 @@ public class BoardNetworkListener extends KeyAdapter implements ActionListener ,
 				return true;
 			}
 			catch (IOException error) {
-				System.out.println("slwwp " + error);
 				int sleepTime = 1000;
 				try {
 					Thread.sleep(sleepTime);
