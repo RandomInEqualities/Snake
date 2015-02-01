@@ -7,4 +7,4 @@ It is built with the MVC pattern and java swing.
 How To Run
 -------
 
-The easiest way is to import it into Eclipse Juno with Egit.
+The easiest way is to import it into Eclipse Luna with Egit.
